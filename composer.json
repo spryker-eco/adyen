@@ -1,0 +1,40 @@
+{
+  "name": "spryker-eco/adyen",
+  "description": "Adyen Module",
+  "license": "MIT",
+  "require": {
+    "php": ">=7.1",
+    "spryker/kernel": "^3.0.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "SprykerEco\\": "src/SprykerEco/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "SprykerEcoTest\\": "tests/SprykerEcoTest/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "config": {
+    "preferred-install": "dist",
+    "sort-packages": true,
+    "process-timeout": 600
+  },
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://code.spryker.com/repo/private"
+    }
+  ],
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "dev-master"
+  }
+}
