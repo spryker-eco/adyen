@@ -11,4 +11,6 @@ use Spryker\Shared\Kernel\AbstractBundleConfig;
 
 class AdyenConfig extends AbstractBundleConfig
 {
+    public const PROVIDER_NAME = 'Adyen';
+    public const ADYEN_CREDIT_CARD = 'adyenCreditCard';
 }
