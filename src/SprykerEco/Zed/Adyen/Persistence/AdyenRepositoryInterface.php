@@ -5,8 +5,8 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerEco\Zed\Adyen\Business;
+namespace SprykerEco\Zed\Adyen\Persistence;
 
-interface AdyenFacadeInterface
+interface AdyenRepositoryInterface
 {
 }

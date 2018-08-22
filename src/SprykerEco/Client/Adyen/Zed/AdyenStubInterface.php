@@ -7,7 +7,6 @@
 
 namespace SprykerEco\Client\Adyen\Zed;
 
-
 interface AdyenStubInterface
 {
 }

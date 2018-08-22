@@ -7,6 +7,8 @@
 
 namespace SprykerEco\Zed\Adyen\Persistence;
 
-interface AdyenQueryContainerInterface
+use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
+
+class AdyenEntityManager extends AbstractEntityManager implements AdyenEntityManagerInterface
 {
 }

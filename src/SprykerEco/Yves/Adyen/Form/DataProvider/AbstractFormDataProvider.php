@@ -7,7 +7,6 @@
 
 namespace SprykerEco\Yves\Adyen\Form\DataProvider;
 
-use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Yves\StepEngine\Dependency\Form\StepEngineFormDataProviderInterface;
 

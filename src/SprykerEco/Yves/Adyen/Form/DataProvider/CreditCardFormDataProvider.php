@@ -7,10 +7,7 @@
 
 namespace SprykerEco\Yves\Adyen\Form\DataProvider;
 
-use Generated\Shared\Transfer\PaymentTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
-use SprykerEco\Shared\Adyen\AdyenConfig;
 
 class CreditCardFormDataProvider extends AbstractFormDataProvider
 {

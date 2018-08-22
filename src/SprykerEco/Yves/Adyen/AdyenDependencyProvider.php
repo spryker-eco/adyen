@@ -12,7 +12,6 @@ use Spryker\Yves\Kernel\Container;
 
 class AdyenDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     /**
      * @param \Spryker\Yves\Kernel\Container $container
      *
