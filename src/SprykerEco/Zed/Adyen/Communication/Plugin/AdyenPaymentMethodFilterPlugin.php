@@ -5,19 +5,22 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerEco\Zed\Adyen\Business;
+namespace SprykerEco\Zed\Adyen\Communication\Plugin;
 
 use Generated\Shared\Transfer\PaymentMethodsTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\Kernel\Business\AbstractFacade;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Zed\Payment\Dependency\Plugin\Payment\PaymentMethodFilterPluginInterface;
 
 /**
- * @method \SprykerEco\Zed\Adyen\Business\AdyenBusinessFactory getFactory()
+ * @method \SprykerEco\Zed\Adyen\Business\AdyenFacadeInterface getFacade()
+ * @method \SprykerEco\Zed\Adyen\Communication\AdyenCommunicationFactory getFactory()
  */
-class AdyenFacade extends AbstractFacade implements AdyenFacadeInterface
+class AdyenPaymentMethodFilterPlugin extends AbstractPlugin implements PaymentMethodFilterPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * Specification:
+     * - Returns filtered by set of plugins array object of payments
      *
      * @api
      *
@@ -30,9 +33,8 @@ class AdyenFacade extends AbstractFacade implements AdyenFacadeInterface
         PaymentMethodsTransfer $paymentMethodsTransfer,
         QuoteTransfer $quoteTransfer
     ): PaymentMethodsTransfer {
-        return $this
-            ->getFactory()
-            ->createPaymentMethodsFilter()
-            ->filterPaymentMethods($paymentMethodsTransfer, $quoteTransfer);
+        $this->getFacade();
+
+        return $paymentMethodsTransfer;
     }
 }
