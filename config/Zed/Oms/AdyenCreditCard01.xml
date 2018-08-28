@@ -9,7 +9,7 @@
             <state name="new" reserved="true" />
             <state name="authorized" reserved="true" />
             <state name="authorization failed" reserved="false" />
-            <state name="cancelled" reserved="false" />
+            <state name="canceled" reserved="false" />
             <state name="captured" reserved="true" />
             <state name="capture failed" reserved="false" />
             <state name="shipped" reserved="true" />
@@ -41,9 +41,9 @@
                 <event>authorize</event>
             </transition>
 
-            <transition condition="Adyen/IsCancelled">
+            <transition condition="Adyen/IsCanceled">
                 <source>authorized</source>
-                <target>cancelled</target>
+                <target>canceled</target>
                 <event>cancel</event>
             </transition>
 

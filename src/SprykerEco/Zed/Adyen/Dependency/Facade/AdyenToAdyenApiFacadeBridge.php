@@ -60,9 +60,9 @@ class AdyenToAdyenApiFacadeBridge implements AdyenToAdyenApiFacadeInterface
      *
      * @return \Generated\Shared\Transfer\AdyenApiResponseTransfer
      */
-    public function performAuthoriseApiCall(AdyenApiRequestTransfer $requestTransfer): AdyenApiResponseTransfer
+    public function performAuthorizeApiCall(AdyenApiRequestTransfer $requestTransfer): AdyenApiResponseTransfer
     {
-        return $this->adyenApiFacade->performAuthoriseApiCall($requestTransfer);
+        return $this->adyenApiFacade->performAuthorizeApiCall($requestTransfer);
     }
 
     /**
@@ -70,9 +70,9 @@ class AdyenToAdyenApiFacadeBridge implements AdyenToAdyenApiFacadeInterface
      *
      * @return \Generated\Shared\Transfer\AdyenApiResponseTransfer
      */
-    public function performAuthorise3dApiCall(AdyenApiRequestTransfer $requestTransfer): AdyenApiResponseTransfer
+    public function performAuthorize3dApiCall(AdyenApiRequestTransfer $requestTransfer): AdyenApiResponseTransfer
     {
-        return $this->adyenApiFacade->performAuthorise3dApiCall($requestTransfer);
+        return $this->adyenApiFacade->performAuthorize3dApiCall($requestTransfer);
     }
 
     /**
@@ -130,8 +130,8 @@ class AdyenToAdyenApiFacadeBridge implements AdyenToAdyenApiFacadeInterface
      *
      * @return \Generated\Shared\Transfer\AdyenApiResponseTransfer
      */
-    public function performAdjustAuthorisationApiCall(AdyenApiRequestTransfer $requestTransfer): AdyenApiResponseTransfer
+    public function performAdjustAuthorizationApiCall(AdyenApiRequestTransfer $requestTransfer): AdyenApiResponseTransfer
     {
-        return $this->adyenApiFacade->performAdjustAuthorisationApiCall($requestTransfer);
+        return $this->adyenApiFacade->performAdjustAuthorizationApiCall($requestTransfer);
     }
 }
