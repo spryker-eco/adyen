@@ -19,8 +19,4 @@
         <property name="adyenCreditCard" type="AdyenCreditCardPayment" />
     </transfer>
 
-    <transfer name="AdyenPayment">
-
-    </transfer>
-
 </transfers>
