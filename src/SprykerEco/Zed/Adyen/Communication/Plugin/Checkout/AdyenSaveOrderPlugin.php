@@ -28,6 +28,6 @@ class AdyenSaveOrderPlugin extends AbstractPlugin implements CheckoutPluginInter
      */
     public function execute(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse)
     {
-        // TODO: Implement execute() method.
+        $this->getFacade()->saveOrderPayment($quoteTransfer, $checkoutResponse);
     }
 }

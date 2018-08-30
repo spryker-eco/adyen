@@ -19,7 +19,7 @@ class CreditCardSubForm extends AbstractSubForm
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return PaymentTransfer::ADYEN_CREDIT_CARD;
     }
@@ -27,7 +27,7 @@ class CreditCardSubForm extends AbstractSubForm
     /**
      * @return string
      */
-    public function getPropertyPath()
+    public function getPropertyPath(): string
     {
         return PaymentTransfer::ADYEN_CREDIT_CARD;
     }
@@ -35,7 +35,7 @@ class CreditCardSubForm extends AbstractSubForm
     /**
      * @return string
      */
-    public function getTemplatePath()
+    public function getTemplatePath(): string
     {
         return AdyenConfig::PROVIDER_NAME . '/' . static::PAYMENT_METHOD;
     }
@@ -45,7 +45,7 @@ class CreditCardSubForm extends AbstractSubForm
      *
      * @return void
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => AdyenCreditCardPaymentTransfer::class,

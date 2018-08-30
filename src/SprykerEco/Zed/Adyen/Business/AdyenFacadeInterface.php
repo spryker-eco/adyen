@@ -7,6 +7,7 @@
 
 namespace SprykerEco\Zed\Adyen\Business;
 
+use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\PaymentMethodsTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -80,4 +81,30 @@ interface AdyenFacadeInterface
      * @return void
      */
     public function handleRefundCommand(array $orderItems, OrderTransfer $orderTransfer): void;
+
+    /**
+     * Specification:
+     * - Saves order payment method data according to quote and checkout response transfer data.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
+     *
+     * @return void
+     */
+    public function saveOrderPayment(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse): void;
+
+    /**
+     * Specification:
+     * - Executes make payment request to API.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
+     *
+     * @return void
+     */
+    public function executePostSaveHook(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse): void;
 }
