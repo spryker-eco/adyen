@@ -93,7 +93,7 @@ interface AdyenFacadeInterface
      *
      * @return void
      */
-    public function saveOrderPayment(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse): void;
+    public function executeSaveOrderHook(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse): void;
 
     /**
      * Specification:

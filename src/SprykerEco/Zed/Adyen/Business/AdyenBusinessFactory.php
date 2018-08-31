@@ -9,6 +9,9 @@ namespace SprykerEco\Zed\Adyen\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use SprykerEco\Zed\Adyen\AdyenDependencyProvider;
+use SprykerEco\Zed\Adyen\Business\Hook\AdyenHookInterface;
+use SprykerEco\Zed\Adyen\Business\Hook\AdyenPostCheckHook;
+use SprykerEco\Zed\Adyen\Business\Hook\AdyenSaveOrderHook;
 use SprykerEco\Zed\Adyen\Business\Logger\AdyenLogger;
 use SprykerEco\Zed\Adyen\Business\Logger\AdyenLoggerInterface;
 use SprykerEco\Zed\Adyen\Business\Oms\Handler\AdyenCommandHandlerInterface;
@@ -41,6 +44,22 @@ class AdyenBusinessFactory extends AbstractBusinessFactory
     public function createPaymentMethodsFilter(): AdyenPaymentMethodFilterInterface
     {
         return new AdyenPaymentMethodFilter($this->getAdyenApiFacade());
+    }
+
+    /**
+     * @return \SprykerEco\Zed\Adyen\Business\Hook\AdyenHookInterface
+     */
+    public function createSaveOrderHook(): AdyenHookInterface
+    {
+        return new AdyenSaveOrderHook();
+    }
+
+    /**
+     * @return \SprykerEco\Zed\Adyen\Business\Hook\AdyenHookInterface
+     */
+    public function createPostCheckHook(): AdyenHookInterface
+    {
+        return new AdyenPostCheckHook();
     }
 
     /**

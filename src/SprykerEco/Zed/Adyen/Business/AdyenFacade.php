@@ -108,8 +108,9 @@ class AdyenFacade extends AbstractFacade implements AdyenFacadeInterface
      *
      * @return void
      */
-    public function saveOrderPayment(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse): void
+    public function executeSaveOrderHook(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse): void
     {
+        $this->getFactory()->createSaveOrderHook()->execute($quoteTransfer, $checkoutResponse);
     }
 
     /**
@@ -124,5 +125,6 @@ class AdyenFacade extends AbstractFacade implements AdyenFacadeInterface
      */
     public function executePostSaveHook(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse): void
     {
+        $this->getFactory()->createPostCheckHook()->execute($quoteTransfer, $checkoutResponse);
     }
 }

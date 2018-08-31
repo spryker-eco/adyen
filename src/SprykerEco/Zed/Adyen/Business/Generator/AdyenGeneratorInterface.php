@@ -5,16 +5,16 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerEco\Yves\Adyen\Dependency\Client;
+namespace SprykerEco\Zed\Adyen\Business\Generator;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 
-interface AdyenToQuoteClientInterface
+interface AdyenGeneratorInterface
 {
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return void
+     * @return string
      */
-    public function setQuote(QuoteTransfer $quoteTransfer);
+    public function generateReference(QuoteTransfer $quoteTransfer): string;
 }
