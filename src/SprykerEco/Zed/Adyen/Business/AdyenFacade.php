@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\PaymentMethodsTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\SaveOrderTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -104,13 +105,13 @@ class AdyenFacade extends AbstractFacade implements AdyenFacadeInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
+     * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
      *
      * @return void
      */
-    public function executeSaveOrderHook(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse): void
+    public function saveOrderPayment(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer): void
     {
-        $this->getFactory()->createSaveOrderHook()->execute($quoteTransfer, $checkoutResponse);
+        $this->getFactory()->createOrderPaymentManager()->saveOrderPayment($quoteTransfer, $saveOrderTransfer);
     }
 
     /**

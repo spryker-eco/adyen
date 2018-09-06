@@ -9,16 +9,20 @@ namespace SprykerEco\Zed\Adyen\Communication\Plugin\Checkout;
 
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPostSaveHookInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPluginInterface;
 
 /**
  * @method \SprykerEco\Zed\Adyen\Business\AdyenFacadeInterface getFacade()
  * @method \SprykerEco\Zed\Adyen\Communication\AdyenCommunicationFactory getFactory()
  */
-class AdyenPreCheckPlugin extends AbstractPlugin implements CheckoutPluginInterface
+class AdyenPostSaveHookPlugin extends AbstractPlugin implements CheckoutPostSaveHookInterface
 {
     /**
+     * Specification:
+     * - This plugin is called after the order is placed.
+     * - Set the success flag to false, if redirect should be headed to an error page afterwords
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -26,8 +30,8 @@ class AdyenPreCheckPlugin extends AbstractPlugin implements CheckoutPluginInterf
      *
      * @return void
      */
-    public function execute(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse)
+    public function executeHook(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse)
     {
-        // TODO: Implement execute() method.
+        $this->getFacade()->executePostSaveHook($quoteTransfer, $checkoutResponse);
     }
 }

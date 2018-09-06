@@ -8,23 +8,23 @@
 namespace SprykerEco\Yves\Adyen\Handler;
 
 use Generated\Shared\Transfer\QuoteTransfer;
-use SprykerEco\Shared\Adyen\AdyenConfig as SharedAdyenConfig;
-use SprykerEco\Yves\Adyen\AdyenConfig;
+use SprykerEco\Service\Adyen\AdyenServiceInterface;
+use SprykerEco\Shared\Adyen\AdyenConfig;
 use Symfony\Component\HttpFoundation\Request;
 
 class AdyenPaymentHandler implements AdyenPaymentHandlerInterface
 {
     /**
-     * @var \SprykerEco\Yves\Adyen\AdyenConfig
+     * @var \SprykerEco\Service\Adyen\AdyenServiceInterface
      */
-    protected $config;
+    protected $service;
 
     /**
-     * @param \SprykerEco\Yves\Adyen\AdyenConfig $config
+     * @param \SprykerEco\Service\Adyen\AdyenServiceInterface $service
      */
-    public function __construct(AdyenConfig $config)
+    public function __construct(AdyenServiceInterface $service)
     {
-        $this->config = $config;
+        $this->service = $service;
     }
 
     /**
@@ -38,8 +38,13 @@ class AdyenPaymentHandler implements AdyenPaymentHandlerInterface
         $paymentSelection = $quoteTransfer->getPayment()->getPaymentSelection();
         $quoteTransfer
             ->getPayment()
-            ->setPaymentProvider(SharedAdyenConfig::PROVIDER_NAME)
+            ->setPaymentProvider(AdyenConfig::PROVIDER_NAME)
             ->setPaymentMethod($paymentSelection);
+
+        $quoteTransfer
+            ->getPayment()
+            ->getAdyenPayment()
+            ->setReference($this->service->generateReference($quoteTransfer));
 
         $quoteTransfer
             ->getPayment()

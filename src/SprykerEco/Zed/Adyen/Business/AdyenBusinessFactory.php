@@ -10,8 +10,9 @@ namespace SprykerEco\Zed\Adyen\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use SprykerEco\Zed\Adyen\AdyenDependencyProvider;
 use SprykerEco\Zed\Adyen\Business\Hook\AdyenHookInterface;
-use SprykerEco\Zed\Adyen\Business\Hook\AdyenPostCheckHook;
-use SprykerEco\Zed\Adyen\Business\Hook\AdyenSaveOrderHook;
+use SprykerEco\Zed\Adyen\Business\Hook\AdyenPostSaveHook;
+use SprykerEco\Zed\Adyen\Business\Hook\Mapper\AdyenMapperResolver;
+use SprykerEco\Zed\Adyen\Business\Hook\Saver\AdyenSaverResolver;
 use SprykerEco\Zed\Adyen\Business\Logger\AdyenLogger;
 use SprykerEco\Zed\Adyen\Business\Logger\AdyenLoggerInterface;
 use SprykerEco\Zed\Adyen\Business\Oms\Handler\AdyenCommandHandlerInterface;
@@ -29,12 +30,18 @@ use SprykerEco\Zed\Adyen\Business\Oms\Saver\AuthorizeCommandSaver;
 use SprykerEco\Zed\Adyen\Business\Oms\Saver\CancelCommandSaver;
 use SprykerEco\Zed\Adyen\Business\Oms\Saver\CaptureCommandSaver;
 use SprykerEco\Zed\Adyen\Business\Oms\Saver\RefundCommandSaver;
+use SprykerEco\Zed\Adyen\Business\Order\AdyenOrderPaymentManager;
+use SprykerEco\Zed\Adyen\Business\Order\AdyenOrderPaymentManagerInterface;
 use SprykerEco\Zed\Adyen\Business\Payment\AdyenPaymentMethodFilter;
 use SprykerEco\Zed\Adyen\Business\Payment\AdyenPaymentMethodFilterInterface;
+use SprykerEco\Zed\Adyen\Business\Writer\AdyenWriter;
+use SprykerEco\Zed\Adyen\Business\Writer\AdyenWriterInterface;
 use SprykerEco\Zed\Adyen\Dependency\Facade\AdyenToAdyenApiFacadeInterface;
 
 /**
  * @method \SprykerEco\Zed\Adyen\AdyenConfig getConfig()
+ * @method \SprykerEco\Zed\Adyen\Persistence\AdyenRepositoryInterface getRepository()
+ * @method \SprykerEco\Zed\Adyen\Persistence\AdyenEntityManagerInterface getEntityManager()
  */
 class AdyenBusinessFactory extends AbstractBusinessFactory
 {
@@ -47,11 +54,11 @@ class AdyenBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \SprykerEco\Zed\Adyen\Business\Hook\AdyenHookInterface
+     * @return \SprykerEco\Zed\Adyen\Business\Order\AdyenOrderPaymentManagerInterface
      */
-    public function createSaveOrderHook(): AdyenHookInterface
+    public function createOrderPaymentManager(): AdyenOrderPaymentManagerInterface
     {
-        return new AdyenSaveOrderHook();
+        return new AdyenOrderPaymentManager($this->createWriter());
     }
 
     /**
@@ -59,7 +66,24 @@ class AdyenBusinessFactory extends AbstractBusinessFactory
      */
     public function createPostCheckHook(): AdyenHookInterface
     {
-        return new AdyenPostCheckHook();
+        return new AdyenPostSaveHook(
+            $this->getAdyenApiFacade(),
+            $this->createMapperResolver(),
+            $this->createSaverResolver()
+        );
+    }
+
+    public function createMapperResolver()
+    {
+        return new AdyenMapperResolver($this->getConfig());
+    }
+
+    public function createSaverResolver()
+    {
+        return new AdyenSaverResolver(
+            $this->createWriter(),
+            $this->getConfig()
+        );
     }
 
     /**
@@ -183,7 +207,19 @@ class AdyenBusinessFactory extends AbstractBusinessFactory
      */
     public function createLogger(): AdyenLoggerInterface
     {
-        return new AdyenLogger();
+        return new AdyenLogger($this->createWriter());
+    }
+
+    /**
+     * @return \SprykerEco\Zed\Adyen\Business\Writer\AdyenWriterInterface
+     */
+    public function createWriter(): AdyenWriterInterface
+    {
+        return new AdyenWriter(
+            $this->getRepository(),
+            $this->getEntityManager(),
+            $this->getConfig()
+        );
     }
 
     /**

@@ -18,7 +18,7 @@ interface AdyenLoggerInterface
      * @param \Generated\Shared\Transfer\AdyenApiRequestTransfer $request
      * @param \Generated\Shared\Transfer\AdyenApiResponseTransfer $response
      *
-     * @return \Orm\Zed\Adyen\Persistence\SpyPaymentAdyenApiLog
+     * @return void
      */
-    public function log(string $type, AdyenApiRequestTransfer $request, AdyenApiResponseTransfer $response): SpyPaymentAdyenApiLog;
+    public function log(string $type, AdyenApiRequestTransfer $request, AdyenApiResponseTransfer $response): void;
 }

@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerEco\Zed\Adyen\Business\Generator;
+namespace SprykerEco\Service\Adyen\Generator;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 

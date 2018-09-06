@@ -8,9 +8,11 @@
 namespace SprykerEco\Yves\Adyen\Form\DataProvider;
 
 use Generated\Shared\Transfer\AdyenCreditCardPaymentTransfer;
+use Generated\Shared\Transfer\AdyenPaymentTransfer;
 use Generated\Shared\Transfer\PaymentTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
+use SprykerEco\Shared\Adyen\AdyenConfig;
 
 class CreditCardFormDataProvider extends AbstractFormDataProvider
 {
@@ -26,12 +28,17 @@ class CreditCardFormDataProvider extends AbstractFormDataProvider
             $quoteTransfer->setPayment($paymentTransfer);
         }
 
-        if ($quoteTransfer->getPayment()->getAdyenCreditCard() === null) {
-            $paymentTransfer = $quoteTransfer->getPayment();
-            $paymentTransfer->setAdyenCreditCard(new AdyenCreditCardPaymentTransfer());
-            $quoteTransfer->setPayment($paymentTransfer);
-            $this->quoteClient->setQuote($quoteTransfer);
+        $paymentTransfer = $quoteTransfer->getPayment();
+
+        if ($paymentTransfer->getAdyenPayment() === null) {
+            $paymentTransfer->setAdyenPayment(new AdyenPaymentTransfer());
         }
+
+        if ($paymentTransfer->getAdyenCreditCard() === null) {
+            $paymentTransfer->setAdyenCreditCard(new AdyenCreditCardPaymentTransfer());
+        }
+
+        $this->quoteClient->setQuote($quoteTransfer);
 
         return $quoteTransfer;
     }

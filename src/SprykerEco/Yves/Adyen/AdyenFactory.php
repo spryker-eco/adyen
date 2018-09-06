@@ -10,6 +10,7 @@ namespace SprykerEco\Yves\Adyen;
 use Spryker\Yves\Kernel\AbstractFactory;
 use Spryker\Yves\StepEngine\Dependency\Form\StepEngineFormDataProviderInterface;
 use Spryker\Yves\StepEngine\Dependency\Form\SubFormInterface;
+use SprykerEco\Service\Adyen\AdyenServiceInterface;
 use SprykerEco\Yves\Adyen\Dependency\Client\AdyenToQuoteClientInterface;
 use SprykerEco\Yves\Adyen\Form\CreditCardSubForm;
 use SprykerEco\Yves\Adyen\Form\DataProvider\CreditCardFormDataProvider;
@@ -26,7 +27,7 @@ class AdyenFactory extends AbstractFactory
      */
     public function createAdyenPaymentHandler(): AdyenPaymentHandlerInterface
     {
-        return new AdyenPaymentHandler($this->getConfig());
+        return new AdyenPaymentHandler($this->getAdyenService());
     }
 
     /**
@@ -43,6 +44,14 @@ class AdyenFactory extends AbstractFactory
     public function createCreditCardFormDataProvider(): StepEngineFormDataProviderInterface
     {
         return new CreditCardFormDataProvider($this->getQuoteClient());
+    }
+
+    /**
+     * @return \SprykerEco\Service\Adyen\AdyenServiceInterface
+     */
+    public function getAdyenService(): AdyenServiceInterface
+    {
+        return $this->getProvidedDependency(AdyenDependencyProvider::SERVICE_ADYEN);
     }
 
     /**

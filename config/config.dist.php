@@ -3,9 +3,11 @@
  * Copy over the following configs to your config
  */
 
+use SprykerEco\Shared\Adyen\AdyenConstants;
 use SprykerEco\Shared\AdyenApi\AdyenApiConstants;
 
-$config[AdyenApiConstants::MERCHANT_ACCOUNT] = 'PUT YOUR MERCHANT ACCOUNT HERE';
+$config[AdyenConstants::MERCHANT_ACCOUNT] = 'PUT YOUR MERCHANT ACCOUNT HERE';
+$config[AdyenConstants::RETURN_URL] = 'RETURN URL';
 $config[AdyenApiConstants::API_KEY] = 'PUT YOUR API KEY HERE';
 $config[AdyenApiConstants::GET_PAYMENT_METHODS_ACTION_URL] = 'https://checkout-test.adyen.com/v32/paymentMethods';
 $config[AdyenApiConstants::MAKE_PAYMENT_ACTION_URL] = 'https://checkout-test.adyen.com/v32/payments';

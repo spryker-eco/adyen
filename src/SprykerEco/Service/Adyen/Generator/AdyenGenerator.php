@@ -5,11 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerEco\Zed\Adyen\Business\Generator;
+namespace SprykerEco\Service\Adyen\Generator;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Service\UtilText\Model\Hash;
-use Spryker\Service\UtilText\UtilTextServiceInterface;
+use SprykerEco\Service\Adyen\Dependency\Service\AdyenToUtilTextServiceInterface;
 
 class AdyenGenerator implements AdyenGeneratorInterface
 {
@@ -17,14 +17,14 @@ class AdyenGenerator implements AdyenGeneratorInterface
     protected const REFERENCE_LENGTH = 80;
 
     /**
-     * @var \Spryker\Service\UtilText\UtilTextServiceInterface
+     * @var \SprykerEco\Service\Adyen\Dependency\Service\AdyenToUtilTextServiceInterface
      */
     protected $textService;
 
     /**
-     * @param \Spryker\Service\UtilText\UtilTextServiceInterface $textService
+     * @param \SprykerEco\Service\Adyen\Dependency\Service\AdyenToUtilTextServiceInterface $textService
      */
-    public function __construct(UtilTextServiceInterface $textService)
+    public function __construct(AdyenToUtilTextServiceInterface $textService)
     {
         $this->textService = $textService;
     }

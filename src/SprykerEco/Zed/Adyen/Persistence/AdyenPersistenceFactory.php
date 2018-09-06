@@ -11,6 +11,8 @@ use Orm\Zed\Adyen\Persistence\SpyPaymentAdyenApiLogQuery;
 use Orm\Zed\Adyen\Persistence\SpyPaymentAdyenOrderItemQuery;
 use Orm\Zed\Adyen\Persistence\SpyPaymentAdyenQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
+use SprykerEco\Zed\Adyen\Persistence\Mapper\AdyenPersistenceMapper;
+use SprykerEco\Zed\Adyen\Persistence\Mapper\AdyenPersistenceMapperInterface;
 
 /**
  * @method \SprykerEco\Zed\Adyen\AdyenConfig getConfig()
@@ -39,5 +41,13 @@ class AdyenPersistenceFactory extends AbstractPersistenceFactory
     public function createPaymentAdyenOrderItemQuery(): SpyPaymentAdyenOrderItemQuery
     {
         return SpyPaymentAdyenOrderItemQuery::create();
+    }
+
+    /**
+     * @return \SprykerEco\Zed\Adyen\Persistence\Mapper\AdyenPersistenceMapperInterface
+     */
+    public function createAdyenPersistenceMapper(): AdyenPersistenceMapperInterface
+    {
+        return new AdyenPersistenceMapper();
     }
 }
