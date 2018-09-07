@@ -9,7 +9,6 @@ namespace SprykerEco\Zed\Adyen;
 
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 use SprykerEco\Shared\Adyen\AdyenConstants;
-use SprykerEco\Shared\AdyenApi\AdyenApiConstants;
 
 class AdyenConfig extends AbstractBundleConfig
 {

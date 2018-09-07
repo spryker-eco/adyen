@@ -35,12 +35,11 @@ class AdyenRepository extends AbstractRepository implements AdyenRepositoryInter
 
     /**
      * @param string $reference
-     *
-     * @param null $orderId
+     * @param int|null $idOrderItem
      *
      * @return \Generated\Shared\Transfer\PaymentAdyenOrderItemTransfer[]
      */
-    public function getOrderItemsByReferenceAndOrderId(string $reference, $orderId = null): array
+    public function getOrderItemsByReferenceAndIdOrderItem(string $reference, $idOrderItem = null): array
     {
         $query = $this
             ->getPaymentAdyenOrderItemQuery()
@@ -48,8 +47,8 @@ class AdyenRepository extends AbstractRepository implements AdyenRepositoryInter
             ->filterByReference($reference)
             ->endUse();
 
-        if ($orderId !== null) {
-            $query->filterByFkSalesOrderItem($orderId);
+        if ($idOrderItem !== null) {
+            $query->filterByFkSalesOrderItem($idOrderItem);
         }
 
         $entityTransfers = $this->buildQueryFromCriteria($query)->find();

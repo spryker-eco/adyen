@@ -12,7 +12,9 @@ use SprykerEco\Zed\Adyen\AdyenDependencyProvider;
 use SprykerEco\Zed\Adyen\Business\Hook\AdyenHookInterface;
 use SprykerEco\Zed\Adyen\Business\Hook\AdyenPostSaveHook;
 use SprykerEco\Zed\Adyen\Business\Hook\Mapper\AdyenMapperResolver;
+use SprykerEco\Zed\Adyen\Business\Hook\Mapper\AdyenMapperResolverInterface;
 use SprykerEco\Zed\Adyen\Business\Hook\Saver\AdyenSaverResolver;
+use SprykerEco\Zed\Adyen\Business\Hook\Saver\AdyenSaverResolverInterface;
 use SprykerEco\Zed\Adyen\Business\Logger\AdyenLogger;
 use SprykerEco\Zed\Adyen\Business\Logger\AdyenLoggerInterface;
 use SprykerEco\Zed\Adyen\Business\Oms\Handler\AdyenCommandHandlerInterface;
@@ -73,12 +75,18 @@ class AdyenBusinessFactory extends AbstractBusinessFactory
         );
     }
 
-    public function createMapperResolver()
+    /**
+     * @return \SprykerEco\Zed\Adyen\Business\Hook\Mapper\AdyenMapperResolverInterface
+     */
+    public function createMapperResolver(): AdyenMapperResolverInterface
     {
         return new AdyenMapperResolver($this->getConfig());
     }
 
-    public function createSaverResolver()
+    /**
+     * @return \SprykerEco\Zed\Adyen\Business\Hook\Saver\AdyenSaverResolverInterface
+     */
+    public function createSaverResolver(): AdyenSaverResolverInterface
     {
         return new AdyenSaverResolver(
             $this->createWriter(),

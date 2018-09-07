@@ -90,7 +90,7 @@ class AdyenWriter implements AdyenWriterInterface
             $this->entityManager->savePaymentAdyen($paymentAdyenTransfer);
 
             $paymentAdyenOrderItemTransfers = $this->repository
-                ->getOrderItemsByReferenceAndOrderId($reference);
+                ->getOrderItemsByReferenceAndIdOrderItem($reference);
 
             foreach ($paymentAdyenOrderItemTransfers as $paymentAdyenOrderItemTransfer) {
                 $paymentAdyenOrderItemTransfer->setStatus($status);

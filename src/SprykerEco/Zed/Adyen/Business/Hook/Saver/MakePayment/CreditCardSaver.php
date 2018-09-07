@@ -12,14 +12,23 @@ use Generated\Shared\Transfer\AdyenApiResponseTransfer;
 
 class CreditCardSaver extends AbstractSaver implements AdyenSaverInterface
 {
-    const MAKE_PAYMENT_CREDIT_CARD_REQUEST_TYPE = 'MakePayment[CreditCard]';
+    protected const MAKE_PAYMENT_CREDIT_CARD_REQUEST_TYPE = 'MakePayment[CreditCard]';
 
-    protected function getRequestType()
+    /**
+     * @return string
+     */
+    protected function getRequestType(): string
     {
         return static::MAKE_PAYMENT_CREDIT_CARD_REQUEST_TYPE;
     }
 
-    public function save(AdyenApiRequestTransfer $request, AdyenApiResponseTransfer $response)
+    /**
+     * @param \Generated\Shared\Transfer\AdyenApiRequestTransfer $request
+     * @param \Generated\Shared\Transfer\AdyenApiResponseTransfer $response
+     *
+     * @return void
+     */
+    public function save(AdyenApiRequestTransfer $request, AdyenApiResponseTransfer $response): void
     {
         if ($response->getIsSuccess()) {
             $this->updateEntities($request, $response);
@@ -28,7 +37,13 @@ class CreditCardSaver extends AbstractSaver implements AdyenSaverInterface
         $this->log($request, $response);
     }
 
-    protected function updateEntities($request, $response)
+    /**
+     * @param \Generated\Shared\Transfer\AdyenApiRequestTransfer $request
+     * @param \Generated\Shared\Transfer\AdyenApiResponseTransfer $response
+     *
+     * @return void
+     */
+    protected function updateEntities(AdyenApiRequestTransfer $request, AdyenApiResponseTransfer $response): void
     {
         $this->writer->updateOrderPaymentEntities(
             $this->config->getOmsStatusAuthorized(),
@@ -36,5 +51,4 @@ class CreditCardSaver extends AbstractSaver implements AdyenSaverInterface
             $response
         );
     }
-
 }

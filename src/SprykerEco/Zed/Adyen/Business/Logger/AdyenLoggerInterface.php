@@ -9,7 +9,6 @@ namespace SprykerEco\Zed\Adyen\Business\Logger;
 
 use Generated\Shared\Transfer\AdyenApiRequestTransfer;
 use Generated\Shared\Transfer\AdyenApiResponseTransfer;
-use Orm\Zed\Adyen\Persistence\SpyPaymentAdyenApiLog;
 
 interface AdyenLoggerInterface
 {

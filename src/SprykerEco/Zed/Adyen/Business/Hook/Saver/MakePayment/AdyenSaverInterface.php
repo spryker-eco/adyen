@@ -12,5 +12,11 @@ use Generated\Shared\Transfer\AdyenApiResponseTransfer;
 
 interface AdyenSaverInterface
 {
-    public function save(AdyenApiRequestTransfer $request, AdyenApiResponseTransfer $response);
+    /**
+     * @param \Generated\Shared\Transfer\AdyenApiRequestTransfer $request
+     * @param \Generated\Shared\Transfer\AdyenApiResponseTransfer $response
+     *
+     * @return void
+     */
+    public function save(AdyenApiRequestTransfer $request, AdyenApiResponseTransfer $response): void;
 }

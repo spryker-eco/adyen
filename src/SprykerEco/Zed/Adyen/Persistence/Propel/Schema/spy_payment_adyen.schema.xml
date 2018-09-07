@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\Adyen\Persistence" namespaceAutoPackage="false" package="src.Orm.Zed.Adyen.Persistence">
 
-    <table name="spy_payment_adyen" phpName="SpyPaymentAdyen">
+    <table name="spy_payment_adyen">
         <column name="id_payment_adyen" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_sales_order" required="true" type="INTEGER" />
 

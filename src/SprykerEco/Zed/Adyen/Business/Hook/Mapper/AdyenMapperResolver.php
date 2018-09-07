@@ -15,7 +15,6 @@ use SprykerEco\Zed\Adyen\Business\Hook\Mapper\MakePayment\AdyenMapperInterface;
 class AdyenMapperResolver implements AdyenMapperResolverInterface
 {
     protected const CLASS_NAME_PATTERN = '\\SprykerEco\\Zed\\Adyen\\Business\\Hook\\Mapper\\MakePayment\\%sMapper';
-    protected const MODULE_NAME = 'adyen';
 
     /**
      * @var \SprykerEco\Zed\Adyen\AdyenConfig
@@ -32,6 +31,8 @@ class AdyenMapperResolver implements AdyenMapperResolverInterface
 
     /**
      * @param string $methodName
+     *
+     * @throws \SprykerEco\Zed\Adyen\Business\Exception\AdyenMethodMapperException
      *
      * @return \SprykerEco\Zed\Adyen\Business\Hook\Mapper\MakePayment\AdyenMapperInterface
      */

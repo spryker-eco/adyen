@@ -12,6 +12,11 @@ use Generated\Shared\Transfer\QuoteTransfer;
 interface AdyenServiceInterface
 {
     /**
+     * Specification:
+     * - Generate reference (some kind of transaction id) based on QuoteTransfer.
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return string

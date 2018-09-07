@@ -20,10 +20,9 @@ interface AdyenRepositoryInterface
 
     /**
      * @param string $reference
-     *
-     * @param null $orderId
+     * @param int|null $idOrderItem
      *
      * @return \Generated\Shared\Transfer\PaymentAdyenOrderItemTransfer[]
      */
-    public function getOrderItemsByReferenceAndOrderId(string $reference, $orderId = null): array;
+    public function getOrderItemsByReferenceAndIdOrderItem(string $reference, $idOrderItem = null): array;
 }

@@ -8,9 +8,9 @@
 namespace SprykerEco\Service\Adyen;
 
 use Spryker\Service\Kernel\AbstractServiceFactory;
+use SprykerEco\Service\Adyen\Dependency\Service\AdyenToUtilTextServiceInterface;
 use SprykerEco\Service\Adyen\Generator\AdyenGenerator;
 use SprykerEco\Service\Adyen\Generator\AdyenGeneratorInterface;
-use SprykerEco\Service\Adyen\Dependency\Service\AdyenToUtilTextServiceInterface;
 
 /**
  * @method \SprykerEco\Service\Adyen\AdyenConfig getConfig()

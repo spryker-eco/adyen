@@ -42,6 +42,8 @@ class AdyenSaverResolver implements AdyenSaverResolverInterface
     /**
      * @param string $methodName
      *
+     * @throws \SprykerEco\Zed\Adyen\Business\Exception\AdyenMethodSaverException
+     *
      * @return \SprykerEco\Zed\Adyen\Business\Hook\Saver\MakePayment\AdyenSaverInterface
      */
     public function resolve(string $methodName): AdyenSaverInterface

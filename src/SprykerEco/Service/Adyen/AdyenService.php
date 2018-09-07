@@ -16,6 +16,10 @@ use Spryker\Service\Kernel\AbstractService;
 class AdyenService extends AbstractService implements AdyenServiceInterface
 {
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return string

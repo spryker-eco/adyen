@@ -45,7 +45,7 @@ class CreditCardMapper extends AbstractMapper implements AdyenMapperInterface
     /**
      * @param \Generated\Shared\Transfer\AdyenCreditCardPaymentTransfer $creditCardTransfer
      *
-     * @return array
+     * @return string[]
      */
     protected function getPaymentMethodData(AdyenCreditCardPaymentTransfer $creditCardTransfer): array
     {
