@@ -10,6 +10,7 @@ namespace SprykerEco\Zed\Adyen\Business\Writer;
 use Generated\Shared\Transfer\AdyenApiRequestTransfer;
 use Generated\Shared\Transfer\AdyenApiResponseTransfer;
 use Generated\Shared\Transfer\PaymentAdyenApiLogTransfer;
+use Generated\Shared\Transfer\PaymentAdyenTransfer;
 use Generated\Shared\Transfer\PaymentTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 
@@ -34,6 +35,19 @@ interface AdyenWriterInterface
         string $status,
         AdyenApiRequestTransfer $request,
         AdyenApiResponseTransfer $response
+    ): void;
+
+    /**
+     * @param string $status
+     * @param \Generated\Shared\Transfer\PaymentAdyenOrderItemTransfer[] $paymentAdyenOrderItemTransfers
+     * @param \Generated\Shared\Transfer\PaymentAdyenTransfer $paymentAdyenTransfer
+     *
+     * @return void
+     */
+    public function update(
+        string $status,
+        array $paymentAdyenOrderItemTransfers,
+        PaymentAdyenTransfer $paymentAdyenTransfer = null
     ): void;
 
     /**

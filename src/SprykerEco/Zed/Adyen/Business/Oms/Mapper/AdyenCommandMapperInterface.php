@@ -13,9 +13,10 @@ use Generated\Shared\Transfer\OrderTransfer;
 interface AdyenCommandMapperInterface
 {
     /**
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $orderItems
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return \Generated\Shared\Transfer\AdyenApiRequestTransfer
      */
-    public function buildRequestTransfer(OrderTransfer $orderTransfer): AdyenApiRequestTransfer;
+    public function buildRequestTransfer(array $orderItems, OrderTransfer $orderTransfer): AdyenApiRequestTransfer;
 }

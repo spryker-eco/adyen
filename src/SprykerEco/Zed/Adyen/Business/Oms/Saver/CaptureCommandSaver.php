@@ -7,23 +7,34 @@
 
 namespace SprykerEco\Zed\Adyen\Business\Oms\Saver;
 
+use Generated\Shared\Transfer\AdyenApiRequestTransfer;
 use Generated\Shared\Transfer\AdyenApiResponseTransfer;
-use Generated\Shared\Transfer\OrderTransfer;
-use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 
-class CaptureCommandSaver implements AdyenCommandSaverInterface
+class CaptureCommandSaver extends AbstractCommandSaver implements AdyenCommandSaverInterface
 {
-    use TransactionTrait;
+    const REQUEST_TYPE_CAPTURE = 'CAPTURE';
 
     /**
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $orderItems
+     * @param \Generated\Shared\Transfer\AdyenApiRequestTransfer $requestTransfer
      * @param \Generated\Shared\Transfer\AdyenApiResponseTransfer $responseTransfer
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return void
      */
-    public function save(AdyenApiResponseTransfer $responseTransfer, OrderTransfer $orderTransfer): void
-    {
-        $this->getTransactionHandler()->handleTransaction(function () use ($responseTransfer, $orderTransfer) {
-        });
+    public function save(
+        array $orderItems,
+        AdyenApiRequestTransfer $requestTransfer,
+        AdyenApiResponseTransfer $responseTransfer
+    ): void {
+        $this->writer->update(
+            $this->config->getOmsStatusCaptured(),
+            $this->reader->getPaymentAdyenOrderItemsByOrderItems($orderItems)
+        );
+
+        $this->writer->savePaymentAdyenApiLog(
+            static::REQUEST_TYPE_CAPTURE,
+            $requestTransfer,
+            $responseTransfer
+        );
     }
 }

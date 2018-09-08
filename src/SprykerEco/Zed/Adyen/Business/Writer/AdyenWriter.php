@@ -100,6 +100,32 @@ class AdyenWriter implements AdyenWriterInterface
     }
 
     /**
+     * @param string $status
+     * @param \Generated\Shared\Transfer\PaymentAdyenOrderItemTransfer[] $paymentAdyenOrderItemTransfers
+     * @param \Generated\Shared\Transfer\PaymentAdyenTransfer $paymentAdyenTransfer
+     *
+     * @return void
+     */
+    public function update(
+        string $status,
+        array $paymentAdyenOrderItemTransfers,
+        PaymentAdyenTransfer $paymentAdyenTransfer = null
+    ): void {
+        $this->getTransactionHandler()->handleTransaction(
+            function () use ($status, $paymentAdyenOrderItemTransfers, $paymentAdyenTransfer) {
+                if ($paymentAdyenTransfer !== null) {
+                    $this->entityManager->savePaymentAdyen($paymentAdyenTransfer);
+                }
+
+                foreach ($paymentAdyenOrderItemTransfers as $paymentAdyenOrderItemTransfer) {
+                    $paymentAdyenOrderItemTransfer->setStatus($status);
+                    $this->entityManager->savePaymentAdyenOrderItem($paymentAdyenOrderItemTransfer);
+                }
+            }
+        );
+    }
+
+    /**
      * @param string $type
      * @param \Generated\Shared\Transfer\AdyenApiRequestTransfer $request
      * @param \Generated\Shared\Transfer\AdyenApiResponseTransfer $response

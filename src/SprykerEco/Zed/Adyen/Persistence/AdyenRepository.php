@@ -34,6 +34,21 @@ class AdyenRepository extends AbstractRepository implements AdyenRepositoryInter
     }
 
     /**
+     * @param int $idSalesOrder
+     *
+     * @return \Generated\Shared\Transfer\PaymentAdyenTransfer
+     */
+    public function getPaymentAdyenByIdSalesOrder(int $idSalesOrder): PaymentAdyenTransfer
+    {
+        $query = $this->getPaymentAdyenQuery()->filterByFkSalesOrder($idSalesOrder);
+        $entityTransfer = $this->buildQueryFromCriteria($query)->findOne();
+
+        return $this->getFactory()
+            ->createAdyenPersistenceMapper()
+            ->mapEntityTransferToPaymentAdyenTransfer($entityTransfer, new PaymentAdyenTransfer());
+    }
+
+    /**
      * @param string $reference
      * @param int|null $idOrderItem
      *
@@ -50,6 +65,33 @@ class AdyenRepository extends AbstractRepository implements AdyenRepositoryInter
         if ($idOrderItem !== null) {
             $query->filterByFkSalesOrderItem($idOrderItem);
         }
+
+        $entityTransfers = $this->buildQueryFromCriteria($query)->find();
+
+        $mapper = $result[] = $this->getFactory()->createAdyenPersistenceMapper();
+        $result = [];
+
+        foreach ($entityTransfers as $entityTransfer) {
+            $result[] = $mapper
+                ->mapEntityTransferToPaymentAdyenOrderItemTransfer(
+                    $entityTransfer,
+                    new PaymentAdyenOrderItemTransfer()
+                );
+        }
+
+        return $result;
+    }
+
+    /**
+     * @param int[] $orderItemIds
+     *
+     * @return \Generated\Shared\Transfer\PaymentAdyenOrderItemTransfer[]
+     */
+    public function getOrderItemsByIdsSalesOrderItems(array $orderItemIds): array
+    {
+        $query = $this
+            ->getPaymentAdyenOrderItemQuery()
+            ->filterByFkSalesOrderItem_In($orderItemIds);
 
         $entityTransfers = $this->buildQueryFromCriteria($query)->find();
 

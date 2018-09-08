@@ -7,18 +7,30 @@
 
 namespace SprykerEco\Zed\Adyen\Business\Oms\Mapper;
 
+use Generated\Shared\Transfer\AdyenApiCaptureRequestTransfer;
 use Generated\Shared\Transfer\AdyenApiRequestTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 
-class CaptureCommandMapper implements AdyenCommandMapperInterface
+class CaptureCommandMapper extends AbstractCommandMapper implements AdyenCommandMapperInterface
 {
     /**
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $orderItems
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return \Generated\Shared\Transfer\AdyenApiRequestTransfer
      */
-    public function buildRequestTransfer(OrderTransfer $orderTransfer): AdyenApiRequestTransfer
+    public function buildRequestTransfer(array $orderItems, OrderTransfer $orderTransfer): AdyenApiRequestTransfer
     {
-        return new AdyenApiRequestTransfer();
+        $request = new AdyenApiRequestTransfer();
+        $paymentAdyen = $this->reader->getPaymentAdyen($orderTransfer);
+        $request->setCaptureRequest(
+            (new AdyenApiCaptureRequestTransfer())
+                ->setMerchantAccount($this->config->getMerchantAccount())
+                ->setOriginalReference($paymentAdyen->getPspReference())
+                ->setOriginalMerchantReference($paymentAdyen->getReference())
+                ->setModificationAmount($this->createAmountTransfer($orderItems, $orderTransfer))
+        );
+
+        return $request;
     }
 }

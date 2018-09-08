@@ -7,16 +7,21 @@
 
 namespace SprykerEco\Zed\Adyen\Business\Oms\Saver;
 
+use Generated\Shared\Transfer\AdyenApiRequestTransfer;
 use Generated\Shared\Transfer\AdyenApiResponseTransfer;
-use Generated\Shared\Transfer\OrderTransfer;
 
 interface AdyenCommandSaverInterface
 {
     /**
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $orderItems
+     * @param \Generated\Shared\Transfer\AdyenApiRequestTransfer $requestTransfer
      * @param \Generated\Shared\Transfer\AdyenApiResponseTransfer $responseTransfer
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return void
      */
-    public function save(AdyenApiResponseTransfer $responseTransfer, OrderTransfer $orderTransfer): void;
+    public function save(
+        array $orderItems,
+        AdyenApiRequestTransfer $requestTransfer,
+        AdyenApiResponseTransfer $responseTransfer
+    ): void;
 }
