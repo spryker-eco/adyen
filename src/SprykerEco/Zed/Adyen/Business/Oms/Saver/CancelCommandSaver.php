@@ -7,23 +7,52 @@
 
 namespace SprykerEco\Zed\Adyen\Business\Oms\Saver;
 
-use Generated\Shared\Transfer\AdyenApiResponseTransfer;
-use Generated\Shared\Transfer\OrderTransfer;
-use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
-
-class CancelCommandSaver implements AdyenCommandSaverInterface
+class CancelCommandSaver extends AbstractCommandSaver implements AdyenCommandSaverInterface
 {
-    use TransactionTrait;
+    protected const REQUEST_TYPE = 'CANCEL';
 
     /**
-     * @param \Generated\Shared\Transfer\AdyenApiResponseTransfer $responseTransfer
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $orderItems
      *
      * @return void
      */
-    public function save(AdyenApiResponseTransfer $responseTransfer, OrderTransfer $orderTransfer): void
+    public function save(array $orderItems): void
     {
-        $this->getTransactionHandler()->handleTransaction(function () use ($responseTransfer, $orderTransfer) {
-        });
+        /** @var \Orm\Zed\Sales\Persistence\SpySalesOrderItem $orderItem */
+        $orderItem = reset($orderItems);
+
+        $this->writer->update(
+            $this->config->getOmsStatusCanceled(),
+            $this->reader->getAllPaymentAdyenOrderItemsByIdSalesOrder($orderItem->getFkSalesOrder())
+        );
+
+        $this->triggerCancelEvent($orderItems);
+    }
+
+    /**
+     * @return string
+     */
+    protected function getRequestType(): string
+    {
+        return static::REQUEST_TYPE;
+    }
+
+    /**
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $orderItems
+     *
+     * @return void
+     */
+    protected function triggerCancelEvent(array $orderItems): void
+    {
+        $remainingItems = $this->reader->getRemainingSalesOrderItemIds($orderItems);
+        if (count($remainingItems) === 0) {
+            return;
+        }
+
+        $this->omsFacade->triggerEventForOrderItems(
+            $this->config->getOmsEventCancelName(),
+            $remainingItems,
+            [$this->config->getAdyenAutomaticOmsTrigger() => true]
+        );
     }
 }

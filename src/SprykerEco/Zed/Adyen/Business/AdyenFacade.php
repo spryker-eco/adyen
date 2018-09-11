@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\PaymentMethodsTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
+use Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject;
 
 /**
  * @method \SprykerEco\Zed\Adyen\Business\AdyenBusinessFactory getFactory()
@@ -46,12 +47,16 @@ class AdyenFacade extends AbstractFacade implements AdyenFacadeInterface
      *
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $orderItems
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject $data
      *
      * @return void
      */
-    public function handleAuthorizeCommand(array $orderItems, OrderTransfer $orderTransfer): void
-    {
-        $this->getFactory()->createAuthorizeCommandHandler()->handle($orderItems, $orderTransfer);
+    public function handleAuthorizeCommand(
+        array $orderItems,
+        OrderTransfer $orderTransfer,
+        ReadOnlyArrayObject $data
+    ): void {
+        $this->getFactory()->createAuthorizeCommandHandler()->handle($orderItems, $orderTransfer, $data);
     }
 
     /**
@@ -61,12 +66,16 @@ class AdyenFacade extends AbstractFacade implements AdyenFacadeInterface
      *
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $orderItems
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject $data
      *
      * @return void
      */
-    public function handleCancelCommand(array $orderItems, OrderTransfer $orderTransfer): void
-    {
-        $this->getFactory()->createCancelCommandHandler()->handle($orderItems, $orderTransfer);
+    public function handleCancelCommand(
+        array $orderItems,
+        OrderTransfer $orderTransfer,
+        ReadOnlyArrayObject $data
+    ): void {
+        $this->getFactory()->createCancelCommandHandler()->handle($orderItems, $orderTransfer, $data);
     }
 
     /**
@@ -76,12 +85,16 @@ class AdyenFacade extends AbstractFacade implements AdyenFacadeInterface
      *
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $orderItems
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject $data
      *
      * @return void
      */
-    public function handleCaptureCommand(array $orderItems, OrderTransfer $orderTransfer): void
-    {
-        $this->getFactory()->createCaptureCommandHandler()->handle($orderItems, $orderTransfer);
+    public function handleCaptureCommand(
+        array $orderItems,
+        OrderTransfer $orderTransfer,
+        ReadOnlyArrayObject $data
+    ): void {
+        $this->getFactory()->createCaptureCommandHandler()->handle($orderItems, $orderTransfer, $data);
     }
 
     /**
@@ -91,12 +104,16 @@ class AdyenFacade extends AbstractFacade implements AdyenFacadeInterface
      *
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $orderItems
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject $data
      *
      * @return void
      */
-    public function handleRefundCommand(array $orderItems, OrderTransfer $orderTransfer): void
-    {
-        $this->getFactory()->createRefundCommandHandler()->handle($orderItems, $orderTransfer);
+    public function handleRefundCommand(
+        array $orderItems,
+        OrderTransfer $orderTransfer,
+        ReadOnlyArrayObject $data
+    ): void {
+        $this->getFactory()->createRefundCommandHandler()->handle($orderItems, $orderTransfer, $data);
     }
 
     /**

@@ -12,8 +12,6 @@ use Generated\Shared\Transfer\AdyenApiResponseTransfer;
 
 class RefundCommandHandler extends AbstractCommandHandler implements AdyenCommandHandlerInterface
 {
-    protected const REQUEST_TYPE = 'REFUND';
-
     /**
      * @param \Generated\Shared\Transfer\AdyenApiRequestTransfer $request
      *
@@ -22,13 +20,5 @@ class RefundCommandHandler extends AbstractCommandHandler implements AdyenComman
     protected function sendApiRequest(AdyenApiRequestTransfer $request): AdyenApiResponseTransfer
     {
         return $this->adyenApiFacade->performRefundApiCall($request);
-    }
-
-    /**
-     * @return string
-     */
-    protected function getRequestType(): string
-    {
-        return static::REQUEST_TYPE;
     }
 }

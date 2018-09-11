@@ -14,13 +14,18 @@ interface AdyenCommandSaverInterface
 {
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $orderItems
+     *
+     * @return void
+     */
+    public function save(array $orderItems): void;
+
+    /**
      * @param \Generated\Shared\Transfer\AdyenApiRequestTransfer $requestTransfer
      * @param \Generated\Shared\Transfer\AdyenApiResponseTransfer $responseTransfer
      *
      * @return void
      */
-    public function save(
-        array $orderItems,
+    public function logResponse(
         AdyenApiRequestTransfer $requestTransfer,
         AdyenApiResponseTransfer $responseTransfer
     ): void;

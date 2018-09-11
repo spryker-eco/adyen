@@ -39,6 +39,6 @@ class AdyenOrderPaymentManager implements AdyenOrderPaymentManagerInterface
             return;
         }
 
-        $this->writer->saveOrderPaymentEntities($quoteTransfer->getPayment(), $saveOrderTransfer);
+        $this->writer->save($quoteTransfer->getPayment(), $saveOrderTransfer);
     }
 }

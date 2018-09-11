@@ -11,6 +11,7 @@ use SprykerEco\Shared\Adyen\AdyenConfig as SharedAdyenConfig;
 use SprykerEco\Zed\Adyen\AdyenConfig;
 use SprykerEco\Zed\Adyen\Business\Exception\AdyenMethodSaverException;
 use SprykerEco\Zed\Adyen\Business\Hook\Saver\MakePayment\AdyenSaverInterface;
+use SprykerEco\Zed\Adyen\Business\Reader\AdyenReaderInterface;
 use SprykerEco\Zed\Adyen\Business\Writer\AdyenWriterInterface;
 
 class AdyenSaverResolver implements AdyenSaverResolverInterface
@@ -18,9 +19,9 @@ class AdyenSaverResolver implements AdyenSaverResolverInterface
     protected const CLASS_NAME_PATTERN = '\\SprykerEco\\Zed\\Adyen\\Business\\Hook\\Saver\\MakePayment\\%sSaver';
 
     /**
-     * @var \SprykerEco\Zed\Adyen\AdyenConfig
+     * @var \SprykerEco\Zed\Adyen\Business\Reader\AdyenReaderInterface
      */
-    protected $config;
+    protected $reader;
 
     /**
      * @var \SprykerEco\Zed\Adyen\Business\Writer\AdyenWriterInterface
@@ -28,13 +29,21 @@ class AdyenSaverResolver implements AdyenSaverResolverInterface
     protected $writer;
 
     /**
+     * @var \SprykerEco\Zed\Adyen\AdyenConfig
+     */
+    protected $config;
+
+    /**
+     * @param \SprykerEco\Zed\Adyen\Business\Reader\AdyenReaderInterface $reader
      * @param \SprykerEco\Zed\Adyen\Business\Writer\AdyenWriterInterface $writer
      * @param \SprykerEco\Zed\Adyen\AdyenConfig $config
      */
     public function __construct(
+        AdyenReaderInterface $reader,
         AdyenWriterInterface $writer,
         AdyenConfig $config
     ) {
+        $this->reader = $reader;
         $this->writer = $writer;
         $this->config = $config;
     }
@@ -55,7 +64,7 @@ class AdyenSaverResolver implements AdyenSaverResolverInterface
             );
         }
 
-        return new $className($this->writer, $this->config);
+        return new $className($this->reader, $this->writer, $this->config);
     }
 
     /**

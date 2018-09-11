@@ -22,32 +22,19 @@ interface AdyenWriterInterface
      *
      * @return void
      */
-    public function saveOrderPaymentEntities(PaymentTransfer $paymentTransfer, SaveOrderTransfer $saveOrderTransfer): void;
-
-    /**
-     * @param string $status
-     * @param \Generated\Shared\Transfer\AdyenApiRequestTransfer $request
-     * @param \Generated\Shared\Transfer\AdyenApiResponseTransfer $response
-     *
-     * @return void
-     */
-    public function updateOrderPaymentEntities(
-        string $status,
-        AdyenApiRequestTransfer $request,
-        AdyenApiResponseTransfer $response
-    ): void;
+    public function save(PaymentTransfer $paymentTransfer, SaveOrderTransfer $saveOrderTransfer): void;
 
     /**
      * @param string $status
      * @param \Generated\Shared\Transfer\PaymentAdyenOrderItemTransfer[] $paymentAdyenOrderItemTransfers
-     * @param \Generated\Shared\Transfer\PaymentAdyenTransfer $paymentAdyenTransfer
+     * @param \Generated\Shared\Transfer\PaymentAdyenTransfer|null $paymentAdyenTransfer
      *
      * @return void
      */
     public function update(
         string $status,
         array $paymentAdyenOrderItemTransfers,
-        PaymentAdyenTransfer $paymentAdyenTransfer = null
+        ?PaymentAdyenTransfer $paymentAdyenTransfer = null
     ): void;
 
     /**

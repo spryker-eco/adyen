@@ -30,7 +30,7 @@ class CapturePlugin extends AbstractCommandPlugin implements CommandByOrderInter
      */
     public function run(array $orderItems, SpySalesOrder $orderEntity, ReadOnlyArrayObject $data): array
     {
-        $this->getFacade()->handleCaptureCommand($orderItems, $this->getOrderTransfer($orderEntity));
+        $this->getFacade()->handleCaptureCommand($orderItems, $this->getOrderTransfer($orderEntity), $data);
 
         return [];
     }

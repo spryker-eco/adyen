@@ -12,8 +12,6 @@ use Generated\Shared\Transfer\AdyenApiResponseTransfer;
 
 class CaptureCommandHandler extends AbstractCommandHandler implements AdyenCommandHandlerInterface
 {
-    protected const REQUEST_TYPE = 'CAPTURE';
-
     /**
      * @param \Generated\Shared\Transfer\AdyenApiRequestTransfer $request
      *
@@ -22,13 +20,5 @@ class CaptureCommandHandler extends AbstractCommandHandler implements AdyenComma
     protected function sendApiRequest(AdyenApiRequestTransfer $request): AdyenApiResponseTransfer
     {
         return $this->adyenApiFacade->performCaptureApiCall($request);
-    }
-
-    /**
-     * @return string
-     */
-    protected function getRequestType(): string
-    {
-        return static::REQUEST_TYPE;
     }
 }

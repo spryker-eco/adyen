@@ -11,6 +11,7 @@ use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use SprykerEco\Zed\Adyen\Dependency\Facade\AdyenToAdyenApiFacadeBridge;
 use SprykerEco\Zed\Adyen\Dependency\Facade\AdyenToCalculationFacadeBridge;
+use SprykerEco\Zed\Adyen\Dependency\Facade\AdyenToOmsFacadeBridge;
 use SprykerEco\Zed\Adyen\Dependency\Facade\AdyenToSalesFacadeBridge;
 
 class AdyenDependencyProvider extends AbstractBundleDependencyProvider
@@ -18,6 +19,7 @@ class AdyenDependencyProvider extends AbstractBundleDependencyProvider
     public const FACADE_ADYEN_API = 'FACADE_ADYEN_API';
     public const FACADE_SALES = 'FACADE_SALES';
     public const FACADE_CALCULATION = 'FACADE_CALCULATION';
+    public const FACADE_OMS = 'FACADE_OMS';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -42,6 +44,7 @@ class AdyenDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container = parent::provideBusinessLayerDependencies($container);
         $container = $this->addAdyenApiFacade($container);
+        $container = $this->addOmsFacade($container);
 
         return $container;
     }
@@ -83,6 +86,20 @@ class AdyenDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[static::FACADE_CALCULATION] = function (Container $container) {
             return new AdyenToCalculationFacadeBridge($container->getLocator()->calculation()->facade());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addOmsFacade(Container $container): Container
+    {
+        $container[static::FACADE_OMS] = function (Container $container) {
+            return new AdyenToOmsFacadeBridge($container->getLocator()->oms()->facade());
         };
 
         return $container;

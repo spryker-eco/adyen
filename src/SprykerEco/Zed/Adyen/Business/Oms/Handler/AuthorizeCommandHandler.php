@@ -12,8 +12,6 @@ use Generated\Shared\Transfer\AdyenApiResponseTransfer;
 
 class AuthorizeCommandHandler extends AbstractCommandHandler implements AdyenCommandHandlerInterface
 {
-    protected const REQUEST_TYPE = 'AUTHORIZE';
-
     /**
      * @param \Generated\Shared\Transfer\AdyenApiRequestTransfer $request
      *
@@ -22,13 +20,5 @@ class AuthorizeCommandHandler extends AbstractCommandHandler implements AdyenCom
     protected function sendApiRequest(AdyenApiRequestTransfer $request): AdyenApiResponseTransfer
     {
         return $this->adyenApiFacade->performAuthorizeApiCall($request);
-    }
-
-    /**
-     * @return string
-     */
-    protected function getRequestType(): string
-    {
-        return static::REQUEST_TYPE;
     }
 }

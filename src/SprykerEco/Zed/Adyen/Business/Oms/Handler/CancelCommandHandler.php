@@ -12,8 +12,6 @@ use Generated\Shared\Transfer\AdyenApiResponseTransfer;
 
 class CancelCommandHandler extends AbstractCommandHandler implements AdyenCommandHandlerInterface
 {
-    protected const REQUEST_TYPE = 'CANCEL';
-
     /**
      * @param \Generated\Shared\Transfer\AdyenApiRequestTransfer $request
      *
@@ -22,13 +20,5 @@ class CancelCommandHandler extends AbstractCommandHandler implements AdyenComman
     protected function sendApiRequest(AdyenApiRequestTransfer $request): AdyenApiResponseTransfer
     {
         return $this->adyenApiFacade->performCancelApiCall($request);
-    }
-
-    /**
-     * @return string
-     */
-    protected function getRequestType(): string
-    {
-        return static::REQUEST_TYPE;
     }
 }

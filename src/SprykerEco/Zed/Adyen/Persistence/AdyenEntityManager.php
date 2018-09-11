@@ -35,6 +35,7 @@ class AdyenEntityManager extends AbstractEntityManager implements AdyenEntityMan
                 new SpyPaymentAdyenEntityTransfer()
             );
 
+        /** @var \Generated\Shared\Transfer\SpyPaymentAdyenEntityTransfer $entityTransfer */
         $entityTransfer = $this->save($entityTransfer);
 
         $paymentAdyenTransfer = $this
@@ -62,6 +63,7 @@ class AdyenEntityManager extends AbstractEntityManager implements AdyenEntityMan
                 new SpyPaymentAdyenOrderItemEntityTransfer()
             );
 
+        /** @var \Generated\Shared\Transfer\SpyPaymentAdyenOrderItemEntityTransfer $entityTransfer */
         $entityTransfer = $this->save($entityTransfer);
 
         $paymentAdyenOrderItemTransfer = $this
@@ -89,6 +91,7 @@ class AdyenEntityManager extends AbstractEntityManager implements AdyenEntityMan
                 new SpyPaymentAdyenApiLogEntityTransfer()
             );
 
+        /** @var \Generated\Shared\Transfer\SpyPaymentAdyenApiLogEntityTransfer $entityTransfer */
         $entityTransfer = $this->save($entityTransfer);
 
         $paymentAdyenApiLogTransfer = $this

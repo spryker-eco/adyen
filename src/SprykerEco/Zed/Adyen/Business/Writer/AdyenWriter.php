@@ -60,7 +60,7 @@ class AdyenWriter implements AdyenWriterInterface
      *
      * @return void
      */
-    public function saveOrderPaymentEntities(PaymentTransfer $paymentTransfer, SaveOrderTransfer $saveOrderTransfer): void
+    public function save(PaymentTransfer $paymentTransfer, SaveOrderTransfer $saveOrderTransfer): void
     {
         $paymentAdyenTransfer = $this->savePaymentAdyen($paymentTransfer, $saveOrderTransfer);
 
@@ -71,45 +71,15 @@ class AdyenWriter implements AdyenWriterInterface
 
     /**
      * @param string $status
-     * @param \Generated\Shared\Transfer\AdyenApiRequestTransfer $request
-     * @param \Generated\Shared\Transfer\AdyenApiResponseTransfer $response
-     *
-     * @return void
-     */
-    public function updateOrderPaymentEntities(
-        string $status,
-        AdyenApiRequestTransfer $request,
-        AdyenApiResponseTransfer $response
-    ): void {
-        $reference = $request->getMakePaymentRequest()->getReference();
-        $pspReference = $response->getMakePaymentResponse()->getPspReference();
-
-        $this->getTransactionHandler()->handleTransaction(function () use ($status, $reference, $pspReference) {
-            $paymentAdyenTransfer = $this->repository->getPaymentAdyenByReference($reference);
-            $paymentAdyenTransfer->setPspReference($pspReference);
-            $this->entityManager->savePaymentAdyen($paymentAdyenTransfer);
-
-            $paymentAdyenOrderItemTransfers = $this->repository
-                ->getOrderItemsByReferenceAndIdOrderItem($reference);
-
-            foreach ($paymentAdyenOrderItemTransfers as $paymentAdyenOrderItemTransfer) {
-                $paymentAdyenOrderItemTransfer->setStatus($status);
-                $this->entityManager->savePaymentAdyenOrderItem($paymentAdyenOrderItemTransfer);
-            }
-        });
-    }
-
-    /**
-     * @param string $status
      * @param \Generated\Shared\Transfer\PaymentAdyenOrderItemTransfer[] $paymentAdyenOrderItemTransfers
-     * @param \Generated\Shared\Transfer\PaymentAdyenTransfer $paymentAdyenTransfer
+     * @param \Generated\Shared\Transfer\PaymentAdyenTransfer|null $paymentAdyenTransfer
      *
      * @return void
      */
     public function update(
         string $status,
         array $paymentAdyenOrderItemTransfers,
-        PaymentAdyenTransfer $paymentAdyenTransfer = null
+        ?PaymentAdyenTransfer $paymentAdyenTransfer = null
     ): void {
         $this->getTransactionHandler()->handleTransaction(
             function () use ($status, $paymentAdyenOrderItemTransfers, $paymentAdyenTransfer) {

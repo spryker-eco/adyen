@@ -41,6 +41,7 @@ use SprykerEco\Zed\Adyen\Business\Reader\AdyenReaderInterface;
 use SprykerEco\Zed\Adyen\Business\Writer\AdyenWriter;
 use SprykerEco\Zed\Adyen\Business\Writer\AdyenWriterInterface;
 use SprykerEco\Zed\Adyen\Dependency\Facade\AdyenToAdyenApiFacadeInterface;
+use SprykerEco\Zed\Adyen\Dependency\Facade\AdyenToOmsFacadeInterface;
 
 /**
  * @method \SprykerEco\Zed\Adyen\AdyenConfig getConfig()
@@ -91,6 +92,7 @@ class AdyenBusinessFactory extends AbstractBusinessFactory
     public function createSaverResolver(): AdyenSaverResolverInterface
     {
         return new AdyenSaverResolver(
+            $this->createReader(),
             $this->createWriter(),
             $this->getConfig()
         );
@@ -104,7 +106,8 @@ class AdyenBusinessFactory extends AbstractBusinessFactory
         return new AuthorizeCommandHandler(
             $this->createAuthorizeCommandMapper(),
             $this->getAdyenApiFacade(),
-            $this->createAuthorizeCommandSaver()
+            $this->createAuthorizeCommandSaver(),
+            $this->getConfig()
         );
     }
 
@@ -116,7 +119,8 @@ class AdyenBusinessFactory extends AbstractBusinessFactory
         return new CancelCommandHandler(
             $this->createCancelCommandMapper(),
             $this->getAdyenApiFacade(),
-            $this->createCancelCommandSaver()
+            $this->createCancelCommandSaver(),
+            $this->getConfig()
         );
     }
 
@@ -128,7 +132,8 @@ class AdyenBusinessFactory extends AbstractBusinessFactory
         return new CaptureCommandHandler(
             $this->createCaptureCommandMapper(),
             $this->getAdyenApiFacade(),
-            $this->createCaptureCommandSaver()
+            $this->createCaptureCommandSaver(),
+            $this->getConfig()
         );
     }
 
@@ -140,7 +145,8 @@ class AdyenBusinessFactory extends AbstractBusinessFactory
         return new RefundCommandHandler(
             $this->createRefundCommandMapper(),
             $this->getAdyenApiFacade(),
-            $this->createRefundCommandSaver()
+            $this->createRefundCommandSaver(),
+            $this->getConfig()
         );
     }
 
@@ -149,7 +155,10 @@ class AdyenBusinessFactory extends AbstractBusinessFactory
      */
     public function createAuthorizeCommandMapper(): AdyenCommandMapperInterface
     {
-        return new AuthorizeCommandMapper();
+        return new AuthorizeCommandMapper(
+            $this->createReader(),
+            $this->getConfig()
+        );
     }
 
     /**
@@ -157,7 +166,10 @@ class AdyenBusinessFactory extends AbstractBusinessFactory
      */
     public function createCancelCommandMapper(): AdyenCommandMapperInterface
     {
-        return new CancelCommandMapper();
+        return new CancelCommandMapper(
+            $this->createReader(),
+            $this->getConfig()
+        );
     }
 
     /**
@@ -176,7 +188,10 @@ class AdyenBusinessFactory extends AbstractBusinessFactory
      */
     public function createRefundCommandMapper(): AdyenCommandMapperInterface
     {
-        return new RefundCommandMapper();
+        return new RefundCommandMapper(
+            $this->createReader(),
+            $this->getConfig()
+        );
     }
 
     /**
@@ -184,7 +199,12 @@ class AdyenBusinessFactory extends AbstractBusinessFactory
      */
     public function createAuthorizeCommandSaver(): AdyenCommandSaverInterface
     {
-        return new AuthorizeCommandSaver();
+        return new AuthorizeCommandSaver(
+            $this->getOmsFacade(),
+            $this->createReader(),
+            $this->createWriter(),
+            $this->getConfig()
+        );
     }
 
     /**
@@ -192,7 +212,12 @@ class AdyenBusinessFactory extends AbstractBusinessFactory
      */
     public function createCancelCommandSaver(): AdyenCommandSaverInterface
     {
-        return new CancelCommandSaver();
+        return new CancelCommandSaver(
+            $this->getOmsFacade(),
+            $this->createReader(),
+            $this->createWriter(),
+            $this->getConfig()
+        );
     }
 
     /**
@@ -201,6 +226,7 @@ class AdyenBusinessFactory extends AbstractBusinessFactory
     public function createCaptureCommandSaver(): AdyenCommandSaverInterface
     {
         return new CaptureCommandSaver(
+            $this->getOmsFacade(),
             $this->createReader(),
             $this->createWriter(),
             $this->getConfig()
@@ -212,7 +238,12 @@ class AdyenBusinessFactory extends AbstractBusinessFactory
      */
     public function createRefundCommandSaver(): AdyenCommandSaverInterface
     {
-        return new RefundCommandSaver();
+        return new RefundCommandSaver(
+            $this->getOmsFacade(),
+            $this->createReader(),
+            $this->createWriter(),
+            $this->getConfig()
+        );
     }
 
     /**
@@ -249,5 +280,13 @@ class AdyenBusinessFactory extends AbstractBusinessFactory
     public function getAdyenApiFacade(): AdyenToAdyenApiFacadeInterface
     {
         return $this->getProvidedDependency(AdyenDependencyProvider::FACADE_ADYEN_API);
+    }
+
+    /**
+     * @return \SprykerEco\Zed\Adyen\Dependency\Facade\AdyenToOmsFacadeInterface
+     */
+    public function getOmsFacade(): AdyenToOmsFacadeInterface
+    {
+        return $this->getProvidedDependency(AdyenDependencyProvider::FACADE_OMS);
     }
 }

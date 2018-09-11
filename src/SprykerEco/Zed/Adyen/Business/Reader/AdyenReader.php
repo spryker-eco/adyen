@@ -14,8 +14,14 @@ use SprykerEco\Zed\Adyen\Persistence\AdyenRepositoryInterface;
 
 class AdyenReader implements AdyenReaderInterface
 {
+    /**
+     * @var \SprykerEco\Zed\Adyen\Persistence\AdyenRepositoryInterface
+     */
     protected $repository;
 
+    /**
+     * @param \SprykerEco\Zed\Adyen\Persistence\AdyenRepositoryInterface $repository
+     */
     public function __construct(AdyenRepositoryInterface $repository)
     {
         $this->repository = $repository;
@@ -26,9 +32,29 @@ class AdyenReader implements AdyenReaderInterface
      *
      * @return \Generated\Shared\Transfer\PaymentAdyenTransfer
      */
-    public function getPaymentAdyen(OrderTransfer $orderTransfer): PaymentAdyenTransfer
+    public function getPaymentAdyenByOrderTransfer(OrderTransfer $orderTransfer): PaymentAdyenTransfer
     {
         return $this->repository->getPaymentAdyenByIdSalesOrder($orderTransfer->getIdSalesOrder());
+    }
+
+    /**
+     * @param string $reference
+     *
+     * @return \Generated\Shared\Transfer\PaymentAdyenTransfer
+     */
+    public function getPaymentAdyenByReference(string $reference): PaymentAdyenTransfer
+    {
+        return $this->repository->getPaymentAdyenByReference($reference);
+    }
+
+    /**
+     * @param int $idSalesOrder
+     *
+     * @return \Generated\Shared\Transfer\PaymentAdyenOrderItemTransfer[]
+     */
+    public function getAllPaymentAdyenOrderItemsByIdSalesOrder(int $idSalesOrder): array
+    {
+        return $this->repository->getAllPaymentAdyenOrderItemsByIdSalesOrder($idSalesOrder);
     }
 
     /**
@@ -46,5 +72,45 @@ class AdyenReader implements AdyenReaderInterface
         );
 
         return $this->repository->getOrderItemsByIdsSalesOrderItems($orderItemIds);
+    }
+
+    /**
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $orderItems
+     *
+     * @return \Generated\Shared\Transfer\PaymentAdyenOrderItemTransfer[]
+     */
+    public function getRemainingPaymentAdyenOrderItems(array $orderItems): array
+    {
+        /** @var \Orm\Zed\Sales\Persistence\SpySalesOrderItem $orderItem */
+        $orderItem = reset($orderItems);
+
+        $orderItemIds = array_map(
+            function (SpySalesOrderItem $orderItem) {
+                return $orderItem->getIdSalesOrderItem();
+            },
+            $orderItems
+        );
+
+        return $this->repository->getRemainingPaymentAdyenOrderItems($orderItem->getFkSalesOrder(), $orderItemIds);
+    }
+
+    /**
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $orderItems
+     *
+     * @return int[]
+     */
+    public function getRemainingSalesOrderItemIds(array $orderItems): array
+    {
+        /** @var \Orm\Zed\Sales\Persistence\SpySalesOrderItem $orderItem */
+        $orderItem = reset($orderItems);
+
+        $orderItemIds = array_map(
+            function (SpySalesOrderItem $orderItem) {
+                return $orderItem->getIdSalesOrderItem();
+            },
+            $orderItems
+        );
+
+        return $this->repository->getRemainingSalesOrderItemIds($orderItem->getFkSalesOrder(), $orderItemIds);
     }
 }

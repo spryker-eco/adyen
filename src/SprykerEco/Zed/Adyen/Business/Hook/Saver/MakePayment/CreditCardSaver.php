@@ -45,10 +45,22 @@ class CreditCardSaver extends AbstractSaver implements AdyenSaverInterface
      */
     protected function updateEntities(AdyenApiRequestTransfer $request, AdyenApiResponseTransfer $response): void
     {
-        $this->writer->updateOrderPaymentEntities(
+        $paymentAdyenTransfer = $this->reader
+            ->getPaymentAdyenByReference(
+                $request->getMakePaymentRequest()->getReference()
+            );
+
+        $paymentAdyenTransfer->setPspReference($response->getMakePaymentResponse()->getPspReference());
+
+        $paymentAdyenOrderItemTransfers = $this->reader
+            ->getAllPaymentAdyenOrderItemsByIdSalesOrder(
+                $paymentAdyenTransfer->getFkSalesOrder()
+            );
+
+        $this->writer->update(
             $this->config->getOmsStatusAuthorized(),
-            $request,
-            $response
+            $paymentAdyenOrderItemTransfers,
+            $paymentAdyenTransfer
         );
     }
 }

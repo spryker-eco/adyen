@@ -29,7 +29,7 @@ class AuthorizePlugin extends AbstractCommandPlugin implements CommandByOrderInt
      */
     public function run(array $orderItems, SpySalesOrder $orderEntity, ReadOnlyArrayObject $data): array
     {
-        $this->getFacade()->handleAuthorizeCommand($orderItems, $this->getOrderTransfer($orderEntity));
+        $this->getFacade()->handleAuthorizeCommand($orderItems, $this->getOrderTransfer($orderEntity), $data);
 
         return [];
     }

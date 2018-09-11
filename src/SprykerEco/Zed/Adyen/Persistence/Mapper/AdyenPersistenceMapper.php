@@ -101,7 +101,7 @@ class AdyenPersistenceMapper implements AdyenPersistenceMapperInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SpyPaymentAdyenApiLogEntityTransfer|\Spryker\Shared\Kernel\Transfer\EntityTransferInterface $paymentAdyenApiLogEntityTransfer
+     * @param \Generated\Shared\Transfer\SpyPaymentAdyenApiLogEntityTransfer $paymentAdyenApiLogEntityTransfer
      * @param \Generated\Shared\Transfer\PaymentAdyenApiLogTransfer $paymentAdyenApiLogTransfer
      *
      * @return \Generated\Shared\Transfer\PaymentAdyenApiLogTransfer

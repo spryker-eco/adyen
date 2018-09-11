@@ -7,41 +7,30 @@
 
 namespace SprykerEco\Zed\Adyen\Business\Oms\Mapper;
 
-use Generated\Shared\Transfer\AdyenApiAmountTransfer;
-use Generated\Shared\Transfer\OrderTransfer;
-use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use SprykerEco\Zed\Adyen\AdyenConfig;
 use SprykerEco\Zed\Adyen\Business\Reader\AdyenReaderInterface;
 
-class AbstractCommandMapper
+abstract class AbstractCommandMapper
 {
+    /**
+     * @var \SprykerEco\Zed\Adyen\Business\Reader\AdyenReaderInterface
+     */
     protected $reader;
+
+    /**
+     * @var \SprykerEco\Zed\Adyen\AdyenConfig
+     */
     protected $config;
 
+    /**
+     * @param \SprykerEco\Zed\Adyen\Business\Reader\AdyenReaderInterface $reader
+     * @param \SprykerEco\Zed\Adyen\AdyenConfig $config
+     */
     public function __construct(
         AdyenReaderInterface $reader,
         AdyenConfig $config
     ) {
         $this->reader = $reader;
         $this->config = $config;
-    }
-
-    protected function createAmountTransfer(array $orderItems, OrderTransfer $orderTransfer)
-    {
-        return (new AdyenApiAmountTransfer())
-            ->setValue($this->getAmountToModify($orderItems))
-            ->setCurrency($orderTransfer->getCurrencyIsoCode());
-    }
-
-    protected function getAmountToModify(array $orderItems)
-    {
-        $amount = array_map(
-            function (SpySalesOrderItem $orderItem) {
-                return $orderItem->getPriceToPayAggregation();
-            },
-            $orderItems
-        );
-
-        return array_sum($amount);
     }
 }

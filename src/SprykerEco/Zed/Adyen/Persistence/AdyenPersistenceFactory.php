@@ -10,6 +10,7 @@ namespace SprykerEco\Zed\Adyen\Persistence;
 use Orm\Zed\Adyen\Persistence\SpyPaymentAdyenApiLogQuery;
 use Orm\Zed\Adyen\Persistence\SpyPaymentAdyenOrderItemQuery;
 use Orm\Zed\Adyen\Persistence\SpyPaymentAdyenQuery;
+use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 use SprykerEco\Zed\Adyen\Persistence\Mapper\AdyenPersistenceMapper;
 use SprykerEco\Zed\Adyen\Persistence\Mapper\AdyenPersistenceMapperInterface;
@@ -41,6 +42,14 @@ class AdyenPersistenceFactory extends AbstractPersistenceFactory
     public function createPaymentAdyenOrderItemQuery(): SpyPaymentAdyenOrderItemQuery
     {
         return SpyPaymentAdyenOrderItemQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
+     */
+    public function createSpySalesOrderItemQuery(): SpySalesOrderItemQuery
+    {
+        return SpySalesOrderItemQuery::create();
     }
 
     /**

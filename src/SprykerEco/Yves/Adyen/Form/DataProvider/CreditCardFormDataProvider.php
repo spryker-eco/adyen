@@ -16,7 +16,7 @@ use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 class CreditCardFormDataProvider extends AbstractFormDataProvider
 {
     /**
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|\Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */

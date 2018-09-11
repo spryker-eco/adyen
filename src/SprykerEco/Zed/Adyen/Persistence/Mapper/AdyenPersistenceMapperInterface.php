@@ -28,7 +28,7 @@ interface AdyenPersistenceMapperInterface
     ): SpyPaymentAdyenEntityTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\SpyPaymentAdyenEntityTransfer|\Spryker\Shared\Kernel\Transfer\EntityTransferInterface $paymentAdyenEntityTransfer
+     * @param \Generated\Shared\Transfer\SpyPaymentAdyenEntityTransfer $paymentAdyenEntityTransfer
      * @param \Generated\Shared\Transfer\PaymentAdyenTransfer $paymentAdyenTransfer
      *
      * @return \Generated\Shared\Transfer\PaymentAdyenTransfer
@@ -50,7 +50,7 @@ interface AdyenPersistenceMapperInterface
     ): SpyPaymentAdyenOrderItemEntityTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\SpyPaymentAdyenOrderItemEntityTransfer|\Spryker\Shared\Kernel\Transfer\EntityTransferInterface $paymentAdyenOrderItemEntityTransfer
+     * @param \Generated\Shared\Transfer\SpyPaymentAdyenOrderItemEntityTransfer $paymentAdyenOrderItemEntityTransfer
      * @param \Generated\Shared\Transfer\PaymentAdyenOrderItemTransfer $paymentAdyenOrderItemTransfer
      *
      * @return \Generated\Shared\Transfer\PaymentAdyenOrderItemTransfer
@@ -72,7 +72,7 @@ interface AdyenPersistenceMapperInterface
     ): SpyPaymentAdyenApiLogEntityTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\SpyPaymentAdyenApiLogEntityTransfer|\Spryker\Shared\Kernel\Transfer\EntityTransferInterface $paymentAdyenApiLogEntityTransfer
+     * @param \Generated\Shared\Transfer\SpyPaymentAdyenApiLogEntityTransfer $paymentAdyenApiLogEntityTransfer
      * @param \Generated\Shared\Transfer\PaymentAdyenApiLogTransfer $paymentAdyenApiLogTransfer
      *
      * @return \Generated\Shared\Transfer\PaymentAdyenApiLogTransfer
