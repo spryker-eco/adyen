@@ -10,7 +10,7 @@ namespace SprykerEco\Shared\Adyen;
 /**
  * Declares global environment configuration keys. Do not use it for other class constants.
  */
-interface AdyenSdkConstants
+interface AdyenSdkConfig
 {
     public const REQUEST_TYPE_FIELD = 'type';
     public const ENCRYPTED_CARD_NUMBER_FIELD = 'encryptedCardNumber';

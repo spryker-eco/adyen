@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\PaymentMethodsTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
-use Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject;
 
 interface AdyenFacadeInterface
 {
@@ -40,14 +39,14 @@ interface AdyenFacadeInterface
      *
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $orderItems
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     * @param \Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject $data
+     * @param array $data
      *
      * @return void
      */
     public function handleAuthorizeCommand(
         array $orderItems,
         OrderTransfer $orderTransfer,
-        ReadOnlyArrayObject $data
+        array $data
     ): void;
 
     /**
@@ -58,14 +57,14 @@ interface AdyenFacadeInterface
      *
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $orderItems
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     * @param \Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject $data
+     * @param array $data
      *
      * @return void
      */
     public function handleCancelCommand(
         array $orderItems,
         OrderTransfer $orderTransfer,
-        ReadOnlyArrayObject $data
+        array $data
     ): void;
 
     /**
@@ -76,14 +75,14 @@ interface AdyenFacadeInterface
      *
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $orderItems
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     * @param \Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject $data
+     * @param array $data
      *
      * @return void
      */
     public function handleCaptureCommand(
         array $orderItems,
         OrderTransfer $orderTransfer,
-        ReadOnlyArrayObject $data
+        array $data
     ): void;
 
     /**
@@ -94,14 +93,14 @@ interface AdyenFacadeInterface
      *
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $orderItems
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     * @param \Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject $data
+     * @param array $data
      *
      * @return void
      */
     public function handleRefundCommand(
         array $orderItems,
         OrderTransfer $orderTransfer,
-        ReadOnlyArrayObject $data
+        array $data
     ): void;
 
     /**

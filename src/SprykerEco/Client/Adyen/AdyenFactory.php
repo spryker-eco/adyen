@@ -9,13 +9,14 @@ namespace SprykerEco\Client\Adyen;
 
 use Spryker\Client\Kernel\AbstractFactory;
 use SprykerEco\Client\Adyen\Zed\AdyenStub;
+use SprykerEco\Client\Adyen\Zed\AdyenStubInterface;
 
 class AdyenFactory extends AbstractFactory
 {
     /**
-     * @return \SprykerEco\Client\Adyen\Zed\AdyenStub
+     * @return \SprykerEco\Client\Adyen\Zed\AdyenStubInterface
      */
-    public function createZedStub(): AdyenStub
+    public function createZedStub(): AdyenStubInterface
     {
         return new AdyenStub($this->getProvidedDependency(AdyenDependencyProvider::SERVICE_ZED));
     }

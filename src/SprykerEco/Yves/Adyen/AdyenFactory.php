@@ -31,7 +31,7 @@ class AdyenFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerEco\Yves\Adyen\Form\CreditCardSubForm
+     * @return \Spryker\Yves\StepEngine\Dependency\Form\SubFormInterface
      */
     public function createCreditCardForm(): SubFormInterface
     {
@@ -39,7 +39,7 @@ class AdyenFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerEco\Yves\Adyen\Form\DataProvider\CreditCardFormDataProvider
+     * @return \Spryker\Yves\StepEngine\Dependency\Form\StepEngineFormDataProviderInterface
      */
     public function createCreditCardFormDataProvider(): StepEngineFormDataProviderInterface
     {

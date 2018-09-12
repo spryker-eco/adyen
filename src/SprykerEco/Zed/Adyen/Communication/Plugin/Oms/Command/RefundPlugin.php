@@ -30,7 +30,12 @@ class RefundPlugin extends AbstractCommandPlugin implements CommandByOrderInterf
      */
     public function run(array $orderItems, SpySalesOrder $orderEntity, ReadOnlyArrayObject $data): array
     {
-        $this->getFacade()->handleRefundCommand($orderItems, $this->getOrderTransfer($orderEntity), $data);
+        $this->getFacade()
+            ->handleRefundCommand(
+                $orderItems,
+                $this->getOrderTransfer($orderEntity),
+                $data->getArrayCopy()
+            );
 
         return [];
     }

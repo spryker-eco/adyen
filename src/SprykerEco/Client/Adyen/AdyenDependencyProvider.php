@@ -12,7 +12,7 @@ use Spryker\Client\Kernel\Container;
 
 class AdyenDependencyProvider extends AbstractDependencyProvider
 {
-    public const SERVICE_ZED = 'service zed';
+    public const SERVICE_ZED = 'SERVICE_ZED';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -20,6 +20,19 @@ class AdyenDependencyProvider extends AbstractDependencyProvider
      * @return \Spryker\Client\Kernel\Container
      */
     public function provideServiceLayerDependencies(Container $container): Container
+    {
+        $container = parent::provideServiceLayerDependencies($container);
+        $container = $this->addServiceZed($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addServiceZed(Container $container): Container
     {
         $container[self::SERVICE_ZED] = function (Container $container) {
             return $container->getLocator()->zedRequest()->client();
