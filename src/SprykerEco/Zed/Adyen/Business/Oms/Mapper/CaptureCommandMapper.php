@@ -57,7 +57,7 @@ class CaptureCommandMapper extends AbstractCommandMapper implements AdyenCommand
      */
     protected function getAmountToModify(array $orderItems, OrderTransfer $orderTransfer): int
     {
-        if (count($orderTransfer->getItems()) === count($orderItems)) {
+        if ($orderTransfer->getItems()->count() === count($orderItems)) {
             return $orderTransfer->getTotals()->getGrandTotal();
         }
 

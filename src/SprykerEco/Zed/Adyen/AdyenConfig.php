@@ -91,7 +91,7 @@ class AdyenConfig extends AbstractBundleConfig
      */
     public function isMultiplePartialCaptureEnabled(): bool
     {
-        return false;
+        return $this->get(AdyenConstants::MULTIPLE_PARTIAL_CAPTURE_ENABLED);
     }
 
     /**

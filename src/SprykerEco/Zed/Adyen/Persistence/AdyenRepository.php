@@ -66,7 +66,7 @@ class AdyenRepository extends AbstractRepository implements AdyenRepositoryInter
 
         $entityTransfers = $this->buildQueryFromCriteria($query)->find();
 
-        $mapper = $result[] = $this->getFactory()->createAdyenPersistenceMapper();
+        $mapper = $this->getFactory()->createAdyenPersistenceMapper();
         $result = [];
 
         foreach ($entityTransfers as $entityTransfer) {
@@ -95,7 +95,7 @@ class AdyenRepository extends AbstractRepository implements AdyenRepositoryInter
 
         $entityTransfers = $this->buildQueryFromCriteria($query)->find();
 
-        $mapper = $result[] = $this->getFactory()->createAdyenPersistenceMapper();
+        $mapper = $this->getFactory()->createAdyenPersistenceMapper();
         $result = [];
 
         foreach ($entityTransfers as $entityTransfer) {
@@ -122,7 +122,7 @@ class AdyenRepository extends AbstractRepository implements AdyenRepositoryInter
 
         $entityTransfers = $this->buildQueryFromCriteria($query)->find();
 
-        $mapper = $result[] = $this->getFactory()->createAdyenPersistenceMapper();
+        $mapper = $this->getFactory()->createAdyenPersistenceMapper();
         $result = [];
 
         foreach ($entityTransfers as $entityTransfer) {
@@ -153,7 +153,7 @@ class AdyenRepository extends AbstractRepository implements AdyenRepositoryInter
 
         $entityTransfers = $this->buildQueryFromCriteria($query)->find();
 
-        $mapper = $result[] = $this->getFactory()->createAdyenPersistenceMapper();
+        $mapper = $this->getFactory()->createAdyenPersistenceMapper();
         $result = [];
 
         foreach ($entityTransfers as $entityTransfer) {

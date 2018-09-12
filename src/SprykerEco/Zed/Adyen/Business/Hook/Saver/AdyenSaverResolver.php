@@ -76,7 +76,7 @@ class AdyenSaverResolver implements AdyenSaverResolverInterface
     {
         return sprintf(
             static::CLASS_NAME_PATTERN,
-            str_replace(strtolower(SharedAdyenConfig::PROVIDER_NAME), '', $methodName)
+            ltrim($methodName, strtolower(SharedAdyenConfig::PROVIDER_NAME))
         );
     }
 }

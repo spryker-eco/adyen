@@ -119,6 +119,8 @@ interface AdyenFacadeInterface
     /**
      * Specification:
      * - Executes make payment request to API.
+     * - Create PaymentAdyen entities, save them to DB.
+     * - Update order items with necessary OMS statuses.
      *
      * @api
      *

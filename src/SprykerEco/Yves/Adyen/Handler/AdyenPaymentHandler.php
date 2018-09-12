@@ -33,7 +33,7 @@ class AdyenPaymentHandler implements AdyenPaymentHandlerInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function addPaymentToQuote(Request $request, QuoteTransfer $quoteTransfer)
+    public function addPaymentToQuote(Request $request, QuoteTransfer $quoteTransfer): QuoteTransfer
     {
         $paymentSelection = $quoteTransfer->getPayment()->getPaymentSelection();
         $quoteTransfer

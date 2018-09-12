@@ -17,7 +17,6 @@ use Spryker\Zed\Oms\Dependency\Plugin\Command\CommandByOrderInterface;
 class CancelPlugin extends AbstractCommandPlugin implements CommandByOrderInterface
 {
     /**
-     *
      * {@inheritdoc}
      *
      * @api

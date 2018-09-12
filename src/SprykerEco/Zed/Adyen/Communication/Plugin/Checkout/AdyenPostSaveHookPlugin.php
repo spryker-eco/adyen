@@ -19,9 +19,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class AdyenPostSaveHookPlugin extends AbstractPlugin implements CheckoutPostSaveHookInterface
 {
     /**
-     * Specification:
-     * - This plugin is called after the order is placed.
-     * - Set the success flag to false, if redirect should be headed to an error page afterwords
+     * {@inheritdoc}
      *
      * @api
      *
