@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\AdyenApiResponseTransfer;
 use SprykerEco\Zed\Adyen\AdyenConfig;
 use SprykerEco\Zed\Adyen\Business\Reader\AdyenReaderInterface;
 use SprykerEco\Zed\Adyen\Business\Writer\AdyenWriterInterface;
+use SprykerEco\Zed\Adyen\Dependency\Service\AdyenToUtilEncodingServiceInterface;
 
 abstract class AbstractSaver
 {
@@ -26,6 +27,11 @@ abstract class AbstractSaver
     protected $writer;
 
     /**
+     * @var \SprykerEco\Zed\Adyen\Dependency\Service\AdyenToUtilEncodingServiceInterface
+     */
+    protected $encodingService;
+
+    /**
      * @var \SprykerEco\Zed\Adyen\AdyenConfig
      */
     protected $config;
@@ -38,15 +44,18 @@ abstract class AbstractSaver
     /**
      * @param \SprykerEco\Zed\Adyen\Business\Reader\AdyenReaderInterface $reader
      * @param \SprykerEco\Zed\Adyen\Business\Writer\AdyenWriterInterface $writer
+     * @param \SprykerEco\Zed\Adyen\Dependency\Service\AdyenToUtilEncodingServiceInterface $encodingService
      * @param \SprykerEco\Zed\Adyen\AdyenConfig $config
      */
     public function __construct(
         AdyenReaderInterface $reader,
         AdyenWriterInterface $writer,
+        AdyenToUtilEncodingServiceInterface $encodingService,
         AdyenConfig $config
     ) {
         $this->reader = $reader;
         $this->writer = $writer;
+        $this->encodingService = $encodingService;
         $this->config = $config;
     }
 

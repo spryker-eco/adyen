@@ -18,14 +18,6 @@ class CreditCardMapper extends AbstractMapper implements AdyenMapperInterface
     protected const REQUEST_TYPE = 'scheme';
 
     /**
-     * @return string
-     */
-    public function getMethodName(): string
-    {
-        return PaymentTransfer::ADYEN_CREDIT_CARD;
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\AdyenApiRequestTransfer

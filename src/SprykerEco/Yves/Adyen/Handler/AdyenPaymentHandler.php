@@ -46,13 +46,15 @@ class AdyenPaymentHandler implements AdyenPaymentHandlerInterface
             ->getAdyenPayment()
             ->setReference($this->service->generateReference($quoteTransfer));
 
-        $quoteTransfer
-            ->getPayment()
-            ->getAdyenCreditCard()
-            ->setEncryptedCardNumber($request->get('encryptedCardNumber'))
-            ->setEncryptedExpiryMonth($request->get('encryptedExpiryMonth'))
-            ->setEncryptedExpiryYear($request->get('encryptedExpiryYear'))
-            ->setEncryptedSecurityCode($request->get('encryptedSecurityCode'));
+        if (false) {
+            $quoteTransfer
+                ->getPayment()
+                ->getAdyenCreditCard()
+                ->setEncryptedCardNumber($request->get('encryptedCardNumber'))
+                ->setEncryptedExpiryMonth($request->get('encryptedExpiryMonth'))
+                ->setEncryptedExpiryYear($request->get('encryptedExpiryYear'))
+                ->setEncryptedSecurityCode($request->get('encryptedSecurityCode'));
+        }
 
         return $quoteTransfer;
     }

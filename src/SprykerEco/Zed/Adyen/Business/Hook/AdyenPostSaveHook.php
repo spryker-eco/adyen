@@ -7,6 +7,7 @@
 
 namespace SprykerEco\Zed\Adyen\Business\Hook;
 
+use Generated\Shared\Transfer\AdyenApiResponseTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use SprykerEco\Shared\Adyen\AdyenConfig;
@@ -64,5 +65,22 @@ class AdyenPostSaveHook implements AdyenHookInterface
         $requestTransfer = $mapper->buildPaymentRequestTransfer($quoteTransfer);
         $responseTransfer = $this->adyenApiFacade->performMakePaymentApiCall($requestTransfer);
         $saver->save($requestTransfer, $responseTransfer);
+
+        if ($this->isMethodWithRedirect($responseTransfer)) {
+            $checkoutResponseTransfer->setIsExternalRedirect(true);
+            $checkoutResponseTransfer->setRedirectUrl(
+                $responseTransfer->getMakePaymentResponse()->getRedirect()->getUrl()
+            );
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AdyenApiResponseTransfer $responseTransfer
+     *
+     * @return bool
+     */
+    protected function isMethodWithRedirect(AdyenApiResponseTransfer $responseTransfer): bool
+    {
+        return !empty($responseTransfer->getMakePaymentResponse()->getRedirect());
     }
 }

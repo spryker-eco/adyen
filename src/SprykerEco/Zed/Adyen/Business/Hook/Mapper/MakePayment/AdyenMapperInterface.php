@@ -13,11 +13,6 @@ use Generated\Shared\Transfer\QuoteTransfer;
 interface AdyenMapperInterface
 {
     /**
-     * @return string
-     */
-    public function getMethodName(): string;
-
-    /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\AdyenApiRequestTransfer

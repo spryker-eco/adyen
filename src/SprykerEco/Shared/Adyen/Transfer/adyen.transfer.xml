@@ -10,6 +10,8 @@
         <property name="orderReference" type="string" />
         <property name="reference" type="string" />
         <property name="pspReference" type="string" />
+        <property name="details" type="string" />
+        <property name="paymentData" type="string" />
     </transfer>
 
     <transfer name="PaymentAdyenOrderItem">
@@ -42,14 +44,20 @@
         <property name="holderName" type="string" />
     </transfer>
 
+    <transfer name="AdyenSofortPayment">
+        <property name="redirectUrl" type="string" />
+    </transfer>
+
     <transfer name="Payment">
         <property name="adyenPayment" type="AdyenPayment" />
         <property name="adyenCreditCard" type="AdyenCreditCardPayment" />
+        <property name="adyenSofort" type="AdyenSofortPayment" />
     </transfer>
 
     <transfer name="Order">
         <property name="adyenPayment" type="AdyenPayment" />
         <property name="adyenCreditCard" type="AdyenCreditCardPayment" />
+        <property name="adyenSofort" type="AdyenSofortPayment" />
     </transfer>
 
 </transfers>

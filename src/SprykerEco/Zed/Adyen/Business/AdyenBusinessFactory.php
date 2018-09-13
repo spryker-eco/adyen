@@ -42,6 +42,7 @@ use SprykerEco\Zed\Adyen\Business\Writer\AdyenWriter;
 use SprykerEco\Zed\Adyen\Business\Writer\AdyenWriterInterface;
 use SprykerEco\Zed\Adyen\Dependency\Facade\AdyenToAdyenApiFacadeInterface;
 use SprykerEco\Zed\Adyen\Dependency\Facade\AdyenToOmsFacadeInterface;
+use SprykerEco\Zed\Adyen\Dependency\Service\AdyenToUtilEncodingServiceBridge;
 
 /**
  * @method \SprykerEco\Zed\Adyen\AdyenConfig getConfig()
@@ -288,5 +289,13 @@ class AdyenBusinessFactory extends AbstractBusinessFactory
     public function getOmsFacade(): AdyenToOmsFacadeInterface
     {
         return $this->getProvidedDependency(AdyenDependencyProvider::FACADE_OMS);
+    }
+
+    /**
+     * @return \SprykerEco\Zed\Adyen\Dependency\Service\AdyenToUtilEncodingServiceInterface
+     */
+    public function getUtilEncodingService(): AdyenToUtilEncodingServiceBridge
+    {
+        return $this->getProvidedDependency(AdyenDependencyProvider::SERVICE_UTIL_ENCODING);
     }
 }
