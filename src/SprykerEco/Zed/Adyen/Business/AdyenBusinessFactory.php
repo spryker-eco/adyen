@@ -7,7 +7,6 @@
 
 namespace SprykerEco\Zed\Adyen\Business;
 
-use Closure;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use SprykerEco\Shared\Adyen\AdyenConfig;
 use SprykerEco\Zed\Adyen\AdyenDependencyProvider;
@@ -15,9 +14,11 @@ use SprykerEco\Zed\Adyen\Business\Hook\AdyenHookInterface;
 use SprykerEco\Zed\Adyen\Business\Hook\AdyenPostSaveHook;
 use SprykerEco\Zed\Adyen\Business\Hook\Mapper\AdyenMapperResolver;
 use SprykerEco\Zed\Adyen\Business\Hook\Mapper\AdyenMapperResolverInterface;
+use SprykerEco\Zed\Adyen\Business\Hook\Mapper\MakePayment\AdyenMapperInterface;
 use SprykerEco\Zed\Adyen\Business\Hook\Mapper\MakePayment\CreditCardMapper;
 use SprykerEco\Zed\Adyen\Business\Hook\Saver\AdyenSaverResolver;
 use SprykerEco\Zed\Adyen\Business\Hook\Saver\AdyenSaverResolverInterface;
+use SprykerEco\Zed\Adyen\Business\Hook\Saver\MakePayment\AdyenSaverInterface;
 use SprykerEco\Zed\Adyen\Business\Hook\Saver\MakePayment\CreditCardSaver;
 use SprykerEco\Zed\Adyen\Business\Logger\AdyenLogger;
 use SprykerEco\Zed\Adyen\Business\Logger\AdyenLoggerInterface;
@@ -92,7 +93,7 @@ class AdyenBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return array
+     * @return \SprykerEco\Zed\Adyen\Business\Hook\Mapper\MakePayment\AdyenMapperInterface[]
      */
     public function getMakePaymentMappers(): array
     {
@@ -102,13 +103,11 @@ class AdyenBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Closure
+     * @return \SprykerEco\Zed\Adyen\Business\Hook\Mapper\MakePayment\AdyenMapperInterface
      */
-    public function createCreditCardMakePaymentMapper(): Closure
+    public function createCreditCardMakePaymentMapper(): AdyenMapperInterface
     {
-        return function () {
-            return new CreditCardMapper($this->getConfig());
-        };
+        return new CreditCardMapper($this->getConfig());
     }
 
     /**
@@ -120,7 +119,7 @@ class AdyenBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return array
+     * @return \SprykerEco\Zed\Adyen\Business\Hook\Saver\MakePayment\AdyenSaverInterface[]
      */
     public function getMakePaymentSavers(): array
     {
@@ -130,17 +129,15 @@ class AdyenBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Closure
+     * @return \SprykerEco\Zed\Adyen\Business\Hook\Saver\MakePayment\AdyenSaverInterface
      */
-    public function createCreditCardMakePaymentSaver(): Closure
+    public function createCreditCardMakePaymentSaver(): AdyenSaverInterface
     {
-        return function () {
-            return new CreditCardSaver(
-                $this->createReader(),
-                $this->createWriter(),
-                $this->getConfig()
-            );
-        };
+        return new CreditCardSaver(
+            $this->createReader(),
+            $this->createWriter(),
+            $this->getConfig()
+        );
     }
 
     /**
