@@ -7,26 +7,22 @@
 
 namespace SprykerEco\Zed\Adyen\Business\Hook\Mapper;
 
-use SprykerEco\Shared\Adyen\AdyenConfig as SharedAdyenConfig;
-use SprykerEco\Zed\Adyen\AdyenConfig;
 use SprykerEco\Zed\Adyen\Business\Exception\AdyenMethodMapperException;
 use SprykerEco\Zed\Adyen\Business\Hook\Mapper\MakePayment\AdyenMapperInterface;
 
 class AdyenMapperResolver implements AdyenMapperResolverInterface
 {
-    protected const CLASS_NAME_PATTERN = '\\SprykerEco\\Zed\\Adyen\\Business\\Hook\\Mapper\\MakePayment\\%sMapper';
+    /**
+     * @var array
+     */
+    protected $mappers;
 
     /**
-     * @var \SprykerEco\Zed\Adyen\AdyenConfig
+     * @param array $mappers
      */
-    protected $config;
-
-    /**
-     * @param \SprykerEco\Zed\Adyen\AdyenConfig $config
-     */
-    public function __construct(AdyenConfig $config)
+    public function __construct(array $mappers)
     {
-        $this->config = $config;
+        $this->mappers = $mappers;
     }
 
     /**
@@ -38,26 +34,12 @@ class AdyenMapperResolver implements AdyenMapperResolverInterface
      */
     public function resolve(string $methodName): AdyenMapperInterface
     {
-        $className = $this->getMapperClassName($methodName);
-        if (!class_exists($className)) {
+        if (!array_key_exists($methodName, $this->mappers)) {
             throw new AdyenMethodMapperException(
-                sprintf('%s method mapper does not exist.', $methodName)
+                sprintf('%s method mapper is not registered.', $methodName)
             );
         }
 
-        return new $className($this->config);
-    }
-
-    /**
-     * @param string $methodName
-     *
-     * @return string
-     */
-    protected function getMapperClassName(string $methodName): string
-    {
-        return sprintf(
-            static::CLASS_NAME_PATTERN,
-            ltrim($methodName, strtolower(SharedAdyenConfig::PROVIDER_NAME))
-        );
+        return $this->mappers[$methodName]();
     }
 }

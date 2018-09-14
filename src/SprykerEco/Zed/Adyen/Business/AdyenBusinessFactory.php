@@ -7,14 +7,18 @@
 
 namespace SprykerEco\Zed\Adyen\Business;
 
+use Closure;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use SprykerEco\Shared\Adyen\AdyenConfig;
 use SprykerEco\Zed\Adyen\AdyenDependencyProvider;
 use SprykerEco\Zed\Adyen\Business\Hook\AdyenHookInterface;
 use SprykerEco\Zed\Adyen\Business\Hook\AdyenPostSaveHook;
 use SprykerEco\Zed\Adyen\Business\Hook\Mapper\AdyenMapperResolver;
 use SprykerEco\Zed\Adyen\Business\Hook\Mapper\AdyenMapperResolverInterface;
+use SprykerEco\Zed\Adyen\Business\Hook\Mapper\MakePayment\CreditCardMapper;
 use SprykerEco\Zed\Adyen\Business\Hook\Saver\AdyenSaverResolver;
 use SprykerEco\Zed\Adyen\Business\Hook\Saver\AdyenSaverResolverInterface;
+use SprykerEco\Zed\Adyen\Business\Hook\Saver\MakePayment\CreditCardSaver;
 use SprykerEco\Zed\Adyen\Business\Logger\AdyenLogger;
 use SprykerEco\Zed\Adyen\Business\Logger\AdyenLoggerInterface;
 use SprykerEco\Zed\Adyen\Business\Oms\Handler\AdyenCommandHandlerInterface;
@@ -83,7 +87,27 @@ class AdyenBusinessFactory extends AbstractBusinessFactory
      */
     public function createMapperResolver(): AdyenMapperResolverInterface
     {
-        return new AdyenMapperResolver($this->getConfig());
+        return new AdyenMapperResolver($this->getMakePaymentMappers());
+    }
+
+    /**
+     * @return array
+     */
+    public function getMakePaymentMappers(): array
+    {
+        return [
+            AdyenConfig::ADYEN_CREDIT_CARD => $this->createCreditCardMakePaymentMapper(),
+        ];
+    }
+
+    /**
+     * @return \Closure
+     */
+    public function createCreditCardMakePaymentMapper(): Closure
+    {
+        return function () {
+            return new CreditCardMapper($this->getConfig());
+        };
     }
 
     /**
@@ -91,11 +115,31 @@ class AdyenBusinessFactory extends AbstractBusinessFactory
      */
     public function createSaverResolver(): AdyenSaverResolverInterface
     {
-        return new AdyenSaverResolver(
-            $this->createReader(),
-            $this->createWriter(),
-            $this->getConfig()
-        );
+        return new AdyenSaverResolver($this->getMakePaymentSavers());
+    }
+
+    /**
+     * @return array
+     */
+    public function getMakePaymentSavers(): array
+    {
+        return [
+            AdyenConfig::ADYEN_CREDIT_CARD => $this->createCreditCardMakePaymentSaver(),
+        ];
+    }
+
+    /**
+     * @return \Closure
+     */
+    public function createCreditCardMakePaymentSaver(): Closure
+    {
+        return function () {
+            return new CreditCardSaver(
+                $this->createReader(),
+                $this->createWriter(),
+                $this->getConfig()
+            );
+        };
     }
 
     /**
