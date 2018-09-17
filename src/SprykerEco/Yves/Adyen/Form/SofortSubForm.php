@@ -7,7 +7,6 @@
 
 namespace SprykerEco\Yves\Adyen\Form;
 
-use Generated\Shared\Transfer\AdyenCreditCardPaymentTransfer;
 use Generated\Shared\Transfer\AdyenSofortPaymentTransfer;
 use Generated\Shared\Transfer\PaymentTransfer;
 use SprykerEco\Shared\Adyen\AdyenConfig;

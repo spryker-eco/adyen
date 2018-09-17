@@ -50,7 +50,9 @@ class SofortSaver extends AbstractSaver implements AdyenSaverInterface
                 $request->getMakePaymentRequest()->getReference()
             );
 
-        $paymentAdyenTransfer->setDetails($response->getMakePaymentResponse()->getDetails());
+        $paymentAdyenTransfer->setDetails(
+            $this->encodingService->encodeJson($response->getMakePaymentResponse()->getDetails())
+        );
         $paymentAdyenTransfer->setPaymentData($response->getMakePaymentResponse()->getPaymentData());
 
         $paymentAdyenOrderItemTransfers = $this->reader

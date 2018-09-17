@@ -14,7 +14,6 @@ class AdyenControllerProvider extends YvesControllerProvider
 {
     protected const BUNDLE_NAME = 'Adyen';
 
-
     /**
      * @param \Silex\Application $app
      *

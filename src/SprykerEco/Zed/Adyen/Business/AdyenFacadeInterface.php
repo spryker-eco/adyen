@@ -7,6 +7,7 @@
 
 namespace SprykerEco\Zed\Adyen\Business;
 
+use Generated\Shared\Transfer\AdyenRedirectResponseTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\PaymentMethodsTransfer;
@@ -105,6 +106,24 @@ interface AdyenFacadeInterface
 
     /**
      * Specification:
+     * - Handle CancelOrRefund OMS command, make request to API, process response.
+     *
+     * @api
+     *
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $orderItems
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param array $data
+     *
+     * @return void
+     */
+    public function handleCancelOrRefundCommand(
+        array $orderItems,
+        OrderTransfer $orderTransfer,
+        array $data
+    ): void;
+
+    /**
+     * Specification:
      * - Saves order payment method data according to quote and checkout response transfer data.
      *
      * @api
@@ -130,4 +149,13 @@ interface AdyenFacadeInterface
      * @return void
      */
     public function executePostSaveHook(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse): void;
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\AdyenRedirectResponseTransfer $redirectResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\AdyenRedirectResponseTransfer
+     */
+    public function handleSofortResponseFromAdyen(AdyenRedirectResponseTransfer $redirectResponseTransfer): AdyenRedirectResponseTransfer;
 }

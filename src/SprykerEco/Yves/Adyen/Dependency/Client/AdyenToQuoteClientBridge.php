@@ -25,6 +25,14 @@ class AdyenToQuoteClientBridge implements AdyenToQuoteClientInterface
     }
 
     /**
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function getQuote(): QuoteTransfer
+    {
+        return $this->quoteClient->getQuote();
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void

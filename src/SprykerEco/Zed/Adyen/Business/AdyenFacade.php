@@ -7,6 +7,7 @@
 
 namespace SprykerEco\Zed\Adyen\Business;
 
+use Generated\Shared\Transfer\AdyenRedirectResponseTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\PaymentMethodsTransfer;
@@ -120,6 +121,25 @@ class AdyenFacade extends AbstractFacade implements AdyenFacadeInterface
      *
      * @api
      *
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $orderItems
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param array $data
+     *
+     * @return void
+     */
+    public function handleCancelOrRefundCommand(
+        array $orderItems,
+        OrderTransfer $orderTransfer,
+        array $data
+    ): void {
+        $this->getFactory()->createCancelOrRefundCommandHandler()->handle($orderItems, $orderTransfer, $data);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
      *
@@ -143,5 +163,17 @@ class AdyenFacade extends AbstractFacade implements AdyenFacadeInterface
     public function executePostSaveHook(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse): void
     {
         $this->getFactory()->createPostCheckHook()->execute($quoteTransfer, $checkoutResponse);
+    }
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\AdyenRedirectResponseTransfer $redirectResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\AdyenRedirectResponseTransfer
+     */
+    public function handleSofortResponseFromAdyen(AdyenRedirectResponseTransfer $redirectResponseTransfer): AdyenRedirectResponseTransfer
+    {
+        return $this->getFactory()->createSofortRedirectHandler()->handle($redirectResponseTransfer);
     }
 }

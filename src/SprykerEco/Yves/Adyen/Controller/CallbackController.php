@@ -7,8 +7,9 @@
 
 namespace SprykerEco\Yves\Adyen\Controller;
 
-
 use Spryker\Yves\Kernel\Controller\AbstractController;
+use SprykerShop\Yves\CheckoutPage\Plugin\Provider\CheckoutPageControllerProvider;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -16,9 +17,19 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class CallbackController extends AbstractController
 {
-    public function indexAction(Request $request)
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function indexAction(Request $request): RedirectResponse
     {
-        $response = $request->query->all();
-        $response = null;
+        $responseTransfer = $this->getFactory()->createSofortRedirectHandler()->handle($request);
+
+        if ($responseTransfer->getIsSuccess()) {
+            return $this->redirectResponseInternal(CheckoutPageControllerProvider::CHECKOUT_SUCCESS);
+        }
+
+        return $this->redirectResponseInternal(CheckoutPageControllerProvider::CHECKOUT_ERROR);
     }
 }

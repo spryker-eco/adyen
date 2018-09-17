@@ -12,6 +12,11 @@ use Generated\Shared\Transfer\QuoteTransfer;
 interface AdyenToQuoteClientInterface
 {
     /**
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function getQuote();
+
+    /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void

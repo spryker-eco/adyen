@@ -52,35 +52,6 @@ class AdyenRepository extends AbstractRepository implements AdyenRepositoryInter
     }
 
     /**
-     * @param string $reference
-     *
-     * @return \Generated\Shared\Transfer\PaymentAdyenOrderItemTransfer[]
-     */
-    public function getAllPaymentAdyenOrderItemsByReference(string $reference): array
-    {
-        $query = $this
-            ->getPaymentAdyenOrderItemQuery()
-            ->useSpyPaymentAdyenQuery()
-            ->filterByReference($reference)
-            ->endUse();
-
-        $entityTransfers = $this->buildQueryFromCriteria($query)->find();
-
-        $mapper = $this->getFactory()->createAdyenPersistenceMapper();
-        $result = [];
-
-        foreach ($entityTransfers as $entityTransfer) {
-            $result[] = $mapper
-                ->mapEntityTransferToPaymentAdyenOrderItemTransfer(
-                    $entityTransfer,
-                    new PaymentAdyenOrderItemTransfer()
-                );
-        }
-
-        return $result;
-    }
-
-    /**
      * @param int $idSalesOrder
      *
      * @return \Generated\Shared\Transfer\PaymentAdyenOrderItemTransfer[]

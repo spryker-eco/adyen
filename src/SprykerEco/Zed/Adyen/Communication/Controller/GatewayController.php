@@ -7,6 +7,7 @@
 
 namespace SprykerEco\Zed\Adyen\Communication\Controller;
 
+use Generated\Shared\Transfer\AdyenRedirectResponseTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 
 /**
@@ -14,4 +15,13 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
  */
 class GatewayController extends AbstractGatewayController
 {
+    /**
+     * @param \Generated\Shared\Transfer\AdyenRedirectResponseTransfer $redirectResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\AdyenRedirectResponseTransfer
+     */
+    public function handleSofortResponseAction(AdyenRedirectResponseTransfer $redirectResponseTransfer): AdyenRedirectResponseTransfer
+    {
+        return $this->getFacade()->handleSofortResponseFromAdyen($redirectResponseTransfer);
+    }
 }
