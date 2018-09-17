@@ -37,19 +37,19 @@ class AdyenGenerator implements AdyenGeneratorInterface
     public function generateReference(QuoteTransfer $quoteTransfer): string
     {
         $parameters = [
-            $this->createUniqueSalt(),
+            $this->generateUniqueSalt(),
             $quoteTransfer->getTotals()->getHash(),
         ];
 
         $string = $this->textService->hashValue(implode(static::PARAMETERS_SEPARATOR, $parameters), Hash::SHA256);
 
-        return substr($string, 0, static::REFERENCE_LENGTH);
+        return $this->getLimitedReference($string);
     }
 
     /**
      * @return string
      */
-    protected function createUniqueSalt(): string
+    protected function generateUniqueSalt(): string
     {
         $params = [
             time(),
@@ -57,5 +57,15 @@ class AdyenGenerator implements AdyenGeneratorInterface
         ];
 
         return implode(static::PARAMETERS_SEPARATOR, $params);
+    }
+
+    /**
+     * @param string $string
+     *
+     * @return string
+     */
+    protected function getLimitedReference(string $string): string
+    {
+        return substr($string, 0, static::REFERENCE_LENGTH);
     }
 }
