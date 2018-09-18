@@ -2,7 +2,7 @@
 
 /**
  * MIT License
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
 namespace SprykerEco\Zed\Adyen\Business\Oms\Saver;
@@ -18,7 +18,7 @@ class CancelOrRefundCommandSaver extends AbstractCommandSaver implements AdyenCo
      */
     public function save(array $orderItems): void
     {
-        $this->writer->update(
+        $this->writer->updatePaymentEntities(
             $this->config->getOmsStatusRefunded(),
             $this->reader->getPaymentAdyenOrderItemsByOrderItems($orderItems)
         );

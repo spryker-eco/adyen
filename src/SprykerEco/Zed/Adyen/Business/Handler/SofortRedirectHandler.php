@@ -2,7 +2,7 @@
 
 /**
  * MIT License
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
 namespace SprykerEco\Zed\Adyen\Business\Handler;
@@ -69,7 +69,7 @@ class SofortRedirectHandler implements AdyenRedirectHandlerInterface
         $requestTransfer = $this->createDetailsRequestTransfer($redirectResponseTransfer, $paymentAdyenTransfer);
         $responseTransfer = $this->adyenApiFacade->performPaymentsDetailsApiCall($requestTransfer);
 
-        $this->writer->savePaymentAdyenApiLog(
+        $this->writer->saveApiLog(
             'Sofort Redirect',
             new AdyenApiRequestTransfer(),
             $responseTransfer
@@ -81,7 +81,7 @@ class SofortRedirectHandler implements AdyenRedirectHandlerInterface
 
         $paymentAdyenTransfer->setPspReference($responseTransfer->getPaymentsDetailsResponse()->getPspReference());
 
-        $this->writer->update(
+        $this->writer->updatePaymentEntities(
             $this->config->getOmsStatusCaptured(),
             $paymentAdyenOrderItems,
             $paymentAdyenTransfer

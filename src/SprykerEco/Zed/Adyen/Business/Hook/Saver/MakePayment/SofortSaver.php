@@ -2,7 +2,7 @@
 
 /**
  * MIT License
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
 namespace SprykerEco\Zed\Adyen\Business\Hook\Saver\MakePayment;
@@ -60,7 +60,7 @@ class SofortSaver extends AbstractSaver implements AdyenSaverInterface
                 $paymentAdyenTransfer->getFkSalesOrder()
             );
 
-        $this->writer->update(
+        $this->writer->updatePaymentEntities(
             $this->config->getOmsStatusNew(),
             $paymentAdyenOrderItemTransfers,
             $paymentAdyenTransfer
