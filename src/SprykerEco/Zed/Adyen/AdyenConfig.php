@@ -90,9 +90,9 @@ class AdyenConfig extends AbstractBundleConfig
     /**
      * @return string
      */
-    public function getReturnUrl(): string
+    public function getSofortReturnUrl(): string
     {
-        return $this->get(AdyenConstants::RETURN_URL);
+        return $this->get(AdyenConstants::SOFORT_RETURN_URL);
     }
 
     /**

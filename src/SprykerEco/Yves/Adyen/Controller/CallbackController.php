@@ -22,7 +22,7 @@ class CallbackController extends AbstractController
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function indexAction(Request $request): RedirectResponse
+    public function redirectSofortAction(Request $request): RedirectResponse
     {
         $responseTransfer = $this->getFactory()->createSofortRedirectHandler()->handle($request);
 

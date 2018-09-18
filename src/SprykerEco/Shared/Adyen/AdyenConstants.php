@@ -13,6 +13,6 @@ namespace SprykerEco\Shared\Adyen;
 interface AdyenConstants
 {
     public const MERCHANT_ACCOUNT = 'ADYEN:MERCHANT_ACCOUNT';
-    public const RETURN_URL = 'ADYEN:RETURN_URL';
+    public const SOFORT_RETURN_URL = 'ADYEN:SOFORT_RETURN_URL';
     public const MULTIPLE_PARTIAL_CAPTURE_ENABLED = 'ADYEN:MULTIPLE_PARTIAL_CAPTURE_ENABLED';
 }

@@ -7,7 +7,7 @@ use SprykerEco\Shared\Adyen\AdyenConstants;
 use SprykerEco\Shared\AdyenApi\AdyenApiConstants;
 
 $config[AdyenConstants::MERCHANT_ACCOUNT] = 'PUT YOUR MERCHANT ACCOUNT HERE';
-$config[AdyenConstants::RETURN_URL] = 'RETURN URL';
+$config[AdyenConstants::SOFORT_RETURN_URL] = 'SOFORT RETURN URL';
 $config[AdyenConstants::MULTIPLE_PARTIAL_CAPTURE_ENABLED] = false;
 
 $config[AdyenApiConstants::API_KEY] = 'PUT YOUR API KEY HERE';

@@ -33,4 +33,12 @@ class SofortMapper extends AbstractMapper implements AdyenMapperInterface
 
         return $requestTransfer;
     }
+
+    /**
+     * @return string
+     */
+    protected function getReturnUrl(): string
+    {
+        return $this->config->getSofortReturnUrl();
+    }
 }
