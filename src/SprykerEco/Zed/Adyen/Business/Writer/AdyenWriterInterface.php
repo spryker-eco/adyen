@@ -22,7 +22,7 @@ interface AdyenWriterInterface
      *
      * @return void
      */
-    public function save(PaymentTransfer $paymentTransfer, SaveOrderTransfer $saveOrderTransfer): void;
+    public function savePaymentEntities(PaymentTransfer $paymentTransfer, SaveOrderTransfer $saveOrderTransfer): void;
 
     /**
      * @param string $status
@@ -31,7 +31,7 @@ interface AdyenWriterInterface
      *
      * @return void
      */
-    public function update(
+    public function updatePaymentEntities(
         string $status,
         array $paymentAdyenOrderItemTransfers,
         ?PaymentAdyenTransfer $paymentAdyenTransfer = null
@@ -44,7 +44,7 @@ interface AdyenWriterInterface
      *
      * @return \Generated\Shared\Transfer\PaymentAdyenApiLogTransfer
      */
-    public function savePaymentAdyenApiLog(
+    public function saveApiLog(
         string $type,
         AdyenApiRequestTransfer $request,
         AdyenApiResponseTransfer $response

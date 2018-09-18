@@ -9,21 +9,12 @@ namespace SprykerEco\Zed\Adyen\Business\Hook\Mapper\MakePayment;
 
 use Generated\Shared\Transfer\AdyenApiRequestTransfer;
 use Generated\Shared\Transfer\AdyenCreditCardPaymentTransfer;
-use Generated\Shared\Transfer\PaymentTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use SprykerEco\Shared\Adyen\AdyenSdkConfig;
 
 class CreditCardMapper extends AbstractMapper implements AdyenMapperInterface
 {
     protected const REQUEST_TYPE = 'scheme';
-
-    /**
-     * @return string
-     */
-    public function getMethodName(): string
-    {
-        return PaymentTransfer::ADYEN_CREDIT_CARD;
-    }
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer

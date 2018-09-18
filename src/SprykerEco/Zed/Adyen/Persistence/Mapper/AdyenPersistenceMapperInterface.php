@@ -18,13 +18,11 @@ interface AdyenPersistenceMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\PaymentAdyenTransfer $paymentAdyenTransfer
-     * @param \Generated\Shared\Transfer\SpyPaymentAdyenEntityTransfer $paymentAdyenEntityTransfer
      *
      * @return \Generated\Shared\Transfer\SpyPaymentAdyenEntityTransfer
      */
     public function mapPaymentAdyenTransferToEntityTransfer(
-        PaymentAdyenTransfer $paymentAdyenTransfer,
-        SpyPaymentAdyenEntityTransfer $paymentAdyenEntityTransfer
+        PaymentAdyenTransfer $paymentAdyenTransfer
     ): SpyPaymentAdyenEntityTransfer;
 
     /**
@@ -40,13 +38,11 @@ interface AdyenPersistenceMapperInterface
 
     /**
      * @param \Generated\Shared\Transfer\PaymentAdyenOrderItemTransfer $paymentAdyenOrderItemTransfer
-     * @param \Generated\Shared\Transfer\SpyPaymentAdyenOrderItemEntityTransfer $paymentAdyenOrderItemEntityTransfer
      *
      * @return \Generated\Shared\Transfer\SpyPaymentAdyenOrderItemEntityTransfer
      */
     public function mapPaymentAdyenOrderItemTransferToEntityTransfer(
-        PaymentAdyenOrderItemTransfer $paymentAdyenOrderItemTransfer,
-        SpyPaymentAdyenOrderItemEntityTransfer $paymentAdyenOrderItemEntityTransfer
+        PaymentAdyenOrderItemTransfer $paymentAdyenOrderItemTransfer
     ): SpyPaymentAdyenOrderItemEntityTransfer;
 
     /**
@@ -62,13 +58,11 @@ interface AdyenPersistenceMapperInterface
 
     /**
      * @param \Generated\Shared\Transfer\PaymentAdyenApiLogTransfer $paymentAdyenApiLogTransfer
-     * @param \Generated\Shared\Transfer\SpyPaymentAdyenApiLogEntityTransfer $paymentAdyenApiLogEntityTransfer
      *
      * @return \Generated\Shared\Transfer\SpyPaymentAdyenApiLogEntityTransfer
      */
     public function mapPaymentAdyenApiLogTransferToEntityTransfer(
-        PaymentAdyenApiLogTransfer $paymentAdyenApiLogTransfer,
-        SpyPaymentAdyenApiLogEntityTransfer $paymentAdyenApiLogEntityTransfer
+        PaymentAdyenApiLogTransfer $paymentAdyenApiLogTransfer
     ): SpyPaymentAdyenApiLogEntityTransfer;
 
     /**

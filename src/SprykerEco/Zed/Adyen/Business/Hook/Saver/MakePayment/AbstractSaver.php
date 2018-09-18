@@ -58,7 +58,7 @@ abstract class AbstractSaver
      */
     protected function log(AdyenApiRequestTransfer $request, AdyenApiResponseTransfer $response): void
     {
-        $this->writer->savePaymentAdyenApiLog(
+        $this->writer->saveApiLog(
             $this->getRequestType(),
             $request,
             $response

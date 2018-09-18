@@ -57,7 +57,7 @@ class CreditCardSaver extends AbstractSaver implements AdyenSaverInterface
                 $paymentAdyenTransfer->getFkSalesOrder()
             );
 
-        $this->writer->update(
+        $this->writer->updatePaymentEntities(
             $this->config->getOmsStatusAuthorized(),
             $paymentAdyenOrderItemTransfers,
             $paymentAdyenTransfer

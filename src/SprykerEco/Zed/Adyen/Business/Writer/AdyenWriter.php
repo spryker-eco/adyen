@@ -18,16 +18,10 @@ use Generated\Shared\Transfer\SaveOrderTransfer;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use SprykerEco\Zed\Adyen\AdyenConfig;
 use SprykerEco\Zed\Adyen\Persistence\AdyenEntityManagerInterface;
-use SprykerEco\Zed\Adyen\Persistence\AdyenRepositoryInterface;
 
 class AdyenWriter implements AdyenWriterInterface
 {
     use TransactionTrait;
-
-    /**
-     * @var \SprykerEco\Zed\Adyen\Persistence\AdyenRepositoryInterface
-     */
-    protected $repository;
 
     /**
      * @var \SprykerEco\Zed\Adyen\Persistence\AdyenEntityManagerInterface
@@ -40,16 +34,13 @@ class AdyenWriter implements AdyenWriterInterface
     protected $config;
 
     /**
-     * @param \SprykerEco\Zed\Adyen\Persistence\AdyenRepositoryInterface $repository
      * @param \SprykerEco\Zed\Adyen\Persistence\AdyenEntityManagerInterface $entityManager
      * @param \SprykerEco\Zed\Adyen\AdyenConfig $config
      */
     public function __construct(
-        AdyenRepositoryInterface $repository,
         AdyenEntityManagerInterface $entityManager,
         AdyenConfig $config
     ) {
-        $this->repository = $repository;
         $this->entityManager = $entityManager;
         $this->config = $config;
     }
@@ -60,7 +51,7 @@ class AdyenWriter implements AdyenWriterInterface
      *
      * @return void
      */
-    public function save(PaymentTransfer $paymentTransfer, SaveOrderTransfer $saveOrderTransfer): void
+    public function savePaymentEntities(PaymentTransfer $paymentTransfer, SaveOrderTransfer $saveOrderTransfer): void
     {
         $paymentAdyenTransfer = $this->savePaymentAdyen($paymentTransfer, $saveOrderTransfer);
 
@@ -76,7 +67,7 @@ class AdyenWriter implements AdyenWriterInterface
      *
      * @return void
      */
-    public function update(
+    public function updatePaymentEntities(
         string $status,
         array $paymentAdyenOrderItemTransfers,
         ?PaymentAdyenTransfer $paymentAdyenTransfer = null
@@ -102,7 +93,7 @@ class AdyenWriter implements AdyenWriterInterface
      *
      * @return \Generated\Shared\Transfer\PaymentAdyenApiLogTransfer
      */
-    public function savePaymentAdyenApiLog(
+    public function saveApiLog(
         string $type,
         AdyenApiRequestTransfer $request,
         AdyenApiResponseTransfer $response
