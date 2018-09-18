@@ -19,6 +19,7 @@ class AdyenConfig extends AbstractBundleConfig
     protected const OMS_STATUS_REFUNDED = 'refunded';
 
     protected const OMS_EVENT_CANCEL_NAME = 'cancel';
+    protected const OMS_EVENT_REFUND_NAME = 'refund';
 
     protected const ADYEN_AUTOMATIC_OMS_TRIGGER = 'ADYEN_AUTOMATIC_OMS_TRIGGER';
 
@@ -68,6 +69,14 @@ class AdyenConfig extends AbstractBundleConfig
     public function getOmsEventCancelName(): string
     {
         return static::OMS_EVENT_CANCEL_NAME;
+    }
+
+    /**
+     * @return string
+     */
+    public function getOmsEventRefundName(): string
+    {
+        return static::OMS_EVENT_REFUND_NAME;
     }
 
     /**
