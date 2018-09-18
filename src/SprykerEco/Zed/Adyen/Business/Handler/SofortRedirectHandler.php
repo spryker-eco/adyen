@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\AdyenApiPaymentsDetailsRequestTransfer;
 use Generated\Shared\Transfer\AdyenApiRequestTransfer;
 use Generated\Shared\Transfer\AdyenRedirectResponseTransfer;
 use Generated\Shared\Transfer\PaymentAdyenTransfer;
+use SprykerEco\Shared\Adyen\AdyenSdkConfig;
 use SprykerEco\Zed\Adyen\AdyenConfig;
 use SprykerEco\Zed\Adyen\Business\Reader\AdyenReaderInterface;
 use SprykerEco\Zed\Adyen\Business\Writer\AdyenWriterInterface;
@@ -18,6 +19,8 @@ use SprykerEco\Zed\Adyen\Dependency\Facade\AdyenToAdyenApiFacadeInterface;
 
 class SofortRedirectHandler implements AdyenRedirectHandlerInterface
 {
+    protected const REQUEST_TYPE = 'PaymentDetails[Sofort]';
+
     /**
      * @var \SprykerEco\Zed\Adyen\Dependency\Facade\AdyenToAdyenApiFacadeInterface
      */
@@ -70,8 +73,8 @@ class SofortRedirectHandler implements AdyenRedirectHandlerInterface
         $responseTransfer = $this->adyenApiFacade->performPaymentsDetailsApiCall($requestTransfer);
 
         $this->writer->saveApiLog(
-            'Sofort Redirect',
-            new AdyenApiRequestTransfer(),
+            static::REQUEST_TYPE,
+            $requestTransfer,
             $responseTransfer
         );
 
@@ -106,7 +109,7 @@ class SofortRedirectHandler implements AdyenRedirectHandlerInterface
         $requestTransfer->setPaymentsDetailsRequest(new AdyenApiPaymentsDetailsRequestTransfer());
         $requestTransfer->getPaymentsDetailsRequest()->setPaymentData($paymentAdyenTransfer->getPaymentData());
         $requestTransfer->getPaymentsDetailsRequest()->setDetails(
-            ['payload' => $redirectResponseTransfer->getPayload()]
+            [AdyenSdkConfig::PAYLOAD_FIELD => $redirectResponseTransfer->getPayload()]
         );
 
         return $requestTransfer;

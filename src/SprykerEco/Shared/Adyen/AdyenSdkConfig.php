@@ -17,4 +17,5 @@ interface AdyenSdkConfig
     public const ENCRYPTED_EXPIRY_MONTH_FIELD = 'encryptedExpiryMonth';
     public const ENCRYPTED_EXPIRY_YEAR_FIELD = 'encryptedExpiryYear';
     public const ENCRYPTED_SECURITY_CODE_FIELD = 'encryptedSecurityCode';
+    public const PAYLOAD_FIELD = 'payload';
 }
