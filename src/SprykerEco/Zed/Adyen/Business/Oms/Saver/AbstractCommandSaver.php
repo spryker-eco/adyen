@@ -69,7 +69,7 @@ abstract class AbstractCommandSaver implements AdyenCommandSaverInterface
         AdyenApiRequestTransfer $requestTransfer,
         AdyenApiResponseTransfer $responseTransfer
     ): void {
-        $this->writer->savePaymentAdyenApiLog(
+        $this->writer->saveApiLog(
             $this->getRequestType(),
             $requestTransfer,
             $responseTransfer

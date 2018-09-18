@@ -7,9 +7,11 @@
 
 namespace SprykerEco\Yves\Adyen\Handler;
 
+use Generated\Shared\Transfer\PaymentTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use SprykerEco\Service\Adyen\AdyenServiceInterface;
 use SprykerEco\Shared\Adyen\AdyenConfig;
+use SprykerEco\Shared\Adyen\AdyenSdkConfig;
 use Symfony\Component\HttpFoundation\Request;
 
 class AdyenPaymentHandler implements AdyenPaymentHandlerInterface
@@ -46,14 +48,14 @@ class AdyenPaymentHandler implements AdyenPaymentHandlerInterface
             ->getAdyenPayment()
             ->setReference($this->service->generateReference($quoteTransfer));
 
-        if (false) {
+        if ($paymentSelection === PaymentTransfer::ADYEN_CREDIT_CARD) {
             $quoteTransfer
                 ->getPayment()
                 ->getAdyenCreditCard()
-                ->setEncryptedCardNumber($request->get('encryptedCardNumber'))
-                ->setEncryptedExpiryMonth($request->get('encryptedExpiryMonth'))
-                ->setEncryptedExpiryYear($request->get('encryptedExpiryYear'))
-                ->setEncryptedSecurityCode($request->get('encryptedSecurityCode'));
+                ->setEncryptedCardNumber($request->get(AdyenSdkConfig::ENCRYPTED_CARD_NUMBER_FIELD))
+                ->setEncryptedExpiryMonth($request->get(AdyenSdkConfig::ENCRYPTED_EXPIRY_MONTH_FIELD))
+                ->setEncryptedExpiryYear($request->get(AdyenSdkConfig::ENCRYPTED_EXPIRY_YEAR_FIELD))
+                ->setEncryptedSecurityCode($request->get(AdyenSdkConfig::ENCRYPTED_SECURITY_CODE_FIELD));
         }
 
         return $quoteTransfer;

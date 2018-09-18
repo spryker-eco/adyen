@@ -370,7 +370,6 @@ class AdyenBusinessFactory extends AbstractBusinessFactory
     public function createWriter(): AdyenWriterInterface
     {
         return new AdyenWriter(
-            $this->getRepository(),
             $this->getEntityManager(),
             $this->getConfig()
         );

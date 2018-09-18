@@ -35,6 +35,6 @@ class AdyenLogger implements AdyenLoggerInterface
      */
     public function log(string $type, AdyenApiRequestTransfer $request, AdyenApiResponseTransfer $response): void
     {
-        $this->writer->savePaymentAdyenApiLog($type, $request, $response);
+        $this->writer->saveApiLog($type, $request, $response);
     }
 }

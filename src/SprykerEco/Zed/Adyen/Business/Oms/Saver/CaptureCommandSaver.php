@@ -18,7 +18,7 @@ class CaptureCommandSaver extends AbstractCommandSaver implements AdyenCommandSa
      */
     public function save(array $orderItems): void
     {
-        $this->writer->update(
+        $this->writer->updatePaymentEntities(
             $this->config->getOmsStatusCaptured(),
             $this->reader->getPaymentAdyenOrderItemsByOrderItems($orderItems)
         );
@@ -30,7 +30,7 @@ class CaptureCommandSaver extends AbstractCommandSaver implements AdyenCommandSa
         }
 
         if (!$this->config->isMultiplePartialCaptureEnabled()) {
-            $this->writer->update(
+            $this->writer->updatePaymentEntities(
                 $this->config->getOmsStatusCanceled(),
                 $remainingItems
             );

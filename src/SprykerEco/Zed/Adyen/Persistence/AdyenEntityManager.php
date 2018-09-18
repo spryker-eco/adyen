@@ -10,9 +10,6 @@ namespace SprykerEco\Zed\Adyen\Persistence;
 use Generated\Shared\Transfer\PaymentAdyenApiLogTransfer;
 use Generated\Shared\Transfer\PaymentAdyenOrderItemTransfer;
 use Generated\Shared\Transfer\PaymentAdyenTransfer;
-use Generated\Shared\Transfer\SpyPaymentAdyenApiLogEntityTransfer;
-use Generated\Shared\Transfer\SpyPaymentAdyenEntityTransfer;
-use Generated\Shared\Transfer\SpyPaymentAdyenOrderItemEntityTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 use SprykerEco\Zed\Adyen\Persistence\Mapper\AdyenPersistenceMapperInterface;
 
@@ -30,10 +27,7 @@ class AdyenEntityManager extends AbstractEntityManager implements AdyenEntityMan
     {
         $entityTransfer = $this
             ->getMapper()
-            ->mapPaymentAdyenTransferToEntityTransfer(
-                $paymentAdyenTransfer,
-                new SpyPaymentAdyenEntityTransfer()
-            );
+            ->mapPaymentAdyenTransferToEntityTransfer($paymentAdyenTransfer);
 
         /** @var \Generated\Shared\Transfer\SpyPaymentAdyenEntityTransfer $entityTransfer */
         $entityTransfer = $this->save($entityTransfer);
@@ -58,10 +52,7 @@ class AdyenEntityManager extends AbstractEntityManager implements AdyenEntityMan
     ): PaymentAdyenOrderItemTransfer {
         $entityTransfer = $this
             ->getMapper()
-            ->mapPaymentAdyenOrderItemTransferToEntityTransfer(
-                $paymentAdyenOrderItemTransfer,
-                new SpyPaymentAdyenOrderItemEntityTransfer()
-            );
+            ->mapPaymentAdyenOrderItemTransferToEntityTransfer($paymentAdyenOrderItemTransfer);
 
         /** @var \Generated\Shared\Transfer\SpyPaymentAdyenOrderItemEntityTransfer $entityTransfer */
         $entityTransfer = $this->save($entityTransfer);
@@ -86,10 +77,7 @@ class AdyenEntityManager extends AbstractEntityManager implements AdyenEntityMan
     ): PaymentAdyenApiLogTransfer {
         $entityTransfer = $this
             ->getMapper()
-            ->mapPaymentAdyenApiLogTransferToEntityTransfer(
-                $paymentAdyenApiLogTransfer,
-                new SpyPaymentAdyenApiLogEntityTransfer()
-            );
+            ->mapPaymentAdyenApiLogTransferToEntityTransfer($paymentAdyenApiLogTransfer);
 
         /** @var \Generated\Shared\Transfer\SpyPaymentAdyenApiLogEntityTransfer $entityTransfer */
         $entityTransfer = $this->save($entityTransfer);
