@@ -21,6 +21,11 @@ abstract class AbstractMapper
     protected $config;
 
     /**
+     * @return string
+     */
+    abstract protected function getReturnUrl(): string;
+
+    /**
      * @param \SprykerEco\Zed\Adyen\AdyenConfig $config
      */
     public function __construct(AdyenConfig $config)
@@ -50,7 +55,7 @@ abstract class AbstractMapper
             ->setMerchantAccount($this->config->getMerchantAccount())
             ->setReference($quoteTransfer->getPayment()->getAdyenPayment()->getReference())
             ->setAmount($this->createAmountTransfer($quoteTransfer))
-            ->setReturnUrl($this->config->getReturnUrl());
+            ->setReturnUrl($this->getReturnUrl());
     }
 
     /**

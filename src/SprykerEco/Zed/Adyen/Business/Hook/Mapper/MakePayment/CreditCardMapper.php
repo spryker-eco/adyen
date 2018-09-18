@@ -34,6 +34,14 @@ class CreditCardMapper extends AbstractMapper implements AdyenMapperInterface
     }
 
     /**
+     * @return string
+     */
+    protected function getReturnUrl(): string
+    {
+        return '';
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\AdyenCreditCardPaymentTransfer $creditCardTransfer
      *
      * @return string[]
