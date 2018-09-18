@@ -30,7 +30,7 @@ class CancelOrRefundPlugin extends AbstractCommandPlugin implements CommandByOrd
     public function run(array $orderItems, SpySalesOrder $orderEntity, ReadOnlyArrayObject $data): array
     {
         $this->getFacade()
-            ->handleRefundCommand(
+            ->handleCancelOrRefundCommand(
                 $orderItems,
                 $this->getOrderTransfer($orderEntity),
                 $data->getArrayCopy()

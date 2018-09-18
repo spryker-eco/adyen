@@ -390,6 +390,7 @@ class AdyenBusinessFactory extends AbstractBusinessFactory
     public function createSofortRedirectHandler(): AdyenRedirectHandlerInterface
     {
         return new SofortRedirectHandler(
+            $this->getAdyenApiFacade(),
             $this->createReader(),
             $this->createWriter(),
             $this->getConfig()
