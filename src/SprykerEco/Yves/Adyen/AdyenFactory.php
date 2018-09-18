@@ -15,7 +15,9 @@ use SprykerEco\Service\Adyen\AdyenServiceInterface;
 use SprykerEco\Yves\Adyen\Dependency\Client\AdyenToQuoteClientInterface;
 use SprykerEco\Yves\Adyen\Form\CreditCardSubForm;
 use SprykerEco\Yves\Adyen\Form\DataProvider\CreditCardFormDataProvider;
+use SprykerEco\Yves\Adyen\Form\DataProvider\DirectDebitFormDataProvider;
 use SprykerEco\Yves\Adyen\Form\DataProvider\SofortFormDataProvider;
+use SprykerEco\Yves\Adyen\Form\DirectDebitSubForm;
 use SprykerEco\Yves\Adyen\Form\SofortSubForm;
 use SprykerEco\Yves\Adyen\Handler\AdyenPaymentHandler;
 use SprykerEco\Yves\Adyen\Handler\AdyenPaymentHandlerInterface;
@@ -52,6 +54,14 @@ class AdyenFactory extends AbstractFactory
     }
 
     /**
+     * @return \Spryker\Yves\StepEngine\Dependency\Form\SubFormInterface
+     */
+    public function createDirectDebitForm(): SubFormInterface
+    {
+        return new DirectDebitSubForm();
+    }
+
+    /**
      * @return \Spryker\Yves\StepEngine\Dependency\Form\StepEngineFormDataProviderInterface
      */
     public function createCreditCardFormDataProvider(): StepEngineFormDataProviderInterface
@@ -65,6 +75,14 @@ class AdyenFactory extends AbstractFactory
     public function createSofortFormDataProvider(): StepEngineFormDataProviderInterface
     {
         return new SofortFormDataProvider($this->getQuoteClient());
+    }
+
+    /**
+     * @return \Spryker\Yves\StepEngine\Dependency\Form\StepEngineFormDataProviderInterface
+     */
+    public function createDirectDebitFormDataProvider(): StepEngineFormDataProviderInterface
+    {
+        return new DirectDebitFormDataProvider($this->getQuoteClient());
     }
 
     /**
