@@ -18,4 +18,6 @@ interface AdyenSdkConfig
     public const ENCRYPTED_EXPIRY_YEAR_FIELD = 'encryptedExpiryYear';
     public const ENCRYPTED_SECURITY_CODE_FIELD = 'encryptedSecurityCode';
     public const PAYLOAD_FIELD = 'payload';
+    public const SEPA_OWNER_NAME_FIELD = 'sepa.ownerName';
+    public const SEPA_IBAN_NUMBER_FIELD = 'sepa.ibanNumber';
 }

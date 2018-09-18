@@ -12,6 +12,7 @@
         <property name="pspReference" type="string" />
         <property name="details" type="string" />
         <property name="paymentData" type="string" />
+        <property name="additionalData" type="string" />
     </transfer>
 
     <transfer name="AdyenRedirectResponse">
