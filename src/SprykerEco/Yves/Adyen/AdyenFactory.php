@@ -13,6 +13,7 @@ use Spryker\Yves\StepEngine\Dependency\Form\SubFormInterface;
 use SprykerEco\Client\Adyen\AdyenClientInterface;
 use SprykerEco\Service\Adyen\AdyenServiceInterface;
 use SprykerEco\Yves\Adyen\Dependency\Client\AdyenToQuoteClientInterface;
+use SprykerEco\Yves\Adyen\Dependency\Service\AdyenToUtilEncodingServiceInterface;
 use SprykerEco\Yves\Adyen\Form\CreditCardSubForm;
 use SprykerEco\Yves\Adyen\Form\DataProvider\CreditCardFormDataProvider;
 use SprykerEco\Yves\Adyen\Form\DataProvider\DirectDebitFormDataProvider;
@@ -21,6 +22,10 @@ use SprykerEco\Yves\Adyen\Form\DirectDebitSubForm;
 use SprykerEco\Yves\Adyen\Form\SofortSubForm;
 use SprykerEco\Yves\Adyen\Handler\AdyenPaymentHandler;
 use SprykerEco\Yves\Adyen\Handler\AdyenPaymentHandlerInterface;
+use SprykerEco\Yves\Adyen\Handler\Notification\AdyenNotificationHandler;
+use SprykerEco\Yves\Adyen\Handler\Notification\AdyenNotificationHandlerInterface;
+use SprykerEco\Yves\Adyen\Handler\Notification\Mapper\AdyenNotificationMapper;
+use SprykerEco\Yves\Adyen\Handler\Notification\Mapper\AdyenNotificationMapperInterface;
 use SprykerEco\Yves\Adyen\Handler\Redirect\AdyenRedirectHandlerInterface;
 use SprykerEco\Yves\Adyen\Handler\Redirect\SofortRedirectHandler;
 
@@ -97,6 +102,25 @@ class AdyenFactory extends AbstractFactory
     }
 
     /**
+     * @return \SprykerEco\Yves\Adyen\Handler\Notification\AdyenNotificationHandlerInterface
+     */
+    public function createNotificationHandler(): AdyenNotificationHandlerInterface
+    {
+        return new AdyenNotificationHandler(
+            $this->getAdyenClient(),
+            $this->createNotificationMapper()
+        );
+    }
+
+    /**
+     * @return \SprykerEco\Yves\Adyen\Handler\Notification\Mapper\AdyenNotificationMapperInterface
+     */
+    public function createNotificationMapper(): AdyenNotificationMapperInterface
+    {
+        return new AdyenNotificationMapper($this->getUtilEncodingService());
+    }
+
+    /**
      * @return \SprykerEco\Client\Adyen\AdyenClientInterface
      */
     public function getAdyenClient(): AdyenClientInterface
@@ -118,5 +142,13 @@ class AdyenFactory extends AbstractFactory
     public function getQuoteClient(): AdyenToQuoteClientInterface
     {
         return $this->getProvidedDependency(AdyenDependencyProvider::CLIENT_QUOTE);
+    }
+
+    /**
+     * @return \SprykerEco\Yves\Adyen\Dependency\Service\AdyenToUtilEncodingServiceInterface
+     */
+    public function getUtilEncodingService(): AdyenToUtilEncodingServiceInterface
+    {
+        return $this->getProvidedDependency(AdyenDependencyProvider::SERVICE_UTIL_ENCODING);
     }
 }

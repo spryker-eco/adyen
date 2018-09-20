@@ -105,4 +105,24 @@
         <property name="adyenKlarnaInvoice" type="AdyenKlarnaInvoicePayment" />
     </transfer>
 
+    <transfer name="AdyenNotifications">
+        <property name="notificationItems" type="AdyenNotificationRequestItem[]" />
+        <property name="live" type="bool" />
+        <property name="isSuccess" type="bool" />
+    </transfer>
+
+    <transfer name="AdyenNotificationRequestItem">
+        <property name="additionalData" type="array" />
+        <property name="amount" type="AdyenApiAmount" />
+        <property name="operations" type="array" />
+        <property name="pspReference" type="string" />
+        <property name="eventCode" type="string" />
+        <property name="eventDate" type="string" />
+        <property name="merchantAccountCode" type="string" />
+        <property name="merchantReference" type="string" />
+        <property name="paymentMethod" type="string" />
+        <property name="success" type="bool" />
+        <property name="reason" type="string" />
+    </transfer>
+
 </transfers>

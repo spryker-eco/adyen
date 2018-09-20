@@ -10,6 +10,7 @@ namespace SprykerEco\Yves\Adyen;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 use SprykerEco\Yves\Adyen\Dependency\Client\AdyenToQuoteClientBridge;
+use SprykerEco\Yves\Adyen\Dependency\Service\AdyenToUtilEncodingServiceBridge;
 
 class AdyenDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -17,6 +18,7 @@ class AdyenDependencyProvider extends AbstractBundleDependencyProvider
     public const CLIENT_ADYEN = 'CLIENT_ADYEN';
 
     public const SERVICE_ADYEN = 'SERVICE_ADYEN';
+    public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -29,6 +31,7 @@ class AdyenDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addAdyenClient($container);
         $container = $this->addQuoteClient($container);
         $container = $this->addAdyenService($container);
+        $container = $this->addUtilEncodingService($container);
 
         return $container;
     }
@@ -70,6 +73,20 @@ class AdyenDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[static::SERVICE_ADYEN] = function (Container $container) {
             return $container->getLocator()->adyen()->service();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addUtilEncodingService(Container $container): Container
+    {
+        $container[static::SERVICE_UTIL_ENCODING] = function (Container $container) {
+            return new AdyenToUtilEncodingServiceBridge($container->getLocator()->utilEncoding()->service());
         };
 
         return $container;

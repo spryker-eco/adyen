@@ -48,6 +48,16 @@ class AdyenReader implements AdyenReaderInterface
     }
 
     /**
+     * @param string $pspReference
+     *
+     * @return \Generated\Shared\Transfer\PaymentAdyenTransfer
+     */
+    public function getPaymentAdyenByPspReference(string $pspReference): PaymentAdyenTransfer
+    {
+        return $this->repository->getPaymentAdyenByPspReference($pspReference);
+    }
+
+    /**
      * @param int $idSalesOrder
      *
      * @return \Generated\Shared\Transfer\PaymentAdyenOrderItemTransfer[]

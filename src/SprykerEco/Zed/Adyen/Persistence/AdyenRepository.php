@@ -52,6 +52,21 @@ class AdyenRepository extends AbstractRepository implements AdyenRepositoryInter
     }
 
     /**
+     * @param string $pspReference
+     *
+     * @return \Generated\Shared\Transfer\PaymentAdyenTransfer
+     */
+    public function getPaymentAdyenByPspReference(string $pspReference): PaymentAdyenTransfer
+    {
+        $query = $this->getPaymentAdyenQuery()->filterByPspReference($pspReference);
+        $entityTransfer = $this->buildQueryFromCriteria($query)->findOne();
+
+        return $this->getFactory()
+            ->createAdyenPersistenceMapper()
+            ->mapEntityTransferToPaymentAdyenTransfer($entityTransfer, new PaymentAdyenTransfer());
+    }
+
+    /**
      * @param int $idSalesOrder
      *
      * @return \Generated\Shared\Transfer\PaymentAdyenOrderItemTransfer[]

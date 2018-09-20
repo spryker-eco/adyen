@@ -23,6 +23,8 @@ class AdyenConfig extends AbstractBundleConfig
 
     protected const ADYEN_AUTOMATIC_OMS_TRIGGER = 'ADYEN_AUTOMATIC_OMS_TRIGGER';
 
+    protected const ADYEN_NOTIFICATION_AUTHORIZE_STATUS = 'AUTHORISATION';
+
     /**
      * @return string
      */
@@ -109,5 +111,15 @@ class AdyenConfig extends AbstractBundleConfig
     public function getAdyenAutomaticOmsTrigger(): string
     {
         return static::ADYEN_AUTOMATIC_OMS_TRIGGER;
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getMappedOmsStatuses(): array
+    {
+        return [
+            static::ADYEN_NOTIFICATION_AUTHORIZE_STATUS => $this->getOmsStatusAuthorized(),
+        ];
     }
 }

@@ -7,6 +7,7 @@
 
 namespace SprykerEco\Client\Adyen;
 
+use Generated\Shared\Transfer\AdyenNotificationsTransfer;
 use Generated\Shared\Transfer\AdyenRedirectResponseTransfer;
 
 interface AdyenClientInterface
@@ -23,4 +24,18 @@ interface AdyenClientInterface
      * @return \Generated\Shared\Transfer\AdyenRedirectResponseTransfer
      */
     public function handleSofortResponseFromAdyen(AdyenRedirectResponseTransfer $redirectResponseTransfer): AdyenRedirectResponseTransfer;
+
+    /**
+     * Specification:
+     * - Handle notification from API.
+     * - Update payment entities.
+     * - Update order items statuses.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\AdyenNotificationsTransfer $notificationsTransfer
+     *
+     * @return \Generated\Shared\Transfer\AdyenNotificationsTransfer
+     */
+    public function handleNotificationRequest(AdyenNotificationsTransfer $notificationsTransfer): AdyenNotificationsTransfer;
 }

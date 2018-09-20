@@ -11,6 +11,8 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use SprykerEco\Shared\Adyen\AdyenConfig;
 use SprykerEco\Zed\Adyen\AdyenDependencyProvider;
 use SprykerEco\Zed\Adyen\Business\Handler\AdyenRedirectHandlerInterface;
+use SprykerEco\Zed\Adyen\Business\Handler\Notification\AdyenNotificationHandler;
+use SprykerEco\Zed\Adyen\Business\Handler\Notification\AdyenNotificationHandlerInterface;
 use SprykerEco\Zed\Adyen\Business\Handler\SofortRedirectHandler;
 use SprykerEco\Zed\Adyen\Business\Hook\AdyenHookInterface;
 use SprykerEco\Zed\Adyen\Business\Hook\AdyenPostSaveHook;
@@ -415,6 +417,19 @@ class AdyenBusinessFactory extends AbstractBusinessFactory
     {
         return new SofortRedirectHandler(
             $this->getAdyenApiFacade(),
+            $this->createReader(),
+            $this->createWriter(),
+            $this->getConfig()
+        );
+    }
+
+    /**
+     * @return \SprykerEco\Zed\Adyen\Business\Handler\Notification\AdyenNotificationHandlerInterface
+     */
+    public function createNotificationHandler(): AdyenNotificationHandlerInterface
+    {
+        return new AdyenNotificationHandler(
+            $this->getUtilEncodingService(),
             $this->createReader(),
             $this->createWriter(),
             $this->getConfig()
