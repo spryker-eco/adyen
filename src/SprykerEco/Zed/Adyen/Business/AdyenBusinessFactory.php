@@ -10,8 +10,8 @@ namespace SprykerEco\Zed\Adyen\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use SprykerEco\Shared\Adyen\AdyenConfig;
 use SprykerEco\Zed\Adyen\AdyenDependencyProvider;
-use SprykerEco\Zed\Adyen\Business\Handler\AdyenRedirectHandlerInterface;
-use SprykerEco\Zed\Adyen\Business\Handler\SofortRedirectHandler;
+use SprykerEco\Zed\Adyen\Business\Handler\Redirect\AdyenRedirectHandlerInterface;
+use SprykerEco\Zed\Adyen\Business\Handler\Redirect\SofortRedirectHandler;
 use SprykerEco\Zed\Adyen\Business\Hook\AdyenHookInterface;
 use SprykerEco\Zed\Adyen\Business\Hook\AdyenPostSaveHook;
 use SprykerEco\Zed\Adyen\Business\Hook\Mapper\AdyenMapperResolver;
@@ -384,7 +384,7 @@ class AdyenBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \SprykerEco\Zed\Adyen\Business\Handler\AdyenRedirectHandlerInterface
+     * @return \SprykerEco\Zed\Adyen\Business\Handler\Redirect\AdyenRedirectHandlerInterface
      */
     public function createSofortRedirectHandler(): AdyenRedirectHandlerInterface
     {
@@ -418,5 +418,3 @@ class AdyenBusinessFactory extends AbstractBusinessFactory
     public function getUtilEncodingService(): AdyenToUtilEncodingServiceInterface
     {
         return $this->getProvidedDependency(AdyenDependencyProvider::SERVICE_UTIL_ENCODING);
-    }
-}
