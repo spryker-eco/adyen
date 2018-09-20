@@ -167,6 +167,8 @@ class AdyenFacade extends AbstractFacade implements AdyenFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\AdyenRedirectResponseTransfer $redirectResponseTransfer
