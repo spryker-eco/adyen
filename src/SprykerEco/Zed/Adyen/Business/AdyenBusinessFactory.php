@@ -418,3 +418,5 @@ class AdyenBusinessFactory extends AbstractBusinessFactory
     public function getUtilEncodingService(): AdyenToUtilEncodingServiceInterface
     {
         return $this->getProvidedDependency(AdyenDependencyProvider::SERVICE_UTIL_ENCODING);
+    }
+}
