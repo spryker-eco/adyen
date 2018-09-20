@@ -13,7 +13,8 @@ use Spryker\Yves\Application\Plugin\Provider\YvesControllerProvider;
 class AdyenControllerProvider extends YvesControllerProvider
 {
     protected const BUNDLE_NAME = 'Adyen';
-    protected const CONTROLLER_NAME = 'Callback';
+    protected const CALLBACK_CONTROLLER_NAME = 'Callback';
+    protected const NOTIFICATION_CONTROLLER_NAME = 'Notification';
 
     /**
      * @param \Silex\Application $app
@@ -23,10 +24,18 @@ class AdyenControllerProvider extends YvesControllerProvider
     protected function defineControllers(Application $app)
     {
         $this->createController(
+            '/adyen/notification',
+            'adyen-notification',
+            static::BUNDLE_NAME,
+            static::NOTIFICATION_CONTROLLER_NAME,
+            'index'
+        );
+
+        $this->createController(
             '/adyen/callback/redirect-sofort',
             'adyen-redirect-sofort',
             static::BUNDLE_NAME,
-            static::CONTROLLER_NAME,
+            static::CALLBACK_CONTROLLER_NAME,
             'redirectSofort'
         );
     }

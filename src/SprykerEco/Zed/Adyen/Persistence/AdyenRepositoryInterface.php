@@ -26,6 +26,13 @@ interface AdyenRepositoryInterface
     public function getPaymentAdyenByIdSalesOrder(int $idSalesOrder): PaymentAdyenTransfer;
 
     /**
+     * @param string $pspReference
+     *
+     * @return \Generated\Shared\Transfer\PaymentAdyenTransfer
+     */
+    public function getPaymentAdyenByPspReference(string $pspReference): PaymentAdyenTransfer;
+
+    /**
      * @param int $idSalesOrder
      *
      * @return \Generated\Shared\Transfer\PaymentAdyenOrderItemTransfer[]

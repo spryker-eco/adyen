@@ -7,6 +7,7 @@
 
 namespace SprykerEco\Zed\Adyen\Communication\Controller;
 
+use Generated\Shared\Transfer\AdyenNotificationsTransfer;
 use Generated\Shared\Transfer\AdyenRedirectResponseTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 
@@ -23,5 +24,15 @@ class GatewayController extends AbstractGatewayController
     public function handleSofortResponseAction(AdyenRedirectResponseTransfer $redirectResponseTransfer): AdyenRedirectResponseTransfer
     {
         return $this->getFacade()->handleSofortResponseFromAdyen($redirectResponseTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AdyenNotificationsTransfer $notificationsTransfer
+     *
+     * @return \Generated\Shared\Transfer\AdyenNotificationsTransfer
+     */
+    public function handleNotificationAction(AdyenNotificationsTransfer $notificationsTransfer): AdyenNotificationsTransfer
+    {
+        return $this->getFacade()->handleNotification($notificationsTransfer);
     }
 }

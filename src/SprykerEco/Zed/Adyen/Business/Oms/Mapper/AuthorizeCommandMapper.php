@@ -25,7 +25,6 @@ class AuthorizeCommandMapper extends AbstractCommandMapper implements AdyenComma
         $paymentAdyen = $this->reader->getPaymentAdyenByOrderTransfer($orderTransfer);
         $request->setAuthorizeRequest(
             (new AdyenApiAuthorizeRequestTransfer())
-                ->setAdditionalData($paymentAdyen)
         );
 
         return $request;

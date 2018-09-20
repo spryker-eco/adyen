@@ -19,7 +19,7 @@
         </states>
 
         <events>
-            <event name="authorize" manual="true" command="Adyen/Authorize" timeout="20min" />
+            <event name="invalidation" timeout="7days" />
             <event name="cancel" manual="true" command="Adyen/Cancel" timeout="14days" />
             <event name="capture" manual="true" command="Adyen/Capture" />
             <event name="ship" manual="true" />
@@ -32,13 +32,12 @@
             <transition condition="Adyen/IsAuthorized" happy="true">
                 <source>new</source>
                 <target>authorized</target>
-                <event>authorize</event>
             </transition>
 
             <transition>
                 <source>new</source>
                 <target>authorization failed</target>
-                <event>authorize</event>
+                <event>invalidation</event>
             </transition>
 
             <transition condition="Adyen/IsCanceled">

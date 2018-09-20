@@ -7,6 +7,7 @@
 
 namespace SprykerEco\Client\Adyen;
 
+use Generated\Shared\Transfer\AdyenNotificationsTransfer;
 use Generated\Shared\Transfer\AdyenRedirectResponseTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
@@ -30,5 +31,22 @@ class AdyenClient extends AbstractClient implements AdyenClientInterface
             ->getFactory()
             ->createZedStub()
             ->handleSofortResponseFromAdyen($redirectResponseTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\AdyenNotificationsTransfer $notificationsTransfer
+     *
+     * @return \Generated\Shared\Transfer\AdyenNotificationsTransfer
+     */
+    public function handleNotificationRequest(AdyenNotificationsTransfer $notificationsTransfer): AdyenNotificationsTransfer
+    {
+        return $this
+            ->getFactory()
+            ->createZedStub()
+            ->handleNotificationRequest($notificationsTransfer);
     }
 }
