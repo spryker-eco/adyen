@@ -35,7 +35,7 @@ class DirectDebitMapper extends AbstractMapper implements AdyenMapperInterface
      */
     protected function getReturnUrl(): string
     {
-        return $this->config->getSofortReturnUrl();
+        return '';
     }
 
     /**
