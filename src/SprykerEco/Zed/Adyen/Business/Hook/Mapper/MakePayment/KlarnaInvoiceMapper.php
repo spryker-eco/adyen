@@ -46,3 +46,7 @@ class KlarnaInvoiceMapper extends AbstractMapper implements AdyenMapperInterface
      * @return array
      */
     protected function getPayload(QuoteTransfer $quoteTransfer): array
+    {
+        return $quoteTransfer->getPayment()->getAdyenKlarnaInvoiceRequest()->modifiedToArray(true, true);
+    }
+}
