@@ -24,7 +24,7 @@ class CreditCardMapper extends AbstractMapper implements AdyenMapperInterface
     public function buildPaymentRequestTransfer(QuoteTransfer $quoteTransfer): AdyenApiRequestTransfer
     {
         $requestTransfer = $this->createRequestTransfer($quoteTransfer);
-        $payload = $this->getPaymentMethodData($quoteTransfer->getPayment()->getAdyenCreditCard());
+        $payload = $this->getPayload($quoteTransfer->getPayment()->getAdyenCreditCard());
 
         $requestTransfer
             ->getMakePaymentRequest()
@@ -38,7 +38,7 @@ class CreditCardMapper extends AbstractMapper implements AdyenMapperInterface
      *
      * @return string[]
      */
-    protected function getPaymentMethodData(AdyenCreditCardPaymentTransfer $creditCardTransfer): array
+    protected function getPayload(AdyenCreditCardPaymentTransfer $creditCardTransfer): array
     {
         return [
             AdyenSdkConfig::REQUEST_TYPE_FIELD => static::REQUEST_TYPE,
