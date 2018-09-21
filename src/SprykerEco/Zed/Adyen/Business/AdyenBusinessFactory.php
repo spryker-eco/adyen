@@ -21,12 +21,14 @@ use SprykerEco\Zed\Adyen\Business\Hook\Mapper\AdyenMapperResolverInterface;
 use SprykerEco\Zed\Adyen\Business\Hook\Mapper\MakePayment\AdyenMapperInterface;
 use SprykerEco\Zed\Adyen\Business\Hook\Mapper\MakePayment\CreditCardMapper;
 use SprykerEco\Zed\Adyen\Business\Hook\Mapper\MakePayment\DirectDebitMapper;
+use SprykerEco\Zed\Adyen\Business\Hook\Mapper\MakePayment\KlarnaInvoiceMapper;
 use SprykerEco\Zed\Adyen\Business\Hook\Mapper\MakePayment\SofortMapper;
 use SprykerEco\Zed\Adyen\Business\Hook\Saver\AdyenSaverResolver;
 use SprykerEco\Zed\Adyen\Business\Hook\Saver\AdyenSaverResolverInterface;
 use SprykerEco\Zed\Adyen\Business\Hook\Saver\MakePayment\AdyenSaverInterface;
 use SprykerEco\Zed\Adyen\Business\Hook\Saver\MakePayment\CreditCardSaver;
 use SprykerEco\Zed\Adyen\Business\Hook\Saver\MakePayment\DirectDebitSaver;
+use SprykerEco\Zed\Adyen\Business\Hook\Saver\MakePayment\KlarnaInvoiceSaver;
 use SprykerEco\Zed\Adyen\Business\Hook\Saver\MakePayment\SofortSaver;
 use SprykerEco\Zed\Adyen\Business\Logger\AdyenLogger;
 use SprykerEco\Zed\Adyen\Business\Logger\AdyenLoggerInterface;
@@ -112,6 +114,7 @@ class AdyenBusinessFactory extends AbstractBusinessFactory
             AdyenConfig::ADYEN_CREDIT_CARD => $this->createCreditCardMakePaymentMapper(),
             AdyenConfig::ADYEN_SOFORT => $this->createSofortMakePaymentMapper(),
             AdyenConfig::ADYEN_DIRECT_DEBIT => $this->createDirectDebitMakePaymentMapper(),
+            AdyenConfig::ADYEN_KLARNA_INVOICE => $this->createKlarnaInvoiceMakePaymentMapper(),
         ];
     }
 
@@ -140,6 +143,14 @@ class AdyenBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \SprykerEco\Zed\Adyen\Business\Hook\Mapper\MakePayment\AdyenMapperInterface
+     */
+    public function createKlarnaInvoiceMakePaymentMapper(): AdyenMapperInterface
+    {
+        return new KlarnaInvoiceMapper($this->getConfig());
+    }
+
+    /**
      * @return \SprykerEco\Zed\Adyen\Business\Hook\Saver\AdyenSaverResolverInterface
      */
     public function createSaverResolver(): AdyenSaverResolverInterface
@@ -156,6 +167,7 @@ class AdyenBusinessFactory extends AbstractBusinessFactory
             AdyenConfig::ADYEN_CREDIT_CARD => $this->createCreditCardMakePaymentSaver(),
             AdyenConfig::ADYEN_SOFORT => $this->createSofortMakePaymentSaver(),
             AdyenConfig::ADYEN_DIRECT_DEBIT => $this->createDirectDebitMakePaymentSaver(),
+            AdyenConfig::ADYEN_KLARNA_INVOICE => $this->createKlarnaInvoiceMakePaymentSaver(),
         ];
     }
 
@@ -191,6 +203,19 @@ class AdyenBusinessFactory extends AbstractBusinessFactory
     public function createDirectDebitMakePaymentSaver(): AdyenSaverInterface
     {
         return new DirectDebitSaver(
+            $this->createReader(),
+            $this->createWriter(),
+            $this->getUtilEncodingService(),
+            $this->getConfig()
+        );
+    }
+
+    /**
+     * @return \SprykerEco\Zed\Adyen\Business\Hook\Saver\MakePayment\AdyenSaverInterface
+     */
+    public function createKlarnaInvoiceMakePaymentSaver(): AdyenSaverInterface
+    {
+        return new KlarnaInvoiceSaver(
             $this->createReader(),
             $this->createWriter(),
             $this->getUtilEncodingService(),

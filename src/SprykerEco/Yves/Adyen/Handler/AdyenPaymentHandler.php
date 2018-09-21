@@ -7,11 +7,9 @@
 
 namespace SprykerEco\Yves\Adyen\Handler;
 
-use Generated\Shared\Transfer\PaymentTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use SprykerEco\Service\Adyen\AdyenServiceInterface;
 use SprykerEco\Shared\Adyen\AdyenConfig;
-use SprykerEco\Shared\Adyen\AdyenSdkConfig;
 use Symfony\Component\HttpFoundation\Request;
 
 class AdyenPaymentHandler implements AdyenPaymentHandlerInterface
@@ -22,11 +20,20 @@ class AdyenPaymentHandler implements AdyenPaymentHandlerInterface
     protected $service;
 
     /**
-     * @param \SprykerEco\Service\Adyen\AdyenServiceInterface $service
+     * @var array|\SprykerEco\Yves\Adyen\Plugin\Payment\AdyenPaymentPluginInterface[]
      */
-    public function __construct(AdyenServiceInterface $service)
-    {
+    protected $paymentPlugins;
+
+    /**
+     * @param \SprykerEco\Service\Adyen\AdyenServiceInterface $service
+     * @param \SprykerEco\Yves\Adyen\Plugin\Payment\AdyenPaymentPluginInterface[] $paymentPlugins
+     */
+    public function __construct(
+        AdyenServiceInterface $service,
+        array $paymentPlugins
+    ) {
         $this->service = $service;
+        $this->paymentPlugins = $paymentPlugins;
     }
 
     /**
@@ -48,14 +55,9 @@ class AdyenPaymentHandler implements AdyenPaymentHandlerInterface
             ->getAdyenPayment()
             ->setReference($this->service->generateReference($quoteTransfer));
 
-        if ($paymentSelection === PaymentTransfer::ADYEN_CREDIT_CARD) {
-            $quoteTransfer
-                ->getPayment()
-                ->getAdyenCreditCard()
-                ->setEncryptedCardNumber($request->get(AdyenSdkConfig::ENCRYPTED_CARD_NUMBER_FIELD))
-                ->setEncryptedExpiryMonth($request->get(AdyenSdkConfig::ENCRYPTED_EXPIRY_MONTH_FIELD))
-                ->setEncryptedExpiryYear($request->get(AdyenSdkConfig::ENCRYPTED_EXPIRY_YEAR_FIELD))
-                ->setEncryptedSecurityCode($request->get(AdyenSdkConfig::ENCRYPTED_SECURITY_CODE_FIELD));
+        if (array_key_exists($paymentSelection, $this->paymentPlugins)) {
+            $plugin = $this->paymentPlugins[$paymentSelection];
+            $plugin->setPaymentDataToQuote($quoteTransfer, $request);
         }
 
         return $quoteTransfer;

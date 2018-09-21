@@ -7,7 +7,7 @@
 
 namespace SprykerEco\Yves\Adyen\Form;
 
-use Generated\Shared\Transfer\AdyenDirectDebitPaymentTransfer;
+use Generated\Shared\Transfer\AdyenKlarnaInvoicePaymentTransfer;
 use Generated\Shared\Transfer\PaymentTransfer;
 use Spryker\Yves\StepEngine\Dependency\Form\SubFormInterface;
 use SprykerEco\Shared\Adyen\AdyenConfig;
@@ -19,8 +19,8 @@ class KlarnaInvoiceSubForm extends AbstractSubForm
 {
     protected const PAYMENT_METHOD = 'klarna_invoice';
 
-    protected const OWNER_NAME_FIELD = 'owner_name';
-    protected const IBAN_NUMBER_FIELD = 'iban_number';
+    protected const SOCIAL_SECURITY_NUMBER_FIELD = 'social_security_number';
+    protected const DATE_OF_BIRTH_FIELD = 'date_of_birth';
 
     /**
      * @return string
@@ -54,7 +54,7 @@ class KlarnaInvoiceSubForm extends AbstractSubForm
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => AdyenDirectDebitPaymentTransfer::class,
+            'data_class' => AdyenKlarnaInvoicePaymentTransfer::class,
         ])->setRequired(static::OPTIONS_FIELD_NAME);
     }
 
@@ -67,8 +67,8 @@ class KlarnaInvoiceSubForm extends AbstractSubForm
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         parent::buildForm($builder, $options);
-        $this->addOwnerName($builder);
-        $this->addIbanNumber($builder);
+        $this->addSocialSecurityNumber($builder);
+        $this->addDateOfBirth($builder);
     }
 
     /**
@@ -76,13 +76,13 @@ class KlarnaInvoiceSubForm extends AbstractSubForm
      *
      * @return \Spryker\Yves\StepEngine\Dependency\Form\SubFormInterface
      */
-    protected function addOwnerName(FormBuilderInterface $builder): SubFormInterface
+    protected function addSocialSecurityNumber(FormBuilderInterface $builder): SubFormInterface
     {
         $builder->add(
-            static::OWNER_NAME_FIELD,
+            static::SOCIAL_SECURITY_NUMBER_FIELD,
             TextType::class,
             [
-                'label' => 'Owner Name',
+                'label' => 'Social Security Number',
                 'required' => true,
                 'constraints' => [],
             ]
@@ -96,13 +96,13 @@ class KlarnaInvoiceSubForm extends AbstractSubForm
      *
      * @return \Spryker\Yves\StepEngine\Dependency\Form\SubFormInterface
      */
-    protected function addIbanNumber(FormBuilderInterface $builder): SubFormInterface
+    protected function addDateOfBirth(FormBuilderInterface $builder): SubFormInterface
     {
         $builder->add(
-            static::IBAN_NUMBER_FIELD,
+            static::DATE_OF_BIRTH_FIELD,
             TextType::class,
             [
-                'label' => 'IBAN',
+                'label' => 'Date Of Birth',
                 'required' => true,
                 'constraints' => [],
             ]
