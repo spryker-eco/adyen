@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="PaymentAdyen">
+        <property name="idPaymentAdyen" type="int" />
+        <property name="fkSalesOrder" type="int" />
+        <property name="paymentMethod" type="string" />
+        <property name="orderReference" type="string" />
+        <property name="reference" type="string" />
+        <property name="pspReference" type="string" />
+    </transfer>
+
+    <transfer name="PaymentAdyenOrderItem">
+        <property name="idPaymentAdyenOrderItem" type="int" />
+        <property name="fkPaymentAdyen" type="int" />
+        <property name="fkSalesOrderItem" type="int" />
+        <property name="status" type="string" />
+    </transfer>
+
+    <transfer name="PaymentAdyenApiLog">
+        <property name="type" type="string" />
+        <property name="request" type="string" />
+        <property name="isSuccess" type="bool" />
+        <property name="response" type="string" />
+        <property name="statusCode" type="int" />
+        <property name="errorCode" type="string" />
+        <property name="errorMessage" type="string" />
+        <property name="errorType" type="string" />
+    </transfer>
+
+    <transfer name="AdyenPayment">
+        <property name="reference" type="string" />
+    </transfer>
+
+    <transfer name="AdyenCreditCardPayment">
+        <property name="encryptedCardNumber" type="string" />
+        <property name="encryptedSecurityCode" type="string" />
+        <property name="encryptedExpiryMonth" type="string" />
+        <property name="encryptedExpiryYear" type="string" />
+        <property name="holderName" type="string" />
+    </transfer>
+
+    <transfer name="Payment">
+        <property name="adyenPayment" type="AdyenPayment" />
+        <property name="adyenCreditCard" type="AdyenCreditCardPayment" />
+    </transfer>
+
+    <transfer name="Order">
+        <property name="adyenPayment" type="AdyenPayment" />
+        <property name="adyenCreditCard" type="AdyenCreditCardPayment" />
+    </transfer>
+
+</transfers>

@@ -4,7 +4,8 @@
   "license": "MIT",
   "require": {
     "php": ">=7.1",
-    "spryker/kernel": "^3.0.0"
+    "spryker/kernel": "^3.0.0",
+    "spryker-eco/adyen-api": "dev-feature/eco-1685/eco-1805-general-and-api-module"
   },
   "autoload": {
     "psr-4": {
@@ -25,8 +26,8 @@
   },
   "repositories": [
     {
-      "type": "composer",
-      "url": "https://code.spryker.com/repo/private"
+      "type": "git",
+      "url": "git@github.com:spryker-eco/adyen-api.git"
     }
   ],
   "extra": {
