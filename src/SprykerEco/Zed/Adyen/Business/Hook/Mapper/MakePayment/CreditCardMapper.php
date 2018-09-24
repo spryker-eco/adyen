@@ -28,7 +28,8 @@ class CreditCardMapper extends AbstractMapper implements AdyenMapperInterface
 
         $requestTransfer
             ->getMakePaymentRequest()
-            ->setPaymentMethod($payload);
+            ->setPaymentMethod($payload)
+            ->setAdditionalData(["executeThreeD" => "true"]);
 
         return $requestTransfer;
     }

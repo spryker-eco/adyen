@@ -53,6 +53,11 @@
         <property name="holderName" type="string" />
     </transfer>
 
+    <transfer name="AdyenRedirect">
+        <property name="action" type="string" />
+        <property name="fields" type="array" />
+    </transfer>
+
     <transfer name="AdyenSofortPayment">
         <property name="redirectUrl" type="string" />
     </transfer>
@@ -60,6 +65,10 @@
     <transfer name="AdyenDirectDebitPayment">
         <property name="ownerName" type="string" />
         <property name="ibanNumber" type="string" />
+    </transfer>
+
+    <transfer name="CheckoutResponse">
+        <property name="adyenRedirect" type="AdyenRedirect" />
     </transfer>
 
     <transfer name="Payment">
@@ -72,6 +81,7 @@
     <transfer name="Order">
         <property name="adyenPayment" type="AdyenPayment" />
         <property name="adyenCreditCard" type="AdyenCreditCardPayment" />
+        <property name="adyenCreditCard3d" type="AdyenCreditCard3dPayment" />
         <property name="adyenSofort" type="AdyenSofortPayment" />
         <property name="adyenDirectDebit" type="AdyenDirectDebitPayment" />
     </transfer>
