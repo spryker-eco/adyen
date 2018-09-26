@@ -76,12 +76,12 @@
         <property name="adyenCreditCard" type="AdyenCreditCardPayment" />
         <property name="adyenSofort" type="AdyenSofortPayment" />
         <property name="adyenDirectDebit" type="AdyenDirectDebitPayment" />
+        <property name="adyenRedirect" type="AdyenRedirect" />
     </transfer>
 
     <transfer name="Order">
         <property name="adyenPayment" type="AdyenPayment" />
         <property name="adyenCreditCard" type="AdyenCreditCardPayment" />
-        <property name="adyenCreditCard3d" type="AdyenCreditCard3dPayment" />
         <property name="adyenSofort" type="AdyenSofortPayment" />
         <property name="adyenDirectDebit" type="AdyenDirectDebitPayment" />
     </transfer>

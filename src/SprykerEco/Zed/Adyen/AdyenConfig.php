@@ -122,4 +122,12 @@ class AdyenConfig extends AbstractBundleConfig
             static::ADYEN_NOTIFICATION_AUTHORIZE_STATUS => $this->getOmsStatusAuthorized(),
         ];
     }
+
+    /**
+     * @return bool
+     */
+    public function isCreditCard3dSecureEnabled(): bool
+    {
+        return $this->get(AdyenConstants::CREDIT_CARD_3D_SECURE_ENABLED);
+    }
 }

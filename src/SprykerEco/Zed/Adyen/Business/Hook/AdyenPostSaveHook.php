@@ -19,6 +19,9 @@ use SprykerEco\Zed\Adyen\Dependency\Facade\AdyenToAdyenApiFacadeInterface;
 
 class AdyenPostSaveHook implements AdyenHookInterface
 {
+    protected const REDIRECT_METHOD_GET = 'GET';
+    protected const REDIRECT_METHOD_POST = 'POST';
+
     /**
      * @var \SprykerEco\Zed\Adyen\Dependency\Facade\AdyenToAdyenApiFacadeInterface
      */
@@ -68,20 +71,20 @@ class AdyenPostSaveHook implements AdyenHookInterface
         $responseTransfer = $this->adyenApiFacade->performMakePaymentApiCall($requestTransfer);
         $saver->save($requestTransfer, $responseTransfer);
 
-        if ($this->isMethodWithRedirect($responseTransfer)) {
-            $checkoutResponseTransfer->setIsExternalRedirect(true);
-            $checkoutResponseTransfer->setRedirectUrl(
-                $responseTransfer->getMakePaymentResponse()->getRedirect()->getUrl()
-            );
+        if (!$this->isMethodWithRedirect($responseTransfer)) {
+            return;
         }
 
-        if ($quoteTransfer->getPayment()->getPaymentSelection() === PaymentTransfer::ADYEN_CREDIT_CARD) {
-            $checkoutResponseTransfer
-                ->setAdyenRedirect(
-                    (new AdyenRedirectTransfer())
-                        ->setAction($responseTransfer->getMakePaymentResponse()->getRedirect()->getUrl())
-                        ->setFields($responseTransfer->getMakePaymentResponse()->getRedirect()->getData())
-                );
+        if ($responseTransfer->getMakePaymentResponse()->getRedirect()->getMethod() === static::REDIRECT_METHOD_GET) {
+            $this->processGetRedirect($checkoutResponseTransfer, $responseTransfer);
+
+            return;
+        }
+
+        if ($responseTransfer->getMakePaymentResponse()->getRedirect()->getMethod() === static::REDIRECT_METHOD_POST) {
+            $this->processPostRedirect($checkoutResponseTransfer, $responseTransfer);
+
+            return;
         }
     }
 
@@ -92,7 +95,42 @@ class AdyenPostSaveHook implements AdyenHookInterface
      */
     protected function isMethodWithRedirect(AdyenApiResponseTransfer $responseTransfer): bool
     {
-        return !empty($responseTransfer->getMakePaymentResponse()->getRedirect())
-            && $responseTransfer->getMakePaymentResponse()->getRedirect()->getMethod() === 'GET';
+        return !empty($responseTransfer->getMakePaymentResponse()->getRedirect());
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     *
+     * @param \Generated\Shared\Transfer\AdyenApiResponseTransfer $responseTransfer
+     *
+     * @return void
+     */
+    protected function processGetRedirect(
+        CheckoutResponseTransfer $checkoutResponseTransfer,
+        AdyenApiResponseTransfer $responseTransfer
+    ): void {
+        $checkoutResponseTransfer->setIsExternalRedirect(true);
+        $checkoutResponseTransfer->setRedirectUrl(
+            $responseTransfer->getMakePaymentResponse()->getRedirect()->getUrl()
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     * @param \Generated\Shared\Transfer\AdyenApiResponseTransfer $responseTransfer
+     *
+     * @return void
+     */
+    protected function processPostRedirect(
+        CheckoutResponseTransfer $checkoutResponseTransfer,
+        AdyenApiResponseTransfer $responseTransfer
+    ): void {
+        $checkoutResponseTransfer
+            ->setAdyenRedirect(
+                (new AdyenRedirectTransfer())
+                    ->setAction($responseTransfer->getMakePaymentResponse()->getRedirect()->getUrl())
+                    ->setFields($responseTransfer->getMakePaymentResponse()->getRedirect()->getData())
+            );
+    }
+
 }
