@@ -71,12 +71,42 @@
         <property name="adyenRedirect" type="AdyenRedirect" />
     </transfer>
 
+    <transfer name="AdyenKlarnaInvoicePayment">
+        <property name="socialSecurityNumber" type="string" />
+        <property name="dateOfBirth" type="string" />
+    </transfer>
+
+    <transfer name="AdyenKlarnaInvoiceRequest">
+        <property name="personalDetails" type="AdyenKlarnaPersonalDetails" />
+        <property name="billingAddress" type="AdyenKlarnaAddress" />
+        <property name="deliveryAddress" type="AdyenKlarnaAddress" />
+        <property name="separateDeliveryAddress" type="bool" />
+    </transfer>
+
+    <transfer name="AdyenKlarnaPersonalDetails">
+        <property name="firstName" type="string" />
+        <property name="lastName" type="string" />
+        <property name="telephoneNumber" type="string" />
+        <property name="socialSecurityNumber" type="string" />
+        <property name="shopperEmail" type="string" />
+    </transfer>
+
+    <transfer name="AdyenKlarnaAddress">
+        <property name="street" type="string" />
+        <property name="houseNumberOrName" type="string" />
+        <property name="city" type="string" />
+        <property name="postalCode" type="string" />
+        <property name="country" type="string" />
+    </transfer>
+
     <transfer name="Payment">
         <property name="adyenPayment" type="AdyenPayment" />
         <property name="adyenCreditCard" type="AdyenCreditCardPayment" />
         <property name="adyenSofort" type="AdyenSofortPayment" />
         <property name="adyenDirectDebit" type="AdyenDirectDebitPayment" />
         <property name="adyenRedirect" type="AdyenRedirect" />
+        <property name="adyenKlarnaInvoice" type="AdyenKlarnaInvoicePayment" />
+        <property name="adyenKlarnaInvoiceRequest" type="AdyenKlarnaInvoiceRequest" />
     </transfer>
 
     <transfer name="Order">
@@ -84,6 +114,7 @@
         <property name="adyenCreditCard" type="AdyenCreditCardPayment" />
         <property name="adyenSofort" type="AdyenSofortPayment" />
         <property name="adyenDirectDebit" type="AdyenDirectDebitPayment" />
+        <property name="adyenKlarnaInvoice" type="AdyenKlarnaInvoicePayment" />
     </transfer>
 
     <transfer name="AdyenNotifications">

@@ -7,18 +7,22 @@
 
 namespace SprykerEco\Yves\Adyen;
 
+use Generated\Shared\Transfer\PaymentTransfer;
 use Spryker\Yves\Kernel\AbstractFactory;
 use Spryker\Yves\StepEngine\Dependency\Form\StepEngineFormDataProviderInterface;
 use Spryker\Yves\StepEngine\Dependency\Form\SubFormInterface;
 use SprykerEco\Client\Adyen\AdyenClientInterface;
 use SprykerEco\Service\Adyen\AdyenServiceInterface;
 use SprykerEco\Yves\Adyen\Dependency\Client\AdyenToQuoteClientInterface;
+use SprykerEco\Yves\Adyen\Dependency\Client\AdyenToStoreClientInterface;
 use SprykerEco\Yves\Adyen\Dependency\Service\AdyenToUtilEncodingServiceInterface;
 use SprykerEco\Yves\Adyen\Form\CreditCardSubForm;
 use SprykerEco\Yves\Adyen\Form\DataProvider\CreditCardFormDataProvider;
 use SprykerEco\Yves\Adyen\Form\DataProvider\DirectDebitFormDataProvider;
+use SprykerEco\Yves\Adyen\Form\DataProvider\KlarnaInvoiceFormDataProvider;
 use SprykerEco\Yves\Adyen\Form\DataProvider\SofortFormDataProvider;
 use SprykerEco\Yves\Adyen\Form\DirectDebitSubForm;
+use SprykerEco\Yves\Adyen\Form\KlarnaInvoiceSubForm;
 use SprykerEco\Yves\Adyen\Form\SofortSubForm;
 use SprykerEco\Yves\Adyen\Handler\AdyenPaymentHandler;
 use SprykerEco\Yves\Adyen\Handler\AdyenPaymentHandlerInterface;
@@ -28,6 +32,9 @@ use SprykerEco\Yves\Adyen\Handler\Notification\Mapper\AdyenNotificationMapper;
 use SprykerEco\Yves\Adyen\Handler\Notification\Mapper\AdyenNotificationMapperInterface;
 use SprykerEco\Yves\Adyen\Handler\Redirect\AdyenRedirectHandlerInterface;
 use SprykerEco\Yves\Adyen\Handler\Redirect\SofortRedirectHandler;
+use SprykerEco\Yves\Adyen\Plugin\Payment\AdyenPaymentPluginInterface;
+use SprykerEco\Yves\Adyen\Plugin\Payment\CreditCardPaymentPlugin;
+use SprykerEco\Yves\Adyen\Plugin\Payment\KlarnaInvoicePaymentPlugin;
 
 /**
  * @method \SprykerEco\Yves\Adyen\AdyenConfig getConfig()
@@ -39,7 +46,10 @@ class AdyenFactory extends AbstractFactory
      */
     public function createAdyenPaymentHandler(): AdyenPaymentHandlerInterface
     {
-        return new AdyenPaymentHandler($this->getAdyenService());
+        return new AdyenPaymentHandler(
+            $this->getAdyenService(),
+            $this->getPaymentPlugins()
+        );
     }
 
     /**
@@ -67,6 +77,14 @@ class AdyenFactory extends AbstractFactory
     }
 
     /**
+     * @return \Spryker\Yves\StepEngine\Dependency\Form\SubFormInterface
+     */
+    public function createKlarnaInvoiceForm(): SubFormInterface
+    {
+        return new KlarnaInvoiceSubForm();
+    }
+
+    /**
      * @return \Spryker\Yves\StepEngine\Dependency\Form\StepEngineFormDataProviderInterface
      */
     public function createCreditCardFormDataProvider(): StepEngineFormDataProviderInterface
@@ -88,6 +106,18 @@ class AdyenFactory extends AbstractFactory
     public function createDirectDebitFormDataProvider(): StepEngineFormDataProviderInterface
     {
         return new DirectDebitFormDataProvider($this->getQuoteClient());
+    }
+
+    /**
+     * @return \Spryker\Yves\StepEngine\Dependency\Form\StepEngineFormDataProviderInterface
+     */
+    public function createKlarnaInvoiceFormDataProvider(): StepEngineFormDataProviderInterface
+    {
+        return new KlarnaInvoiceFormDataProvider(
+            $this->getQuoteClient(),
+            $this->getStoreClient(),
+            $this->getConfig()
+        );
     }
 
     /**
@@ -121,6 +151,36 @@ class AdyenFactory extends AbstractFactory
     }
 
     /**
+     * @return \SprykerEco\Yves\Adyen\Plugin\Payment\AdyenPaymentPluginInterface[]
+     */
+    public function getPaymentPlugins(): array
+    {
+        return [
+            PaymentTransfer::ADYEN_CREDIT_CARD => $this->createCreditCardPaymentPlugin(),
+            PaymentTransfer::ADYEN_KLARNA_INVOICE => $this->createKlarnaInvoicePaymentPlugin(),
+        ];
+    }
+
+    /**
+     * @return \SprykerEco\Yves\Adyen\Plugin\Payment\AdyenPaymentPluginInterface
+     */
+    public function createCreditCardPaymentPlugin(): AdyenPaymentPluginInterface
+    {
+        return new CreditCardPaymentPlugin();
+    }
+
+    /**
+     * @return \SprykerEco\Yves\Adyen\Plugin\Payment\AdyenPaymentPluginInterface
+     */
+    public function createKlarnaInvoicePaymentPlugin(): AdyenPaymentPluginInterface
+    {
+        return new KlarnaInvoicePaymentPlugin(
+            $this->getStoreClient(),
+            $this->getConfig()
+        );
+    }
+
+    /**
      * @return \SprykerEco\Client\Adyen\AdyenClientInterface
      */
     public function getAdyenClient(): AdyenClientInterface
@@ -142,6 +202,14 @@ class AdyenFactory extends AbstractFactory
     public function getQuoteClient(): AdyenToQuoteClientInterface
     {
         return $this->getProvidedDependency(AdyenDependencyProvider::CLIENT_QUOTE);
+    }
+
+    /**
+     * @return \SprykerEco\Yves\Adyen\Dependency\Client\AdyenToStoreClientInterface
+     */
+    public function getStoreClient(): AdyenToStoreClientInterface
+    {
+        return $this->getProvidedDependency(AdyenDependencyProvider::CLIENT_STORE);
     }
 
     /**
