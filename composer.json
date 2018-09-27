@@ -5,7 +5,7 @@
   "require": {
     "php": ">=7.1",
     "spryker/kernel": "^3.0.0",
-    "spryker-eco/adyen-api": "dev-feature/eco-1685/eco-1805-general-and-api-module"
+    "spryker-eco/adyen-api": "dev-feature/eco-1685/dev-adyen"
   },
   "autoload": {
     "psr-4": {

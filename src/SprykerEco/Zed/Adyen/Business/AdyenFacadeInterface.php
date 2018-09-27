@@ -35,7 +35,7 @@ interface AdyenFacadeInterface
 
     /**
      * Specification:
-     * - Handle Authorize OMS command, make request to API, process response.
+     * - Handles Authorize OMS command, make request to API, process response.
      *
      * @api
      *
@@ -53,7 +53,7 @@ interface AdyenFacadeInterface
 
     /**
      * Specification:
-     * - Handle Cancel OMS command, make request to API, process response.
+     * - Handles Cancel OMS command, make request to API, process response.
      *
      * @api
      *
@@ -71,7 +71,7 @@ interface AdyenFacadeInterface
 
     /**
      * Specification:
-     * - Handle Capture OMS command, make request to API, process response.
+     * - Handles Capture OMS command, make request to API, process response.
      *
      * @api
      *
@@ -89,7 +89,7 @@ interface AdyenFacadeInterface
 
     /**
      * Specification:
-     * - Handle Refund OMS command, make request to API, process response.
+     * - Handles Refund OMS command, make request to API, process response.
      *
      * @api
      *
@@ -107,7 +107,7 @@ interface AdyenFacadeInterface
 
     /**
      * Specification:
-     * - Handle CancelOrRefund OMS command, make request to API, process response.
+     * - Handles CancelOrRefund OMS command, make request to API, process response.
      *
      * @api
      *
@@ -139,8 +139,8 @@ interface AdyenFacadeInterface
     /**
      * Specification:
      * - Executes make payment request to API.
-     * - Create PaymentAdyen entities, save them to DB.
-     * - Update order items with necessary OMS statuses.
+     * - Creates PaymentAdyen entities, save them to DB.
+     * - Updates order items with necessary OMS statuses.
      *
      * @api
      *
@@ -152,6 +152,11 @@ interface AdyenFacadeInterface
     public function executePostSaveHook(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse): void;
 
     /**
+     * Specification:
+     * - Handles response after redirect customer to the shop.
+     * - Performs Payment Details call.
+     * - Saves result to DB.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\AdyenRedirectResponseTransfer $redirectResponseTransfer
