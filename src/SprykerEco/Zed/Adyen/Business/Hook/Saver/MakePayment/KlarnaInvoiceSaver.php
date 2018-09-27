@@ -50,10 +50,7 @@ class KlarnaInvoiceSaver extends AbstractSaver implements AdyenSaverInterface
                 $request->getMakePaymentRequest()->getReference()
             );
 
-        $paymentAdyenTransfer->setDetails(
-            $this->encodingService->encodeJson($response->getMakePaymentResponse()->getDetails())
-        );
-        $paymentAdyenTransfer->setPaymentData($response->getMakePaymentResponse()->getPaymentData());
+        $paymentAdyenTransfer->setPspReference($response->getMakePaymentResponse()->getPspReference());
 
         $paymentAdyenOrderItemTransfers = $this->reader
             ->getAllPaymentAdyenOrderItemsByIdSalesOrder(
@@ -61,7 +58,7 @@ class KlarnaInvoiceSaver extends AbstractSaver implements AdyenSaverInterface
             );
 
         $this->writer->updatePaymentEntities(
-            $this->config->getOmsStatusNew(),
+            $this->config->getOmsStatusAuthorized(),
             $paymentAdyenOrderItemTransfers,
             $paymentAdyenTransfer
         );

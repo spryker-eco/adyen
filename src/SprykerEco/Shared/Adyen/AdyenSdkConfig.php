@@ -20,4 +20,7 @@ interface AdyenSdkConfig
     public const PAYLOAD_FIELD = 'payload';
     public const SEPA_OWNER_NAME_FIELD = 'sepa.ownerName';
     public const SEPA_IBAN_NUMBER_FIELD = 'sepa.ibanNumber';
+    public const BILLING_ADDRESS_FIELD = 'billingAddress';
+    public const DELIVERY_ADDRESS_FIELD = 'deliveryAddress';
+    public const PERSONAL_DETAILS_FIELD = 'personalDetails';
 }

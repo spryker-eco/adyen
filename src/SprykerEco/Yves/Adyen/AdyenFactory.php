@@ -14,6 +14,7 @@ use Spryker\Yves\StepEngine\Dependency\Form\SubFormInterface;
 use SprykerEco\Client\Adyen\AdyenClientInterface;
 use SprykerEco\Service\Adyen\AdyenServiceInterface;
 use SprykerEco\Yves\Adyen\Dependency\Client\AdyenToQuoteClientInterface;
+use SprykerEco\Yves\Adyen\Dependency\Client\AdyenToStoreClientInterface;
 use SprykerEco\Yves\Adyen\Dependency\Service\AdyenToUtilEncodingServiceInterface;
 use SprykerEco\Yves\Adyen\Form\CreditCardSubForm;
 use SprykerEco\Yves\Adyen\Form\DataProvider\CreditCardFormDataProvider;
@@ -112,7 +113,11 @@ class AdyenFactory extends AbstractFactory
      */
     public function createKlarnaInvoiceFormDataProvider(): StepEngineFormDataProviderInterface
     {
-        return new KlarnaInvoiceFormDataProvider($this->getQuoteClient());
+        return new KlarnaInvoiceFormDataProvider(
+            $this->getQuoteClient(),
+            $this->getStoreClient(),
+            $this->getConfig()
+        );
     }
 
     /**
@@ -169,7 +174,10 @@ class AdyenFactory extends AbstractFactory
      */
     public function createKlarnaInvoicePaymentPlugin(): AdyenPaymentPluginInterface
     {
-        return new KlarnaInvoicePaymentPlugin();
+        return new KlarnaInvoicePaymentPlugin(
+            $this->getStoreClient(),
+            $this->getConfig()
+        );
     }
 
     /**
@@ -194,6 +202,14 @@ class AdyenFactory extends AbstractFactory
     public function getQuoteClient(): AdyenToQuoteClientInterface
     {
         return $this->getProvidedDependency(AdyenDependencyProvider::CLIENT_QUOTE);
+    }
+
+    /**
+     * @return \SprykerEco\Yves\Adyen\Dependency\Client\AdyenToStoreClientInterface
+     */
+    public function getStoreClient(): AdyenToStoreClientInterface
+    {
+        return $this->getProvidedDependency(AdyenDependencyProvider::CLIENT_STORE);
     }
 
     /**

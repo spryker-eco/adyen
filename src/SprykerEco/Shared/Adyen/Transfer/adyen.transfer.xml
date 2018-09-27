@@ -76,10 +76,7 @@
 
     <transfer name="AdyenKlarnaPersonalDetails">
         <property name="firstName" type="string" />
-        <property name="infix" type="string" />
         <property name="lastName" type="string" />
-        <property name="gender" type="string" />
-        <property name="dateOfBirth" type="string" />
         <property name="telephoneNumber" type="string" />
         <property name="socialSecurityNumber" type="string" />
         <property name="shopperEmail" type="string" />
@@ -90,7 +87,6 @@
         <property name="houseNumberOrName" type="string" />
         <property name="city" type="string" />
         <property name="postalCode" type="string" />
-        <property name="stateOrProvince" type="string" />
         <property name="country" type="string" />
     </transfer>
 

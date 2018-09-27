@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\AdyenKlarnaInvoicePaymentTransfer;
 use Generated\Shared\Transfer\PaymentTransfer;
 use Spryker\Yves\StepEngine\Dependency\Form\SubFormInterface;
 use SprykerEco\Shared\Adyen\AdyenConfig;
+use SprykerEco\Yves\Adyen\Form\DataProvider\KlarnaInvoiceFormDataProvider;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -18,9 +19,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class KlarnaInvoiceSubForm extends AbstractSubForm
 {
     protected const PAYMENT_METHOD = 'klarna_invoice';
-
+    protected const SELECT_OPTIONS_FIELD = 'select_options';
     protected const SOCIAL_SECURITY_NUMBER_FIELD = 'social_security_number';
-    protected const DATE_OF_BIRTH_FIELD = 'date_of_birth';
 
     /**
      * @return string
@@ -67,8 +67,10 @@ class KlarnaInvoiceSubForm extends AbstractSubForm
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         parent::buildForm($builder, $options);
-        $this->addSocialSecurityNumber($builder);
-        $this->addDateOfBirth($builder);
+
+        if ($options[static::SELECT_OPTIONS_FIELD][KlarnaInvoiceFormDataProvider::SOCIAL_SECURITY_NUMBER_REQUIRED]) {
+            $this->addSocialSecurityNumber($builder);
+        }
     }
 
     /**
@@ -83,26 +85,6 @@ class KlarnaInvoiceSubForm extends AbstractSubForm
             TextType::class,
             [
                 'label' => 'Social Security Number',
-                'required' => true,
-                'constraints' => [],
-            ]
-        );
-
-        return $this;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
-     * @return \Spryker\Yves\StepEngine\Dependency\Form\SubFormInterface
-     */
-    protected function addDateOfBirth(FormBuilderInterface $builder): SubFormInterface
-    {
-        $builder->add(
-            static::DATE_OF_BIRTH_FIELD,
-            TextType::class,
-            [
-                'label' => 'Date Of Birth',
                 'required' => true,
                 'constraints' => [],
             ]
