@@ -66,7 +66,7 @@ class AdyenPostSaveHook implements AdyenHookInterface
         $responseTransfer = $this->adyenApiFacade->performMakePaymentApiCall($requestTransfer);
         $saver->save($requestTransfer, $responseTransfer);
 
-        if ($this->isMethodWithRedirect($responseTransfer)) {
+        if ($responseTransfer->getIsSuccess() && $this->isMethodWithRedirect($responseTransfer)) {
             $checkoutResponseTransfer->setIsExternalRedirect(true);
             $checkoutResponseTransfer->setRedirectUrl(
                 $responseTransfer->getMakePaymentResponse()->getRedirect()->getUrl()
