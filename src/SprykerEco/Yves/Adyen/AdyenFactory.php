@@ -20,9 +20,11 @@ use SprykerEco\Yves\Adyen\Form\CreditCardSubForm;
 use SprykerEco\Yves\Adyen\Form\DataProvider\CreditCardFormDataProvider;
 use SprykerEco\Yves\Adyen\Form\DataProvider\DirectDebitFormDataProvider;
 use SprykerEco\Yves\Adyen\Form\DataProvider\KlarnaInvoiceFormDataProvider;
+use SprykerEco\Yves\Adyen\Form\DataProvider\PrepaymentFormDataProvider;
 use SprykerEco\Yves\Adyen\Form\DataProvider\SofortFormDataProvider;
 use SprykerEco\Yves\Adyen\Form\DirectDebitSubForm;
 use SprykerEco\Yves\Adyen\Form\KlarnaInvoiceSubForm;
+use SprykerEco\Yves\Adyen\Form\PrepaymentSubForm;
 use SprykerEco\Yves\Adyen\Form\SofortSubForm;
 use SprykerEco\Yves\Adyen\Handler\AdyenPaymentHandler;
 use SprykerEco\Yves\Adyen\Handler\AdyenPaymentHandlerInterface;
@@ -85,6 +87,14 @@ class AdyenFactory extends AbstractFactory
     }
 
     /**
+     * @return \Spryker\Yves\StepEngine\Dependency\Form\SubFormInterface
+     */
+    public function createPrepaymentForm(): SubFormInterface
+    {
+        return new PrepaymentSubForm();
+    }
+
+    /**
      * @return \Spryker\Yves\StepEngine\Dependency\Form\StepEngineFormDataProviderInterface
      */
     public function createCreditCardFormDataProvider(): StepEngineFormDataProviderInterface
@@ -118,6 +128,14 @@ class AdyenFactory extends AbstractFactory
             $this->getStoreClient(),
             $this->getConfig()
         );
+    }
+
+    /**
+     * @return \Spryker\Yves\StepEngine\Dependency\Form\StepEngineFormDataProviderInterface
+     */
+    public function createPrepaymentFormDataProvider(): StepEngineFormDataProviderInterface
+    {
+        return new PrepaymentFormDataProvider($this->getQuoteClient());
     }
 
     /**

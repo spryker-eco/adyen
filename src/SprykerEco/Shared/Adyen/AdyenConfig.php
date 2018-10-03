@@ -16,4 +16,5 @@ class AdyenConfig extends AbstractBundleConfig
     public const ADYEN_SOFORT = 'adyenSofort';
     public const ADYEN_DIRECT_DEBIT = 'adyenDirectDebit';
     public const ADYEN_KLARNA_INVOICE = 'adyenKlarnaInvoice';
+    public const ADYEN_PREPAYMENT = 'adyenPrepayment';
 }
