@@ -31,6 +31,7 @@ use SprykerEco\Yves\Adyen\Handler\Notification\AdyenNotificationHandlerInterface
 use SprykerEco\Yves\Adyen\Handler\Notification\Mapper\AdyenNotificationMapper;
 use SprykerEco\Yves\Adyen\Handler\Notification\Mapper\AdyenNotificationMapperInterface;
 use SprykerEco\Yves\Adyen\Handler\Redirect\AdyenRedirectHandlerInterface;
+use SprykerEco\Yves\Adyen\Handler\Redirect\CreditCard3dRedirectHandler;
 use SprykerEco\Yves\Adyen\Handler\Redirect\SofortRedirectHandler;
 use SprykerEco\Yves\Adyen\Plugin\Payment\AdyenPaymentPluginInterface;
 use SprykerEco\Yves\Adyen\Plugin\Payment\CreditCardPaymentPlugin;
@@ -126,6 +127,17 @@ class AdyenFactory extends AbstractFactory
     public function createSofortRedirectHandler(): AdyenRedirectHandlerInterface
     {
         return new SofortRedirectHandler(
+            $this->getQuoteClient(),
+            $this->getAdyenClient()
+        );
+    }
+
+    /**
+     * @return \SprykerEco\Yves\Adyen\Handler\Redirect\AdyenRedirectHandlerInterface
+     */
+    public function createCreditCard3dRedirectHandler(): AdyenRedirectHandlerInterface
+    {
+        return new CreditCard3dRedirectHandler(
             $this->getQuoteClient(),
             $this->getAdyenClient()
         );

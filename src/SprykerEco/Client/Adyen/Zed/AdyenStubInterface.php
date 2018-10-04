@@ -20,6 +20,13 @@ interface AdyenStubInterface
     public function handleSofortResponseFromAdyen(AdyenRedirectResponseTransfer $redirectResponseTransfer): AdyenRedirectResponseTransfer;
 
     /**
+     * @param \Generated\Shared\Transfer\AdyenRedirectResponseTransfer $redirectResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\AdyenRedirectResponseTransfer
+     */
+    public function handleCreditCard3dResponseFromAdyen(AdyenRedirectResponseTransfer $redirectResponseTransfer): AdyenRedirectResponseTransfer;
+
+    /**
      * @param \Generated\Shared\Transfer\AdyenNotificationsTransfer $notificationsTransfer
      *
      * @return \Generated\Shared\Transfer\AdyenNotificationsTransfer

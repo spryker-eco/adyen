@@ -32,4 +32,20 @@ class CallbackController extends AbstractController
 
         return $this->redirectResponseInternal(CheckoutPageControllerProvider::CHECKOUT_ERROR);
     }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function redirectCreditCard3dAction(Request $request): RedirectResponse
+    {
+        $responseTransfer = $this->getFactory()->createCreditCard3dRedirectHandler()->handle($request);
+
+        if ($responseTransfer->getIsSuccess()) {
+            return $this->redirectResponseInternal(CheckoutPageControllerProvider::CHECKOUT_SUCCESS);
+        }
+
+        return $this->redirectResponseInternal(CheckoutPageControllerProvider::CHECKOUT_ERROR);
+    }
 }

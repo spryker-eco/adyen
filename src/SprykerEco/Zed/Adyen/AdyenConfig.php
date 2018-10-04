@@ -98,6 +98,14 @@ class AdyenConfig extends AbstractBundleConfig
     }
 
     /**
+     * @return string
+     */
+    public function getCreditCard3DReturnUrl(): string
+    {
+        return $this->get(AdyenConstants::CREDIT_CARD_3D_RETURN_URL);
+    }
+
+    /**
      * @return bool
      */
     public function isMultiplePartialCaptureEnabled(): bool

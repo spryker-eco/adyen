@@ -15,6 +15,7 @@ use SprykerEco\Shared\Adyen\AdyenSdkConfig;
 class CreditCardMapper extends AbstractMapper implements AdyenMapperInterface
 {
     protected const REQUEST_TYPE = 'scheme';
+    protected const THREE_D_SECURE_DATA = ['executeThreeD' => 'true'];
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -29,7 +30,7 @@ class CreditCardMapper extends AbstractMapper implements AdyenMapperInterface
         $requestTransfer
             ->getMakePaymentRequest()
             ->setPaymentMethod($payload)
-            ->setAdditionalData(["executeThreeD" => "true"]);
+            ->setAdditionalData($this->getAdditionalData());
 
         return $requestTransfer;
     }
@@ -39,7 +40,7 @@ class CreditCardMapper extends AbstractMapper implements AdyenMapperInterface
      */
     protected function getReturnUrl(): string
     {
-        return '';
+        return $this->config->isCreditCard3dSecureEnabled() ? $this->config->getCreditCard3DReturnUrl() : '';
     }
 
     /**
@@ -56,5 +57,26 @@ class CreditCardMapper extends AbstractMapper implements AdyenMapperInterface
             AdyenSdkConfig::ENCRYPTED_EXPIRY_YEAR_FIELD => $creditCardTransfer->getEncryptedExpiryYear(),
             AdyenSdkConfig::ENCRYPTED_SECURITY_CODE_FIELD => $creditCardTransfer->getEncryptedSecurityCode(),
         ];
+    }
+
+    /**
+     * @return bool
+     */
+    protected function is3dSecure(): bool
+    {
+        return $this->config->isCreditCard3dSecureEnabled();
+    }
+
+    /**
+     * @return string[]
+     */
+    protected function getAdditionalData(): array
+    {
+        $data = [];
+        if ($this->is3dSecure()) {
+            $data += static::THREE_D_SECURE_DATA;
+        }
+
+        return $data;
     }
 }

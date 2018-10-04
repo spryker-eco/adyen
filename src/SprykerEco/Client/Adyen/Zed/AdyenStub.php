@@ -27,6 +27,19 @@ class AdyenStub extends ZedRequestStub implements AdyenStubInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\AdyenRedirectResponseTransfer $redirectResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\AdyenRedirectResponseTransfer
+     */
+    public function handleCreditCard3dResponseFromAdyen(AdyenRedirectResponseTransfer $redirectResponseTransfer): AdyenRedirectResponseTransfer
+    {
+        /** @var \Generated\Shared\Transfer\AdyenRedirectResponseTransfer $redirectResponseTransfer */
+        $redirectResponseTransfer = $this->zedStub->call('/adyen/gateway/handle-credit-card-3d-response', $redirectResponseTransfer);
+
+        return $redirectResponseTransfer;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\AdyenNotificationsTransfer $notificationsTransfer
      *
      * @return \Generated\Shared\Transfer\AdyenNotificationsTransfer
