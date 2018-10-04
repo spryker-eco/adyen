@@ -62,7 +62,7 @@ class PrepaymentSaver extends AbstractSaver implements AdyenSaverInterface
             );
 
         $this->writer->updatePaymentEntities(
-            $this->config->getOmsStatusAuthorized(),
+            $this->config->getOmsStatusNew(),
             $paymentAdyenOrderItemTransfers,
             $paymentAdyenTransfer
         );
