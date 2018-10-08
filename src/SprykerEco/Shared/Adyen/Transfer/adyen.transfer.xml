@@ -20,6 +20,8 @@
         <property name="payload" type="string" />
         <property name="type" type="string" />
         <property name="resultCode" type="string" />
+        <property name="md" type="string" />
+        <property name="paRes" type="string" />
         <property name="isSuccess" type="bool" />
     </transfer>
 

@@ -52,6 +52,10 @@ class CreditCardSaver extends AbstractSaver implements AdyenSaverInterface
 
         $paymentAdyenTransfer->setPspReference($response->getMakePaymentResponse()->getPspReference());
 
+        if ($this->config->isCreditCard3dSecureEnabled()) {
+            $paymentAdyenTransfer->setPaymentData($response->getMakePaymentResponse()->getPaymentData());
+        }
+
         $paymentAdyenOrderItemTransfers = $this->reader
             ->getAllPaymentAdyenOrderItemsByIdSalesOrder(
                 $paymentAdyenTransfer->getFkSalesOrder()
