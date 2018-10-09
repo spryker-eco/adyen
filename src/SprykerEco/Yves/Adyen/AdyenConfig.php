@@ -19,4 +19,12 @@ class AdyenConfig extends AbstractBundleConfig
     {
         return $this->get(AdyenConstants::SOCIAL_SECURITY_NUMBER_COUNTRIES_MANDATORY);
     }
+
+    /**
+     * @return string[]
+     */
+    public function getIdealIssuersList(): array
+    {
+        return $this->get(AdyenConstants::IDEAL_ISSUERS_LIST);
+    }
 }

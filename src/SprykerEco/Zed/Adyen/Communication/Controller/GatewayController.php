@@ -37,6 +37,16 @@ class GatewayController extends AbstractGatewayController
     }
 
     /**
+     * @param \Generated\Shared\Transfer\AdyenRedirectResponseTransfer $redirectResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\AdyenRedirectResponseTransfer
+     */
+    public function handleIdealResponseAction(AdyenRedirectResponseTransfer $redirectResponseTransfer): AdyenRedirectResponseTransfer
+    {
+        return $this->getFacade()->handleIdealResponseFromAdyen($redirectResponseTransfer);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\AdyenNotificationsTransfer $notificationsTransfer
      *
      * @return \Generated\Shared\Transfer\AdyenNotificationsTransfer

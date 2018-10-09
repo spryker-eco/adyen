@@ -199,6 +199,20 @@ class AdyenFacade extends AbstractFacade implements AdyenFacadeInterface
      *
      * @api
      *
+     * @param \Generated\Shared\Transfer\AdyenRedirectResponseTransfer $redirectResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\AdyenRedirectResponseTransfer
+     */
+    public function handleIdealResponseFromAdyen(AdyenRedirectResponseTransfer $redirectResponseTransfer): AdyenRedirectResponseTransfer
+    {
+        return $this->getFactory()->createIdealRedirectHandler()->handle($redirectResponseTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\AdyenNotificationsTransfer $notificationsTransfer
      *
      * @return \Generated\Shared\Transfer\AdyenNotificationsTransfer

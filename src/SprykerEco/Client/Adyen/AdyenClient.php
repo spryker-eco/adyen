@@ -29,7 +29,7 @@ class AdyenClient extends AbstractClient implements AdyenClientInterface
     {
         return $this
             ->getFactory()
-            ->createZedStub()
+            ->createZedAdyenStub()
             ->handleSofortResponseFromAdyen($redirectResponseTransfer);
     }
 
@@ -46,8 +46,25 @@ class AdyenClient extends AbstractClient implements AdyenClientInterface
     {
         return $this
             ->getFactory()
-            ->createZedStub()
+            ->createZedAdyenStub()
             ->handleCreditCard3dResponseFromAdyen($redirectResponseTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\AdyenRedirectResponseTransfer $redirectResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\AdyenRedirectResponseTransfer
+     */
+    public function handleIdealResponseFromAdyen(AdyenRedirectResponseTransfer $redirectResponseTransfer): AdyenRedirectResponseTransfer
+    {
+        return $this
+            ->getFactory()
+            ->createZedAdyenStub()
+            ->handleIdealResponseFromAdyen($redirectResponseTransfer);
     }
 
     /**
@@ -63,7 +80,7 @@ class AdyenClient extends AbstractClient implements AdyenClientInterface
     {
         return $this
             ->getFactory()
-            ->createZedStub()
+            ->createZedAdyenStub()
             ->handleNotificationRequest($notificationsTransfer);
     }
 }

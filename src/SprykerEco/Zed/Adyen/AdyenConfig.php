@@ -106,6 +106,14 @@ class AdyenConfig extends AbstractBundleConfig
     }
 
     /**
+     * @return string
+     */
+    public function getIdealReturnUrl(): string
+    {
+        return $this->get(AdyenConstants::IDEAL_RETURN_URL);
+    }
+
+    /**
      * @return bool
      */
     public function isMultiplePartialCaptureEnabled(): bool

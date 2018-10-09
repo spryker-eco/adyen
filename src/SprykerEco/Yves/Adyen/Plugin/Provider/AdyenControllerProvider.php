@@ -46,5 +46,13 @@ class AdyenControllerProvider extends YvesControllerProvider
             static::CALLBACK_CONTROLLER_NAME,
             'redirectCreditCard3d'
         );
+
+        $this->createController(
+            '/adyen/callback/redirect-ideal',
+            'adyen-redirect-ideal',
+            static::BUNDLE_NAME,
+            static::CALLBACK_CONTROLLER_NAME,
+            'redirectIdeal'
+        );
     }
 }
