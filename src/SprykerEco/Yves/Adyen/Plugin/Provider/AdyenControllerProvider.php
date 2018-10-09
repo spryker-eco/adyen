@@ -54,5 +54,13 @@ class AdyenControllerProvider extends YvesControllerProvider
             static::CALLBACK_CONTROLLER_NAME,
             'redirectIdeal'
         );
+
+        $this->createController(
+            '/adyen/callback/redirect-paypal',
+            'adyen-redirect-paypal',
+            static::BUNDLE_NAME,
+            static::CALLBACK_CONTROLLER_NAME,
+            'redirectPayPal'
+        );
     }
 }

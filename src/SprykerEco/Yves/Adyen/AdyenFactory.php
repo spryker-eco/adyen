@@ -21,11 +21,13 @@ use SprykerEco\Yves\Adyen\Form\DataProvider\CreditCardFormDataProvider;
 use SprykerEco\Yves\Adyen\Form\DataProvider\DirectDebitFormDataProvider;
 use SprykerEco\Yves\Adyen\Form\DataProvider\IdealFormDataProvider;
 use SprykerEco\Yves\Adyen\Form\DataProvider\KlarnaInvoiceFormDataProvider;
+use SprykerEco\Yves\Adyen\Form\DataProvider\PayPalFormDataProvider;
 use SprykerEco\Yves\Adyen\Form\DataProvider\PrepaymentFormDataProvider;
 use SprykerEco\Yves\Adyen\Form\DataProvider\SofortFormDataProvider;
 use SprykerEco\Yves\Adyen\Form\DirectDebitSubForm;
 use SprykerEco\Yves\Adyen\Form\IdealSubForm;
 use SprykerEco\Yves\Adyen\Form\KlarnaInvoiceSubForm;
+use SprykerEco\Yves\Adyen\Form\PayPalSubForm;
 use SprykerEco\Yves\Adyen\Form\PrepaymentSubForm;
 use SprykerEco\Yves\Adyen\Form\SofortSubForm;
 use SprykerEco\Yves\Adyen\Handler\AdyenPaymentHandler;
@@ -37,6 +39,7 @@ use SprykerEco\Yves\Adyen\Handler\Notification\Mapper\AdyenNotificationMapperInt
 use SprykerEco\Yves\Adyen\Handler\Redirect\AdyenRedirectHandlerInterface;
 use SprykerEco\Yves\Adyen\Handler\Redirect\CreditCard3dRedirectHandler;
 use SprykerEco\Yves\Adyen\Handler\Redirect\IdealRedirectHandler;
+use SprykerEco\Yves\Adyen\Handler\Redirect\PayPalRedirectHandler;
 use SprykerEco\Yves\Adyen\Handler\Redirect\SofortRedirectHandler;
 use SprykerEco\Yves\Adyen\Plugin\Payment\AdyenPaymentPluginInterface;
 use SprykerEco\Yves\Adyen\Plugin\Payment\CreditCardPaymentPlugin;
@@ -107,6 +110,14 @@ class AdyenFactory extends AbstractFactory
     }
 
     /**
+     * @return \Spryker\Yves\StepEngine\Dependency\Form\SubFormInterface
+     */
+    public function createPayPalForm(): SubFormInterface
+    {
+        return new PayPalSubForm();
+    }
+
+    /**
      * @return \Spryker\Yves\StepEngine\Dependency\Form\StepEngineFormDataProviderInterface
      */
     public function createCreditCardFormDataProvider(): StepEngineFormDataProviderInterface
@@ -162,6 +173,14 @@ class AdyenFactory extends AbstractFactory
     }
 
     /**
+     * @return \Spryker\Yves\StepEngine\Dependency\Form\StepEngineFormDataProviderInterface
+     */
+    public function createPayPalFormDataProvider(): StepEngineFormDataProviderInterface
+    {
+        return new PayPalFormDataProvider($this->getQuoteClient());
+    }
+
+    /**
      * @return \SprykerEco\Yves\Adyen\Handler\Redirect\AdyenRedirectHandlerInterface
      */
     public function createSofortRedirectHandler(): AdyenRedirectHandlerInterface
@@ -189,6 +208,17 @@ class AdyenFactory extends AbstractFactory
     public function createIdealRedirectHandler(): AdyenRedirectHandlerInterface
     {
         return new IdealRedirectHandler(
+            $this->getQuoteClient(),
+            $this->getAdyenClient()
+        );
+    }
+
+    /**
+     * @return \SprykerEco\Yves\Adyen\Handler\Redirect\AdyenRedirectHandlerInterface
+     */
+    public function createPayPalRedirectHandler(): AdyenRedirectHandlerInterface
+    {
+        return new PayPalRedirectHandler(
             $this->getQuoteClient(),
             $this->getAdyenClient()
         );

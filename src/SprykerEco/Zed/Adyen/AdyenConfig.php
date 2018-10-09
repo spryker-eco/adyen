@@ -114,6 +114,14 @@ class AdyenConfig extends AbstractBundleConfig
     }
 
     /**
+     * @return string
+     */
+    public function getPayPalReturnUrl(): string
+    {
+        return $this->get(AdyenConstants::PAY_PAL_RETURN_URL);
+    }
+
+    /**
      * @return bool
      */
     public function isMultiplePartialCaptureEnabled(): bool

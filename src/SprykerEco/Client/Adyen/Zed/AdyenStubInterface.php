@@ -13,6 +13,13 @@ use Generated\Shared\Transfer\AdyenRedirectResponseTransfer;
 interface AdyenStubInterface
 {
     /**
+     * @param \Generated\Shared\Transfer\AdyenNotificationsTransfer $notificationsTransfer
+     *
+     * @return \Generated\Shared\Transfer\AdyenNotificationsTransfer
+     */
+    public function handleNotificationRequest(AdyenNotificationsTransfer $notificationsTransfer): AdyenNotificationsTransfer;
+
+    /**
      * @param \Generated\Shared\Transfer\AdyenRedirectResponseTransfer $redirectResponseTransfer
      *
      * @return \Generated\Shared\Transfer\AdyenRedirectResponseTransfer
@@ -34,9 +41,9 @@ interface AdyenStubInterface
     public function handleIdealResponseFromAdyen(AdyenRedirectResponseTransfer $redirectResponseTransfer): AdyenRedirectResponseTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\AdyenNotificationsTransfer $notificationsTransfer
+     * @param \Generated\Shared\Transfer\AdyenRedirectResponseTransfer $redirectResponseTransfer
      *
-     * @return \Generated\Shared\Transfer\AdyenNotificationsTransfer
+     * @return \Generated\Shared\Transfer\AdyenRedirectResponseTransfer
      */
-    public function handleNotificationRequest(AdyenNotificationsTransfer $notificationsTransfer): AdyenNotificationsTransfer;
+    public function handlePayPalResponseFromAdyen(AdyenRedirectResponseTransfer $redirectResponseTransfer): AdyenRedirectResponseTransfer;
 }

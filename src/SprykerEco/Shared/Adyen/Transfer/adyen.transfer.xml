@@ -109,6 +109,10 @@
         <property name="idealIssuer" type="string" />
     </transfer>
 
+    <transfer name="AdyenPayPalPayment">
+        <property name="type" type="string" />
+    </transfer>
+
     <transfer name="Payment">
         <property name="adyenPayment" type="AdyenPayment" />
         <property name="adyenCreditCard" type="AdyenCreditCardPayment" />
@@ -119,6 +123,7 @@
         <property name="adyenKlarnaInvoiceRequest" type="AdyenKlarnaInvoiceRequest" />
         <property name="adyenPrepayment" type="AdyenPrepaymentPayment" />
         <property name="adyenIdeal" type="AdyenIdealPayment" />
+        <property name="adyenPayPal" type="AdyenPayPalPayment" />
     </transfer>
 
     <transfer name="Order">
@@ -129,6 +134,7 @@
         <property name="adyenKlarnaInvoice" type="AdyenKlarnaInvoicePayment" />
         <property name="adyenPrepayment" type="AdyenPrepaymentPayment" />
         <property name="adyenIdeal" type="AdyenIdealPayment" />
+        <property name="adyenPayPal" type="AdyenPayPalPayment" />
     </transfer>
 
     <transfer name="AdyenNotifications">

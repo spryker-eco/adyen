@@ -27,6 +27,19 @@ class AdyenStub implements AdyenStubInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\AdyenNotificationsTransfer $notificationsTransfer
+     *
+     * @return \Generated\Shared\Transfer\AdyenNotificationsTransfer
+     */
+    public function handleNotificationRequest(AdyenNotificationsTransfer $notificationsTransfer): AdyenNotificationsTransfer
+    {
+        /** @var \Generated\Shared\Transfer\AdyenNotificationsTransfer $notificationsTransfer */
+        $notificationsTransfer = $this->zedRequestClient->call('/adyen/gateway/handle-notification', $notificationsTransfer);
+
+        return $notificationsTransfer;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\AdyenRedirectResponseTransfer $redirectResponseTransfer
      *
      * @return \Generated\Shared\Transfer\AdyenRedirectResponseTransfer
@@ -66,15 +79,15 @@ class AdyenStub implements AdyenStubInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\AdyenNotificationsTransfer $notificationsTransfer
+     * @param \Generated\Shared\Transfer\AdyenRedirectResponseTransfer $redirectResponseTransfer
      *
-     * @return \Generated\Shared\Transfer\AdyenNotificationsTransfer
+     * @return \Generated\Shared\Transfer\AdyenRedirectResponseTransfer
      */
-    public function handleNotificationRequest(AdyenNotificationsTransfer $notificationsTransfer): AdyenNotificationsTransfer
+    public function handlePayPalResponseFromAdyen(AdyenRedirectResponseTransfer $redirectResponseTransfer): AdyenRedirectResponseTransfer
     {
-        /** @var \Generated\Shared\Transfer\AdyenNotificationsTransfer $notificationsTransfer */
-        $notificationsTransfer = $this->zedRequestClient->call('/adyen/gateway/handle-notification', $notificationsTransfer);
+        /** @var \Generated\Shared\Transfer\AdyenRedirectResponseTransfer $redirectResponseTransfer */
+        $redirectResponseTransfer = $this->zedRequestClient->call('/adyen/gateway/handle-paypal-response', $redirectResponseTransfer);
 
-        return $notificationsTransfer;
+        return $redirectResponseTransfer;
     }
 }

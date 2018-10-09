@@ -153,6 +153,20 @@ interface AdyenFacadeInterface
 
     /**
      * Specification:
+     * - Handle notification from API.
+     * - Update payment entities.
+     * - Update order items statuses.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\AdyenNotificationsTransfer $notificationsTransfer
+     *
+     * @return \Generated\Shared\Transfer\AdyenNotificationsTransfer
+     */
+    public function handleNotification(AdyenNotificationsTransfer $notificationsTransfer): AdyenNotificationsTransfer;
+
+    /**
+     * Specification:
      * - Handles response after redirect customer to the shop.
      * - Performs Payment Details call.
      * - Saves result to DB.
@@ -195,15 +209,15 @@ interface AdyenFacadeInterface
 
     /**
      * Specification:
-     * - Handle notification from API.
-     * - Update payment entities.
-     * - Update order items statuses.
+     * - Handles response after redirect customer to the shop.
+     * - Performs Payment Details call.
+     * - Saves result to DB.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\AdyenNotificationsTransfer $notificationsTransfer
+     * @param \Generated\Shared\Transfer\AdyenRedirectResponseTransfer $redirectResponseTransfer
      *
-     * @return \Generated\Shared\Transfer\AdyenNotificationsTransfer
+     * @return \Generated\Shared\Transfer\AdyenRedirectResponseTransfer
      */
-    public function handleNotification(AdyenNotificationsTransfer $notificationsTransfer): AdyenNotificationsTransfer;
+    public function handlePayPalResponseFromAdyen(AdyenRedirectResponseTransfer $redirectResponseTransfer): AdyenRedirectResponseTransfer;
 }

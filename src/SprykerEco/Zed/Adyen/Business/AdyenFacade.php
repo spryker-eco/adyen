@@ -171,6 +171,20 @@ class AdyenFacade extends AbstractFacade implements AdyenFacadeInterface
      *
      * @api
      *
+     * @param \Generated\Shared\Transfer\AdyenNotificationsTransfer $notificationsTransfer
+     *
+     * @return \Generated\Shared\Transfer\AdyenNotificationsTransfer
+     */
+    public function handleNotification(AdyenNotificationsTransfer $notificationsTransfer): AdyenNotificationsTransfer
+    {
+        return $this->getFactory()->createNotificationHandler()->handle($notificationsTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\AdyenRedirectResponseTransfer $redirectResponseTransfer
      *
      * @return \Generated\Shared\Transfer\AdyenRedirectResponseTransfer
@@ -213,12 +227,12 @@ class AdyenFacade extends AbstractFacade implements AdyenFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\AdyenNotificationsTransfer $notificationsTransfer
+     * @param \Generated\Shared\Transfer\AdyenRedirectResponseTransfer $redirectResponseTransfer
      *
-     * @return \Generated\Shared\Transfer\AdyenNotificationsTransfer
+     * @return \Generated\Shared\Transfer\AdyenRedirectResponseTransfer
      */
-    public function handleNotification(AdyenNotificationsTransfer $notificationsTransfer): AdyenNotificationsTransfer
+    public function handlePayPalResponseFromAdyen(AdyenRedirectResponseTransfer $redirectResponseTransfer): AdyenRedirectResponseTransfer
     {
-        return $this->getFactory()->createNotificationHandler()->handle($notificationsTransfer);
+        return $this->getFactory()->createPayPalRedirectHandler()->handle($redirectResponseTransfer);
     }
 }

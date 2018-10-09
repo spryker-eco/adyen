@@ -17,6 +17,16 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 class GatewayController extends AbstractGatewayController
 {
     /**
+     * @param \Generated\Shared\Transfer\AdyenNotificationsTransfer $notificationsTransfer
+     *
+     * @return \Generated\Shared\Transfer\AdyenNotificationsTransfer
+     */
+    public function handleNotificationAction(AdyenNotificationsTransfer $notificationsTransfer): AdyenNotificationsTransfer
+    {
+        return $this->getFacade()->handleNotification($notificationsTransfer);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\AdyenRedirectResponseTransfer $redirectResponseTransfer
      *
      * @return \Generated\Shared\Transfer\AdyenRedirectResponseTransfer
@@ -47,12 +57,12 @@ class GatewayController extends AbstractGatewayController
     }
 
     /**
-     * @param \Generated\Shared\Transfer\AdyenNotificationsTransfer $notificationsTransfer
+     * @param \Generated\Shared\Transfer\AdyenRedirectResponseTransfer $redirectResponseTransfer
      *
-     * @return \Generated\Shared\Transfer\AdyenNotificationsTransfer
+     * @return \Generated\Shared\Transfer\AdyenRedirectResponseTransfer
      */
-    public function handleNotificationAction(AdyenNotificationsTransfer $notificationsTransfer): AdyenNotificationsTransfer
+    public function handlePayPalResponseAction(AdyenRedirectResponseTransfer $redirectResponseTransfer): AdyenRedirectResponseTransfer
     {
-        return $this->getFacade()->handleNotification($notificationsTransfer);
+        return $this->getFacade()->handlePayPalResponseFromAdyen($redirectResponseTransfer);
     }
 }

@@ -18,4 +18,5 @@ class AdyenConfig extends AbstractBundleConfig
     public const ADYEN_KLARNA_INVOICE = 'adyenKlarnaInvoice';
     public const ADYEN_PREPAYMENT = 'adyenPrepayment';
     public const ADYEN_IDEAL = 'adyenIdeal';
+    public const ADYEN_PAY_PAL = 'adyenPayPal';
 }
