@@ -9,8 +9,8 @@ namespace SprykerEco\Zed\Adyen\Business\Hook;
 
 use Generated\Shared\Transfer\AdyenApiResponseTransfer;
 use Generated\Shared\Transfer\AdyenRedirectTransfer;
+use Generated\Shared\Transfer\CheckoutErrorTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
-use Generated\Shared\Transfer\PaymentTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use SprykerEco\Shared\Adyen\AdyenConfig;
 use SprykerEco\Zed\Adyen\Business\Hook\Mapper\AdyenMapperResolverInterface;
@@ -21,6 +21,8 @@ class AdyenPostSaveHook implements AdyenHookInterface
 {
     protected const REDIRECT_METHOD_GET = 'GET';
     protected const REDIRECT_METHOD_POST = 'POST';
+    protected const ERROR_TYPE_PAYMENT_FAILED = 'payment failed';
+    protected const ERROR_MESSAGE_PAYMENT_FAILED = 'Something went wrong with your payment. Try again!';
 
     /**
      * @var \SprykerEco\Zed\Adyen\Dependency\Facade\AdyenToAdyenApiFacadeInterface
@@ -71,7 +73,13 @@ class AdyenPostSaveHook implements AdyenHookInterface
         $responseTransfer = $this->adyenApiFacade->performMakePaymentApiCall($requestTransfer);
         $saver->save($requestTransfer, $responseTransfer);
 
-        if (!$responseTransfer->getIsSuccess() || !$this->isMethodWithRedirect($responseTransfer)) {
+        if (!$responseTransfer->getIsSuccess()) {
+            $this->processFailureResponse($checkoutResponseTransfer);
+
+            return;
+        }
+
+        if (!$this->isMethodWithRedirect($responseTransfer)) {
             return;
         }
 
@@ -100,7 +108,6 @@ class AdyenPostSaveHook implements AdyenHookInterface
 
     /**
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
-     *
      * @param \Generated\Shared\Transfer\AdyenApiResponseTransfer $responseTransfer
      *
      * @return void
@@ -125,11 +132,26 @@ class AdyenPostSaveHook implements AdyenHookInterface
         CheckoutResponseTransfer $checkoutResponseTransfer,
         AdyenApiResponseTransfer $responseTransfer
     ): void {
-        $checkoutResponseTransfer
-            ->setAdyenRedirect(
-                (new AdyenRedirectTransfer())
-                    ->setAction($responseTransfer->getMakePaymentResponse()->getRedirect()->getUrl())
-                    ->setFields($responseTransfer->getMakePaymentResponse()->getRedirect()->getData())
-            );
+        $redirectTransfer = (new AdyenRedirectTransfer())
+            ->setAction($responseTransfer->getMakePaymentResponse()->getRedirect()->getUrl())
+            ->setFields($responseTransfer->getMakePaymentResponse()->getRedirect()->getData());
+
+        $checkoutResponseTransfer->setAdyenRedirect($redirectTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     *
+     * @return void
+     */
+    protected function processFailureResponse(
+        CheckoutResponseTransfer $checkoutResponseTransfer
+    ): void {
+        $error = (new CheckoutErrorTransfer())
+            ->setErrorType(static::ERROR_TYPE_PAYMENT_FAILED)
+            ->setMessage(static::ERROR_MESSAGE_PAYMENT_FAILED);
+
+        $checkoutResponseTransfer->setIsSuccess(false);
+        $checkoutResponseTransfer->addError($error);
     }
 }
