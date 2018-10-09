@@ -1,19 +1,19 @@
 <script type="text/javascript" src="https://checkoutshopper-test.adyen.com/checkoutshopper/assets/js/sdk/checkoutSecuredFields.1.1.1.min.js"></script>
-<div class="cards-div">
-    <div class="js-chckt-pm__pm-holder">
-        <input type="hidden" name="txvariant" value="card" />
-        <br />
-        <label>
-            <span class="input-field" data-hosted-id="hostedCardNumberField" data-cse="encryptedCardNumber" />
-        </label>
-        <br />
-        <label>
-            <span class="input-field" data-hosted-id="hostedExpiryDateField" data-cse="encryptedExpiryDate" />
-        </label>
-        <br />
-        <label>
-            <span class="input-field" data-hosted-id="hostedSecurityCodeField" data-cse="encryptedSecurityCode" />
-        </label>
+
+<div class="adyen-payment-form adyen-payment-klarna-invoice-form payment-form cards-div js-chckt-pm__pm-holder" id="adyenKlarnaInvoice">
+    {{ form_widget(form.adyenCreditCard) }}
+    <input type="hidden" name="txvariant" value="card" />
+
+    <div class="field">
+        <span class="input-field input" data-hosted-id="hostedCardNumberField" data-cse="encryptedCardNumber" />
+    </div>
+
+    <div class="field">
+        <span class="input-field input" data-hosted-id="hostedExpiryDateField" data-cse="encryptedExpiryDate" />
+    </div>
+
+    <div class="field">
+        <span class="input-field input" data-hosted-id="hostedSecurityCodeField" data-cse="encryptedSecurityCode" />
     </div>
 </div>
 
@@ -24,6 +24,9 @@
         base: {
             color: 'black',
             fontSize: '16px',
+            border: '1px solid #dadada',
+            height: '32px',
+            lineHeight: '32px',
             fontSmoothing: 'antialiased',
             fontFamily: 'Helvetica'
         },

@@ -55,7 +55,8 @@ abstract class AbstractMapper
             ->setMerchantAccount($this->config->getMerchantAccount())
             ->setReference($quoteTransfer->getPayment()->getAdyenPayment()->getReference())
             ->setAmount($this->createAmountTransfer($quoteTransfer))
-            ->setReturnUrl($this->getReturnUrl());
+            ->setReturnUrl($this->getReturnUrl())
+            ->setCountryCode($quoteTransfer->getBillingAddress()->getIso2Code());
     }
 
     /**
