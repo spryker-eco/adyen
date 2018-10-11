@@ -70,5 +70,13 @@ class AdyenControllerProvider extends YvesControllerProvider
             static::CALLBACK_CONTROLLER_NAME,
             'redirectAliPay'
         );
+
+        $this->createController(
+            '/adyen/callback/redirect-wechatpay',
+            'adyen-redirect-wechatpay',
+            static::BUNDLE_NAME,
+            static::CALLBACK_CONTROLLER_NAME,
+            'redirectWeChatPay'
+        );
     }
 }

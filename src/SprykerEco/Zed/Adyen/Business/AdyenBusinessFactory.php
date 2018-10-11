@@ -18,6 +18,7 @@ use SprykerEco\Zed\Adyen\Business\Handler\Redirect\CreditCard3dRedirectHandler;
 use SprykerEco\Zed\Adyen\Business\Handler\Redirect\IdealRedirectHandler;
 use SprykerEco\Zed\Adyen\Business\Handler\Redirect\PayPalRedirectHandler;
 use SprykerEco\Zed\Adyen\Business\Handler\Redirect\SofortRedirectHandler;
+use SprykerEco\Zed\Adyen\Business\Handler\Redirect\WeChatPayRedirectHandler;
 use SprykerEco\Zed\Adyen\Business\Hook\AdyenHookInterface;
 use SprykerEco\Zed\Adyen\Business\Hook\AdyenPostSaveHook;
 use SprykerEco\Zed\Adyen\Business\Hook\Mapper\AdyenMapperResolver;
@@ -31,6 +32,7 @@ use SprykerEco\Zed\Adyen\Business\Hook\Mapper\MakePayment\KlarnaInvoiceMapper;
 use SprykerEco\Zed\Adyen\Business\Hook\Mapper\MakePayment\PayPalMapper;
 use SprykerEco\Zed\Adyen\Business\Hook\Mapper\MakePayment\PrepaymentMapper;
 use SprykerEco\Zed\Adyen\Business\Hook\Mapper\MakePayment\SofortMapper;
+use SprykerEco\Zed\Adyen\Business\Hook\Mapper\MakePayment\WeChatPayMapper;
 use SprykerEco\Zed\Adyen\Business\Hook\Saver\AdyenSaverResolver;
 use SprykerEco\Zed\Adyen\Business\Hook\Saver\AdyenSaverResolverInterface;
 use SprykerEco\Zed\Adyen\Business\Hook\Saver\MakePayment\AdyenSaverInterface;
@@ -42,6 +44,7 @@ use SprykerEco\Zed\Adyen\Business\Hook\Saver\MakePayment\KlarnaInvoiceSaver;
 use SprykerEco\Zed\Adyen\Business\Hook\Saver\MakePayment\PayPalSaver;
 use SprykerEco\Zed\Adyen\Business\Hook\Saver\MakePayment\PrepaymentSaver;
 use SprykerEco\Zed\Adyen\Business\Hook\Saver\MakePayment\SofortSaver;
+use SprykerEco\Zed\Adyen\Business\Hook\Saver\MakePayment\WeChatPaySaver;
 use SprykerEco\Zed\Adyen\Business\Logger\AdyenLogger;
 use SprykerEco\Zed\Adyen\Business\Logger\AdyenLoggerInterface;
 use SprykerEco\Zed\Adyen\Business\Oms\Handler\AdyenCommandHandlerInterface;
@@ -130,7 +133,8 @@ class AdyenBusinessFactory extends AbstractBusinessFactory
             AdyenConfig::ADYEN_PREPAYMENT => $this->createPrepaymentMakePaymentMapper(),
             AdyenConfig::ADYEN_IDEAL => $this->createIdealMakePaymentMapper(),
             AdyenConfig::ADYEN_PAY_PAL => $this->createPayPalMakePaymentMapper(),
-            AdyenConfig::ADYEN_ALI_PAL => $this->createAliPayMakePaymentMapper(),
+            AdyenConfig::ADYEN_ALI_PAY => $this->createAliPayMakePaymentMapper(),
+            AdyenConfig::ADYEN_WE_CHAT_PAY => $this->createWeChatPayMakePaymentMapper(),
         ];
     }
 
@@ -199,6 +203,14 @@ class AdyenBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \SprykerEco\Zed\Adyen\Business\Hook\Mapper\MakePayment\AdyenMapperInterface
+     */
+    public function createWeChatPayMakePaymentMapper(): AdyenMapperInterface
+    {
+        return new WeChatPayMapper($this->getConfig());
+    }
+
+    /**
      * @return \SprykerEco\Zed\Adyen\Business\Hook\Saver\AdyenSaverResolverInterface
      */
     public function createSaverResolver(): AdyenSaverResolverInterface
@@ -219,7 +231,8 @@ class AdyenBusinessFactory extends AbstractBusinessFactory
             AdyenConfig::ADYEN_PREPAYMENT => $this->createPrepaymentMakePaymentSaver(),
             AdyenConfig::ADYEN_IDEAL => $this->createIdealMakePaymentSaver(),
             AdyenConfig::ADYEN_PAY_PAL => $this->createPayPalMakePaymentSaver(),
-            AdyenConfig::ADYEN_ALI_PAL => $this->createAliPayMakePaymentSaver(),
+            AdyenConfig::ADYEN_ALI_PAY => $this->createAliPayMakePaymentSaver(),
+            AdyenConfig::ADYEN_WE_CHAT_PAY => $this->createWeChatPayMakePaymentSaver(),
         ];
     }
 
@@ -320,6 +333,19 @@ class AdyenBusinessFactory extends AbstractBusinessFactory
     public function createAliPayMakePaymentSaver(): AdyenSaverInterface
     {
         return new AliPaySaver(
+            $this->createReader(),
+            $this->createWriter(),
+            $this->getUtilEncodingService(),
+            $this->getConfig()
+        );
+    }
+
+    /**
+     * @return \SprykerEco\Zed\Adyen\Business\Hook\Saver\MakePayment\AdyenSaverInterface
+     */
+    public function createWeChatPayMakePaymentSaver(): AdyenSaverInterface
+    {
+        return new WeChatPaySaver(
             $this->createReader(),
             $this->createWriter(),
             $this->getUtilEncodingService(),
@@ -597,6 +623,19 @@ class AdyenBusinessFactory extends AbstractBusinessFactory
     public function createAliPayRedirectHandler(): AdyenRedirectHandlerInterface
     {
         return new AliPayRedirectHandler(
+            $this->getAdyenApiFacade(),
+            $this->createReader(),
+            $this->createWriter(),
+            $this->getConfig()
+        );
+    }
+
+    /**
+     * @return \SprykerEco\Zed\Adyen\Business\Handler\Redirect\AdyenRedirectHandlerInterface
+     */
+    public function createWeChatPayRedirectHandler(): AdyenRedirectHandlerInterface
+    {
+        return new WeChatPayRedirectHandler(
             $this->getAdyenApiFacade(),
             $this->createReader(),
             $this->createWriter(),

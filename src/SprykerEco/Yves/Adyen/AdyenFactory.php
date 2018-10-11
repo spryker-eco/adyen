@@ -26,12 +26,14 @@ use SprykerEco\Yves\Adyen\Form\DataProvider\KlarnaInvoiceFormDataProvider;
 use SprykerEco\Yves\Adyen\Form\DataProvider\PayPalFormDataProvider;
 use SprykerEco\Yves\Adyen\Form\DataProvider\PrepaymentFormDataProvider;
 use SprykerEco\Yves\Adyen\Form\DataProvider\SofortFormDataProvider;
+use SprykerEco\Yves\Adyen\Form\DataProvider\WeChatPayFormDataProvider;
 use SprykerEco\Yves\Adyen\Form\DirectDebitSubForm;
 use SprykerEco\Yves\Adyen\Form\IdealSubForm;
 use SprykerEco\Yves\Adyen\Form\KlarnaInvoiceSubForm;
 use SprykerEco\Yves\Adyen\Form\PayPalSubForm;
 use SprykerEco\Yves\Adyen\Form\PrepaymentSubForm;
 use SprykerEco\Yves\Adyen\Form\SofortSubForm;
+use SprykerEco\Yves\Adyen\Form\WeChatPaySubForm;
 use SprykerEco\Yves\Adyen\Handler\AdyenPaymentHandler;
 use SprykerEco\Yves\Adyen\Handler\AdyenPaymentHandlerInterface;
 use SprykerEco\Yves\Adyen\Handler\Notification\AdyenNotificationHandler;
@@ -44,6 +46,7 @@ use SprykerEco\Yves\Adyen\Handler\Redirect\CreditCard3dRedirectHandler;
 use SprykerEco\Yves\Adyen\Handler\Redirect\IdealRedirectHandler;
 use SprykerEco\Yves\Adyen\Handler\Redirect\PayPalRedirectHandler;
 use SprykerEco\Yves\Adyen\Handler\Redirect\SofortRedirectHandler;
+use SprykerEco\Yves\Adyen\Handler\Redirect\WeChatPayRedirectHandler;
 use SprykerEco\Yves\Adyen\Plugin\Payment\AdyenPaymentPluginInterface;
 use SprykerEco\Yves\Adyen\Plugin\Payment\CreditCardPaymentPlugin;
 use SprykerEco\Yves\Adyen\Plugin\Payment\KlarnaInvoicePaymentPlugin;
@@ -129,6 +132,14 @@ class AdyenFactory extends AbstractFactory
     }
 
     /**
+     * @return \Spryker\Yves\StepEngine\Dependency\Form\SubFormInterface
+     */
+    public function createWeChatPayForm(): SubFormInterface
+    {
+        return new WeChatPaySubForm();
+    }
+
+    /**
      * @return \Spryker\Yves\StepEngine\Dependency\Form\StepEngineFormDataProviderInterface
      */
     public function createCreditCardFormDataProvider(): StepEngineFormDataProviderInterface
@@ -200,6 +211,14 @@ class AdyenFactory extends AbstractFactory
     }
 
     /**
+     * @return \Spryker\Yves\StepEngine\Dependency\Form\StepEngineFormDataProviderInterface
+     */
+    public function createWeChatPayFormDataProvider(): StepEngineFormDataProviderInterface
+    {
+        return new WeChatPayFormDataProvider($this->getQuoteClient());
+    }
+
+    /**
      * @return \SprykerEco\Yves\Adyen\Handler\Redirect\AdyenRedirectHandlerInterface
      */
     public function createSofortRedirectHandler(): AdyenRedirectHandlerInterface
@@ -249,6 +268,17 @@ class AdyenFactory extends AbstractFactory
     public function createAliPayRedirectHandler(): AdyenRedirectHandlerInterface
     {
         return new AliPayRedirectHandler(
+            $this->getQuoteClient(),
+            $this->getAdyenClient()
+        );
+    }
+
+    /**
+     * @return \SprykerEco\Yves\Adyen\Handler\Redirect\AdyenRedirectHandlerInterface
+     */
+    public function createWeChatPayRedirectHandler(): AdyenRedirectHandlerInterface
+    {
+        return new WeChatPayRedirectHandler(
             $this->getQuoteClient(),
             $this->getAdyenClient()
         );

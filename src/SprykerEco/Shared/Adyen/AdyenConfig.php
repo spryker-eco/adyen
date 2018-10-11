@@ -19,5 +19,6 @@ class AdyenConfig extends AbstractBundleConfig
     public const ADYEN_PREPAYMENT = 'adyenPrepayment';
     public const ADYEN_IDEAL = 'adyenIdeal';
     public const ADYEN_PAY_PAL = 'adyenPayPal';
-    public const ADYEN_ALI_PAL = 'adyenAliPay';
+    public const ADYEN_ALI_PAY = 'adyenAliPay';
+    public const ADYEN_WE_CHAT_PAY = 'adyenWeChatPay';
 }
