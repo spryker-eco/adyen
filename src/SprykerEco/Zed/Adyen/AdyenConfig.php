@@ -13,6 +13,7 @@ use SprykerEco\Shared\Adyen\AdyenConstants;
 class AdyenConfig extends AbstractBundleConfig
 {
     protected const OMS_STATUS_NEW = 'new';
+    protected const OMS_STATUS_AUTHORIZED_AND_CAPTURED = 'authorized and captured';
     protected const OMS_STATUS_AUTHORIZED = 'authorized';
     protected const OMS_STATUS_CAPTURED = 'captured';
     protected const OMS_STATUS_CANCELED = 'canceled';
@@ -31,6 +32,14 @@ class AdyenConfig extends AbstractBundleConfig
     public function getOmsStatusNew(): string
     {
         return static::OMS_STATUS_NEW;
+    }
+
+    /**
+     * @return string
+     */
+    public function getOmsStatusAuthorizedAndCaptured(): string
+    {
+        return static::OMS_STATUS_AUTHORIZED_AND_CAPTURED;
     }
 
     /**

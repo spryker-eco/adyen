@@ -85,7 +85,7 @@ class IdealRedirectHandler implements AdyenRedirectHandlerInterface
         $paymentAdyenTransfer->setPspReference($responseTransfer->getPaymentsDetailsResponse()->getPspReference());
 
         $this->writer->updatePaymentEntities(
-            $this->config->getOmsStatusAuthorized(),
+            $this->config->getOmsStatusAuthorizedAndCaptured(),
             $paymentAdyenOrderItems,
             $paymentAdyenTransfer
         );
