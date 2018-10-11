@@ -90,4 +90,17 @@ class AdyenStub implements AdyenStubInterface
 
         return $redirectResponseTransfer;
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\AdyenRedirectResponseTransfer $redirectResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\AdyenRedirectResponseTransfer
+     */
+    public function handleAliPayResponseFromAdyen(AdyenRedirectResponseTransfer $redirectResponseTransfer): AdyenRedirectResponseTransfer
+    {
+        /** @var \Generated\Shared\Transfer\AdyenRedirectResponseTransfer $redirectResponseTransfer */
+        $redirectResponseTransfer = $this->zedRequestClient->call('/adyen/gateway/handle-alipay-response', $redirectResponseTransfer);
+
+        return $redirectResponseTransfer;
+    }
 }

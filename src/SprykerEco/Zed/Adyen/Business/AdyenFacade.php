@@ -235,4 +235,18 @@ class AdyenFacade extends AbstractFacade implements AdyenFacadeInterface
     {
         return $this->getFactory()->createPayPalRedirectHandler()->handle($redirectResponseTransfer);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\AdyenRedirectResponseTransfer $redirectResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\AdyenRedirectResponseTransfer
+     */
+    public function handleAliPayResponseFromAdyen(AdyenRedirectResponseTransfer $redirectResponseTransfer): AdyenRedirectResponseTransfer
+    {
+        return $this->getFactory()->createAliPayRedirectHandler()->handle($redirectResponseTransfer);
+    }
 }

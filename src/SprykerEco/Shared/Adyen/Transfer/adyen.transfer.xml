@@ -113,6 +113,10 @@
         <property name="type" type="string" />
     </transfer>
 
+    <transfer name="AdyenAliPayPayment">
+        <property name="type" type="string" />
+    </transfer>
+
     <transfer name="Payment">
         <property name="adyenPayment" type="AdyenPayment" />
         <property name="adyenCreditCard" type="AdyenCreditCardPayment" />
@@ -124,6 +128,7 @@
         <property name="adyenPrepayment" type="AdyenPrepaymentPayment" />
         <property name="adyenIdeal" type="AdyenIdealPayment" />
         <property name="adyenPayPal" type="AdyenPayPalPayment" />
+        <property name="adyenAliPay" type="AdyenAliPayPayment" />
     </transfer>
 
     <transfer name="Order">
@@ -135,6 +140,7 @@
         <property name="adyenPrepayment" type="AdyenPrepaymentPayment" />
         <property name="adyenIdeal" type="AdyenIdealPayment" />
         <property name="adyenPayPal" type="AdyenPayPalPayment" />
+        <property name="adyenAliPay" type="AdyenAliPayPayment" />
     </transfer>
 
     <transfer name="AdyenNotifications">

@@ -131,6 +131,14 @@ class AdyenConfig extends AbstractBundleConfig
     }
 
     /**
+     * @return string
+     */
+    public function getAliPayReturnUrl(): string
+    {
+        return $this->get(AdyenConstants::ALI_PAY_RETURN_URL);
+    }
+
+    /**
      * @return bool
      */
     public function isMultiplePartialCaptureEnabled(): bool

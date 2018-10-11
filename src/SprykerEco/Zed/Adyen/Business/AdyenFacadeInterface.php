@@ -220,4 +220,18 @@ interface AdyenFacadeInterface
      * @return \Generated\Shared\Transfer\AdyenRedirectResponseTransfer
      */
     public function handlePayPalResponseFromAdyen(AdyenRedirectResponseTransfer $redirectResponseTransfer): AdyenRedirectResponseTransfer;
+
+    /**
+     * Specification:
+     * - Handles response after redirect customer to the shop.
+     * - Performs Payment Details call.
+     * - Saves result to DB.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\AdyenRedirectResponseTransfer $redirectResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\AdyenRedirectResponseTransfer
+     */
+    public function handleAliPayResponseFromAdyen(AdyenRedirectResponseTransfer $redirectResponseTransfer): AdyenRedirectResponseTransfer;
 }

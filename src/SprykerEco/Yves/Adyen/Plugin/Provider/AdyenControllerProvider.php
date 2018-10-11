@@ -62,5 +62,13 @@ class AdyenControllerProvider extends YvesControllerProvider
             static::CALLBACK_CONTROLLER_NAME,
             'redirectPayPal'
         );
+
+        $this->createController(
+            '/adyen/callback/redirect-alipay',
+            'adyen-redirect-alipay',
+            static::BUNDLE_NAME,
+            static::CALLBACK_CONTROLLER_NAME,
+            'redirectAliPay'
+        );
     }
 }
