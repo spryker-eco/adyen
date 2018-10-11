@@ -25,5 +25,5 @@ interface AdyenSdkConfig
     public const BILLING_ADDRESS_FIELD = 'billingAddress';
     public const DELIVERY_ADDRESS_FIELD = 'deliveryAddress';
     public const PERSONAL_DETAILS_FIELD = 'personalDetails';
-    public const IDEAL_ISSUER_FIELD = 'personalDetails';
+    public const IDEAL_ISSUER_FIELD = 'idealIssuer';
 }
