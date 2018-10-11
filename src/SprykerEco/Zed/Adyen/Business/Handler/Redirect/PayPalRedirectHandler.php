@@ -85,7 +85,7 @@ class PayPalRedirectHandler implements AdyenRedirectHandlerInterface
         $paymentAdyenTransfer->setPspReference($responseTransfer->getPaymentsDetailsResponse()->getPspReference());
 
         $this->writer->updatePaymentEntities(
-            $this->config->getOmsStatusCaptured(),
+            $this->config->getOmsStatusAuthorized(),
             $paymentAdyenOrderItems,
             $paymentAdyenTransfer
         );
