@@ -85,7 +85,7 @@ class SofortRedirectHandler implements AdyenRedirectHandlerInterface
         $paymentAdyenTransfer->setPspReference($responseTransfer->getPaymentsDetailsResponse()->getPspReference());
 
         $this->writer->updatePaymentEntities(
-            $this->config->getOmsStatusCaptured(),
+            $this->config->getOmsStatusAuthorizedAndCaptured(),
             $paymentAdyenOrderItems,
             $paymentAdyenTransfer
         );

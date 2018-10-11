@@ -7,8 +7,8 @@
     <process name="AdyenSofort01" main="true">
         <states>
             <state name="new" reserved="true" />
-            <state name="captured" reserved="true" />
-            <state name="capture failed" reserved="false" />
+            <state name="authorized and captured" reserved="true" />
+            <state name="authorize and capture failed" reserved="false" />
             <state name="shipped" reserved="true" />
             <state name="refunded" reserved="false" />
             <state name="refund failed" reserved="false" />
@@ -24,31 +24,31 @@
 
         <transitions>
 
-            <transition condition="Adyen/IsCaptured" happy="true">
+            <transition condition="Adyen/IsAuthorizedAndCaptured" happy="true">
                 <source>new</source>
-                <target>captured</target>
+                <target>authorized and captured</target>
             </transition>
 
             <transition>
                 <source>new</source>
-                <target>capture failed</target>
+                <target>authorize and capture failed</target>
                 <event>invalidation</event>
             </transition>
 
             <transition condition="Adyen/IsRefunded">
-                <source>captured</source>
+                <source>authorized and captured</source>
                 <target>refunded</target>
                 <event>refund</event>
             </transition>
 
             <transition>
-                <source>captured</source>
+                <source>authorized and captured</source>
                 <target>refund failed</target>
                 <event>refund</event>
             </transition>
 
             <transition happy="true">
-                <source>captured</source>
+                <source>authorized and captured</source>
                 <target>shipped</target>
                 <event>ship</event>
             </transition>
