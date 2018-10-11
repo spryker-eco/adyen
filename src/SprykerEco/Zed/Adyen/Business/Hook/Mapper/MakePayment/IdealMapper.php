@@ -25,7 +25,7 @@ class IdealMapper extends AbstractMapper implements AdyenMapperInterface
         $requestTransfer = $this->createRequestTransfer($quoteTransfer);
         $requestTransfer
             ->getMakePaymentRequest()
-            ->setPaymentMethod($this->getPayload());
+            ->setPaymentMethod($this->getPayload($quoteTransfer));
 
         return $requestTransfer;
     }
@@ -39,12 +39,15 @@ class IdealMapper extends AbstractMapper implements AdyenMapperInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
      * @return string[]
      */
-    protected function getPayload(): array
+    protected function getPayload(QuoteTransfer $quoteTransfer): array
     {
         return [
             AdyenSdkConfig::REQUEST_TYPE_FIELD => static::REQUEST_TYPE,
+            AdyenSdkConfig::IDEAL_ISSUER_FIELD => $quoteTransfer->getPayment()->getAdyenIdeal()->getIdealIssuer(),
         ];
     }
 }
