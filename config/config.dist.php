@@ -10,13 +10,34 @@ use SprykerEco\Shared\Adyen\AdyenConstants;
 use SprykerEco\Shared\AdyenApi\AdyenApiConstants;
 
 $config[AdyenConstants::MERCHANT_ACCOUNT] = 'PUT YOUR MERCHANT ACCOUNT HERE';
-$config[AdyenConstants::SOFORT_RETURN_URL] = 'SOFORT RETURN URL';
+$config[AdyenConstants::SOFORT_RETURN_URL] = 'SOFORT_RETURN_URL';
+$config[AdyenConstants::CREDIT_CARD_3D_RETURN_URL] = 'CREDIT_CARD_3D_RETURN_URL';
+$config[AdyenConstants::IDEAL_RETURN_URL] = 'IDEAL_RETURN_URL';
+$config[AdyenConstants::PAY_PAL_RETURN_URL] = 'PAY_PAL_RETURN_URL';
+$config[AdyenConstants::ALI_PAY_RETURN_URL] = 'ALI_PAY_RETURN_URL';
+$config[AdyenConstants::WE_CHAT_PAY_RETURN_URL] = 'WE_CHAT_PAY_RETURN_URL';
+$config[AdyenConstants::CREDIT_CARD_3D_SECURE_ENABLED] = true;
 $config[AdyenConstants::MULTIPLE_PARTIAL_CAPTURE_ENABLED] = false;
 $config[AdyenConstants::SOCIAL_SECURITY_NUMBER_COUNTRIES_MANDATORY] = [
     'SE',
     'FI',
     'NO',
     'DK',
+];
+$config[AdyenConstants::IDEAL_ISSUERS_LIST] = [
+    '1121' => 'Test Issuer',
+    '1151' => 'Test Issuer 2',
+    '1152' => 'Test Issuer 3',
+    '1153' => 'Test Issuer 4',
+    '1154' => 'Test Issuer 5',
+    '1155' => 'Test Issuer 6',
+    '1156' => 'Test Issuer 7',
+    '1157' => 'Test Issuer 8',
+    '1158' => 'Test Issuer 9',
+    '1159' => 'Test Issuer 10',
+    '1160' => 'Test Issuer Refused',
+    '1161' => 'Test Issuer Pending',
+    '1162' => 'Test Issuer Cancelled',
 ];
 
 $config[AdyenApiConstants::API_KEY] = 'PUT YOUR API KEY HERE';
@@ -43,6 +64,11 @@ $config[OmsConstants::ACTIVE_PROCESSES] = [
     'AdyenSofort01',
     'AdyenDirectDebit01',
     'AdyenKlarnaInvoice01',
+    'AdyenPrepayment01',
+    'AdyenIdeal01',
+    'AdyenPayPal01',
+    'AdyenAliPay01',
+    'AdyenWeChatPay01',
 ];
 $config[SalesConstants::PAYMENT_METHOD_STATEMACHINE_MAPPING] = [
     /* ... */
@@ -50,4 +76,9 @@ $config[SalesConstants::PAYMENT_METHOD_STATEMACHINE_MAPPING] = [
     AdyenConfig::ADYEN_SOFORT => 'AdyenSofort01',
     AdyenConfig::ADYEN_DIRECT_DEBIT => 'AdyenDirectDebit01',
     AdyenConfig::ADYEN_KLARNA_INVOICE => 'AdyenKlarnaInvoice01',
+    AdyenConfig::ADYEN_PREPAYMENT => 'AdyenPrepayment01',
+    AdyenConfig::ADYEN_IDEAL => 'AdyenIdeal01',
+    AdyenConfig::ADYEN_PAY_PAL => 'AdyenPayPal01',
+    AdyenConfig::ADYEN_ALI_PAY => 'AdyenAliPay01',
+    AdyenConfig::ADYEN_WE_CHAT_PAY => 'AdyenWeChatPay01',
 ];

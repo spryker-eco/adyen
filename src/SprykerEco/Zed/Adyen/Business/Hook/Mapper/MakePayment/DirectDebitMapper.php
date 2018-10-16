@@ -7,28 +7,12 @@
 
 namespace SprykerEco\Zed\Adyen\Business\Hook\Mapper\MakePayment;
 
-use Generated\Shared\Transfer\AdyenApiRequestTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use SprykerEco\Shared\Adyen\AdyenSdkConfig;
 
-class DirectDebitMapper extends AbstractMapper implements AdyenMapperInterface
+class DirectDebitMapper extends AbstractMapper
 {
     protected const REQUEST_TYPE = 'sepadirectdebit';
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\AdyenApiRequestTransfer
-     */
-    public function buildPaymentRequestTransfer(QuoteTransfer $quoteTransfer): AdyenApiRequestTransfer
-    {
-        $requestTransfer = $this->createRequestTransfer($quoteTransfer);
-        $requestTransfer
-            ->getMakePaymentRequest()
-            ->setPaymentMethod($this->getPayload($quoteTransfer));
-
-        return $requestTransfer;
-    }
 
     /**
      * @return string
@@ -45,10 +29,12 @@ class DirectDebitMapper extends AbstractMapper implements AdyenMapperInterface
      */
     protected function getPayload(QuoteTransfer $quoteTransfer): array
     {
+        $directDebitTransfer = $quoteTransfer->getPayment()->getAdyenDirectDebit();
+
         return [
             AdyenSdkConfig::REQUEST_TYPE_FIELD => static::REQUEST_TYPE,
-            AdyenSdkConfig::SEPA_OWNER_NAME_FIELD => $quoteTransfer->getPayment()->getAdyenDirectDebit()->getOwnerName(),
-            AdyenSdkConfig::SEPA_IBAN_NUMBER_FIELD => $quoteTransfer->getPayment()->getAdyenDirectDebit()->getIbanNumber(),
+            AdyenSdkConfig::SEPA_OWNER_NAME_FIELD => $directDebitTransfer->getOwnerName(),
+            AdyenSdkConfig::SEPA_IBAN_NUMBER_FIELD => $directDebitTransfer->getIbanNumber(),
         ];
     }
 }

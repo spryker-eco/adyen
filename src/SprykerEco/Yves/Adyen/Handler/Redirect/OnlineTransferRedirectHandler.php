@@ -12,7 +12,7 @@ use SprykerEco\Client\Adyen\AdyenClientInterface;
 use SprykerEco\Yves\Adyen\Dependency\Client\AdyenToQuoteClientInterface;
 use Symfony\Component\HttpFoundation\Request;
 
-class WeChatPayRedirectHandler implements AdyenRedirectHandlerInterface
+class OnlineTransferRedirectHandler implements AdyenRedirectHandlerInterface
 {
     /**
      * @var \SprykerEco\Yves\Adyen\Dependency\Client\AdyenToQuoteClientInterface
@@ -43,12 +43,34 @@ class WeChatPayRedirectHandler implements AdyenRedirectHandlerInterface
      */
     public function handle(Request $request): AdyenRedirectResponseTransfer
     {
+        $redirectResponseTransfer = $this->createAdyenRedirectResponseTransfer($request);
+
+        return $this->handleOnlineTransferResponse($redirectResponseTransfer);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Generated\Shared\Transfer\AdyenRedirectResponseTransfer
+     */
+    protected function createAdyenRedirectResponseTransfer(Request $request): AdyenRedirectResponseTransfer
+    {
         $quoteTransfer = $this->quoteClient->getQuote();
-        $responseTransfer = (new AdyenRedirectResponseTransfer())
+        $redirectResponseTransfer = (new AdyenRedirectResponseTransfer())
             ->fromArray($request->query->all(), true);
 
-        $responseTransfer->setReference($quoteTransfer->getPayment()->getAdyenPayment()->getReference());
+        $redirectResponseTransfer->setReference($quoteTransfer->getPayment()->getAdyenPayment()->getReference());
 
-        return $this->adyenClient->handleWeChatPayResponseFromAdyen($responseTransfer);
+        return $redirectResponseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AdyenRedirectResponseTransfer $redirectResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\AdyenRedirectResponseTransfer
+     */
+    protected function handleOnlineTransferResponse(AdyenRedirectResponseTransfer $redirectResponseTransfer): AdyenRedirectResponseTransfer
+    {
+        return $this->adyenClient->handleOnlineTransferResponseFromAdyen($redirectResponseTransfer);
     }
 }

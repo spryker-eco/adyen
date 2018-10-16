@@ -7,28 +7,12 @@
 
 namespace SprykerEco\Zed\Adyen\Business\Hook\Mapper\MakePayment;
 
-use Generated\Shared\Transfer\AdyenApiRequestTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use SprykerEco\Shared\Adyen\AdyenSdkConfig;
 
-class PayPalMapper extends AbstractMapper implements AdyenMapperInterface
+class PayPalMapper extends AbstractMapper
 {
     protected const REQUEST_TYPE = 'paypal';
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\AdyenApiRequestTransfer
-     */
-    public function buildPaymentRequestTransfer(QuoteTransfer $quoteTransfer): AdyenApiRequestTransfer
-    {
-        $requestTransfer = $this->createRequestTransfer($quoteTransfer);
-        $requestTransfer
-            ->getMakePaymentRequest()
-            ->setPaymentMethod($this->getPayload());
-
-        return $requestTransfer;
-    }
 
     /**
      * @return string
@@ -39,9 +23,11 @@ class PayPalMapper extends AbstractMapper implements AdyenMapperInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
      * @return string[]
      */
-    protected function getPayload(): array
+    protected function getPayload(QuoteTransfer $quoteTransfer): array
     {
         return [
             AdyenSdkConfig::REQUEST_TYPE_FIELD => static::REQUEST_TYPE,

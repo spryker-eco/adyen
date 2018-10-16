@@ -44,10 +44,10 @@ class AdyenStub implements AdyenStubInterface
      *
      * @return \Generated\Shared\Transfer\AdyenRedirectResponseTransfer
      */
-    public function handleSofortResponseFromAdyen(AdyenRedirectResponseTransfer $redirectResponseTransfer): AdyenRedirectResponseTransfer
+    public function handleOnlineTransferResponseFromAdyen(AdyenRedirectResponseTransfer $redirectResponseTransfer): AdyenRedirectResponseTransfer
     {
         /** @var \Generated\Shared\Transfer\AdyenRedirectResponseTransfer $redirectResponseTransfer */
-        $redirectResponseTransfer = $this->zedRequestClient->call('/adyen/gateway/handle-sofort-response', $redirectResponseTransfer);
+        $redirectResponseTransfer = $this->zedRequestClient->call('/adyen/gateway/handle-online-transfer-response', $redirectResponseTransfer);
 
         return $redirectResponseTransfer;
     }
@@ -70,49 +70,10 @@ class AdyenStub implements AdyenStubInterface
      *
      * @return \Generated\Shared\Transfer\AdyenRedirectResponseTransfer
      */
-    public function handleIdealResponseFromAdyen(AdyenRedirectResponseTransfer $redirectResponseTransfer): AdyenRedirectResponseTransfer
-    {
-        /** @var \Generated\Shared\Transfer\AdyenRedirectResponseTransfer $redirectResponseTransfer */
-        $redirectResponseTransfer = $this->zedRequestClient->call('/adyen/gateway/handle-ideal-response', $redirectResponseTransfer);
-
-        return $redirectResponseTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\AdyenRedirectResponseTransfer $redirectResponseTransfer
-     *
-     * @return \Generated\Shared\Transfer\AdyenRedirectResponseTransfer
-     */
     public function handlePayPalResponseFromAdyen(AdyenRedirectResponseTransfer $redirectResponseTransfer): AdyenRedirectResponseTransfer
     {
         /** @var \Generated\Shared\Transfer\AdyenRedirectResponseTransfer $redirectResponseTransfer */
         $redirectResponseTransfer = $this->zedRequestClient->call('/adyen/gateway/handle-paypal-response', $redirectResponseTransfer);
-
-        return $redirectResponseTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\AdyenRedirectResponseTransfer $redirectResponseTransfer
-     *
-     * @return \Generated\Shared\Transfer\AdyenRedirectResponseTransfer
-     */
-    public function handleAliPayResponseFromAdyen(AdyenRedirectResponseTransfer $redirectResponseTransfer): AdyenRedirectResponseTransfer
-    {
-        /** @var \Generated\Shared\Transfer\AdyenRedirectResponseTransfer $redirectResponseTransfer */
-        $redirectResponseTransfer = $this->zedRequestClient->call('/adyen/gateway/handle-alipay-response', $redirectResponseTransfer);
-
-        return $redirectResponseTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\AdyenRedirectResponseTransfer $redirectResponseTransfer
-     *
-     * @return \Generated\Shared\Transfer\AdyenRedirectResponseTransfer
-     */
-    public function handleWeChatPayResponseFromAdyen(AdyenRedirectResponseTransfer $redirectResponseTransfer): AdyenRedirectResponseTransfer
-    {
-        /** @var \Generated\Shared\Transfer\AdyenRedirectResponseTransfer $redirectResponseTransfer */
-        $redirectResponseTransfer = $this->zedRequestClient->call('/adyen/gateway/handle-we-chat-pay-response', $redirectResponseTransfer);
 
         return $redirectResponseTransfer;
     }

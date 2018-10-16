@@ -10,17 +10,19 @@ namespace SprykerEco\Yves\Adyen;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 use SprykerEco\Yves\Adyen\Dependency\Client\AdyenToQuoteClientBridge;
-use SprykerEco\Yves\Adyen\Dependency\Client\AdyenToStoreClientBridge;
 use SprykerEco\Yves\Adyen\Dependency\Service\AdyenToUtilEncodingServiceBridge;
+use SprykerEco\Yves\Adyen\Plugin\Payment\CreditCardPaymentPlugin;
+use SprykerEco\Yves\Adyen\Plugin\Payment\KlarnaInvoicePaymentPlugin;
 
 class AdyenDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const CLIENT_QUOTE = 'CLIENT_QUOTE';
     public const CLIENT_ADYEN = 'CLIENT_ADYEN';
-    public const CLIENT_STORE = 'CLIENT_STORE';
 
     public const SERVICE_ADYEN = 'SERVICE_ADYEN';
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
+
+    public const PLUGINS_ADYEN_PAYMENT = 'PLUGINS_ADYEN_PAYMENT';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -32,7 +34,6 @@ class AdyenDependencyProvider extends AbstractBundleDependencyProvider
         $container = parent::provideDependencies($container);
         $container = $this->addAdyenClient($container);
         $container = $this->addQuoteClient($container);
-        $container = $this->addStoreClient($container);
         $container = $this->addAdyenService($container);
         $container = $this->addUtilEncodingService($container);
 
@@ -72,20 +73,6 @@ class AdyenDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    protected function addStoreClient(Container $container): Container
-    {
-        $container[static::CLIENT_STORE] = function (Container $container) {
-            return new AdyenToStoreClientBridge($container->getLocator()->store()->client());
-        };
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Yves\Kernel\Container $container
-     *
-     * @return \Spryker\Yves\Kernel\Container
-     */
     protected function addAdyenService(Container $container): Container
     {
         $container[static::SERVICE_ADYEN] = function (Container $container) {
@@ -107,5 +94,30 @@ class AdyenDependencyProvider extends AbstractBundleDependencyProvider
         };
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addAdyenPaymentPlugins(Container $container): Container
+    {
+        $container[static::PLUGINS_ADYEN_PAYMENT] = function () {
+            return $this->getAdyenPaymentPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @return \SprykerEco\Yves\Adyen\Plugin\Payment\AdyenPaymentPluginInterface[]
+     */
+    protected function getAdyenPaymentPlugins(): array
+    {
+        return [
+            new CreditCardPaymentPlugin(),
+            new KlarnaInvoicePaymentPlugin(),
+        ];
     }
 }

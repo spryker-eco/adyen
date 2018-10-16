@@ -7,6 +7,7 @@
 
 namespace SprykerEco\Yves\Adyen\Controller;
 
+use Generated\Shared\Transfer\AdyenRedirectResponseTransfer;
 use Spryker\Yves\Kernel\Controller\AbstractController;
 use SprykerShop\Yves\CheckoutPage\Plugin\Provider\CheckoutPageControllerProvider;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -24,13 +25,9 @@ class CallbackController extends AbstractController
      */
     public function redirectSofortAction(Request $request): RedirectResponse
     {
-        $responseTransfer = $this->getFactory()->createSofortRedirectHandler()->handle($request);
+        $responseTransfer = $this->getOnlineTransferRedirectResponse($request);
 
-        if ($responseTransfer->getIsSuccess()) {
-            return $this->redirectResponseInternal(CheckoutPageControllerProvider::CHECKOUT_SUCCESS);
-        }
-
-        return $this->redirectResponseInternal(CheckoutPageControllerProvider::CHECKOUT_ERROR);
+        return $this->handleRedirectFromAdyen($responseTransfer);
     }
 
     /**
@@ -40,13 +37,9 @@ class CallbackController extends AbstractController
      */
     public function redirectCreditCard3dAction(Request $request): RedirectResponse
     {
-        $responseTransfer = $this->getFactory()->createCreditCard3dRedirectHandler()->handle($request);
+        $responseTransfer = $this->getCreditCard3dRedirectResponse($request);
 
-        if ($responseTransfer->getIsSuccess()) {
-            return $this->redirectResponseInternal(CheckoutPageControllerProvider::CHECKOUT_SUCCESS);
-        }
-
-        return $this->redirectResponseInternal(CheckoutPageControllerProvider::CHECKOUT_ERROR);
+        return $this->handleRedirectFromAdyen($responseTransfer);
     }
 
     /**
@@ -56,13 +49,9 @@ class CallbackController extends AbstractController
      */
     public function redirectIdealAction(Request $request): RedirectResponse
     {
-        $responseTransfer = $this->getFactory()->createIdealRedirectHandler()->handle($request);
+        $responseTransfer = $this->getOnlineTransferRedirectResponse($request);
 
-        if ($responseTransfer->getIsSuccess()) {
-            return $this->redirectResponseInternal(CheckoutPageControllerProvider::CHECKOUT_SUCCESS);
-        }
-
-        return $this->redirectResponseInternal(CheckoutPageControllerProvider::CHECKOUT_ERROR);
+        return $this->handleRedirectFromAdyen($responseTransfer);
     }
 
     /**
@@ -72,13 +61,9 @@ class CallbackController extends AbstractController
      */
     public function redirectPayPalAction(Request $request): RedirectResponse
     {
-        $responseTransfer = $this->getFactory()->createPayPalRedirectHandler()->handle($request);
+        $responseTransfer = $this->getPayPalRedirectResponse($request);
 
-        if ($responseTransfer->getIsSuccess()) {
-            return $this->redirectResponseInternal(CheckoutPageControllerProvider::CHECKOUT_SUCCESS);
-        }
-
-        return $this->redirectResponseInternal(CheckoutPageControllerProvider::CHECKOUT_ERROR);
+        return $this->handleRedirectFromAdyen($responseTransfer);
     }
 
     /**
@@ -88,13 +73,9 @@ class CallbackController extends AbstractController
      */
     public function redirectAliPayAction(Request $request): RedirectResponse
     {
-        $responseTransfer = $this->getFactory()->createAliPayRedirectHandler()->handle($request);
+        $responseTransfer = $this->getOnlineTransferRedirectResponse($request);
 
-        if ($responseTransfer->getIsSuccess()) {
-            return $this->redirectResponseInternal(CheckoutPageControllerProvider::CHECKOUT_SUCCESS);
-        }
-
-        return $this->redirectResponseInternal(CheckoutPageControllerProvider::CHECKOUT_ERROR);
+        return $this->handleRedirectFromAdyen($responseTransfer);
     }
 
     /**
@@ -104,8 +85,48 @@ class CallbackController extends AbstractController
      */
     public function redirectWeChatPayAction(Request $request): RedirectResponse
     {
-        $responseTransfer = $this->getFactory()->createWeChatPayRedirectHandler()->handle($request);
+        $responseTransfer = $this->getOnlineTransferRedirectResponse($request);
 
+        return $this->handleRedirectFromAdyen($responseTransfer);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Generated\Shared\Transfer\AdyenRedirectResponseTransfer
+     */
+    protected function getOnlineTransferRedirectResponse(Request $request): AdyenRedirectResponseTransfer
+    {
+        return $this->getFactory()->createOnlineTransferRedirectHandler()->handle($request);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Generated\Shared\Transfer\AdyenRedirectResponseTransfer
+     */
+    protected function getCreditCard3dRedirectResponse(Request $request): AdyenRedirectResponseTransfer
+    {
+        return $this->getFactory()->createCreditCard3dRedirectHandler()->handle($request);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Generated\Shared\Transfer\AdyenRedirectResponseTransfer
+     */
+    protected function getPayPalRedirectResponse(Request $request): AdyenRedirectResponseTransfer
+    {
+        return $this->getFactory()->createPayPalRedirectHandler()->handle($request);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AdyenRedirectResponseTransfer $responseTransfer
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    protected function handleRedirectFromAdyen(AdyenRedirectResponseTransfer $responseTransfer): RedirectResponse
+    {
         if ($responseTransfer->getIsSuccess()) {
             return $this->redirectResponseInternal(CheckoutPageControllerProvider::CHECKOUT_SUCCESS);
         }

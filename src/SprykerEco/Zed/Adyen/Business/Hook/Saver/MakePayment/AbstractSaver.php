@@ -9,12 +9,13 @@ namespace SprykerEco\Zed\Adyen\Business\Hook\Saver\MakePayment;
 
 use Generated\Shared\Transfer\AdyenApiRequestTransfer;
 use Generated\Shared\Transfer\AdyenApiResponseTransfer;
+use Generated\Shared\Transfer\PaymentAdyenTransfer;
 use SprykerEco\Zed\Adyen\AdyenConfig;
 use SprykerEco\Zed\Adyen\Business\Reader\AdyenReaderInterface;
 use SprykerEco\Zed\Adyen\Business\Writer\AdyenWriterInterface;
 use SprykerEco\Zed\Adyen\Dependency\Service\AdyenToUtilEncodingServiceInterface;
 
-abstract class AbstractSaver
+abstract class AbstractSaver implements AdyenSaverInterface
 {
     /**
      * @var \SprykerEco\Zed\Adyen\Business\Reader\AdyenReaderInterface
@@ -57,6 +58,73 @@ abstract class AbstractSaver
         $this->writer = $writer;
         $this->encodingService = $encodingService;
         $this->config = $config;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AdyenApiRequestTransfer $request
+     * @param \Generated\Shared\Transfer\AdyenApiResponseTransfer $response
+     *
+     * @return void
+     */
+    public function save(AdyenApiRequestTransfer $request, AdyenApiResponseTransfer $response): void
+    {
+        $this->log($request, $response);
+
+        if (!$response->getIsSuccess()) {
+            return;
+        }
+
+        $paymentAdyenTransfer = $this->reader->getPaymentAdyenByReference(
+            $request->getMakePaymentRequest()->getReference()
+        );
+
+        $paymentAdyenTransfer = $this->updatePaymentAdyenTransfer($response, $paymentAdyenTransfer);
+        $this->updatePaymentEntities($paymentAdyenTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AdyenApiResponseTransfer $response
+     * @param \Generated\Shared\Transfer\PaymentAdyenTransfer $paymentAdyenTransfer
+     *
+     * @return \Generated\Shared\Transfer\PaymentAdyenTransfer
+     */
+    protected function updatePaymentAdyenTransfer(
+        AdyenApiResponseTransfer $response,
+        PaymentAdyenTransfer $paymentAdyenTransfer
+    ): PaymentAdyenTransfer {
+        $paymentAdyenTransfer->setDetails(
+            $this->encodingService->encodeJson($response->getMakePaymentResponse()->getDetails())
+        );
+        $paymentAdyenTransfer->setPaymentData($response->getMakePaymentResponse()->getPaymentData());
+
+        return $paymentAdyenTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PaymentAdyenTransfer $paymentAdyenTransfer
+     *
+     * @return void
+     */
+    protected function updatePaymentEntities(PaymentAdyenTransfer $paymentAdyenTransfer): void
+    {
+        $paymentAdyenOrderItemTransfers = $this->reader
+            ->getAllPaymentAdyenOrderItemsByIdSalesOrder(
+                $paymentAdyenTransfer->getFkSalesOrder()
+            );
+
+        $this->writer->updatePaymentEntities(
+            $this->getPaymentStatus(),
+            $paymentAdyenOrderItemTransfers,
+            $paymentAdyenTransfer
+        );
+    }
+
+    /**
+     * @return string
+     */
+    protected function getPaymentStatus(): string
+    {
+        return $this->config->getOmsStatusNew();
     }
 
     /**

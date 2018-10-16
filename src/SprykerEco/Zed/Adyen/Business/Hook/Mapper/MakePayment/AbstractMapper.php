@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\AdyenApiRequestTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use SprykerEco\Zed\Adyen\AdyenConfig;
 
-abstract class AbstractMapper
+abstract class AbstractMapper implements AdyenMapperInterface
 {
     /**
      * @var \SprykerEco\Zed\Adyen\AdyenConfig
@@ -26,11 +26,31 @@ abstract class AbstractMapper
     abstract protected function getReturnUrl(): string;
 
     /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return string[]
+     */
+    abstract protected function getPayload(QuoteTransfer $quoteTransfer): array;
+
+    /**
      * @param \SprykerEco\Zed\Adyen\AdyenConfig $config
      */
     public function __construct(AdyenConfig $config)
     {
         $this->config = $config;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\AdyenApiRequestTransfer
+     */
+    public function buildPaymentRequestTransfer(QuoteTransfer $quoteTransfer): AdyenApiRequestTransfer
+    {
+        $requestTransfer = $this->createRequestTransfer($quoteTransfer);
+        $requestTransfer = $this->updateRequestTransfer($quoteTransfer, $requestTransfer);
+
+        return $requestTransfer;
     }
 
     /**
@@ -69,5 +89,22 @@ abstract class AbstractMapper
         return (new AdyenApiAmountTransfer())
             ->setCurrency($quoteTransfer->getCurrency()->getCode())
             ->setValue($quoteTransfer->getTotals()->getPriceToPay());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\AdyenApiRequestTransfer $requestTransfer
+     *
+     * @return \Generated\Shared\Transfer\AdyenApiRequestTransfer
+     */
+    protected function updateRequestTransfer(
+        QuoteTransfer $quoteTransfer,
+        AdyenApiRequestTransfer $requestTransfer
+    ): AdyenApiRequestTransfer {
+        $requestTransfer
+            ->getMakePaymentRequest()
+            ->setPaymentMethod($this->getPayload($quoteTransfer));
+
+        return $requestTransfer;
     }
 }

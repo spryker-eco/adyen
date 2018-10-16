@@ -8,32 +8,13 @@
 namespace SprykerEco\Zed\Adyen\Business\Hook\Mapper\MakePayment;
 
 use Generated\Shared\Transfer\AdyenApiRequestTransfer;
-use Generated\Shared\Transfer\AdyenCreditCardPaymentTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use SprykerEco\Shared\Adyen\AdyenSdkConfig;
 
-class CreditCardMapper extends AbstractMapper implements AdyenMapperInterface
+class CreditCardMapper extends AbstractMapper
 {
     protected const REQUEST_TYPE = 'scheme';
     protected const THREE_D_SECURE_DATA = ['executeThreeD' => 'true'];
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\AdyenApiRequestTransfer
-     */
-    public function buildPaymentRequestTransfer(QuoteTransfer $quoteTransfer): AdyenApiRequestTransfer
-    {
-        $requestTransfer = $this->createRequestTransfer($quoteTransfer);
-        $payload = $this->getPayload($quoteTransfer->getPayment()->getAdyenCreditCard());
-
-        $requestTransfer
-            ->getMakePaymentRequest()
-            ->setPaymentMethod($payload)
-            ->setAdditionalData($this->getAdditionalData());
-
-        return $requestTransfer;
-    }
 
     /**
      * @return string
@@ -44,12 +25,14 @@ class CreditCardMapper extends AbstractMapper implements AdyenMapperInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\AdyenCreditCardPaymentTransfer $creditCardTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return string[]
      */
-    protected function getPayload(AdyenCreditCardPaymentTransfer $creditCardTransfer): array
+    protected function getPayload(QuoteTransfer $quoteTransfer): array
     {
+        $creditCardTransfer = $quoteTransfer->getPayment()->getAdyenCreditCard();
+
         return [
             AdyenSdkConfig::REQUEST_TYPE_FIELD => static::REQUEST_TYPE,
             AdyenSdkConfig::ENCRYPTED_CARD_NUMBER_FIELD => $creditCardTransfer->getEncryptedCardNumber(),
@@ -57,6 +40,24 @@ class CreditCardMapper extends AbstractMapper implements AdyenMapperInterface
             AdyenSdkConfig::ENCRYPTED_EXPIRY_YEAR_FIELD => $creditCardTransfer->getEncryptedExpiryYear(),
             AdyenSdkConfig::ENCRYPTED_SECURITY_CODE_FIELD => $creditCardTransfer->getEncryptedSecurityCode(),
         ];
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\AdyenApiRequestTransfer $requestTransfer
+     *
+     * @return \Generated\Shared\Transfer\AdyenApiRequestTransfer
+     */
+    protected function updateRequestTransfer(
+        QuoteTransfer $quoteTransfer,
+        AdyenApiRequestTransfer $requestTransfer
+    ): AdyenApiRequestTransfer {
+        $requestTransfer = parent::updateRequestTransfer($quoteTransfer, $requestTransfer);
+        $requestTransfer
+            ->getMakePaymentRequest()
+            ->setAdditionalData($this->getAdditionalData());
+
+        return $requestTransfer;
     }
 
     /**

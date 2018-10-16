@@ -13,12 +13,9 @@ use SprykerEco\Zed\Adyen\AdyenDependencyProvider;
 use SprykerEco\Zed\Adyen\Business\Handler\Notification\AdyenNotificationHandler;
 use SprykerEco\Zed\Adyen\Business\Handler\Notification\AdyenNotificationHandlerInterface;
 use SprykerEco\Zed\Adyen\Business\Handler\Redirect\AdyenRedirectHandlerInterface;
-use SprykerEco\Zed\Adyen\Business\Handler\Redirect\AliPayRedirectHandler;
 use SprykerEco\Zed\Adyen\Business\Handler\Redirect\CreditCard3dRedirectHandler;
-use SprykerEco\Zed\Adyen\Business\Handler\Redirect\IdealRedirectHandler;
+use SprykerEco\Zed\Adyen\Business\Handler\Redirect\OnlineTransferRedirectHandler;
 use SprykerEco\Zed\Adyen\Business\Handler\Redirect\PayPalRedirectHandler;
-use SprykerEco\Zed\Adyen\Business\Handler\Redirect\SofortRedirectHandler;
-use SprykerEco\Zed\Adyen\Business\Handler\Redirect\WeChatPayRedirectHandler;
 use SprykerEco\Zed\Adyen\Business\Hook\AdyenHookInterface;
 use SprykerEco\Zed\Adyen\Business\Hook\AdyenPostSaveHook;
 use SprykerEco\Zed\Adyen\Business\Hook\Mapper\AdyenMapperResolver;
@@ -45,8 +42,6 @@ use SprykerEco\Zed\Adyen\Business\Hook\Saver\MakePayment\PayPalSaver;
 use SprykerEco\Zed\Adyen\Business\Hook\Saver\MakePayment\PrepaymentSaver;
 use SprykerEco\Zed\Adyen\Business\Hook\Saver\MakePayment\SofortSaver;
 use SprykerEco\Zed\Adyen\Business\Hook\Saver\MakePayment\WeChatPaySaver;
-use SprykerEco\Zed\Adyen\Business\Logger\AdyenLogger;
-use SprykerEco\Zed\Adyen\Business\Logger\AdyenLoggerInterface;
 use SprykerEco\Zed\Adyen\Business\Oms\Handler\AdyenCommandHandlerInterface;
 use SprykerEco\Zed\Adyen\Business\Oms\Handler\AuthorizeCommandHandler;
 use SprykerEco\Zed\Adyen\Business\Oms\Handler\CancelCommandHandler;
@@ -539,14 +534,6 @@ class AdyenBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \SprykerEco\Zed\Adyen\Business\Logger\AdyenLoggerInterface
-     */
-    public function createLogger(): AdyenLoggerInterface
-    {
-        return new AdyenLogger($this->createWriter());
-    }
-
-    /**
      * @return \SprykerEco\Zed\Adyen\Business\Writer\AdyenWriterInterface
      */
     public function createWriter(): AdyenWriterInterface
@@ -568,9 +555,9 @@ class AdyenBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \SprykerEco\Zed\Adyen\Business\Handler\Redirect\AdyenRedirectHandlerInterface
      */
-    public function createSofortRedirectHandler(): AdyenRedirectHandlerInterface
+    public function createOnlineTransferRedirectHandler(): AdyenRedirectHandlerInterface
     {
-        return new SofortRedirectHandler(
+        return new OnlineTransferRedirectHandler(
             $this->getAdyenApiFacade(),
             $this->createReader(),
             $this->createWriter(),
@@ -594,48 +581,9 @@ class AdyenBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \SprykerEco\Zed\Adyen\Business\Handler\Redirect\AdyenRedirectHandlerInterface
      */
-    public function createIdealRedirectHandler(): AdyenRedirectHandlerInterface
-    {
-        return new IdealRedirectHandler(
-            $this->getAdyenApiFacade(),
-            $this->createReader(),
-            $this->createWriter(),
-            $this->getConfig()
-        );
-    }
-
-    /**
-     * @return \SprykerEco\Zed\Adyen\Business\Handler\Redirect\AdyenRedirectHandlerInterface
-     */
     public function createPayPalRedirectHandler(): AdyenRedirectHandlerInterface
     {
         return new PayPalRedirectHandler(
-            $this->getAdyenApiFacade(),
-            $this->createReader(),
-            $this->createWriter(),
-            $this->getConfig()
-        );
-    }
-
-    /**
-     * @return \SprykerEco\Zed\Adyen\Business\Handler\Redirect\AdyenRedirectHandlerInterface
-     */
-    public function createAliPayRedirectHandler(): AdyenRedirectHandlerInterface
-    {
-        return new AliPayRedirectHandler(
-            $this->getAdyenApiFacade(),
-            $this->createReader(),
-            $this->createWriter(),
-            $this->getConfig()
-        );
-    }
-
-    /**
-     * @return \SprykerEco\Zed\Adyen\Business\Handler\Redirect\AdyenRedirectHandlerInterface
-     */
-    public function createWeChatPayRedirectHandler(): AdyenRedirectHandlerInterface
-    {
-        return new WeChatPayRedirectHandler(
             $this->getAdyenApiFacade(),
             $this->createReader(),
             $this->createWriter(),

@@ -8,47 +8,16 @@
 namespace SprykerEco\Yves\Adyen\Handler\Redirect;
 
 use Generated\Shared\Transfer\AdyenRedirectResponseTransfer;
-use SprykerEco\Client\Adyen\AdyenClientInterface;
-use SprykerEco\Yves\Adyen\Dependency\Client\AdyenToQuoteClientInterface;
-use Symfony\Component\HttpFoundation\Request;
 
-class PayPalRedirectHandler implements AdyenRedirectHandlerInterface
+class PayPalRedirectHandler extends OnlineTransferRedirectHandler
 {
     /**
-     * @var \SprykerEco\Yves\Adyen\Dependency\Client\AdyenToQuoteClientInterface
-     */
-    protected $quoteClient;
-
-    /**
-     * @var \SprykerEco\Client\Adyen\AdyenClientInterface
-     */
-    protected $adyenClient;
-
-    /**
-     * @param \SprykerEco\Yves\Adyen\Dependency\Client\AdyenToQuoteClientInterface $quoteClient
-     * @param \SprykerEco\Client\Adyen\AdyenClientInterface $adyenClient
-     */
-    public function __construct(
-        AdyenToQuoteClientInterface $quoteClient,
-        AdyenClientInterface $adyenClient
-    ) {
-        $this->quoteClient = $quoteClient;
-        $this->adyenClient = $adyenClient;
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \Generated\Shared\Transfer\AdyenRedirectResponseTransfer $redirectResponseTransfer
      *
      * @return \Generated\Shared\Transfer\AdyenRedirectResponseTransfer
      */
-    public function handle(Request $request): AdyenRedirectResponseTransfer
+    protected function handleOnlineTransferResponse(AdyenRedirectResponseTransfer $redirectResponseTransfer): AdyenRedirectResponseTransfer
     {
-        $quoteTransfer = $this->quoteClient->getQuote();
-        $responseTransfer = (new AdyenRedirectResponseTransfer())
-            ->fromArray($request->query->all(), true);
-
-        $responseTransfer->setReference($quoteTransfer->getPayment()->getAdyenPayment()->getReference());
-
-        return $this->adyenClient->handlePayPalResponseFromAdyen($responseTransfer);
+        return $this->adyenClient->handlePayPalResponseFromAdyen($redirectResponseTransfer);
     }
 }

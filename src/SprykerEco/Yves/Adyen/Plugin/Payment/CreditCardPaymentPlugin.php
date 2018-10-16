@@ -7,6 +7,7 @@
 
 namespace SprykerEco\Yves\Adyen\Plugin\Payment;
 
+use Generated\Shared\Transfer\PaymentTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use SprykerEco\Shared\Adyen\AdyenSdkConfig;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,6 +22,10 @@ class CreditCardPaymentPlugin implements AdyenPaymentPluginInterface
      */
     public function setPaymentDataToQuote(QuoteTransfer $quoteTransfer, Request $request): void
     {
+        if ($quoteTransfer->getPayment()->getPaymentSelection() !== PaymentTransfer::ADYEN_CREDIT_CARD) {
+            return;
+        }
+
         $quoteTransfer
             ->getPayment()
             ->getAdyenCreditCard()

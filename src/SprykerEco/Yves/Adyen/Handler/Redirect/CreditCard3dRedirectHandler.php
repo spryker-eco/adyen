@@ -8,48 +8,34 @@
 namespace SprykerEco\Yves\Adyen\Handler\Redirect;
 
 use Generated\Shared\Transfer\AdyenRedirectResponseTransfer;
-use SprykerEco\Client\Adyen\AdyenClientInterface;
 use SprykerEco\Shared\Adyen\AdyenSdkConfig;
-use SprykerEco\Yves\Adyen\Dependency\Client\AdyenToQuoteClientInterface;
 use Symfony\Component\HttpFoundation\Request;
 
-class CreditCard3dRedirectHandler implements AdyenRedirectHandlerInterface
+class CreditCard3dRedirectHandler extends OnlineTransferRedirectHandler
 {
-    /**
-     * @var \SprykerEco\Yves\Adyen\Dependency\Client\AdyenToQuoteClientInterface
-     */
-    protected $quoteClient;
-
-    /**
-     * @var \SprykerEco\Client\Adyen\AdyenClientInterface
-     */
-    protected $adyenClient;
-
-    /**
-     * @param \SprykerEco\Yves\Adyen\Dependency\Client\AdyenToQuoteClientInterface $quoteClient
-     * @param \SprykerEco\Client\Adyen\AdyenClientInterface $adyenClient
-     */
-    public function __construct(
-        AdyenToQuoteClientInterface $quoteClient,
-        AdyenClientInterface $adyenClient
-    ) {
-        $this->quoteClient = $quoteClient;
-        $this->adyenClient = $adyenClient;
-    }
-
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Generated\Shared\Transfer\AdyenRedirectResponseTransfer
      */
-    public function handle(Request $request): AdyenRedirectResponseTransfer
+    protected function createAdyenRedirectResponseTransfer(Request $request): AdyenRedirectResponseTransfer
     {
         $quoteTransfer = $this->quoteClient->getQuote();
-        $responseTransfer = (new AdyenRedirectResponseTransfer())
+        $redirectResponseTransfer = (new AdyenRedirectResponseTransfer())
             ->setMd($request->request->get(AdyenSdkConfig::MD_FIELD))
             ->setPaRes($request->request->get(AdyenSdkConfig::PA_RES_FIELD))
             ->setReference($quoteTransfer->getPayment()->getAdyenPayment()->getReference());
 
-        return $this->adyenClient->handleCreditCard3dResponseFromAdyen($responseTransfer);
+        return $redirectResponseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AdyenRedirectResponseTransfer $redirectResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\AdyenRedirectResponseTransfer
+     */
+    protected function handleOnlineTransferResponse(AdyenRedirectResponseTransfer $redirectResponseTransfer): AdyenRedirectResponseTransfer
+    {
+        return $this->adyenClient->handleCreditCard3dResponseFromAdyen($redirectResponseTransfer);
     }
 }

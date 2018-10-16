@@ -31,9 +31,9 @@ class GatewayController extends AbstractGatewayController
      *
      * @return \Generated\Shared\Transfer\AdyenRedirectResponseTransfer
      */
-    public function handleSofortResponseAction(AdyenRedirectResponseTransfer $redirectResponseTransfer): AdyenRedirectResponseTransfer
+    public function handleOnlineTransferResponseAction(AdyenRedirectResponseTransfer $redirectResponseTransfer): AdyenRedirectResponseTransfer
     {
-        return $this->getFacade()->handleSofortResponseFromAdyen($redirectResponseTransfer);
+        return $this->getFacade()->handleOnlineTransferResponseFromAdyen($redirectResponseTransfer);
     }
 
     /**
@@ -51,38 +51,8 @@ class GatewayController extends AbstractGatewayController
      *
      * @return \Generated\Shared\Transfer\AdyenRedirectResponseTransfer
      */
-    public function handleIdealResponseAction(AdyenRedirectResponseTransfer $redirectResponseTransfer): AdyenRedirectResponseTransfer
-    {
-        return $this->getFacade()->handleIdealResponseFromAdyen($redirectResponseTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\AdyenRedirectResponseTransfer $redirectResponseTransfer
-     *
-     * @return \Generated\Shared\Transfer\AdyenRedirectResponseTransfer
-     */
     public function handlePayPalResponseAction(AdyenRedirectResponseTransfer $redirectResponseTransfer): AdyenRedirectResponseTransfer
     {
         return $this->getFacade()->handlePayPalResponseFromAdyen($redirectResponseTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\AdyenRedirectResponseTransfer $redirectResponseTransfer
-     *
-     * @return \Generated\Shared\Transfer\AdyenRedirectResponseTransfer
-     */
-    public function handleAliPayResponseAction(AdyenRedirectResponseTransfer $redirectResponseTransfer): AdyenRedirectResponseTransfer
-    {
-        return $this->getFacade()->handleAliPayResponseFromAdyen($redirectResponseTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\AdyenRedirectResponseTransfer $redirectResponseTransfer
-     *
-     * @return \Generated\Shared\Transfer\AdyenRedirectResponseTransfer
-     */
-    public function handleWeChatPayResponseAction(AdyenRedirectResponseTransfer $redirectResponseTransfer): AdyenRedirectResponseTransfer
-    {
-        return $this->getFacade()->handleWeChatPayResponseFromAdyen($redirectResponseTransfer);
     }
 }

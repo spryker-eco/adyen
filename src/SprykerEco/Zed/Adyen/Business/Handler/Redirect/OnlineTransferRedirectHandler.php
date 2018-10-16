@@ -9,6 +9,7 @@ namespace SprykerEco\Zed\Adyen\Business\Handler\Redirect;
 
 use Generated\Shared\Transfer\AdyenApiPaymentsDetailsRequestTransfer;
 use Generated\Shared\Transfer\AdyenApiRequestTransfer;
+use Generated\Shared\Transfer\AdyenApiResponseTransfer;
 use Generated\Shared\Transfer\AdyenRedirectResponseTransfer;
 use Generated\Shared\Transfer\PaymentAdyenTransfer;
 use SprykerEco\Shared\Adyen\AdyenSdkConfig;
@@ -17,9 +18,9 @@ use SprykerEco\Zed\Adyen\Business\Reader\AdyenReaderInterface;
 use SprykerEco\Zed\Adyen\Business\Writer\AdyenWriterInterface;
 use SprykerEco\Zed\Adyen\Dependency\Facade\AdyenToAdyenApiFacadeInterface;
 
-class WeChatPayRedirectHandler implements AdyenRedirectHandlerInterface
+class OnlineTransferRedirectHandler implements AdyenRedirectHandlerInterface
 {
-    protected const REQUEST_TYPE = 'PaymentDetails[WeChatPay]';
+    protected const LOG_REQUEST_TYPE = 'PaymentDetails[%s]';
 
     /**
      * @var \SprykerEco\Zed\Adyen\Dependency\Facade\AdyenToAdyenApiFacadeInterface
@@ -67,13 +68,12 @@ class WeChatPayRedirectHandler implements AdyenRedirectHandlerInterface
     public function handle(AdyenRedirectResponseTransfer $redirectResponseTransfer): AdyenRedirectResponseTransfer
     {
         $paymentAdyenTransfer = $this->reader->getPaymentAdyenByReference($redirectResponseTransfer->getReference());
-        $paymentAdyenOrderItems = $this->reader->getAllPaymentAdyenOrderItemsByIdSalesOrder($paymentAdyenTransfer->getFkSalesOrder());
 
         $requestTransfer = $this->createDetailsRequestTransfer($redirectResponseTransfer, $paymentAdyenTransfer);
         $responseTransfer = $this->adyenApiFacade->performPaymentsDetailsApiCall($requestTransfer);
 
         $this->writer->saveApiLog(
-            static::REQUEST_TYPE,
+            sprintf(static::LOG_REQUEST_TYPE, $redirectResponseTransfer->getPaymentMethod()),
             $requestTransfer,
             $responseTransfer
         );
@@ -82,14 +82,7 @@ class WeChatPayRedirectHandler implements AdyenRedirectHandlerInterface
             return $redirectResponseTransfer;
         }
 
-        $paymentAdyenTransfer->setPspReference($responseTransfer->getPaymentsDetailsResponse()->getPspReference());
-
-        $this->writer->updatePaymentEntities(
-            $this->config->getOmsStatusAuthorizedAndCaptured(),
-            $paymentAdyenOrderItems,
-            $paymentAdyenTransfer
-        );
-
+        $this->processPaymentDetailsResponse($paymentAdyenTransfer, $responseTransfer);
         $redirectResponseTransfer->setIsSuccess(true);
 
         return $redirectResponseTransfer;
@@ -106,12 +99,46 @@ class WeChatPayRedirectHandler implements AdyenRedirectHandlerInterface
         PaymentAdyenTransfer $paymentAdyenTransfer
     ): AdyenApiRequestTransfer {
         $requestTransfer = new AdyenApiRequestTransfer();
-        $requestTransfer->setPaymentsDetailsRequest(new AdyenApiPaymentsDetailsRequestTransfer());
-        $requestTransfer->getPaymentsDetailsRequest()->setPaymentData($paymentAdyenTransfer->getPaymentData());
-        $requestTransfer->getPaymentsDetailsRequest()->setDetails(
-            [AdyenSdkConfig::PAYLOAD_FIELD => $redirectResponseTransfer->getPayload()]
+        $requestTransfer->setPaymentsDetailsRequest(
+            (new AdyenApiPaymentsDetailsRequestTransfer())
+                ->setPaymentData($paymentAdyenTransfer->getPaymentData())
+                ->setDetails($this->getRequestDetails($redirectResponseTransfer))
         );
 
         return $requestTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PaymentAdyenTransfer $paymentAdyenTransfer
+     * @param \Generated\Shared\Transfer\AdyenApiResponseTransfer $responseTransfer
+     *
+     * @return void
+     */
+    protected function processPaymentDetailsResponse(PaymentAdyenTransfer $paymentAdyenTransfer, AdyenApiResponseTransfer $responseTransfer): void
+    {
+        $paymentAdyenTransfer->setPspReference($responseTransfer->getPaymentsDetailsResponse()->getPspReference());
+        $paymentAdyenOrderItems = $this->reader->getAllPaymentAdyenOrderItemsByIdSalesOrder($paymentAdyenTransfer->getFkSalesOrder());
+
+        $this->writer->updatePaymentEntities($this->getOmsStatus(), $paymentAdyenOrderItems, $paymentAdyenTransfer);
+    }
+
+    /**
+     * @return string
+     */
+    protected function getOmsStatus(): string
+    {
+        return $this->config->getOmsStatusAuthorizedAndCaptured();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AdyenRedirectResponseTransfer $redirectResponseTransfer
+     *
+     * @return string[]
+     */
+    protected function getRequestDetails(AdyenRedirectResponseTransfer $redirectResponseTransfer): array
+    {
+        return [
+            AdyenSdkConfig::PAYLOAD_FIELD => $redirectResponseTransfer->getPayload(),
+        ];
     }
 }

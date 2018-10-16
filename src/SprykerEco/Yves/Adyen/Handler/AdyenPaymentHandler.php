@@ -10,6 +10,7 @@ namespace SprykerEco\Yves\Adyen\Handler;
 use Generated\Shared\Transfer\QuoteTransfer;
 use SprykerEco\Service\Adyen\AdyenServiceInterface;
 use SprykerEco\Shared\Adyen\AdyenConfig;
+use SprykerEco\Yves\Adyen\Plugin\Payment\AdyenPaymentPluginInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 class AdyenPaymentHandler implements AdyenPaymentHandlerInterface
@@ -55,11 +56,23 @@ class AdyenPaymentHandler implements AdyenPaymentHandlerInterface
             ->getAdyenPayment()
             ->setReference($this->service->generateReference($quoteTransfer));
 
-        if (array_key_exists($paymentSelection, $this->paymentPlugins)) {
-            $plugin = $this->paymentPlugins[$paymentSelection];
-            $plugin->setPaymentDataToQuote($quoteTransfer, $request);
-        }
+        $this->executeAdyenPaymentPlugins($request, $quoteTransfer);
 
         return $quoteTransfer;
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return void
+     */
+    protected function executeAdyenPaymentPlugins(Request $request, QuoteTransfer $quoteTransfer): void
+    {
+        foreach ($this->paymentPlugins as $plugin) {
+            if ($plugin instanceof AdyenPaymentPluginInterface) {
+                $plugin->setPaymentDataToQuote($quoteTransfer, $request);
+            }
+        }
     }
 }

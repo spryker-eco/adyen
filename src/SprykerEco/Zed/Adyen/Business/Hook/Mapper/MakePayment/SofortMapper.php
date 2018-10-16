@@ -7,32 +7,12 @@
 
 namespace SprykerEco\Zed\Adyen\Business\Hook\Mapper\MakePayment;
 
-use Generated\Shared\Transfer\AdyenApiRequestTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use SprykerEco\Shared\Adyen\AdyenSdkConfig;
 
-class SofortMapper extends AbstractMapper implements AdyenMapperInterface
+class SofortMapper extends AbstractMapper
 {
     protected const REQUEST_TYPE = 'directEbanking';
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\AdyenApiRequestTransfer
-     */
-    public function buildPaymentRequestTransfer(QuoteTransfer $quoteTransfer): AdyenApiRequestTransfer
-    {
-        $requestTransfer = $this->createRequestTransfer($quoteTransfer);
-        $payload = [
-            AdyenSdkConfig::REQUEST_TYPE_FIELD => static::REQUEST_TYPE,
-        ];
-
-        $requestTransfer
-            ->getMakePaymentRequest()
-            ->setPaymentMethod($payload);
-
-        return $requestTransfer;
-    }
 
     /**
      * @return string
@@ -40,5 +20,17 @@ class SofortMapper extends AbstractMapper implements AdyenMapperInterface
     protected function getReturnUrl(): string
     {
         return $this->config->getSofortReturnUrl();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return string[]
+     */
+    protected function getPayload(QuoteTransfer $quoteTransfer): array
+    {
+        return [
+            AdyenSdkConfig::REQUEST_TYPE_FIELD => static::REQUEST_TYPE,
+        ];
     }
 }

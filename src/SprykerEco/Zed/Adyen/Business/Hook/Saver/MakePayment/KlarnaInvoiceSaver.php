@@ -7,10 +7,10 @@
 
 namespace SprykerEco\Zed\Adyen\Business\Hook\Saver\MakePayment;
 
-use Generated\Shared\Transfer\AdyenApiRequestTransfer;
 use Generated\Shared\Transfer\AdyenApiResponseTransfer;
+use Generated\Shared\Transfer\PaymentAdyenTransfer;
 
-class KlarnaInvoiceSaver extends AbstractSaver implements AdyenSaverInterface
+class KlarnaInvoiceSaver extends AbstractSaver
 {
     protected const MAKE_PAYMENT_INVOICE_REQUEST_TYPE = 'MakePayment[KlarnaInvoice]';
 
@@ -23,44 +23,25 @@ class KlarnaInvoiceSaver extends AbstractSaver implements AdyenSaverInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\AdyenApiRequestTransfer $request
      * @param \Generated\Shared\Transfer\AdyenApiResponseTransfer $response
+     * @param \Generated\Shared\Transfer\PaymentAdyenTransfer $paymentAdyenTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\PaymentAdyenTransfer
      */
-    public function save(AdyenApiRequestTransfer $request, AdyenApiResponseTransfer $response): void
-    {
-        if ($response->getIsSuccess()) {
-            $this->updateEntities($request, $response);
-        }
+    protected function updatePaymentAdyenTransfer(
+        AdyenApiResponseTransfer $response,
+        PaymentAdyenTransfer $paymentAdyenTransfer
+    ): PaymentAdyenTransfer {
+        $paymentAdyenTransfer->setPspReference($response->getMakePaymentResponse()->getPspReference());
 
-        $this->log($request, $response);
+        return $paymentAdyenTransfer;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\AdyenApiRequestTransfer $request
-     * @param \Generated\Shared\Transfer\AdyenApiResponseTransfer $response
-     *
-     * @return void
+     * @return string
      */
-    protected function updateEntities(AdyenApiRequestTransfer $request, AdyenApiResponseTransfer $response): void
+    protected function getPaymentStatus(): string
     {
-        $paymentAdyenTransfer = $this->reader
-            ->getPaymentAdyenByReference(
-                $request->getMakePaymentRequest()->getReference()
-            );
-
-        $paymentAdyenTransfer->setPspReference($response->getMakePaymentResponse()->getPspReference());
-
-        $paymentAdyenOrderItemTransfers = $this->reader
-            ->getAllPaymentAdyenOrderItemsByIdSalesOrder(
-                $paymentAdyenTransfer->getFkSalesOrder()
-            );
-
-        $this->writer->updatePaymentEntities(
-            $this->config->getOmsStatusAuthorized(),
-            $paymentAdyenOrderItemTransfers,
-            $paymentAdyenTransfer
-        );
+        return $this->config->getOmsStatusAuthorized();
     }
 }

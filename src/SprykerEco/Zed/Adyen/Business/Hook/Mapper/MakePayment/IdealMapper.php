@@ -7,28 +7,12 @@
 
 namespace SprykerEco\Zed\Adyen\Business\Hook\Mapper\MakePayment;
 
-use Generated\Shared\Transfer\AdyenApiRequestTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use SprykerEco\Shared\Adyen\AdyenSdkConfig;
 
-class IdealMapper extends AbstractMapper implements AdyenMapperInterface
+class IdealMapper extends AbstractMapper
 {
     protected const REQUEST_TYPE = 'ideal';
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\AdyenApiRequestTransfer
-     */
-    public function buildPaymentRequestTransfer(QuoteTransfer $quoteTransfer): AdyenApiRequestTransfer
-    {
-        $requestTransfer = $this->createRequestTransfer($quoteTransfer);
-        $requestTransfer
-            ->getMakePaymentRequest()
-            ->setPaymentMethod($this->getPayload($quoteTransfer));
-
-        return $requestTransfer;
-    }
 
     /**
      * @return string
@@ -45,9 +29,11 @@ class IdealMapper extends AbstractMapper implements AdyenMapperInterface
      */
     protected function getPayload(QuoteTransfer $quoteTransfer): array
     {
+        $idealTransfer = $quoteTransfer->getPayment()->getAdyenIdeal();
+
         return [
             AdyenSdkConfig::REQUEST_TYPE_FIELD => static::REQUEST_TYPE,
-            AdyenSdkConfig::IDEAL_ISSUER_FIELD => $quoteTransfer->getPayment()->getAdyenIdeal()->getIdealIssuer(),
+            AdyenSdkConfig::IDEAL_ISSUER_FIELD => $idealTransfer->getIdealIssuer(),
         ];
     }
 }

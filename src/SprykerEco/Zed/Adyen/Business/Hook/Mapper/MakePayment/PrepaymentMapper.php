@@ -7,28 +7,12 @@
 
 namespace SprykerEco\Zed\Adyen\Business\Hook\Mapper\MakePayment;
 
-use Generated\Shared\Transfer\AdyenApiRequestTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use SprykerEco\Shared\Adyen\AdyenSdkConfig;
 
-class PrepaymentMapper extends AbstractMapper implements AdyenMapperInterface
+class PrepaymentMapper extends AbstractMapper
 {
     protected const REQUEST_TYPE = 'bankTransfer_IBAN';
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\AdyenApiRequestTransfer
-     */
-    public function buildPaymentRequestTransfer(QuoteTransfer $quoteTransfer): AdyenApiRequestTransfer
-    {
-        $requestTransfer = $this->createRequestTransfer($quoteTransfer);
-        $requestTransfer
-            ->getMakePaymentRequest()
-            ->setPaymentMethod($this->getPayload($quoteTransfer));
-
-        return $requestTransfer;
-    }
 
     /**
      * @return string

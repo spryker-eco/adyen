@@ -42,12 +42,12 @@ class AdyenClient extends AbstractClient implements AdyenClientInterface
      *
      * @return \Generated\Shared\Transfer\AdyenRedirectResponseTransfer
      */
-    public function handleSofortResponseFromAdyen(AdyenRedirectResponseTransfer $redirectResponseTransfer): AdyenRedirectResponseTransfer
+    public function handleOnlineTransferResponseFromAdyen(AdyenRedirectResponseTransfer $redirectResponseTransfer): AdyenRedirectResponseTransfer
     {
         return $this
             ->getFactory()
             ->createZedAdyenStub()
-            ->handleSofortResponseFromAdyen($redirectResponseTransfer);
+            ->handleOnlineTransferResponseFromAdyen($redirectResponseTransfer);
     }
 
     /**
@@ -76,62 +76,11 @@ class AdyenClient extends AbstractClient implements AdyenClientInterface
      *
      * @return \Generated\Shared\Transfer\AdyenRedirectResponseTransfer
      */
-    public function handleIdealResponseFromAdyen(AdyenRedirectResponseTransfer $redirectResponseTransfer): AdyenRedirectResponseTransfer
-    {
-        return $this
-            ->getFactory()
-            ->createZedAdyenStub()
-            ->handleIdealResponseFromAdyen($redirectResponseTransfer);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\AdyenRedirectResponseTransfer $redirectResponseTransfer
-     *
-     * @return \Generated\Shared\Transfer\AdyenRedirectResponseTransfer
-     */
     public function handlePayPalResponseFromAdyen(AdyenRedirectResponseTransfer $redirectResponseTransfer): AdyenRedirectResponseTransfer
     {
         return $this
             ->getFactory()
             ->createZedAdyenStub()
             ->handlePayPalResponseFromAdyen($redirectResponseTransfer);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\AdyenRedirectResponseTransfer $redirectResponseTransfer
-     *
-     * @return \Generated\Shared\Transfer\AdyenRedirectResponseTransfer
-     */
-    public function handleAliPayResponseFromAdyen(AdyenRedirectResponseTransfer $redirectResponseTransfer): AdyenRedirectResponseTransfer
-    {
-        return $this
-            ->getFactory()
-            ->createZedAdyenStub()
-            ->handleAliPayResponseFromAdyen($redirectResponseTransfer);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\AdyenRedirectResponseTransfer $redirectResponseTransfer
-     *
-     * @return \Generated\Shared\Transfer\AdyenRedirectResponseTransfer
-     */
-    public function handleWeChatPayResponseFromAdyen(AdyenRedirectResponseTransfer $redirectResponseTransfer): AdyenRedirectResponseTransfer
-    {
-        return $this
-            ->getFactory()
-            ->createZedAdyenStub()
-            ->handleWeChatPayResponseFromAdyen($redirectResponseTransfer);
     }
 }

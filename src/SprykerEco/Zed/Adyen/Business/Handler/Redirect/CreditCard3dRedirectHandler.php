@@ -7,114 +7,29 @@
 
 namespace SprykerEco\Zed\Adyen\Business\Handler\Redirect;
 
-use Generated\Shared\Transfer\AdyenApiPaymentsDetailsRequestTransfer;
-use Generated\Shared\Transfer\AdyenApiRequestTransfer;
 use Generated\Shared\Transfer\AdyenRedirectResponseTransfer;
-use Generated\Shared\Transfer\PaymentAdyenTransfer;
 use SprykerEco\Shared\Adyen\AdyenSdkConfig;
-use SprykerEco\Zed\Adyen\AdyenConfig;
-use SprykerEco\Zed\Adyen\Business\Reader\AdyenReaderInterface;
-use SprykerEco\Zed\Adyen\Business\Writer\AdyenWriterInterface;
-use SprykerEco\Zed\Adyen\Dependency\Facade\AdyenToAdyenApiFacadeInterface;
 
-class CreditCard3dRedirectHandler implements AdyenRedirectHandlerInterface
+class CreditCard3dRedirectHandler extends OnlineTransferRedirectHandler
 {
-    protected const REQUEST_TYPE = 'PaymentDetails[Cred]';
-
     /**
-     * @var \SprykerEco\Zed\Adyen\Dependency\Facade\AdyenToAdyenApiFacadeInterface
+     * @return string
      */
-    protected $adyenApiFacade;
-
-    /**
-     * @var \SprykerEco\Zed\Adyen\Business\Reader\AdyenReaderInterface
-     */
-    protected $reader;
-
-    /**
-     * @var \SprykerEco\Zed\Adyen\Business\Writer\AdyenWriterInterface
-     */
-    protected $writer;
-
-    /**
-     * @var \SprykerEco\Zed\Adyen\AdyenConfig
-     */
-    protected $config;
-
-    /**
-     * @param \SprykerEco\Zed\Adyen\Dependency\Facade\AdyenToAdyenApiFacadeInterface $adyenApiFacade
-     * @param \SprykerEco\Zed\Adyen\Business\Reader\AdyenReaderInterface $reader
-     * @param \SprykerEco\Zed\Adyen\Business\Writer\AdyenWriterInterface $writer
-     * @param \SprykerEco\Zed\Adyen\AdyenConfig $config
-     */
-    public function __construct(
-        AdyenToAdyenApiFacadeInterface $adyenApiFacade,
-        AdyenReaderInterface $reader,
-        AdyenWriterInterface $writer,
-        AdyenConfig $config
-    ) {
-        $this->adyenApiFacade = $adyenApiFacade;
-        $this->reader = $reader;
-        $this->writer = $writer;
-        $this->config = $config;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\AdyenRedirectResponseTransfer $redirectResponseTransfer
-     *
-     * @return \Generated\Shared\Transfer\AdyenRedirectResponseTransfer
-     */
-    public function handle(AdyenRedirectResponseTransfer $redirectResponseTransfer): AdyenRedirectResponseTransfer
+    protected function getOmsStatus(): string
     {
-        $paymentAdyenTransfer = $this->reader->getPaymentAdyenByReference($redirectResponseTransfer->getReference());
-        $paymentAdyenOrderItems = $this->reader->getAllPaymentAdyenOrderItemsByIdSalesOrder($paymentAdyenTransfer->getFkSalesOrder());
-
-        $requestTransfer = $this->createDetailsRequestTransfer($redirectResponseTransfer, $paymentAdyenTransfer);
-        $responseTransfer = $this->adyenApiFacade->performPaymentsDetailsApiCall($requestTransfer);
-
-        $this->writer->saveApiLog(
-            static::REQUEST_TYPE,
-            $requestTransfer,
-            $responseTransfer
-        );
-
-        if (!$responseTransfer->getIsSuccess()) {
-            return $redirectResponseTransfer;
-        }
-
-        $paymentAdyenTransfer->setPspReference($responseTransfer->getPaymentsDetailsResponse()->getPspReference());
-
-        $this->writer->updatePaymentEntities(
-            $this->config->getOmsStatusAuthorized(),
-            $paymentAdyenOrderItems,
-            $paymentAdyenTransfer
-        );
-
-        $redirectResponseTransfer->setIsSuccess(true);
-
-        return $redirectResponseTransfer;
+        return $this->config->getOmsStatusAuthorized();
     }
 
     /**
      * @param \Generated\Shared\Transfer\AdyenRedirectResponseTransfer $redirectResponseTransfer
-     * @param \Generated\Shared\Transfer\PaymentAdyenTransfer $paymentAdyenTransfer
      *
-     * @return \Generated\Shared\Transfer\AdyenApiRequestTransfer
+     * @return string[]
      */
-    protected function createDetailsRequestTransfer(
-        AdyenRedirectResponseTransfer $redirectResponseTransfer,
-        PaymentAdyenTransfer $paymentAdyenTransfer
-    ): AdyenApiRequestTransfer {
-        $requestTransfer = new AdyenApiRequestTransfer();
-        $requestTransfer->setPaymentsDetailsRequest(new AdyenApiPaymentsDetailsRequestTransfer());
-        $requestTransfer->getPaymentsDetailsRequest()->setPaymentData($paymentAdyenTransfer->getPaymentData());
-        $requestTransfer->getPaymentsDetailsRequest()->setDetails(
-            [
-                AdyenSdkConfig::MD_FIELD => $redirectResponseTransfer->getMd(),
-                AdyenSdkConfig::PA_RES_FIELD => $redirectResponseTransfer->getPaRes(),
-            ]
-        );
-
-        return $requestTransfer;
+    protected function getRequestDetails(AdyenRedirectResponseTransfer $redirectResponseTransfer): array
+    {
+        return [
+            AdyenSdkConfig::MD_FIELD => $redirectResponseTransfer->getMd(),
+            AdyenSdkConfig::PA_RES_FIELD => $redirectResponseTransfer->getPaRes(),
+        ];
     }
 }

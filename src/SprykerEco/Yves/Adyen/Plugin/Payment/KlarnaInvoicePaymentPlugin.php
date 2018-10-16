@@ -11,35 +11,12 @@ use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\AdyenKlarnaAddressTransfer;
 use Generated\Shared\Transfer\AdyenKlarnaInvoiceRequestTransfer;
 use Generated\Shared\Transfer\AdyenKlarnaPersonalDetailsTransfer;
+use Generated\Shared\Transfer\PaymentTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use SprykerEco\Yves\Adyen\AdyenConfig;
-use SprykerEco\Yves\Adyen\Dependency\Client\AdyenToStoreClientInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 class KlarnaInvoicePaymentPlugin implements AdyenPaymentPluginInterface
 {
-    /**
-     * @var \SprykerEco\Yves\Adyen\Dependency\Client\AdyenToStoreClientInterface
-     */
-    protected $storeClient;
-
-    /**
-     * @var \SprykerEco\Yves\Adyen\AdyenConfig
-     */
-    protected $config;
-
-    /**
-     * @param \SprykerEco\Yves\Adyen\Dependency\Client\AdyenToStoreClientInterface $storeClient
-     * @param \SprykerEco\Yves\Adyen\AdyenConfig $config
-     */
-    public function __construct(
-        AdyenToStoreClientInterface $storeClient,
-        AdyenConfig $config
-    ) {
-        $this->storeClient = $storeClient;
-        $this->config = $config;
-    }
-
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -48,6 +25,10 @@ class KlarnaInvoicePaymentPlugin implements AdyenPaymentPluginInterface
      */
     public function setPaymentDataToQuote(QuoteTransfer $quoteTransfer, Request $request): void
     {
+        if ($quoteTransfer->getPayment()->getPaymentSelection() !== PaymentTransfer::ADYEN_KLARNA_INVOICE) {
+            return;
+        }
+
         $billingAddress = $this->getInvoiceAddress($quoteTransfer->getBillingAddress());
         $shippingAddress = $this->getInvoiceAddress($quoteTransfer->getShippingAddress());
         $personalDetails = $this->getInvoicePersonalDetails($quoteTransfer);
@@ -84,32 +65,13 @@ class KlarnaInvoicePaymentPlugin implements AdyenPaymentPluginInterface
      */
     protected function getInvoicePersonalDetails(QuoteTransfer $quoteTransfer): AdyenKlarnaPersonalDetailsTransfer
     {
-        $personalDetialsTransfer = (new AdyenKlarnaPersonalDetailsTransfer())
+        $personalDetailsTransfer = (new AdyenKlarnaPersonalDetailsTransfer())
             ->setFirstName($quoteTransfer->getBillingAddress()->getFirstName())
             ->setLastName($quoteTransfer->getBillingAddress()->getLastName())
             ->setShopperEmail($quoteTransfer->getCustomer()->getEmail())
-            ->setTelephoneNumber($quoteTransfer->getBillingAddress()->getPhone());
+            ->setTelephoneNumber($quoteTransfer->getBillingAddress()->getPhone())
+            ->setSocialSecurityNumber($quoteTransfer->getPayment()->getAdyenKlarnaInvoice()->getSocialSecurityNumber());
 
-        if ($this->isSocialSecurityNumberRequired()) {
-            $personalDetialsTransfer
-                ->setSocialSecurityNumber(
-                    $quoteTransfer->getPayment()->getAdyenKlarnaInvoice()->getSocialSecurityNumber()
-                );
-        }
-
-        return $personalDetialsTransfer;
-    }
-
-    /**
-     * @return bool
-     */
-    protected function isSocialSecurityNumberRequired(): bool
-    {
-        $storeTransfer = $this->storeClient->getCurrentStore();
-
-        return in_array(
-            $storeTransfer->getDefaultCurrencyIsoCode(),
-            $this->config->getSocialSecurityNumberCountriesMandatory()
-        );
+        return $personalDetailsTransfer;
     }
 }

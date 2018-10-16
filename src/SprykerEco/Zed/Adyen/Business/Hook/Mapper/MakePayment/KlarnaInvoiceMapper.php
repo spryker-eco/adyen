@@ -14,22 +14,9 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use SprykerEco\Shared\Adyen\AdyenSdkConfig;
 
-class KlarnaInvoiceMapper extends AbstractMapper implements AdyenMapperInterface
+class KlarnaInvoiceMapper extends AbstractMapper
 {
     protected const REQUEST_TYPE = 'klarna';
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\AdyenApiRequestTransfer
-     */
-    public function buildPaymentRequestTransfer(QuoteTransfer $quoteTransfer): AdyenApiRequestTransfer
-    {
-        $requestTransfer = $this->createRequestTransfer($quoteTransfer);
-        $requestTransfer = $this->updateRequestTransfer($requestTransfer, $quoteTransfer);
-
-        return $requestTransfer;
-    }
 
     /**
      * @return string
@@ -40,14 +27,35 @@ class KlarnaInvoiceMapper extends AbstractMapper implements AdyenMapperInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\AdyenApiRequestTransfer $requestTransfer
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return array
+     */
+    protected function getPayload(QuoteTransfer $quoteTransfer): array
+    {
+        $klarnaRequestTransfer = $quoteTransfer->getPayment()->getAdyenKlarnaInvoiceRequest();
+        $payload = [
+            AdyenSdkConfig::REQUEST_TYPE_FIELD => static::REQUEST_TYPE,
+            AdyenSdkConfig::BILLING_ADDRESS_FIELD => $klarnaRequestTransfer->getBillingAddress()->modifiedToArray(true, true),
+            AdyenSdkConfig::PERSONAL_DETAILS_FIELD => $klarnaRequestTransfer->getPersonalDetails()->modifiedToArray(true, true),
+        ];
+
+        if (!$quoteTransfer->getBillingSameAsShipping()) {
+            $payload[AdyenSdkConfig::DELIVERY_ADDRESS_FIELD] = $klarnaRequestTransfer->getDeliveryAddress()->modifiedToArray(true, true);
+        }
+
+        return $payload;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\AdyenApiRequestTransfer $requestTransfer
      *
      * @return \Generated\Shared\Transfer\AdyenApiRequestTransfer
      */
     protected function updateRequestTransfer(
-        AdyenApiRequestTransfer $requestTransfer,
-        QuoteTransfer $quoteTransfer
+        QuoteTransfer $quoteTransfer,
+        AdyenApiRequestTransfer $requestTransfer
     ): AdyenApiRequestTransfer {
         $requestTransfer
             ->getMakePaymentRequest()
@@ -82,26 +90,5 @@ class KlarnaInvoiceMapper extends AbstractMapper implements AdyenMapperInterface
         );
 
         return new ArrayObject($items);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return array
-     */
-    protected function getPayload(QuoteTransfer $quoteTransfer): array
-    {
-        $klarnaRequestTransfer = $quoteTransfer->getPayment()->getAdyenKlarnaInvoiceRequest();
-        $payload = [
-            AdyenSdkConfig::REQUEST_TYPE_FIELD => static::REQUEST_TYPE,
-            AdyenSdkConfig::BILLING_ADDRESS_FIELD => $klarnaRequestTransfer->getBillingAddress()->modifiedToArray(true, true),
-            AdyenSdkConfig::PERSONAL_DETAILS_FIELD => $klarnaRequestTransfer->getPersonalDetails()->modifiedToArray(true, true),
-        ];
-
-        if (!$quoteTransfer->getBillingSameAsShipping()) {
-            $payload[AdyenSdkConfig::DELIVERY_ADDRESS_FIELD] = $klarnaRequestTransfer->getDeliveryAddress()->modifiedToArray(true, true);
-        }
-
-        return $payload;
     }
 }

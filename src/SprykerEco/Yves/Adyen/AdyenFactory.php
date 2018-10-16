@@ -7,14 +7,12 @@
 
 namespace SprykerEco\Yves\Adyen;
 
-use Generated\Shared\Transfer\PaymentTransfer;
 use Spryker\Yves\Kernel\AbstractFactory;
 use Spryker\Yves\StepEngine\Dependency\Form\StepEngineFormDataProviderInterface;
 use Spryker\Yves\StepEngine\Dependency\Form\SubFormInterface;
 use SprykerEco\Client\Adyen\AdyenClientInterface;
 use SprykerEco\Service\Adyen\AdyenServiceInterface;
 use SprykerEco\Yves\Adyen\Dependency\Client\AdyenToQuoteClientInterface;
-use SprykerEco\Yves\Adyen\Dependency\Client\AdyenToStoreClientInterface;
 use SprykerEco\Yves\Adyen\Dependency\Service\AdyenToUtilEncodingServiceInterface;
 use SprykerEco\Yves\Adyen\Form\AliPaySubForm;
 use SprykerEco\Yves\Adyen\Form\CreditCardSubForm;
@@ -41,15 +39,9 @@ use SprykerEco\Yves\Adyen\Handler\Notification\AdyenNotificationHandlerInterface
 use SprykerEco\Yves\Adyen\Handler\Notification\Mapper\AdyenNotificationMapper;
 use SprykerEco\Yves\Adyen\Handler\Notification\Mapper\AdyenNotificationMapperInterface;
 use SprykerEco\Yves\Adyen\Handler\Redirect\AdyenRedirectHandlerInterface;
-use SprykerEco\Yves\Adyen\Handler\Redirect\AliPayRedirectHandler;
 use SprykerEco\Yves\Adyen\Handler\Redirect\CreditCard3dRedirectHandler;
-use SprykerEco\Yves\Adyen\Handler\Redirect\IdealRedirectHandler;
+use SprykerEco\Yves\Adyen\Handler\Redirect\OnlineTransferRedirectHandler;
 use SprykerEco\Yves\Adyen\Handler\Redirect\PayPalRedirectHandler;
-use SprykerEco\Yves\Adyen\Handler\Redirect\SofortRedirectHandler;
-use SprykerEco\Yves\Adyen\Handler\Redirect\WeChatPayRedirectHandler;
-use SprykerEco\Yves\Adyen\Plugin\Payment\AdyenPaymentPluginInterface;
-use SprykerEco\Yves\Adyen\Plugin\Payment\CreditCardPaymentPlugin;
-use SprykerEco\Yves\Adyen\Plugin\Payment\KlarnaInvoicePaymentPlugin;
 
 /**
  * @method \SprykerEco\Yves\Adyen\AdyenConfig getConfig()
@@ -63,7 +55,7 @@ class AdyenFactory extends AbstractFactory
     {
         return new AdyenPaymentHandler(
             $this->getAdyenService(),
-            $this->getPaymentPlugins()
+            $this->getAdyenPaymentPlugins()
         );
     }
 
@@ -170,7 +162,6 @@ class AdyenFactory extends AbstractFactory
     {
         return new KlarnaInvoiceFormDataProvider(
             $this->getQuoteClient(),
-            $this->getStoreClient(),
             $this->getConfig()
         );
     }
@@ -221,9 +212,9 @@ class AdyenFactory extends AbstractFactory
     /**
      * @return \SprykerEco\Yves\Adyen\Handler\Redirect\AdyenRedirectHandlerInterface
      */
-    public function createSofortRedirectHandler(): AdyenRedirectHandlerInterface
+    public function createOnlineTransferRedirectHandler(): AdyenRedirectHandlerInterface
     {
-        return new SofortRedirectHandler(
+        return new OnlineTransferRedirectHandler(
             $this->getQuoteClient(),
             $this->getAdyenClient()
         );
@@ -243,42 +234,9 @@ class AdyenFactory extends AbstractFactory
     /**
      * @return \SprykerEco\Yves\Adyen\Handler\Redirect\AdyenRedirectHandlerInterface
      */
-    public function createIdealRedirectHandler(): AdyenRedirectHandlerInterface
-    {
-        return new IdealRedirectHandler(
-            $this->getQuoteClient(),
-            $this->getAdyenClient()
-        );
-    }
-
-    /**
-     * @return \SprykerEco\Yves\Adyen\Handler\Redirect\AdyenRedirectHandlerInterface
-     */
     public function createPayPalRedirectHandler(): AdyenRedirectHandlerInterface
     {
         return new PayPalRedirectHandler(
-            $this->getQuoteClient(),
-            $this->getAdyenClient()
-        );
-    }
-
-    /**
-     * @return \SprykerEco\Yves\Adyen\Handler\Redirect\AdyenRedirectHandlerInterface
-     */
-    public function createAliPayRedirectHandler(): AdyenRedirectHandlerInterface
-    {
-        return new AliPayRedirectHandler(
-            $this->getQuoteClient(),
-            $this->getAdyenClient()
-        );
-    }
-
-    /**
-     * @return \SprykerEco\Yves\Adyen\Handler\Redirect\AdyenRedirectHandlerInterface
-     */
-    public function createWeChatPayRedirectHandler(): AdyenRedirectHandlerInterface
-    {
-        return new WeChatPayRedirectHandler(
             $this->getQuoteClient(),
             $this->getAdyenClient()
         );
@@ -306,31 +264,9 @@ class AdyenFactory extends AbstractFactory
     /**
      * @return \SprykerEco\Yves\Adyen\Plugin\Payment\AdyenPaymentPluginInterface[]
      */
-    public function getPaymentPlugins(): array
+    public function getAdyenPaymentPlugins(): array
     {
-        return [
-            PaymentTransfer::ADYEN_CREDIT_CARD => $this->createCreditCardPaymentPlugin(),
-            PaymentTransfer::ADYEN_KLARNA_INVOICE => $this->createKlarnaInvoicePaymentPlugin(),
-        ];
-    }
-
-    /**
-     * @return \SprykerEco\Yves\Adyen\Plugin\Payment\AdyenPaymentPluginInterface
-     */
-    public function createCreditCardPaymentPlugin(): AdyenPaymentPluginInterface
-    {
-        return new CreditCardPaymentPlugin();
-    }
-
-    /**
-     * @return \SprykerEco\Yves\Adyen\Plugin\Payment\AdyenPaymentPluginInterface
-     */
-    public function createKlarnaInvoicePaymentPlugin(): AdyenPaymentPluginInterface
-    {
-        return new KlarnaInvoicePaymentPlugin(
-            $this->getStoreClient(),
-            $this->getConfig()
-        );
+        return $this->getProvidedDependency(AdyenDependencyProvider::PLUGINS_ADYEN_PAYMENT);
     }
 
     /**
@@ -355,14 +291,6 @@ class AdyenFactory extends AbstractFactory
     public function getQuoteClient(): AdyenToQuoteClientInterface
     {
         return $this->getProvidedDependency(AdyenDependencyProvider::CLIENT_QUOTE);
-    }
-
-    /**
-     * @return \SprykerEco\Yves\Adyen\Dependency\Client\AdyenToStoreClientInterface
-     */
-    public function getStoreClient(): AdyenToStoreClientInterface
-    {
-        return $this->getProvidedDependency(AdyenDependencyProvider::CLIENT_STORE);
     }
 
     /**
