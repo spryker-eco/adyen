@@ -8,7 +8,7 @@
 namespace SprykerEco\Zed\Adyen\Business\Hook\Mapper\MakePayment;
 
 use Generated\Shared\Transfer\QuoteTransfer;
-use SprykerEco\Shared\Adyen\AdyenApiRequestConstants;
+use SprykerEco\Shared\Adyen\AdyenApiRequestConfig;
 
 class PayPalMapper extends AbstractMapper
 {
@@ -30,7 +30,7 @@ class PayPalMapper extends AbstractMapper
     protected function getPayload(QuoteTransfer $quoteTransfer): array
     {
         return [
-            AdyenApiRequestConstants::REQUEST_TYPE_FIELD => static::REQUEST_TYPE,
+            AdyenApiRequestConfig::REQUEST_TYPE_FIELD => static::REQUEST_TYPE,
         ];
     }
 }

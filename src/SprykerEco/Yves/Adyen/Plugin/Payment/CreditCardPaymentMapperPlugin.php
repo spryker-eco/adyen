@@ -9,7 +9,7 @@ namespace SprykerEco\Yves\Adyen\Plugin\Payment;
 
 use Generated\Shared\Transfer\PaymentTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use SprykerEco\Shared\Adyen\AdyenApiRequestConstants;
+use SprykerEco\Shared\Adyen\AdyenApiRequestConfig;
 use Symfony\Component\HttpFoundation\Request;
 
 class CreditCardPaymentMapperPlugin implements AdyenPaymentMapperPluginInterface
@@ -29,9 +29,9 @@ class CreditCardPaymentMapperPlugin implements AdyenPaymentMapperPluginInterface
         $quoteTransfer
             ->getPayment()
             ->getAdyenCreditCard()
-            ->setEncryptedCardNumber($request->get(AdyenApiRequestConstants::ENCRYPTED_CARD_NUMBER_FIELD))
-            ->setEncryptedExpiryMonth($request->get(AdyenApiRequestConstants::ENCRYPTED_EXPIRY_MONTH_FIELD))
-            ->setEncryptedExpiryYear($request->get(AdyenApiRequestConstants::ENCRYPTED_EXPIRY_YEAR_FIELD))
-            ->setEncryptedSecurityCode($request->get(AdyenApiRequestConstants::ENCRYPTED_SECURITY_CODE_FIELD));
+            ->setEncryptedCardNumber($request->get(AdyenApiRequestConfig::ENCRYPTED_CARD_NUMBER_FIELD))
+            ->setEncryptedExpiryMonth($request->get(AdyenApiRequestConfig::ENCRYPTED_EXPIRY_MONTH_FIELD))
+            ->setEncryptedExpiryYear($request->get(AdyenApiRequestConfig::ENCRYPTED_EXPIRY_YEAR_FIELD))
+            ->setEncryptedSecurityCode($request->get(AdyenApiRequestConfig::ENCRYPTED_SECURITY_CODE_FIELD));
     }
 }

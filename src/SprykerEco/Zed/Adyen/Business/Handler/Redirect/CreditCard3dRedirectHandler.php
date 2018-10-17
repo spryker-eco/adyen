@@ -8,7 +8,7 @@
 namespace SprykerEco\Zed\Adyen\Business\Handler\Redirect;
 
 use Generated\Shared\Transfer\AdyenRedirectResponseTransfer;
-use SprykerEco\Shared\Adyen\AdyenApiRequestConstants;
+use SprykerEco\Shared\Adyen\AdyenApiRequestConfig;
 
 class CreditCard3dRedirectHandler extends OnlineTransferRedirectHandler
 {
@@ -28,8 +28,8 @@ class CreditCard3dRedirectHandler extends OnlineTransferRedirectHandler
     protected function getRequestDetails(AdyenRedirectResponseTransfer $redirectResponseTransfer): array
     {
         return [
-            AdyenApiRequestConstants::MD_FIELD => $redirectResponseTransfer->getMd(),
-            AdyenApiRequestConstants::PA_RES_FIELD => $redirectResponseTransfer->getPaRes(),
+            AdyenApiRequestConfig::MD_FIELD => $redirectResponseTransfer->getMd(),
+            AdyenApiRequestConfig::PA_RES_FIELD => $redirectResponseTransfer->getPaRes(),
         ];
     }
 }

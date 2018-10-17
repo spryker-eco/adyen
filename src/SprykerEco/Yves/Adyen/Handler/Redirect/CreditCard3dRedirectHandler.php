@@ -8,7 +8,7 @@
 namespace SprykerEco\Yves\Adyen\Handler\Redirect;
 
 use Generated\Shared\Transfer\AdyenRedirectResponseTransfer;
-use SprykerEco\Shared\Adyen\AdyenApiRequestConstants;
+use SprykerEco\Shared\Adyen\AdyenApiRequestConfig;
 use Symfony\Component\HttpFoundation\Request;
 
 class CreditCard3dRedirectHandler extends OnlineTransferRedirectHandler
@@ -22,8 +22,8 @@ class CreditCard3dRedirectHandler extends OnlineTransferRedirectHandler
     {
         $quoteTransfer = $this->quoteClient->getQuote();
         $redirectResponseTransfer = (new AdyenRedirectResponseTransfer())
-            ->setMd($request->request->get(AdyenApiRequestConstants::MD_FIELD))
-            ->setPaRes($request->request->get(AdyenApiRequestConstants::PA_RES_FIELD))
+            ->setMd($request->request->get(AdyenApiRequestConfig::MD_FIELD))
+            ->setPaRes($request->request->get(AdyenApiRequestConfig::PA_RES_FIELD))
             ->setReference($quoteTransfer->getPayment()->getAdyenPayment()->getReference());
 
         return $redirectResponseTransfer;

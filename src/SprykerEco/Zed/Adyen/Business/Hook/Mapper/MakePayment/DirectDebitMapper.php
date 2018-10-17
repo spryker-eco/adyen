@@ -8,7 +8,7 @@
 namespace SprykerEco\Zed\Adyen\Business\Hook\Mapper\MakePayment;
 
 use Generated\Shared\Transfer\QuoteTransfer;
-use SprykerEco\Shared\Adyen\AdyenApiRequestConstants;
+use SprykerEco\Shared\Adyen\AdyenApiRequestConfig;
 
 class DirectDebitMapper extends AbstractMapper
 {
@@ -32,9 +32,9 @@ class DirectDebitMapper extends AbstractMapper
         $directDebitTransfer = $quoteTransfer->getPayment()->getAdyenDirectDebit();
 
         return [
-            AdyenApiRequestConstants::REQUEST_TYPE_FIELD => static::REQUEST_TYPE,
-            AdyenApiRequestConstants::SEPA_OWNER_NAME_FIELD => $directDebitTransfer->getOwnerName(),
-            AdyenApiRequestConstants::SEPA_IBAN_NUMBER_FIELD => $directDebitTransfer->getIbanNumber(),
+            AdyenApiRequestConfig::REQUEST_TYPE_FIELD => static::REQUEST_TYPE,
+            AdyenApiRequestConfig::SEPA_OWNER_NAME_FIELD => $directDebitTransfer->getOwnerName(),
+            AdyenApiRequestConfig::SEPA_IBAN_NUMBER_FIELD => $directDebitTransfer->getIbanNumber(),
         ];
     }
 }
