@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\AdyenApiRequestTransfer;
 use Generated\Shared\Transfer\AdyenApiResponseTransfer;
 use Generated\Shared\Transfer\AdyenRedirectResponseTransfer;
 use Generated\Shared\Transfer\PaymentAdyenTransfer;
-use SprykerEco\Shared\Adyen\AdyenSdkConfig;
+use SprykerEco\Shared\Adyen\AdyenApiRequestConstants;
 use SprykerEco\Zed\Adyen\AdyenConfig;
 use SprykerEco\Zed\Adyen\Business\Reader\AdyenReaderInterface;
 use SprykerEco\Zed\Adyen\Business\Writer\AdyenWriterInterface;
@@ -138,7 +138,7 @@ class OnlineTransferRedirectHandler implements AdyenRedirectHandlerInterface
     protected function getRequestDetails(AdyenRedirectResponseTransfer $redirectResponseTransfer): array
     {
         return [
-            AdyenSdkConfig::PAYLOAD_FIELD => $redirectResponseTransfer->getPayload(),
+            AdyenApiRequestConstants::PAYLOAD_FIELD => $redirectResponseTransfer->getPayload(),
         ];
     }
 }

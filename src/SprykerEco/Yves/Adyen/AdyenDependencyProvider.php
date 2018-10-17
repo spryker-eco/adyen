@@ -11,8 +11,8 @@ use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 use SprykerEco\Yves\Adyen\Dependency\Client\AdyenToQuoteClientBridge;
 use SprykerEco\Yves\Adyen\Dependency\Service\AdyenToUtilEncodingServiceBridge;
-use SprykerEco\Yves\Adyen\Plugin\Payment\CreditCardPaymentPlugin;
-use SprykerEco\Yves\Adyen\Plugin\Payment\KlarnaInvoicePaymentPlugin;
+use SprykerEco\Yves\Adyen\Plugin\Payment\CreditCardPaymentMapperPlugin;
+use SprykerEco\Yves\Adyen\Plugin\Payment\KlarnaInvoicePaymentMapperPlugin;
 
 class AdyenDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -111,13 +111,13 @@ class AdyenDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \SprykerEco\Yves\Adyen\Plugin\Payment\AdyenPaymentPluginInterface[]
+     * @return \SprykerEco\Yves\Adyen\Plugin\Payment\AdyenPaymentMapperPluginInterface[]
      */
     protected function getAdyenPaymentPlugins(): array
     {
         return [
-            new CreditCardPaymentPlugin(),
-            new KlarnaInvoicePaymentPlugin(),
+            new CreditCardPaymentMapperPlugin(),
+            new KlarnaInvoicePaymentMapperPlugin(),
         ];
     }
 }

@@ -29,7 +29,7 @@ class AdyenToUtilEncodingServiceBridge implements AdyenToUtilEncodingServiceInte
      *
      * @return string|null
      */
-    public function encodeJson($value, $options = null, $depth = null)
+    public function encodeJson($value, $options = null, $depth = null): ?string
     {
         return $this->encodingService->encodeJson($value, $options, $depth);
     }

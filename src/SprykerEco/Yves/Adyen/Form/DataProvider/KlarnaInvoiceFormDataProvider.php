@@ -8,8 +8,6 @@
 namespace SprykerEco\Yves\Adyen\Form\DataProvider;
 
 use Generated\Shared\Transfer\AdyenKlarnaInvoicePaymentTransfer;
-use Generated\Shared\Transfer\AdyenPaymentTransfer;
-use Generated\Shared\Transfer\PaymentTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use SprykerEco\Yves\Adyen\AdyenConfig;
@@ -44,19 +42,10 @@ class KlarnaInvoiceFormDataProvider extends AbstractFormDataProvider
      */
     public function getData(AbstractTransfer $quoteTransfer): QuoteTransfer
     {
-        if ($quoteTransfer->getPayment() === null) {
-            $paymentTransfer = new PaymentTransfer();
-            $quoteTransfer->setPayment($paymentTransfer);
-        }
+        $quoteTransfer = $this->updateQuoteWithPaymentData($quoteTransfer);
 
-        $paymentTransfer = $quoteTransfer->getPayment();
-
-        if ($paymentTransfer->getAdyenPayment() === null) {
-            $paymentTransfer->setAdyenPayment(new AdyenPaymentTransfer());
-        }
-
-        if ($paymentTransfer->getAdyenKlarnaInvoice() === null) {
-            $paymentTransfer->setAdyenKlarnaInvoice(new AdyenKlarnaInvoicePaymentTransfer());
+        if ($quoteTransfer->getPayment()->getAdyenKlarnaInvoice() === null) {
+            $quoteTransfer->getPayment()->setAdyenKlarnaInvoice(new AdyenKlarnaInvoicePaymentTransfer());
         }
 
         $this->quoteClient->setQuote($quoteTransfer);

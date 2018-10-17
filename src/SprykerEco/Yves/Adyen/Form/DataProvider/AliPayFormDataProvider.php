@@ -8,8 +8,6 @@
 namespace SprykerEco\Yves\Adyen\Form\DataProvider;
 
 use Generated\Shared\Transfer\AdyenAliPayPaymentTransfer;
-use Generated\Shared\Transfer\AdyenPaymentTransfer;
-use Generated\Shared\Transfer\PaymentTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 
@@ -22,19 +20,10 @@ class AliPayFormDataProvider extends AbstractFormDataProvider
      */
     public function getData(AbstractTransfer $quoteTransfer): QuoteTransfer
     {
-        if ($quoteTransfer->getPayment() === null) {
-            $paymentTransfer = new PaymentTransfer();
-            $quoteTransfer->setPayment($paymentTransfer);
-        }
+        $quoteTransfer = $this->updateQuoteWithPaymentData($quoteTransfer);
 
-        $paymentTransfer = $quoteTransfer->getPayment();
-
-        if ($paymentTransfer->getAdyenPayment() === null) {
-            $paymentTransfer->setAdyenPayment(new AdyenPaymentTransfer());
-        }
-
-        if ($paymentTransfer->getAdyenAliPay() === null) {
-            $paymentTransfer->setAdyenAliPay(new AdyenAliPayPaymentTransfer());
+        if ($quoteTransfer->getPayment()->getAdyenAliPay() === null) {
+            $quoteTransfer->getPayment()->setAdyenAliPay(new AdyenAliPayPaymentTransfer());
         }
 
         $this->quoteClient->setQuote($quoteTransfer);

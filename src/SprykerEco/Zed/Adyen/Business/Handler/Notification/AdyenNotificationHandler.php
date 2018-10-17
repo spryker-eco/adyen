@@ -10,7 +10,6 @@ namespace SprykerEco\Zed\Adyen\Business\Handler\Notification;
 use Generated\Shared\Transfer\AdyenNotificationRequestItemTransfer;
 use Generated\Shared\Transfer\AdyenNotificationsTransfer;
 use SprykerEco\Zed\Adyen\AdyenConfig;
-use SprykerEco\Zed\Adyen\Business\Exception\AdyenNotificationNotHandledException;
 use SprykerEco\Zed\Adyen\Business\Reader\AdyenReaderInterface;
 use SprykerEco\Zed\Adyen\Business\Writer\AdyenWriterInterface;
 use SprykerEco\Zed\Adyen\Dependency\Service\AdyenToUtilEncodingServiceInterface;
@@ -65,11 +64,8 @@ class AdyenNotificationHandler implements AdyenNotificationHandlerInterface
         $isSuccess = true;
 
         foreach ($notificationsTransfer->getNotificationItems() as $notificationItem) {
-            try {
-                $this->handleNotification($notificationItem);
-            } catch (AdyenNotificationNotHandledException $exception) {
+            if ($this->handleNotification($notificationItem) === false) {
                 $isSuccess = false;
-                continue;
             }
         }
 
@@ -81,26 +77,22 @@ class AdyenNotificationHandler implements AdyenNotificationHandlerInterface
     /**
      * @param \Generated\Shared\Transfer\AdyenNotificationRequestItemTransfer $notificationTransfer
      *
-     * @throws \SprykerEco\Zed\Adyen\Business\Exception\AdyenNotificationNotHandledException
-     *
-     * @return void
+     * @return bool
      */
-    protected function handleNotification(AdyenNotificationRequestItemTransfer $notificationTransfer): void
+    protected function handleNotification(AdyenNotificationRequestItemTransfer $notificationTransfer): bool
     {
         if (!$notificationTransfer->getSuccess()) {
-            throw new AdyenNotificationNotHandledException('Notification Request Item is not success.');
+            return false;
         }
 
         $statuses = $this->config->getMappedOmsStatuses();
         if (!array_key_exists($notificationTransfer->getEventCode(), $statuses)) {
-            throw new AdyenNotificationNotHandledException('Event code does not registered.');
+            return false;
         }
 
         $paymentAdyenTransfer = $this->reader->getPaymentAdyenByPspReference($notificationTransfer->getPspReference());
         if (!$paymentAdyenTransfer->getFkSalesOrder()) {
-            throw new AdyenNotificationNotHandledException(
-                'Payment entity with requested pspReference does not registered.'
-            );
+            return false;
         }
 
         $paymentAdyenOrderItems = $this->reader
@@ -114,5 +106,7 @@ class AdyenNotificationHandler implements AdyenNotificationHandlerInterface
             $paymentAdyenOrderItems,
             $paymentAdyenTransfer
         );
+
+        return true;
     }
 }

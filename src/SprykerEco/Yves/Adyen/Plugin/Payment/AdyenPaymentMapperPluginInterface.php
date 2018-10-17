@@ -10,7 +10,7 @@ namespace SprykerEco\Yves\Adyen\Plugin\Payment;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Symfony\Component\HttpFoundation\Request;
 
-interface AdyenPaymentPluginInterface
+interface AdyenPaymentMapperPluginInterface
 {
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer

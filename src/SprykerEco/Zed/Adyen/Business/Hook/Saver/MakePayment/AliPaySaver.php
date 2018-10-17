@@ -9,13 +9,13 @@ namespace SprykerEco\Zed\Adyen\Business\Hook\Saver\MakePayment;
 
 class AliPaySaver extends AbstractSaver
 {
-    protected const MAKE_PAYMENT_PAY_PAL_REQUEST_TYPE = 'MakePayment[AliPay]';
+    protected const MAKE_PAYMENT_ALI_PAY_REQUEST_TYPE = 'MakePayment[AliPay]';
 
     /**
      * @return string
      */
     protected function getRequestType(): string
     {
-        return static::MAKE_PAYMENT_PAY_PAL_REQUEST_TYPE;
+        return static::MAKE_PAYMENT_ALI_PAY_REQUEST_TYPE;
     }
 }

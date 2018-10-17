@@ -9,7 +9,7 @@ namespace SprykerEco\Zed\Adyen\Business\Hook\Mapper\MakePayment;
 
 use Generated\Shared\Transfer\AdyenApiRequestTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use SprykerEco\Shared\Adyen\AdyenSdkConfig;
+use SprykerEco\Shared\Adyen\AdyenApiRequestConstants;
 
 class CreditCardMapper extends AbstractMapper
 {
@@ -34,11 +34,11 @@ class CreditCardMapper extends AbstractMapper
         $creditCardTransfer = $quoteTransfer->getPayment()->getAdyenCreditCard();
 
         return [
-            AdyenSdkConfig::REQUEST_TYPE_FIELD => static::REQUEST_TYPE,
-            AdyenSdkConfig::ENCRYPTED_CARD_NUMBER_FIELD => $creditCardTransfer->getEncryptedCardNumber(),
-            AdyenSdkConfig::ENCRYPTED_EXPIRY_MONTH_FIELD => $creditCardTransfer->getEncryptedExpiryMonth(),
-            AdyenSdkConfig::ENCRYPTED_EXPIRY_YEAR_FIELD => $creditCardTransfer->getEncryptedExpiryYear(),
-            AdyenSdkConfig::ENCRYPTED_SECURITY_CODE_FIELD => $creditCardTransfer->getEncryptedSecurityCode(),
+            AdyenApiRequestConstants::REQUEST_TYPE_FIELD => static::REQUEST_TYPE,
+            AdyenApiRequestConstants::ENCRYPTED_CARD_NUMBER_FIELD => $creditCardTransfer->getEncryptedCardNumber(),
+            AdyenApiRequestConstants::ENCRYPTED_EXPIRY_MONTH_FIELD => $creditCardTransfer->getEncryptedExpiryMonth(),
+            AdyenApiRequestConstants::ENCRYPTED_EXPIRY_YEAR_FIELD => $creditCardTransfer->getEncryptedExpiryYear(),
+            AdyenApiRequestConstants::ENCRYPTED_SECURITY_CODE_FIELD => $creditCardTransfer->getEncryptedSecurityCode(),
         ];
     }
 

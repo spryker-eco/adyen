@@ -15,7 +15,7 @@ use Generated\Shared\Transfer\PaymentTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Symfony\Component\HttpFoundation\Request;
 
-class KlarnaInvoicePaymentPlugin implements AdyenPaymentPluginInterface
+class KlarnaInvoicePaymentMapperPlugin implements AdyenPaymentMapperPluginInterface
 {
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer

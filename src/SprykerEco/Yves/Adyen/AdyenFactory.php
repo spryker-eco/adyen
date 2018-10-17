@@ -262,7 +262,7 @@ class AdyenFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerEco\Yves\Adyen\Plugin\Payment\AdyenPaymentPluginInterface[]
+     * @return \SprykerEco\Yves\Adyen\Plugin\Payment\AdyenPaymentMapperPluginInterface[]
      */
     public function getAdyenPaymentPlugins(): array
     {

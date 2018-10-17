@@ -28,7 +28,7 @@ interface AdyenClientInterface
 
     /**
      * Specification:
-     * - Handle response from Adyen after redirect customer back to the shop.
+     * - Handle response from Adyen after redirect customer back to the shop after authorization on Sofort, iDeal, AliPay, WeChatPay payment methods.
      * - Save response, update status etc.
      *
      * @api
@@ -41,7 +41,7 @@ interface AdyenClientInterface
 
     /**
      * Specification:
-     * - Handle response from Adyen after redirect customer back to the shop.
+     * - Handle response from Adyen after redirect customer back to the shop after 3D secure has been passed.
      * - Save response, update status etc.
      *
      * @api
@@ -54,7 +54,7 @@ interface AdyenClientInterface
 
     /**
      * Specification:
-     * - Handle response from Adyen after redirect customer back to the shop.
+     * - Handle response from Adyen after redirect customer back to the shop after authorization on PayPal.
      * - Save response, update status etc.
      *
      * @api

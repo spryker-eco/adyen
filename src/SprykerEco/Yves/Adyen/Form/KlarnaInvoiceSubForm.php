@@ -21,6 +21,7 @@ class KlarnaInvoiceSubForm extends AbstractSubForm
     protected const PAYMENT_METHOD = 'klarna_invoice';
     protected const SELECT_OPTIONS_FIELD = 'select_options';
     protected const SOCIAL_SECURITY_NUMBER_FIELD = 'social_security_number';
+    protected const SOCIAL_SECURITY_NUMBER_LABEL = 'Social Security Number';
 
     /**
      * @return string
@@ -84,7 +85,7 @@ class KlarnaInvoiceSubForm extends AbstractSubForm
             static::SOCIAL_SECURITY_NUMBER_FIELD,
             TextType::class,
             [
-                'label' => 'Social Security Number',
+                'label' => static::SOCIAL_SECURITY_NUMBER_LABEL,
                 'required' => true,
                 'constraints' => [],
             ]

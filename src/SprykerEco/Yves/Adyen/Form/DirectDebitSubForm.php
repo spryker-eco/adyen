@@ -22,6 +22,9 @@ class DirectDebitSubForm extends AbstractSubForm
     protected const OWNER_NAME_FIELD = 'owner_name';
     protected const IBAN_NUMBER_FIELD = 'iban_number';
 
+    protected const OWNER_NAME_LABEL = 'Owner Name';
+    protected const IBAN_NUMBER_LABEL = 'IBAN';
+
     /**
      * @return string
      */
@@ -82,7 +85,7 @@ class DirectDebitSubForm extends AbstractSubForm
             static::OWNER_NAME_FIELD,
             TextType::class,
             [
-                'label' => 'Owner Name',
+                'label' => static::OWNER_NAME_LABEL,
                 'required' => true,
                 'constraints' => [],
             ]
@@ -102,7 +105,7 @@ class DirectDebitSubForm extends AbstractSubForm
             static::IBAN_NUMBER_FIELD,
             TextType::class,
             [
-                'label' => 'IBAN',
+                'label' => static::IBAN_NUMBER_LABEL,
                 'required' => true,
                 'constraints' => [],
             ]
