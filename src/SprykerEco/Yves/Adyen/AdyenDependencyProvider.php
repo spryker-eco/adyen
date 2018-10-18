@@ -36,6 +36,7 @@ class AdyenDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addQuoteClient($container);
         $container = $this->addAdyenService($container);
         $container = $this->addUtilEncodingService($container);
+        $container = $this->addAdyenPaymentPlugins($container);
 
         return $container;
     }

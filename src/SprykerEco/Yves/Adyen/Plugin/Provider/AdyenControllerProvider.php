@@ -8,9 +8,9 @@
 namespace SprykerEco\Yves\Adyen\Plugin\Provider;
 
 use Silex\Application;
-use Spryker\Yves\Application\Plugin\Provider\YvesControllerProvider;
+use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvider;
 
-class AdyenControllerProvider extends YvesControllerProvider
+class AdyenControllerProvider extends AbstractYvesControllerProvider
 {
     protected const BUNDLE_NAME = 'Adyen';
     protected const CALLBACK_CONTROLLER_NAME = 'Callback';
