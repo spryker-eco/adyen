@@ -1,4 +1,4 @@
-<script type="text/javascript" src="https://checkoutshopper-test.adyen.com/checkoutshopper/assets/js/sdk/checkoutSecuredFields.1.1.1.min.js"></script>
+<script type="text/javascript" src="{{ form.adyenCreditCard.vars.sdkUrl }}"></script>
 
 <div class="adyen-payment-form adyen-payment-klarna-invoice-form payment-form cards-div js-chckt-pm__pm-holder" id="adyenKlarnaInvoice">
     {{ form_widget(form.adyenCreditCard) }}
@@ -44,7 +44,7 @@
     // Load Secured Fields.
     var securedFields = csf({
         configObject : {
-            originKey : "pub.v2.8215323288033856.aHR0cDovL3d3dy5kZS5hZHllbi5sb2NhbA.wqS4CdQ29skrG79bxc92KusqP7acm6FNEXeWj9IKO0o"
+            originKey : '{{ form.adyenCreditCard.vars.sdkOriginKey }}'
         },
         rootNode: '.cards-div',
         paymentMethods : {

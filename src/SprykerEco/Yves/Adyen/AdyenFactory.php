@@ -136,7 +136,10 @@ class AdyenFactory extends AbstractFactory
      */
     public function createCreditCardFormDataProvider(): StepEngineFormDataProviderInterface
     {
-        return new CreditCardFormDataProvider($this->getQuoteClient());
+        return new CreditCardFormDataProvider(
+            $this->getQuoteClient(),
+            $this->getConfig()
+        );
     }
 
     /**

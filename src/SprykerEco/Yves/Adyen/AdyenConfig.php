@@ -27,4 +27,20 @@ class AdyenConfig extends AbstractBundleConfig
     {
         return $this->get(AdyenConstants::IDEAL_ISSUERS_LIST);
     }
+
+    /**
+     * @return string
+     */
+    public function getSdkCheckoutSecuredFieldsUrl(): string
+    {
+        return $this->get(AdyenConstants::SDK_CHECKOUT_SECURED_FIELDS_URL);
+    }
+
+    /**
+     * @return string
+     */
+    public function getSdkCheckoutOriginKey(): string
+    {
+        return $this->get(AdyenConstants::SDK_CHECKOUT_ORIGIN_KEY);
+    }
 }
