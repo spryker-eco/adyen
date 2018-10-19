@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
 class AdyenNotificationMapper implements AdyenNotificationMapperInterface
 {
     protected const NOTIFICATIONS_KEY = 'notificationItems';
-    protected const NOTIFICATION_ITEM_KEY = 'notificationRequestItem';
+    protected const NOTIFICATION_ITEM_KEY = 'NotificationRequestItem';
     protected const SUCCESS_KEY = 'success';
     protected const LIVE_KEY = 'live';
 
