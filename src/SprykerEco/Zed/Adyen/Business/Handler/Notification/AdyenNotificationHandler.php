@@ -57,42 +57,34 @@ class AdyenNotificationHandler implements AdyenNotificationHandlerInterface
     /**
      * @param \Generated\Shared\Transfer\AdyenNotificationsTransfer $notificationsTransfer
      *
-     * @return \Generated\Shared\Transfer\AdyenNotificationsTransfer
+     * @return void
      */
-    public function handle(AdyenNotificationsTransfer $notificationsTransfer): AdyenNotificationsTransfer
+    public function handle(AdyenNotificationsTransfer $notificationsTransfer): void
     {
-        $isSuccess = true;
-
         foreach ($notificationsTransfer->getNotificationItems() as $notificationItem) {
-            if ($this->handleNotification($notificationItem) === false) {
-                $isSuccess = false;
-            }
+            $this->handleNotification($notificationItem);
         }
-
-        $notificationsTransfer->setIsSuccess($isSuccess);
-
-        return $notificationsTransfer;
     }
 
     /**
      * @param \Generated\Shared\Transfer\AdyenNotificationRequestItemTransfer $notificationTransfer
      *
-     * @return bool
+     * @return void
      */
-    protected function handleNotification(AdyenNotificationRequestItemTransfer $notificationTransfer): bool
+    protected function handleNotification(AdyenNotificationRequestItemTransfer $notificationTransfer): void
     {
         if (!$notificationTransfer->getSuccess()) {
-            return false;
+            return;
         }
 
         $statuses = $this->config->getMappedOmsStatuses();
         if (!array_key_exists($notificationTransfer->getEventCode(), $statuses)) {
-            return false;
+            return;
         }
 
         $paymentAdyenTransfer = $this->reader->getPaymentAdyenByPspReference($notificationTransfer->getPspReference());
         if (!$paymentAdyenTransfer->getFkSalesOrder()) {
-            return false;
+            return;
         }
 
         $paymentAdyenOrderItems = $this->reader
@@ -106,7 +98,5 @@ class AdyenNotificationHandler implements AdyenNotificationHandlerInterface
             $paymentAdyenOrderItems,
             $paymentAdyenTransfer
         );
-
-        return true;
     }
 }

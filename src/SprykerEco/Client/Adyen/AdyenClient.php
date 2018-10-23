@@ -23,11 +23,11 @@ class AdyenClient extends AbstractClient implements AdyenClientInterface
      *
      * @param \Generated\Shared\Transfer\AdyenNotificationsTransfer $notificationsTransfer
      *
-     * @return \Generated\Shared\Transfer\AdyenNotificationsTransfer
+     * @return void
      */
-    public function handleNotificationRequest(AdyenNotificationsTransfer $notificationsTransfer): AdyenNotificationsTransfer
+    public function handleNotificationRequest(AdyenNotificationsTransfer $notificationsTransfer): void
     {
-        return $this
+        $this
             ->getFactory()
             ->createZedAdyenStub()
             ->handleNotificationRequest($notificationsTransfer);

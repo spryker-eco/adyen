@@ -10,6 +10,7 @@
             <state name="authorized and captured" reserved="true" />
             <state name="authorize and capture failed" reserved="false" />
             <state name="shipped" reserved="true" />
+            <state name="refund pending" reserved="false" />
             <state name="refunded" reserved="false" />
             <state name="refund failed" reserved="false" />
             <state name="closed" reserved="false" />
@@ -35,16 +36,20 @@
                 <event>invalidation</event>
             </transition>
 
-            <transition condition="Adyen/IsRefunded">
+            <transition condition="Adyen/IsRefundReceived">
                 <source>authorized and captured</source>
-                <target>refunded</target>
+                <target>refund pending</target>
                 <event>refund</event>
             </transition>
 
-            <transition>
-                <source>authorized and captured</source>
+            <transition condition="Adyen/IsRefunded" happy="true">
+                <source>refund pending</source>
+                <target>refunded</target>
+            </transition>
+
+            <transition condition="Adyen/IsRefundFailed">
+                <source>refund pending</source>
                 <target>refund failed</target>
-                <event>refund</event>
             </transition>
 
             <transition happy="true">

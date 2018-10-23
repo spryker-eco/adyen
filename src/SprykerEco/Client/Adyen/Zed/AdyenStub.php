@@ -29,14 +29,11 @@ class AdyenStub implements AdyenStubInterface
     /**
      * @param \Generated\Shared\Transfer\AdyenNotificationsTransfer $notificationsTransfer
      *
-     * @return \Generated\Shared\Transfer\AdyenNotificationsTransfer
+     * @return void
      */
-    public function handleNotificationRequest(AdyenNotificationsTransfer $notificationsTransfer): AdyenNotificationsTransfer
+    public function handleNotificationRequest(AdyenNotificationsTransfer $notificationsTransfer): void
     {
-        /** @var \Generated\Shared\Transfer\AdyenNotificationsTransfer $notificationsTransfer */
-        $notificationsTransfer = $this->zedRequestClient->call('/adyen/gateway/handle-notification', $notificationsTransfer);
-
-        return $notificationsTransfer;
+        $this->zedRequestClient->call('/adyen/gateway/handle-notification', $notificationsTransfer);
     }
 
     /**

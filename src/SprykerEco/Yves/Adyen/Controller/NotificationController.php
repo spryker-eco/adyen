@@ -16,9 +16,8 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class NotificationController extends AbstractController
 {
-    protected const HEADER_CONTENT_TYPE_KEY = 'Content-Type';
-    protected const HEADER_CONTENT_TYPE_VALUE = 'application/json';
-    protected const NOTIFICATION_ACCEPTED_RESPONSE = ['notificationResponse' => '[accepted]'];
+    protected const NOTIFICATION_ACCEPTED_RESPONSE_HEADER = ['Content-Type' => 'application/json'];
+    protected const NOTIFICATION_ACCEPTED_RESPONSE_BODY = ['notificationResponse' => '[accepted]'];
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -27,10 +26,7 @@ class NotificationController extends AbstractController
      */
     public function indexAction(Request $request): Response
     {
-        $response = $this->getFactory()->createNotificationHandler()->handle($request);
-        if (!$response->getIsSuccess()) {
-            return $this->createNotAcceptableResponse();
-        }
+        $this->getFactory()->createNotificationHandler()->handle($request);
 
         return $this->createAcceptedResponse();
     }
@@ -41,19 +37,9 @@ class NotificationController extends AbstractController
     protected function createAcceptedResponse(): Response
     {
         return new Response(
-            $this->getFactory()->getUtilEncodingService()->encodeJson(static::NOTIFICATION_ACCEPTED_RESPONSE),
+            $this->getFactory()->getUtilEncodingService()->encodeJson(static::NOTIFICATION_ACCEPTED_RESPONSE_BODY),
             Response::HTTP_ACCEPTED,
-            [
-                static::HEADER_CONTENT_TYPE_KEY => static::HEADER_CONTENT_TYPE_VALUE,
-            ]
+            static::NOTIFICATION_ACCEPTED_RESPONSE_HEADER
         );
-    }
-
-    /**
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    protected function createNotAcceptableResponse(): Response
-    {
-        return new Response('', Response::HTTP_NOT_ACCEPTABLE);
     }
 }

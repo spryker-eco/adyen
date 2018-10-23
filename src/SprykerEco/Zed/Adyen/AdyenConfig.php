@@ -16,15 +16,28 @@ class AdyenConfig extends AbstractBundleConfig
     protected const OMS_STATUS_AUTHORIZED_AND_CAPTURED = 'authorized and captured';
     protected const OMS_STATUS_AUTHORIZED = 'authorized';
     protected const OMS_STATUS_CAPTURED = 'captured';
+    protected const OMS_STATUS_CAPTURE_PENDING = 'capture pending';
+    protected const OMS_STATUS_CAPTURE_FAILED = 'capture failed';
     protected const OMS_STATUS_CANCELED = 'canceled';
+    protected const OMS_STATUS_CANCELLATION_PENDING = 'cancellation pending';
+    protected const OMS_STATUS_CANCELLATION_FAILED = 'cancellation failed';
     protected const OMS_STATUS_REFUNDED = 'refunded';
+    protected const OMS_STATUS_REFUND_PENDING = 'refund pending';
+    protected const OMS_STATUS_REFUND_FAILED = 'refund failed';
 
     protected const OMS_EVENT_CANCEL_NAME = 'cancel';
     protected const OMS_EVENT_REFUND_NAME = 'refund';
 
     protected const ADYEN_AUTOMATIC_OMS_TRIGGER = 'ADYEN_AUTOMATIC_OMS_TRIGGER';
 
-    protected const ADYEN_NOTIFICATION_AUTHORIZE_STATUS = 'AUTHORISATION';
+    protected const ADYEN_NOTIFICATION_EVENT_CODE_AUTHORISATION = 'AUTHORISATION';
+    protected const ADYEN_NOTIFICATION_EVENT_CODE_CAPTURE = 'CAPTURE';
+    protected const ADYEN_NOTIFICATION_EVENT_CODE_CAPTURE_FAILED = 'CAPTURE_FAILED';
+    protected const ADYEN_NOTIFICATION_EVENT_CODE_CANCELLATION = 'CANCELLATION';
+    protected const ADYEN_NOTIFICATION_EVENT_CODE_REFUND = 'REFUND';
+    protected const ADYEN_NOTIFICATION_EVENT_CODE_REFUND_FAILED = 'REFUND_FAILED';
+    protected const ADYEN_NOTIFICATION_EVENT_CODE_CANCEL_OR_REFUND = 'CANCEL_OR_REFUND';
+    protected const ADYEN_NOTIFICATION_EVENT_CODE_AUTHORISATION_ADJUSTMENT = 'AUTHORISATION_ADJUSTMENT';
 
     /**
      * @return string
@@ -61,6 +74,22 @@ class AdyenConfig extends AbstractBundleConfig
     /**
      * @return string
      */
+    public function getOmsStatusCapturePending(): string
+    {
+        return static::OMS_STATUS_CAPTURE_PENDING;
+    }
+
+    /**
+     * @return string
+     */
+    public function getOmsStatusCaptureFailed(): string
+    {
+        return static::OMS_STATUS_CAPTURE_FAILED;
+    }
+
+    /**
+     * @return string
+     */
     public function getOmsStatusCanceled(): string
     {
         return static::OMS_STATUS_CANCELED;
@@ -69,9 +98,41 @@ class AdyenConfig extends AbstractBundleConfig
     /**
      * @return string
      */
+    public function getOmsStatusCancellationPending(): string
+    {
+        return static::OMS_STATUS_CANCELLATION_PENDING;
+    }
+
+    /**
+     * @return string
+     */
+    public function getOmsStatusCancellationFailed(): string
+    {
+        return static::OMS_STATUS_CANCELLATION_FAILED;
+    }
+
+    /**
+     * @return string
+     */
     public function getOmsStatusRefunded(): string
     {
         return static::OMS_STATUS_REFUNDED;
+    }
+
+    /**
+     * @return string
+     */
+    public function getOmsStatusRefundPending(): string
+    {
+        return static::OMS_STATUS_REFUND_PENDING;
+    }
+
+    /**
+     * @return string
+     */
+    public function getOmsStatusRefundFailed(): string
+    {
+        return static::OMS_STATUS_REFUND_FAILED;
     }
 
     /**
@@ -168,7 +229,14 @@ class AdyenConfig extends AbstractBundleConfig
     public function getMappedOmsStatuses(): array
     {
         return [
-            static::ADYEN_NOTIFICATION_AUTHORIZE_STATUS => $this->getOmsStatusAuthorized(),
+            static::ADYEN_NOTIFICATION_EVENT_CODE_AUTHORISATION => $this->getOmsStatusAuthorized(),
+            static::ADYEN_NOTIFICATION_EVENT_CODE_CAPTURE => $this->getOmsStatusAuthorized(),
+            static::ADYEN_NOTIFICATION_EVENT_CODE_CAPTURE_FAILED => $this->getOmsStatusAuthorized(),
+            static::ADYEN_NOTIFICATION_EVENT_CODE_CANCELLATION => $this->getOmsStatusAuthorized(),
+            static::ADYEN_NOTIFICATION_EVENT_CODE_REFUND => $this->getOmsStatusAuthorized(),
+            static::ADYEN_NOTIFICATION_EVENT_CODE_REFUND_FAILED => $this->getOmsStatusAuthorized(),
+            static::ADYEN_NOTIFICATION_EVENT_CODE_CANCEL_OR_REFUND => $this->getOmsStatusAuthorized(),
+            static::ADYEN_NOTIFICATION_EVENT_CODE_AUTHORISATION_ADJUSTMENT => $this->getOmsStatusAuthorized(),
         ];
     }
 

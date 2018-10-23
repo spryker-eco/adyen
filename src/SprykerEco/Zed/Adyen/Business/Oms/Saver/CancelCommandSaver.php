@@ -22,7 +22,7 @@ class CancelCommandSaver extends AbstractCommandSaver implements AdyenCommandSav
         $orderItem = reset($orderItems);
 
         $this->writer->updatePaymentEntities(
-            $this->config->getOmsStatusCanceled(),
+            $this->config->getOmsStatusCancellationPending(),
             $this->reader->getAllPaymentAdyenOrderItemsByIdSalesOrder($orderItem->getFkSalesOrder())
         );
 
