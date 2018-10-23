@@ -1,0 +1,23 @@
+{% extends model('template') %}
+
+{% define data = {
+    form: form
+
+} %}
+
+{% block body %}
+    <div class="col col--sm-12 col--md-6">
+        <div class="form__fields">
+            <div class="form__field">
+                <label>{{ 'adyenDirectDebit.owner_name' | trans }}</label>
+                {{ form_widget(data.form.adyenDirectDebit.owner_name, { 'attr': {'placeholder': 'adyenDirectDebit.owner_name' | trans } }) }}
+                {{ form_errors(data.form.adyenDirectDebit.owner_name) }}
+            </div>
+            <div class="form__field">
+                <label>{{ 'adyenDirectDebit.iban_number' | trans }}</label>
+                {{ form_widget(data.form.adyenDirectDebit.iban_number, { 'attr': {'placeholder': 'adyenDirectDebit.iban_number' | trans } }) }}
+                {{ form_errors(data.form.adyenDirectDebit.iban_number) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -19,7 +19,7 @@ class CreditCardSubForm extends AbstractSubForm
     public const SDK_CHECKOUT_SECURED_FIELDS_URL = 'sdkUrl';
     public const SDK_CHECKOUT_ORIGIN_KEY = 'sdkOriginKey';
 
-    protected const PAYMENT_METHOD = 'credit_card';
+    protected const PAYMENT_METHOD = 'credit-card';
 
     /**
      * @return string

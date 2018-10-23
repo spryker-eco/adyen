@@ -1,0 +1,14 @@
+{% extends model('template') %}
+
+{% define data = {
+    form: form
+
+} %}
+
+{% block body %}
+    {% include molecule('credit-card', 'Adyen') with {
+        data: {
+            form: data.form
+        }
+    } only %}
+{% endblock %}
