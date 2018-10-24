@@ -4,7 +4,7 @@ import Component from 'ShopUi/models/component';
 import ScriptLoader from 'ShopUi/components/molecules/script-loader/script-loader';
 
 // Define a custom style.
-const styleObject = {
+const stylesConfig = {
     base: {
         color: '#333',
         fontSize: '14px',
@@ -40,18 +40,10 @@ export default class CreditCard extends Component {
     }
 
     protected initIframes(): void {
-        // Load Secured Fields.
-        const securedFields = csf(this.hostedIFramesConfig());
-
-        // Triggers when receiving a brand callback from the credit card number validation.
-        securedFields.onBrand(function (brandObject) {
-            if (brandObject.brand) {
-                document.getElementById('card-type').innerHTML = brandObject.brand;
-            }
-        });
+        const securedFields = csf(this.gethostedIframesConfig());
     }
 
-    protected hostedIFramesConfig(): any {
+    protected gethostedIframesConfig(): any {
         return {
             configObject : {
                 originKey : this.configKey
@@ -59,7 +51,7 @@ export default class CreditCard extends Component {
             rootNode: `.${this.jsName}__form`,
             paymentMethods : {
                 card : {
-                    sfStyles : this.stylesIFramesConfig,
+                    sfStyles : this.stylesIframesConfig,
                     placeholders: {
                         hostedCardNumberField : '4111 1111 1111 1111',
                         hostedExpiryDateField : '08/18',
@@ -70,9 +62,9 @@ export default class CreditCard extends Component {
         }
     }
 
-    get stylesIFramesConfig(): any {
+    get stylesIframesConfig(): any {
         return {
-            ...styleObject
+            ...stylesConfig
         }
     }
 

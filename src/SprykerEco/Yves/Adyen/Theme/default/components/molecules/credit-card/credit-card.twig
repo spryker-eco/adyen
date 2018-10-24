@@ -21,7 +21,7 @@
             src: data.scriptSrc
         }
     } only %}
-    <div class="col col--sm-12 col--md-6 js-chckt-pm__pm-holder {{ config.jsName }}__form">
+    <div class="{{ config.jsName }}__form">
         {{ form_widget(data.form.adyenCreditCard) }}
         <input type="hidden" name="txvariant" value="card" />
 
