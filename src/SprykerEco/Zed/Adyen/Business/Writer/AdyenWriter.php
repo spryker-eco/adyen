@@ -130,7 +130,6 @@ class AdyenWriter implements AdyenWriterInterface
     }
 
     /**
-    /**
      * @param \Generated\Shared\Transfer\AdyenNotificationsTransfer $adyenNotificationsTransfer
      *
      * @return void

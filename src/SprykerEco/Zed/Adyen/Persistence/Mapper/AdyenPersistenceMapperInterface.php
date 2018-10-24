@@ -8,14 +8,12 @@
 namespace SprykerEco\Zed\Adyen\Persistence\Mapper;
 
 use Generated\Shared\Transfer\PaymentAdyenApiLogTransfer;
-use Generated\Shared\Transfer\PaymentAdyenNotificationsTransfer;
 use Generated\Shared\Transfer\PaymentAdyenNotificationTransfer;
 use Generated\Shared\Transfer\PaymentAdyenOrderItemTransfer;
 use Generated\Shared\Transfer\PaymentAdyenTransfer;
 use Generated\Shared\Transfer\SpyPaymentAdyenApiLogEntityTransfer;
 use Generated\Shared\Transfer\SpyPaymentAdyenEntityTransfer;
 use Generated\Shared\Transfer\SpyPaymentAdyenNotificationEntityTransfer;
-use Generated\Shared\Transfer\SpyPaymentAdyenNotificationsEntityTransfer;
 use Generated\Shared\Transfer\SpyPaymentAdyenOrderItemEntityTransfer;
 
 interface AdyenPersistenceMapperInterface
