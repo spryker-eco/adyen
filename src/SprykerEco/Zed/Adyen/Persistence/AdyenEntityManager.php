@@ -8,6 +8,7 @@
 namespace SprykerEco\Zed\Adyen\Persistence;
 
 use Generated\Shared\Transfer\PaymentAdyenApiLogTransfer;
+use Generated\Shared\Transfer\PaymentAdyenNotificationTransfer;
 use Generated\Shared\Transfer\PaymentAdyenOrderItemTransfer;
 use Generated\Shared\Transfer\PaymentAdyenTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
@@ -90,6 +91,31 @@ class AdyenEntityManager extends AbstractEntityManager implements AdyenEntityMan
             );
 
         return $paymentAdyenApiLogTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PaymentAdyenNotificationTransfer $paymentAdyenNotificationTransfer
+     *
+     * @return \Generated\Shared\Transfer\PaymentAdyenNotificationTransfer
+     */
+    public function savePaymentAdyenNotification(
+        PaymentAdyenNotificationTransfer $paymentAdyenNotificationTransfer
+    ): PaymentAdyenNotificationTransfer {
+        $entityTransfer = $this
+            ->getMapper()
+            ->mapPaymentAdyenNotificationTransferToEntityTransfer($paymentAdyenNotificationTransfer);
+
+        /** @var \Generated\Shared\Transfer\SpyPaymentAdyenNotificationEntityTransfer $entityTransfer */
+        $entityTransfer = $this->save($entityTransfer);
+
+        $paymentAdyenNotificationTransfer = $this
+            ->getMapper()
+            ->mapEntityTransferToPaymentAdyenNotificationTransfer(
+                $entityTransfer,
+                $paymentAdyenNotificationTransfer
+            );
+
+        return $paymentAdyenNotificationTransfer;
     }
 
     /**

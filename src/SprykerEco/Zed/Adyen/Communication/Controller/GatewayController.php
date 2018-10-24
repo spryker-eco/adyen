@@ -19,11 +19,11 @@ class GatewayController extends AbstractGatewayController
     /**
      * @param \Generated\Shared\Transfer\AdyenNotificationsTransfer $notificationsTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\AdyenNotificationsTransfer
      */
-    public function handleNotificationAction(AdyenNotificationsTransfer $notificationsTransfer): void
+    public function handleNotificationAction(AdyenNotificationsTransfer $notificationsTransfer): AdyenNotificationsTransfer
     {
-        $this->getFacade()->handleNotification($notificationsTransfer);
+        return $this->getFacade()->handleNotification($notificationsTransfer);
     }
 
     /**

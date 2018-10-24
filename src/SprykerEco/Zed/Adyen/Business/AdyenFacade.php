@@ -173,11 +173,11 @@ class AdyenFacade extends AbstractFacade implements AdyenFacadeInterface
      *
      * @param \Generated\Shared\Transfer\AdyenNotificationsTransfer $notificationsTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\AdyenNotificationsTransfer
      */
-    public function handleNotification(AdyenNotificationsTransfer $notificationsTransfer): void
+    public function handleNotification(AdyenNotificationsTransfer $notificationsTransfer): AdyenNotificationsTransfer
     {
-        $this->getFactory()->createNotificationHandler()->handle($notificationsTransfer);
+        return $this->getFactory()->createNotificationHandler()->handle($notificationsTransfer);
     }
 
     /**

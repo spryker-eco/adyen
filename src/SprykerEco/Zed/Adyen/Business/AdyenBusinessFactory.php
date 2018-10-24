@@ -540,6 +540,7 @@ class AdyenBusinessFactory extends AbstractBusinessFactory
     {
         return new AdyenWriter(
             $this->getEntityManager(),
+            $this->getUtilEncodingService(),
             $this->getConfig()
         );
     }

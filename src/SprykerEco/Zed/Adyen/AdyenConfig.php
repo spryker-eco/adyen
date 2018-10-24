@@ -15,6 +15,7 @@ class AdyenConfig extends AbstractBundleConfig
     protected const OMS_STATUS_NEW = 'new';
     protected const OMS_STATUS_AUTHORIZED_AND_CAPTURED = 'authorized and captured';
     protected const OMS_STATUS_AUTHORIZED = 'authorized';
+    protected const OMS_STATUS_AUTHORIZATION_FAILED = 'authorization failed';
     protected const OMS_STATUS_CAPTURED = 'captured';
     protected const OMS_STATUS_CAPTURE_PENDING = 'capture pending';
     protected const OMS_STATUS_CAPTURE_FAILED = 'capture failed';
@@ -38,6 +39,8 @@ class AdyenConfig extends AbstractBundleConfig
     protected const ADYEN_NOTIFICATION_EVENT_CODE_REFUND_FAILED = 'REFUND_FAILED';
     protected const ADYEN_NOTIFICATION_EVENT_CODE_CANCEL_OR_REFUND = 'CANCEL_OR_REFUND';
     protected const ADYEN_NOTIFICATION_EVENT_CODE_AUTHORISATION_ADJUSTMENT = 'AUTHORISATION_ADJUSTMENT';
+    protected const ADYEN_NOTIFICATION_SUCCESS_TRUE = 'true';
+    protected const ADYEN_NOTIFICATION_SUCCESS_FALSE = 'false';
 
     /**
      * @return string
@@ -61,6 +64,14 @@ class AdyenConfig extends AbstractBundleConfig
     public function getOmsStatusAuthorized(): string
     {
         return static::OMS_STATUS_AUTHORIZED;
+    }
+
+    /**
+     * @return string
+     */
+    public function getOmsStatusAuthorizationFailed(): string
+    {
+        return static::OMS_STATUS_AUTHORIZATION_FAILED;
     }
 
     /**
@@ -224,19 +235,37 @@ class AdyenConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return string[]
+     * @return array
      */
     public function getMappedOmsStatuses(): array
     {
         return [
-            static::ADYEN_NOTIFICATION_EVENT_CODE_AUTHORISATION => $this->getOmsStatusAuthorized(),
-            static::ADYEN_NOTIFICATION_EVENT_CODE_CAPTURE => $this->getOmsStatusAuthorized(),
-            static::ADYEN_NOTIFICATION_EVENT_CODE_CAPTURE_FAILED => $this->getOmsStatusAuthorized(),
-            static::ADYEN_NOTIFICATION_EVENT_CODE_CANCELLATION => $this->getOmsStatusAuthorized(),
-            static::ADYEN_NOTIFICATION_EVENT_CODE_REFUND => $this->getOmsStatusAuthorized(),
-            static::ADYEN_NOTIFICATION_EVENT_CODE_REFUND_FAILED => $this->getOmsStatusAuthorized(),
-            static::ADYEN_NOTIFICATION_EVENT_CODE_CANCEL_OR_REFUND => $this->getOmsStatusAuthorized(),
-            static::ADYEN_NOTIFICATION_EVENT_CODE_AUTHORISATION_ADJUSTMENT => $this->getOmsStatusAuthorized(),
+            static::ADYEN_NOTIFICATION_EVENT_CODE_AUTHORISATION => [
+                static::ADYEN_NOTIFICATION_SUCCESS_TRUE => $this->getOmsStatusAuthorized(),
+                static::ADYEN_NOTIFICATION_SUCCESS_FALSE => $this->getOmsStatusAuthorizationFailed(),
+            ],
+            static::ADYEN_NOTIFICATION_EVENT_CODE_CAPTURE => [
+                static::ADYEN_NOTIFICATION_SUCCESS_TRUE => $this->getOmsStatusCaptured(),
+                static::ADYEN_NOTIFICATION_SUCCESS_FALSE => $this->getOmsStatusCaptureFailed(),
+            ],
+            static::ADYEN_NOTIFICATION_EVENT_CODE_CAPTURE_FAILED => [
+                static::ADYEN_NOTIFICATION_SUCCESS_TRUE => $this->getOmsStatusCaptureFailed(),
+            ],
+            static::ADYEN_NOTIFICATION_EVENT_CODE_CANCELLATION => [
+                static::ADYEN_NOTIFICATION_SUCCESS_TRUE => $this->getOmsStatusCanceled(),
+                static::ADYEN_NOTIFICATION_SUCCESS_FALSE => $this->getOmsStatusCancellationFailed(),
+            ],
+            static::ADYEN_NOTIFICATION_EVENT_CODE_REFUND => [
+                static::ADYEN_NOTIFICATION_SUCCESS_TRUE => $this->getOmsStatusRefunded(),
+                static::ADYEN_NOTIFICATION_SUCCESS_FALSE => $this->getOmsStatusRefundFailed(),
+            ],
+            static::ADYEN_NOTIFICATION_EVENT_CODE_REFUND_FAILED => [
+                static::ADYEN_NOTIFICATION_SUCCESS_TRUE => $this->getOmsStatusRefundFailed(),
+            ],
+            static::ADYEN_NOTIFICATION_EVENT_CODE_CANCEL_OR_REFUND => [
+                static::ADYEN_NOTIFICATION_SUCCESS_TRUE => $this->getOmsStatusRefunded(),
+                static::ADYEN_NOTIFICATION_SUCCESS_FALSE => $this->getOmsStatusRefundFailed(),
+            ],
         ];
     }
 

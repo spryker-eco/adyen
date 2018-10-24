@@ -9,6 +9,7 @@ namespace SprykerEco\Zed\Adyen\Business\Writer;
 
 use Generated\Shared\Transfer\AdyenApiRequestTransfer;
 use Generated\Shared\Transfer\AdyenApiResponseTransfer;
+use Generated\Shared\Transfer\AdyenNotificationsTransfer;
 use Generated\Shared\Transfer\PaymentAdyenApiLogTransfer;
 use Generated\Shared\Transfer\PaymentAdyenTransfer;
 use Generated\Shared\Transfer\PaymentTransfer;
@@ -49,4 +50,11 @@ interface AdyenWriterInterface
         AdyenApiRequestTransfer $request,
         AdyenApiResponseTransfer $response
     ): PaymentAdyenApiLogTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\AdyenNotificationsTransfer $adyenNotificationsTransfer
+     *
+     * @return void
+     */
+    public function saveNotifications(AdyenNotificationsTransfer $adyenNotificationsTransfer): void;
 }

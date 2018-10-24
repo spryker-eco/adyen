@@ -57,13 +57,17 @@ class AdyenNotificationHandler implements AdyenNotificationHandlerInterface
     /**
      * @param \Generated\Shared\Transfer\AdyenNotificationsTransfer $notificationsTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\AdyenNotificationsTransfer
      */
-    public function handle(AdyenNotificationsTransfer $notificationsTransfer): void
+    public function handle(AdyenNotificationsTransfer $notificationsTransfer): AdyenNotificationsTransfer
     {
+        $this->writer->saveNotifications($notificationsTransfer);
+
         foreach ($notificationsTransfer->getNotificationItems() as $notificationItem) {
             $this->handleNotification($notificationItem);
         }
+
+        return $notificationsTransfer;
     }
 
     /**
@@ -73,10 +77,6 @@ class AdyenNotificationHandler implements AdyenNotificationHandlerInterface
      */
     protected function handleNotification(AdyenNotificationRequestItemTransfer $notificationTransfer): void
     {
-        if (!$notificationTransfer->getSuccess()) {
-            return;
-        }
-
         $statuses = $this->config->getMappedOmsStatuses();
         if (!array_key_exists($notificationTransfer->getEventCode(), $statuses)) {
             return;
@@ -94,7 +94,7 @@ class AdyenNotificationHandler implements AdyenNotificationHandlerInterface
         );
 
         $this->writer->updatePaymentEntities(
-            $statuses[$notificationTransfer->getEventCode()],
+            $statuses[$notificationTransfer->getEventCode()][$notificationTransfer->getSuccess()],
             $paymentAdyenOrderItems,
             $paymentAdyenTransfer
         );

@@ -14,7 +14,7 @@ interface AdyenNotificationHandlerInterface
     /**
      * @param \Generated\Shared\Transfer\AdyenNotificationsTransfer $notificationsTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\AdyenNotificationsTransfer
      */
-    public function handle(AdyenNotificationsTransfer $notificationsTransfer): void;
+    public function handle(AdyenNotificationsTransfer $notificationsTransfer): AdyenNotificationsTransfer;
 }
