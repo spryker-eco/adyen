@@ -78,12 +78,12 @@ class AdyenNotificationHandler implements AdyenNotificationHandlerInterface
     protected function handleNotification(AdyenNotificationRequestItemTransfer $notificationTransfer): void
     {
         $statuses = $this->config->getMappedOmsStatuses();
-        if (!array_key_exists($notificationTransfer->getEventCode(), $statuses)) {
+        if (!isset($statuses[$notificationTransfer->getEventCode()][$notificationTransfer->getSuccess()])) {
             return;
         }
 
         $paymentAdyenTransfer = $this->reader->getPaymentAdyenByPspReference($notificationTransfer->getPspReference());
-        if (!$paymentAdyenTransfer->getFkSalesOrder()) {
+        if ($paymentAdyenTransfer->getFkSalesOrder() === null) {
             return;
         }
 
