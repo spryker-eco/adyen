@@ -23,7 +23,7 @@
         </states>
 
         <events>
-            <event name="invalidation" timeout="20min" />
+            <event name="invalidation" timeout="7days" />
             <event name="cancel" manual="true" command="Adyen/Cancel" />
             <event name="capture" manual="true" command="Adyen/Capture" />
             <event name="ship" manual="true" />
