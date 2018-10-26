@@ -7,7 +7,6 @@
 
 namespace SprykerEco\Zed\Adyen\Business\Hook\Mapper\MakePayment;
 
-use Generated\Shared\Transfer\AdyenApiRequestTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use SprykerEco\Shared\Adyen\AdyenApiRequestConfig;
 
@@ -43,24 +42,6 @@ class CreditCardMapper extends AbstractMapper
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\AdyenApiRequestTransfer $requestTransfer
-     *
-     * @return \Generated\Shared\Transfer\AdyenApiRequestTransfer
-     */
-    protected function updateRequestTransfer(
-        QuoteTransfer $quoteTransfer,
-        AdyenApiRequestTransfer $requestTransfer
-    ): AdyenApiRequestTransfer {
-        $requestTransfer = parent::updateRequestTransfer($quoteTransfer, $requestTransfer);
-        $requestTransfer
-            ->getMakePaymentRequest()
-            ->setAdditionalData($this->getAdditionalData());
-
-        return $requestTransfer;
-    }
-
-    /**
      * @return bool
      */
     protected function is3dSecure(): bool
@@ -73,7 +54,7 @@ class CreditCardMapper extends AbstractMapper
      */
     protected function getAdditionalData(): array
     {
-        $data = [];
+        $data = parent::getAdditionalData();
         if ($this->is3dSecure()) {
             $data += static::THREE_D_SECURE_DATA;
         }
