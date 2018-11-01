@@ -64,6 +64,8 @@ use SprykerEco\Zed\Adyen\Business\Order\AdyenOrderPaymentManager;
 use SprykerEco\Zed\Adyen\Business\Order\AdyenOrderPaymentManagerInterface;
 use SprykerEco\Zed\Adyen\Business\Payment\AdyenPaymentMethodFilter;
 use SprykerEco\Zed\Adyen\Business\Payment\AdyenPaymentMethodFilterInterface;
+use SprykerEco\Zed\Adyen\Business\Payment\Mapper\AdyenPaymentMethodFilterMapper;
+use SprykerEco\Zed\Adyen\Business\Payment\Mapper\AdyenPaymentMethodFilterMapperInterface;
 use SprykerEco\Zed\Adyen\Business\Reader\AdyenReader;
 use SprykerEco\Zed\Adyen\Business\Reader\AdyenReaderInterface;
 use SprykerEco\Zed\Adyen\Business\Writer\AdyenWriter;
@@ -84,7 +86,18 @@ class AdyenBusinessFactory extends AbstractBusinessFactory
      */
     public function createPaymentMethodsFilter(): AdyenPaymentMethodFilterInterface
     {
-        return new AdyenPaymentMethodFilter($this->getAdyenApiFacade());
+        return new AdyenPaymentMethodFilter(
+            $this->getAdyenApiFacade(),
+            $this->createPaymentMethodsFilterMapper()
+        );
+    }
+
+    /**
+     * @return \SprykerEco\Zed\Adyen\Business\Payment\Mapper\AdyenPaymentMethodFilterMapperInterface
+     */
+    public function createPaymentMethodsFilterMapper(): AdyenPaymentMethodFilterMapperInterface
+    {
+        return new AdyenPaymentMethodFilterMapper($this->getConfig());
     }
 
     /**

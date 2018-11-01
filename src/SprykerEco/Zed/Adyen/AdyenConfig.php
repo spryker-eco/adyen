@@ -276,4 +276,12 @@ class AdyenConfig extends AbstractBundleConfig
     {
         return $this->get(AdyenConstants::CREDIT_CARD_3D_SECURE_ENABLED);
     }
+
+    /**
+     * @return string
+     */
+    public function getRequestChannel(): string
+    {
+        return $this->get(AdyenConstants::REQUEST_CHANNEL);
+    }
 }

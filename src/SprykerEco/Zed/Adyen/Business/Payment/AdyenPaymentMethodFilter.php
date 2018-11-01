@@ -11,6 +11,7 @@ use ArrayObject;
 use Generated\Shared\Transfer\PaymentMethodsTransfer;
 use Generated\Shared\Transfer\PaymentMethodTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use SprykerEco\Zed\Adyen\Business\Payment\Mapper\AdyenPaymentMethodFilterMapperInterface;
 use SprykerEco\Zed\Adyen\Dependency\Facade\AdyenToAdyenApiFacadeInterface;
 
 class AdyenPaymentMethodFilter implements AdyenPaymentMethodFilterInterface
@@ -28,11 +29,20 @@ class AdyenPaymentMethodFilter implements AdyenPaymentMethodFilterInterface
     protected $adyenApiFacade;
 
     /**
-     * @param \SprykerEco\Zed\Adyen\Dependency\Facade\AdyenToAdyenApiFacadeInterface $adyenApiFacade
+     * @var \SprykerEco\Zed\Adyen\Business\Payment\Mapper\AdyenPaymentMethodFilterMapperInterface
      */
-    public function __construct(AdyenToAdyenApiFacadeInterface $adyenApiFacade)
-    {
+    protected $mapper;
+
+    /**
+     * @param \SprykerEco\Zed\Adyen\Dependency\Facade\AdyenToAdyenApiFacadeInterface $adyenApiFacade
+     * @param \SprykerEco\Zed\Adyen\Business\Payment\Mapper\AdyenPaymentMethodFilterMapperInterface $mapper
+     */
+    public function __construct(
+        AdyenToAdyenApiFacadeInterface $adyenApiFacade,
+        AdyenPaymentMethodFilterMapperInterface $mapper
+    ) {
         $this->adyenApiFacade = $adyenApiFacade;
+        $this->mapper = $mapper;
     }
 
     /**
@@ -45,7 +55,7 @@ class AdyenPaymentMethodFilter implements AdyenPaymentMethodFilterInterface
         PaymentMethodsTransfer $paymentMethodsTransfer,
         QuoteTransfer $quoteTransfer
     ): PaymentMethodsTransfer {
-        $this->availableMethods = $this->getAvailablePaymentMethods();
+        $this->availableMethods = $this->getAvailablePaymentMethods($quoteTransfer);
 
         $result = new ArrayObject();
 
@@ -63,10 +73,15 @@ class AdyenPaymentMethodFilter implements AdyenPaymentMethodFilterInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
      * @return string[]
      */
-    protected function getAvailablePaymentMethods()
+    protected function getAvailablePaymentMethods(QuoteTransfer $quoteTransfer)
     {
+        $requestTransfer = $this->mapper->buildRequestTransfer($quoteTransfer);
+        $response = $this->adyenApiFacade->performGetPaymentMethodsApiCall($requestTransfer);
+
         return [];
     }
 
