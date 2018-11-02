@@ -17,7 +17,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class DirectDebitSubForm extends AbstractSubForm
 {
-    protected const PAYMENT_METHOD = 'direct_debit';
+    protected const PAYMENT_METHOD = 'direct-debit';
 
     protected const OWNER_NAME_FIELD = 'owner_name';
     protected const IBAN_NUMBER_FIELD = 'iban_number';
