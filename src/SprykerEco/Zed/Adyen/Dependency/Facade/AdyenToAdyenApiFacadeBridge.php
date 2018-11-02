@@ -50,9 +50,9 @@ class AdyenToAdyenApiFacadeBridge implements AdyenToAdyenApiFacadeInterface
      *
      * @return \Generated\Shared\Transfer\AdyenApiResponseTransfer
      */
-    public function performPaymentsDetailsApiCall(AdyenApiRequestTransfer $requestTransfer): AdyenApiResponseTransfer
+    public function performPaymentDetailsApiCall(AdyenApiRequestTransfer $requestTransfer): AdyenApiResponseTransfer
     {
-        return $this->adyenApiFacade->performPaymentsDetailsApiCall($requestTransfer);
+        return $this->adyenApiFacade->performPaymentDetailsApiCall($requestTransfer);
     }
 
     /**

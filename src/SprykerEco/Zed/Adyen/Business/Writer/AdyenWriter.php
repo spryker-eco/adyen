@@ -9,14 +9,18 @@ namespace SprykerEco\Zed\Adyen\Business\Writer;
 
 use Generated\Shared\Transfer\AdyenApiRequestTransfer;
 use Generated\Shared\Transfer\AdyenApiResponseTransfer;
+use Generated\Shared\Transfer\AdyenNotificationRequestItemTransfer;
+use Generated\Shared\Transfer\AdyenNotificationsTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\PaymentAdyenApiLogTransfer;
+use Generated\Shared\Transfer\PaymentAdyenNotificationTransfer;
 use Generated\Shared\Transfer\PaymentAdyenOrderItemTransfer;
 use Generated\Shared\Transfer\PaymentAdyenTransfer;
 use Generated\Shared\Transfer\PaymentTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use SprykerEco\Zed\Adyen\AdyenConfig;
+use SprykerEco\Zed\Adyen\Dependency\Service\AdyenToUtilEncodingServiceInterface;
 use SprykerEco\Zed\Adyen\Persistence\AdyenEntityManagerInterface;
 
 class AdyenWriter implements AdyenWriterInterface
@@ -29,19 +33,27 @@ class AdyenWriter implements AdyenWriterInterface
     protected $entityManager;
 
     /**
+     * @var \SprykerEco\Zed\Adyen\Dependency\Service\AdyenToUtilEncodingServiceInterface
+     */
+    protected $encodingService;
+
+    /**
      * @var \SprykerEco\Zed\Adyen\AdyenConfig
      */
     protected $config;
 
     /**
      * @param \SprykerEco\Zed\Adyen\Persistence\AdyenEntityManagerInterface $entityManager
+     * @param \SprykerEco\Zed\Adyen\Dependency\Service\AdyenToUtilEncodingServiceInterface $encodingService
      * @param \SprykerEco\Zed\Adyen\AdyenConfig $config
      */
     public function __construct(
         AdyenEntityManagerInterface $entityManager,
+        AdyenToUtilEncodingServiceInterface $encodingService,
         AdyenConfig $config
     ) {
         $this->entityManager = $entityManager;
+        $this->encodingService = $encodingService;
         $this->config = $config;
     }
 
@@ -118,6 +130,20 @@ class AdyenWriter implements AdyenWriterInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\AdyenNotificationsTransfer $adyenNotificationsTransfer
+     *
+     * @return void
+     */
+    public function saveNotifications(AdyenNotificationsTransfer $adyenNotificationsTransfer): void
+    {
+        $this->getTransactionHandler()->handleTransaction(function () use ($adyenNotificationsTransfer) {
+            foreach ($adyenNotificationsTransfer->getNotificationItems() as $adyenNotificationRequestItem) {
+                $this->saveAdyenNotification($adyenNotificationRequestItem);
+            }
+        });
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\PaymentTransfer $paymentTransfer
      * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
      *
@@ -152,5 +178,29 @@ class AdyenWriter implements AdyenWriterInterface
             ->setStatus($this->config->getOmsStatusNew());
 
         return $this->entityManager->savePaymentAdyenOrderItem($paymentAdyenOrderItemTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AdyenNotificationRequestItemTransfer $adyenNotificationRequestItem
+     *
+     * @return \Generated\Shared\Transfer\PaymentAdyenNotificationTransfer
+     */
+    protected function saveAdyenNotification(
+        AdyenNotificationRequestItemTransfer $adyenNotificationRequestItem
+    ): PaymentAdyenNotificationTransfer {
+        $paymentAdyenNotification = (new PaymentAdyenNotificationTransfer())
+            ->setPspReference($adyenNotificationRequestItem->getPspReference())
+            ->setEventCode($adyenNotificationRequestItem->getEventCode())
+            ->setSuccess($adyenNotificationRequestItem->getSuccess())
+            ->setEventDate($adyenNotificationRequestItem->getEventDate())
+            ->setPaymentMethod($adyenNotificationRequestItem->getPaymentMethod())
+            ->setReason($adyenNotificationRequestItem->getReason())
+            ->setMerchantAccountCode($adyenNotificationRequestItem->getMerchantAccountCode())
+            ->setMerchantReference($adyenNotificationRequestItem->getMerchantReference())
+            ->setAmount($adyenNotificationRequestItem->getAmount()->serialize())
+            ->setAdditionalData($this->encodingService->encodeJson($adyenNotificationRequestItem->getAdditionalData()))
+            ->setOperations($this->encodingService->encodeJson($adyenNotificationRequestItem->getOperations()));
+
+        return $this->entityManager->savePaymentAdyenNotification($paymentAdyenNotification);
     }
 }

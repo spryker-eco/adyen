@@ -7,7 +7,6 @@
 
 namespace SprykerEco\Yves\Adyen\Handler\Notification;
 
-use Generated\Shared\Transfer\AdyenNotificationsTransfer;
 use SprykerEco\Client\Adyen\AdyenClientInterface;
 use SprykerEco\Yves\Adyen\Handler\Notification\Mapper\AdyenNotificationMapperInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -39,12 +38,11 @@ class AdyenNotificationHandler implements AdyenNotificationHandlerInterface
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \Generated\Shared\Transfer\AdyenNotificationsTransfer
+     * @return void
      */
-    public function handle(Request $request): AdyenNotificationsTransfer
+    public function handle(Request $request): void
     {
         $notificationsTransfer = $this->mapper->mapRequestToNotificationsTransfer($request);
-
-        return $this->adyenClient->handleNotificationRequest($notificationsTransfer);
+        $this->adyenClient->handleNotificationRequest($notificationsTransfer);
     }
 }

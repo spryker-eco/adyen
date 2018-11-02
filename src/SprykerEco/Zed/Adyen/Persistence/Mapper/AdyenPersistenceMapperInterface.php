@@ -8,10 +8,12 @@
 namespace SprykerEco\Zed\Adyen\Persistence\Mapper;
 
 use Generated\Shared\Transfer\PaymentAdyenApiLogTransfer;
+use Generated\Shared\Transfer\PaymentAdyenNotificationTransfer;
 use Generated\Shared\Transfer\PaymentAdyenOrderItemTransfer;
 use Generated\Shared\Transfer\PaymentAdyenTransfer;
 use Generated\Shared\Transfer\SpyPaymentAdyenApiLogEntityTransfer;
 use Generated\Shared\Transfer\SpyPaymentAdyenEntityTransfer;
+use Generated\Shared\Transfer\SpyPaymentAdyenNotificationEntityTransfer;
 use Generated\Shared\Transfer\SpyPaymentAdyenOrderItemEntityTransfer;
 
 interface AdyenPersistenceMapperInterface
@@ -75,4 +77,24 @@ interface AdyenPersistenceMapperInterface
         SpyPaymentAdyenApiLogEntityTransfer $paymentAdyenApiLogEntityTransfer,
         PaymentAdyenApiLogTransfer $paymentAdyenApiLogTransfer
     ): PaymentAdyenApiLogTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\PaymentAdyenNotificationTransfer $paymentAdyenNotificationTransfer
+     *
+     * @return \Generated\Shared\Transfer\SpyPaymentAdyenNotificationEntityTransfer
+     */
+    public function mapPaymentAdyenNotificationTransferToEntityTransfer(
+        PaymentAdyenNotificationTransfer $paymentAdyenNotificationTransfer
+    ): SpyPaymentAdyenNotificationEntityTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\SpyPaymentAdyenNotificationEntityTransfer $paymentAdyenNotificationEntityTransfer
+     * @param \Generated\Shared\Transfer\PaymentAdyenNotificationTransfer $paymentAdyenNotificationTransfer
+     *
+     * @return \Generated\Shared\Transfer\PaymentAdyenNotificationTransfer
+     */
+    public function mapEntityTransferToPaymentAdyenNotificationTransfer(
+        SpyPaymentAdyenNotificationEntityTransfer $paymentAdyenNotificationEntityTransfer,
+        PaymentAdyenNotificationTransfer $paymentAdyenNotificationTransfer
+    ): PaymentAdyenNotificationTransfer;
 }

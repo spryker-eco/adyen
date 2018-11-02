@@ -57,13 +57,10 @@ class KlarnaInvoiceMapper extends AbstractMapper
         QuoteTransfer $quoteTransfer,
         AdyenApiRequestTransfer $requestTransfer
     ): AdyenApiRequestTransfer {
+        $requestTransfer = parent::updateRequestTransfer($quoteTransfer, $requestTransfer);
         $requestTransfer
             ->getMakePaymentRequest()
-            ->setCountryCode($quoteTransfer->getBillingAddress()->getIso2Code())
-            ->setShopperReference($quoteTransfer->getCustomerReference())
-            ->setReturnUrl($this->getReturnUrl())
-            ->setLineItems($this->getLineItems($quoteTransfer))
-            ->setPaymentMethod($this->getPayload($quoteTransfer));
+            ->setLineItems($this->getLineItems($quoteTransfer));
 
         return $requestTransfer;
     }

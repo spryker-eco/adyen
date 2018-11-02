@@ -14,7 +14,7 @@ interface AdyenNotificationHandlerInterface
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \Generated\Shared\Transfer\AdyenRedirectResponseTransfer
+     * @return void
      */
-    public function handle(Request $request);
+    public function handle(Request $request): void;
 }

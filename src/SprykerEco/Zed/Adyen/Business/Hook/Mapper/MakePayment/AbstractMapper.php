@@ -7,8 +7,10 @@
 
 namespace SprykerEco\Zed\Adyen\Business\Hook\Mapper\MakePayment;
 
+use Generated\Shared\Transfer\AdyenApiAddressTransfer;
 use Generated\Shared\Transfer\AdyenApiAmountTransfer;
 use Generated\Shared\Transfer\AdyenApiMakePaymentRequestTransfer;
+use Generated\Shared\Transfer\AdyenApiNameTransfer;
 use Generated\Shared\Transfer\AdyenApiRequestTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use SprykerEco\Zed\Adyen\AdyenConfig;
@@ -101,10 +103,61 @@ abstract class AbstractMapper implements AdyenMapperInterface
         QuoteTransfer $quoteTransfer,
         AdyenApiRequestTransfer $requestTransfer
     ): AdyenApiRequestTransfer {
+        $requestTransfer = $this->addFraudCheckData($quoteTransfer, $requestTransfer);
         $requestTransfer
             ->getMakePaymentRequest()
-            ->setPaymentMethod($this->getPayload($quoteTransfer));
+            ->setPaymentMethod($this->getPayload($quoteTransfer))
+            ->setAdditionalData($this->getAdditionalData());
 
         return $requestTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\AdyenApiRequestTransfer $requestTransfer
+     *
+     * @return \Generated\Shared\Transfer\AdyenApiRequestTransfer
+     */
+    protected function addFraudCheckData(
+        QuoteTransfer $quoteTransfer,
+        AdyenApiRequestTransfer $requestTransfer
+    ): AdyenApiRequestTransfer {
+        $requestTransfer
+            ->getMakePaymentRequest()
+            ->setShopperReference($quoteTransfer->getCustomerReference())
+            ->setDateOfBirth($quoteTransfer->getCustomer()->getDateOfBirth())
+            ->setShopperName(
+                (new AdyenApiNameTransfer())
+                    ->setFirstName($quoteTransfer->getBillingAddress()->getFirstName())
+                    ->setLastName($quoteTransfer->getBillingAddress()->getLastName())
+            )
+            ->setShopperEmail($quoteTransfer->getCustomer()->getEmail())
+            ->setTelephoneNumber($quoteTransfer->getBillingAddress()->getPhone())
+            ->setBillingAddress(
+                (new AdyenApiAddressTransfer())
+                    ->setCity($quoteTransfer->getBillingAddress()->getCity())
+                    ->setCountry($quoteTransfer->getBillingAddress()->getIso2Code())
+                    ->setHouseNumberOrName($quoteTransfer->getBillingAddress()->getAddress2())
+                    ->setPostalCode($quoteTransfer->getBillingAddress()->getZipCode())
+                    ->setStreet($quoteTransfer->getBillingAddress()->getAddress1())
+            )
+            ->setDeliveryAddress(
+                (new AdyenApiAddressTransfer())
+                    ->setCity($quoteTransfer->getShippingAddress()->getCity())
+                    ->setCountry($quoteTransfer->getShippingAddress()->getIso2Code())
+                    ->setHouseNumberOrName($quoteTransfer->getShippingAddress()->getAddress2())
+                    ->setPostalCode($quoteTransfer->getShippingAddress()->getZipCode())
+                    ->setStreet($quoteTransfer->getShippingAddress()->getAddress1())
+            );
+
+        return $requestTransfer;
+    }
+
+    /**
+     * @return string[]
+     */
+    protected function getAdditionalData(): array
+    {
+        return [];
     }
 }

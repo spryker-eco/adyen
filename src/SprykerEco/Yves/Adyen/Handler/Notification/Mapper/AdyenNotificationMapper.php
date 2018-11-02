@@ -17,7 +17,6 @@ class AdyenNotificationMapper implements AdyenNotificationMapperInterface
 {
     protected const NOTIFICATIONS_KEY = 'notificationItems';
     protected const NOTIFICATION_ITEM_KEY = 'NotificationRequestItem';
-    protected const SUCCESS_KEY = 'success';
     protected const LIVE_KEY = 'live';
 
     /**
@@ -68,7 +67,6 @@ class AdyenNotificationMapper implements AdyenNotificationMapperInterface
         $notificationItems = array_map(
             function ($notification) {
                 $item = $notification[static::NOTIFICATION_ITEM_KEY];
-                $item[static::SUCCESS_KEY] = filter_var($item[static::SUCCESS_KEY], FILTER_VALIDATE_BOOLEAN);
                 return (new AdyenNotificationRequestItemTransfer())->fromArray($item, true);
             },
             $response[static::NOTIFICATIONS_KEY]

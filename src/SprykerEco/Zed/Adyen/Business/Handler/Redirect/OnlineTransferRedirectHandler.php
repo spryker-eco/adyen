@@ -7,7 +7,7 @@
 
 namespace SprykerEco\Zed\Adyen\Business\Handler\Redirect;
 
-use Generated\Shared\Transfer\AdyenApiPaymentsDetailsRequestTransfer;
+use Generated\Shared\Transfer\AdyenApiPaymentDetailsRequestTransfer;
 use Generated\Shared\Transfer\AdyenApiRequestTransfer;
 use Generated\Shared\Transfer\AdyenApiResponseTransfer;
 use Generated\Shared\Transfer\AdyenRedirectResponseTransfer;
@@ -70,7 +70,7 @@ class OnlineTransferRedirectHandler implements AdyenRedirectHandlerInterface
         $paymentAdyenTransfer = $this->reader->getPaymentAdyenByReference($redirectResponseTransfer->getReference());
 
         $requestTransfer = $this->createDetailsRequestTransfer($redirectResponseTransfer, $paymentAdyenTransfer);
-        $responseTransfer = $this->adyenApiFacade->performPaymentsDetailsApiCall($requestTransfer);
+        $responseTransfer = $this->adyenApiFacade->performPaymentDetailsApiCall($requestTransfer);
 
         $this->writer->saveApiLog(
             sprintf(static::LOG_REQUEST_TYPE, $redirectResponseTransfer->getPaymentMethod()),
@@ -99,8 +99,8 @@ class OnlineTransferRedirectHandler implements AdyenRedirectHandlerInterface
         PaymentAdyenTransfer $paymentAdyenTransfer
     ): AdyenApiRequestTransfer {
         $requestTransfer = new AdyenApiRequestTransfer();
-        $requestTransfer->setPaymentsDetailsRequest(
-            (new AdyenApiPaymentsDetailsRequestTransfer())
+        $requestTransfer->setPaymentDetailsRequest(
+            (new AdyenApiPaymentDetailsRequestTransfer())
                 ->setPaymentData($paymentAdyenTransfer->getPaymentData())
                 ->setDetails($this->getRequestDetails($redirectResponseTransfer))
         );
@@ -116,7 +116,7 @@ class OnlineTransferRedirectHandler implements AdyenRedirectHandlerInterface
      */
     protected function processPaymentDetailsResponse(PaymentAdyenTransfer $paymentAdyenTransfer, AdyenApiResponseTransfer $responseTransfer): void
     {
-        $paymentAdyenTransfer->setPspReference($responseTransfer->getPaymentsDetailsResponse()->getPspReference());
+        $paymentAdyenTransfer->setPspReference($responseTransfer->getPaymentDetailsResponse()->getPspReference());
         $paymentAdyenOrderItems = $this->reader->getAllPaymentAdyenOrderItemsByIdSalesOrder($paymentAdyenTransfer->getFkSalesOrder());
 
         $this->writer->updatePaymentEntities($this->getOmsStatus(), $paymentAdyenOrderItems, $paymentAdyenTransfer);

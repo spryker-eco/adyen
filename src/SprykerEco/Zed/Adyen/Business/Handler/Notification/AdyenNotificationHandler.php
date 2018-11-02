@@ -61,15 +61,11 @@ class AdyenNotificationHandler implements AdyenNotificationHandlerInterface
      */
     public function handle(AdyenNotificationsTransfer $notificationsTransfer): AdyenNotificationsTransfer
     {
-        $isSuccess = true;
+        $this->writer->saveNotifications($notificationsTransfer);
 
         foreach ($notificationsTransfer->getNotificationItems() as $notificationItem) {
-            if ($this->handleNotification($notificationItem) === false) {
-                $isSuccess = false;
-            }
+            $this->handleNotification($notificationItem);
         }
-
-        $notificationsTransfer->setIsSuccess($isSuccess);
 
         return $notificationsTransfer;
     }
@@ -77,22 +73,18 @@ class AdyenNotificationHandler implements AdyenNotificationHandlerInterface
     /**
      * @param \Generated\Shared\Transfer\AdyenNotificationRequestItemTransfer $notificationTransfer
      *
-     * @return bool
+     * @return void
      */
-    protected function handleNotification(AdyenNotificationRequestItemTransfer $notificationTransfer): bool
+    protected function handleNotification(AdyenNotificationRequestItemTransfer $notificationTransfer): void
     {
-        if (!$notificationTransfer->getSuccess()) {
-            return false;
-        }
-
         $statuses = $this->config->getMappedOmsStatuses();
-        if (!array_key_exists($notificationTransfer->getEventCode(), $statuses)) {
-            return false;
+        if (!isset($statuses[$notificationTransfer->getEventCode()][$notificationTransfer->getSuccess()])) {
+            return;
         }
 
-        $paymentAdyenTransfer = $this->reader->getPaymentAdyenByPspReference($notificationTransfer->getPspReference());
-        if (!$paymentAdyenTransfer->getFkSalesOrder()) {
-            return false;
+        $paymentAdyenTransfer = $this->reader->getPaymentAdyenByReference($notificationTransfer->getMerchantReference());
+        if ($paymentAdyenTransfer->getFkSalesOrder() === null) {
+            return;
         }
 
         $paymentAdyenOrderItems = $this->reader
@@ -102,11 +94,9 @@ class AdyenNotificationHandler implements AdyenNotificationHandlerInterface
         );
 
         $this->writer->updatePaymentEntities(
-            $statuses[$notificationTransfer->getEventCode()],
+            $statuses[$notificationTransfer->getEventCode()][$notificationTransfer->getSuccess()],
             $paymentAdyenOrderItems,
             $paymentAdyenTransfer
         );
-
-        return true;
     }
 }

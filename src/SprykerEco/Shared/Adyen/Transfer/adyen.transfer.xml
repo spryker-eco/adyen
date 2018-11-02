@@ -15,6 +15,21 @@
         <property name="additionalData" type="string" />
     </transfer>
 
+    <transfer name="PaymentAdyenNotification">
+        <property name="idPaymentAdyenNotification" type="int" />
+        <property name="additionalData" type="string" />
+        <property name="amount" type="string" />
+        <property name="operations" type="string" />
+        <property name="pspReference" type="string" />
+        <property name="eventCode" type="string" />
+        <property name="eventDate" type="string" />
+        <property name="merchantAccountCode" type="string" />
+        <property name="merchantReference" type="string" />
+        <property name="paymentMethod" type="string" />
+        <property name="success" type="string" />
+        <property name="reason" type="string" />
+    </transfer>
+
     <transfer name="AdyenRedirectResponse">
         <property name="reference" type="string" />
         <property name="paymentMethod" type="string" />
@@ -166,7 +181,7 @@
         <property name="merchantAccountCode" type="string" />
         <property name="merchantReference" type="string" />
         <property name="paymentMethod" type="string" />
-        <property name="success" type="bool" />
+        <property name="success" type="string" />
         <property name="reason" type="string" />
     </transfer>
 

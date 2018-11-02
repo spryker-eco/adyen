@@ -31,6 +31,10 @@ class AdyenRepository extends AbstractRepository implements AdyenRepositoryInter
         $query = $this->getPaymentAdyenQuery()->filterByReference($reference);
         $entityTransfer = $this->buildQueryFromCriteria($query)->findOne();
 
+        if ($entityTransfer === null) {
+            return new PaymentAdyenTransfer();
+        }
+
         return $this->getFactory()
             ->createAdyenPersistenceMapper()
             ->mapEntityTransferToPaymentAdyenTransfer($entityTransfer, new PaymentAdyenTransfer());
@@ -46,6 +50,10 @@ class AdyenRepository extends AbstractRepository implements AdyenRepositoryInter
         $query = $this->getPaymentAdyenQuery()->filterByFkSalesOrder($idSalesOrder);
         $entityTransfer = $this->buildQueryFromCriteria($query)->findOne();
 
+        if ($entityTransfer === null) {
+            return new PaymentAdyenTransfer();
+        }
+
         return $this->getFactory()
             ->createAdyenPersistenceMapper()
             ->mapEntityTransferToPaymentAdyenTransfer($entityTransfer, new PaymentAdyenTransfer());
@@ -60,6 +68,10 @@ class AdyenRepository extends AbstractRepository implements AdyenRepositoryInter
     {
         $query = $this->getPaymentAdyenQuery()->filterByPspReference($pspReference);
         $entityTransfer = $this->buildQueryFromCriteria($query)->findOne();
+
+        if ($entityTransfer === null) {
+            return new PaymentAdyenTransfer();
+        }
 
         return $this->getFactory()
             ->createAdyenPersistenceMapper()

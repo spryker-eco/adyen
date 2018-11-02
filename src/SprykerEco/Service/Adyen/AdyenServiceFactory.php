@@ -12,9 +12,6 @@ use SprykerEco\Service\Adyen\Dependency\Service\AdyenToUtilTextServiceInterface;
 use SprykerEco\Service\Adyen\Generator\AdyenGenerator;
 use SprykerEco\Service\Adyen\Generator\AdyenGeneratorInterface;
 
-/**
- * @method \SprykerEco\Service\Adyen\AdyenConfig getConfig()
- */
 class AdyenServiceFactory extends AbstractServiceFactory
 {
     /**
