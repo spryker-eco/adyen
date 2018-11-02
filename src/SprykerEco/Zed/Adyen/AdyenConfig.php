@@ -8,6 +8,7 @@
 namespace SprykerEco\Zed\Adyen;
 
 use Spryker\Zed\Kernel\AbstractBundleConfig;
+use SprykerEco\Shared\Adyen\AdyenConfig as SharedAdyenConfig;
 use SprykerEco\Shared\Adyen\AdyenConstants;
 
 class AdyenConfig extends AbstractBundleConfig
@@ -41,6 +42,16 @@ class AdyenConfig extends AbstractBundleConfig
     protected const ADYEN_NOTIFICATION_EVENT_CODE_AUTHORISATION_ADJUSTMENT = 'AUTHORISATION_ADJUSTMENT';
     protected const ADYEN_NOTIFICATION_SUCCESS_TRUE = 'true';
     protected const ADYEN_NOTIFICATION_SUCCESS_FALSE = 'false';
+
+    protected const PAYMENT_METHOD_TYPE_PAY_PAL = 'paypal';
+    protected const PAYMENT_METHOD_TYPE_SCHEME = 'scheme';
+    protected const PAYMENT_METHOD_TYPE_DIRECT_E_BANKING = 'directEbanking';
+    protected const PAYMENT_METHOD_TYPE_SEPA_DIRECT_DEBIT = 'sepadirectdebit';
+    protected const PAYMENT_METHOD_TYPE_KLARNA = 'klarna';
+    protected const PAYMENT_METHOD_TYPE_BANK_TRANSFER_IBAN = 'bankTransfer_IBAN';
+    protected const PAYMENT_METHOD_TYPE_IDEAL = 'ideal';
+    protected const PAYMENT_METHOD_TYPE_ALI_PAY = 'alipay';
+    protected const PAYMENT_METHOD_TYPE_WE_CHAT_PAY = 'wechatpay';
 
     /**
      * @return string
@@ -283,5 +294,23 @@ class AdyenConfig extends AbstractBundleConfig
     public function getRequestChannel(): string
     {
         return $this->get(AdyenConstants::REQUEST_CHANNEL);
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getMapperPaymentMethods(): array
+    {
+        return [
+            static::PAYMENT_METHOD_TYPE_PAY_PAL => SharedAdyenConfig::ADYEN_PAY_PAL,
+            static::PAYMENT_METHOD_TYPE_SCHEME => SharedAdyenConfig::ADYEN_CREDIT_CARD,
+            static::PAYMENT_METHOD_TYPE_DIRECT_E_BANKING => SharedAdyenConfig::ADYEN_SOFORT,
+            static::PAYMENT_METHOD_TYPE_SEPA_DIRECT_DEBIT => SharedAdyenConfig::ADYEN_DIRECT_DEBIT,
+            static::PAYMENT_METHOD_TYPE_KLARNA => SharedAdyenConfig::ADYEN_KLARNA_INVOICE,
+            static::PAYMENT_METHOD_TYPE_BANK_TRANSFER_IBAN => SharedAdyenConfig::ADYEN_PREPAYMENT,
+            static::PAYMENT_METHOD_TYPE_IDEAL => SharedAdyenConfig::ADYEN_IDEAL,
+            static::PAYMENT_METHOD_TYPE_ALI_PAY => SharedAdyenConfig::ADYEN_ALI_PAY,
+            static::PAYMENT_METHOD_TYPE_WE_CHAT_PAY => SharedAdyenConfig::ADYEN_WE_CHAT_PAY,
+        ];
     }
 }

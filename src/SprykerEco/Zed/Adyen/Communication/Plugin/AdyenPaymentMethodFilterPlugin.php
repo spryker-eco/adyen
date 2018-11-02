@@ -33,8 +33,6 @@ class AdyenPaymentMethodFilterPlugin extends AbstractPlugin implements PaymentMe
         PaymentMethodsTransfer $paymentMethodsTransfer,
         QuoteTransfer $quoteTransfer
     ): PaymentMethodsTransfer {
-        $this->getFacade();
-
-        return $paymentMethodsTransfer;
+        return $this->getFacade()->filterPaymentMethods($paymentMethodsTransfer, $quoteTransfer);
     }
 }

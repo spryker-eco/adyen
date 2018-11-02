@@ -11,6 +11,7 @@ use ArrayObject;
 use Generated\Shared\Transfer\PaymentMethodsTransfer;
 use Generated\Shared\Transfer\PaymentMethodTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use SprykerEco\Zed\Adyen\Business\Payment\Converter\AdyenPaymentMethodFilterConverterInterface;
 use SprykerEco\Zed\Adyen\Business\Payment\Mapper\AdyenPaymentMethodFilterMapperInterface;
 use SprykerEco\Zed\Adyen\Dependency\Facade\AdyenToAdyenApiFacadeInterface;
 
@@ -34,15 +35,23 @@ class AdyenPaymentMethodFilter implements AdyenPaymentMethodFilterInterface
     protected $mapper;
 
     /**
+     * @var \SprykerEco\Zed\Adyen\Business\Payment\Converter\AdyenPaymentMethodFilterConverterInterface
+     */
+    protected $converter;
+
+    /**
      * @param \SprykerEco\Zed\Adyen\Dependency\Facade\AdyenToAdyenApiFacadeInterface $adyenApiFacade
      * @param \SprykerEco\Zed\Adyen\Business\Payment\Mapper\AdyenPaymentMethodFilterMapperInterface $mapper
+     * @param \SprykerEco\Zed\Adyen\Business\Payment\Converter\AdyenPaymentMethodFilterConverterInterface $converter
      */
     public function __construct(
         AdyenToAdyenApiFacadeInterface $adyenApiFacade,
-        AdyenPaymentMethodFilterMapperInterface $mapper
+        AdyenPaymentMethodFilterMapperInterface $mapper,
+        AdyenPaymentMethodFilterConverterInterface $converter
     ) {
         $this->adyenApiFacade = $adyenApiFacade;
         $this->mapper = $mapper;
+        $this->converter = $converter;
     }
 
     /**
@@ -80,9 +89,9 @@ class AdyenPaymentMethodFilter implements AdyenPaymentMethodFilterInterface
     protected function getAvailablePaymentMethods(QuoteTransfer $quoteTransfer)
     {
         $requestTransfer = $this->mapper->buildRequestTransfer($quoteTransfer);
-        $response = $this->adyenApiFacade->performGetPaymentMethodsApiCall($requestTransfer);
+        $responseTransfer = $this->adyenApiFacade->performGetPaymentMethodsApiCall($requestTransfer);
 
-        return [];
+        return $this->converter->getAvailablePaymentMethods($responseTransfer->getPaymentMethods()->getArrayCopy());
     }
 
     /**
