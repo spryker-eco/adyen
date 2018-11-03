@@ -30,6 +30,7 @@ use Generated\Shared\Transfer\PaymentAdyenTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Spryker\Shared\Oms\OmsConstants;
+use SprykerEco\Shared\Adyen\AdyenConstants;
 use SprykerEco\Zed\Adyen\AdyenConfig;
 use SprykerEco\Zed\Adyen\Business\AdyenBusinessFactory;
 use SprykerEco\Zed\Adyen\Business\AdyenFacade;
@@ -228,6 +229,7 @@ class BaseSetUpTest extends Test
     protected function setUpCommandTest(string $processName, string $status): OrderTransfer
     {
         $this->tester->setConfig(OmsConstants::ACTIVE_PROCESSES, [$processName]);
+        $this->tester->setConfig(AdyenConstants::MERCHANT_ACCOUNT, static::MERCHANT_ACCOUNT);
         $prices = [
             static::FIELD_UNIT_PRICE => static::AMOUNT,
             static::FIELD_SUM_PRICE => static::AMOUNT,
