@@ -10,6 +10,9 @@ use SprykerEco\Shared\Adyen\AdyenConstants;
 use SprykerEco\Shared\AdyenApi\AdyenApiConstants;
 
 $config[AdyenConstants::MERCHANT_ACCOUNT] = 'PUT YOUR MERCHANT ACCOUNT HERE';
+$config[AdyenConstants::REQUEST_CHANNEL] = 'Web'; //Has to be "Web"
+$config[AdyenConstants::SDK_CHECKOUT_SECURED_FIELDS_URL] = 'JS_SDK_URL';
+$config[AdyenConstants::SDK_CHECKOUT_ORIGIN_KEY] = 'ORIGIN_KEY';
 $config[AdyenConstants::SOFORT_RETURN_URL] = 'SOFORT_RETURN_URL';
 $config[AdyenConstants::CREDIT_CARD_3D_RETURN_URL] = 'CREDIT_CARD_3D_RETURN_URL';
 $config[AdyenConstants::IDEAL_RETURN_URL] = 'IDEAL_RETURN_URL';
