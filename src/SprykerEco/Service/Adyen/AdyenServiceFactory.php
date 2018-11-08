@@ -2,7 +2,7 @@
 
 /**
  * MIT License
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
 namespace SprykerEco\Service\Adyen;
@@ -12,9 +12,6 @@ use SprykerEco\Service\Adyen\Dependency\Service\AdyenToUtilTextServiceInterface;
 use SprykerEco\Service\Adyen\Generator\AdyenGenerator;
 use SprykerEco\Service\Adyen\Generator\AdyenGeneratorInterface;
 
-/**
- * @method \SprykerEco\Service\Adyen\AdyenConfig getConfig()
- */
 class AdyenServiceFactory extends AbstractServiceFactory
 {
     /**

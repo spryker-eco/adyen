@@ -2,7 +2,7 @@
 
 /**
  * MIT License
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
 namespace SprykerEco\Zed\Adyen\Business\Reader;
@@ -25,6 +25,13 @@ interface AdyenReaderInterface
      * @return \Generated\Shared\Transfer\PaymentAdyenTransfer
      */
     public function getPaymentAdyenByReference(string $reference): PaymentAdyenTransfer;
+
+    /**
+     * @param string $pspReference
+     *
+     * @return \Generated\Shared\Transfer\PaymentAdyenTransfer
+     */
+    public function getPaymentAdyenByPspReference(string $pspReference): PaymentAdyenTransfer;
 
     /**
      * @param int $idSalesOrder

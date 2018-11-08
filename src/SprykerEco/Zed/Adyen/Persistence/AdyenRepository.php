@@ -2,7 +2,7 @@
 
 /**
  * MIT License
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
 namespace SprykerEco\Zed\Adyen\Persistence;
@@ -31,6 +31,10 @@ class AdyenRepository extends AbstractRepository implements AdyenRepositoryInter
         $query = $this->getPaymentAdyenQuery()->filterByReference($reference);
         $entityTransfer = $this->buildQueryFromCriteria($query)->findOne();
 
+        if ($entityTransfer === null) {
+            return new PaymentAdyenTransfer();
+        }
+
         return $this->getFactory()
             ->createAdyenPersistenceMapper()
             ->mapEntityTransferToPaymentAdyenTransfer($entityTransfer, new PaymentAdyenTransfer());
@@ -46,38 +50,32 @@ class AdyenRepository extends AbstractRepository implements AdyenRepositoryInter
         $query = $this->getPaymentAdyenQuery()->filterByFkSalesOrder($idSalesOrder);
         $entityTransfer = $this->buildQueryFromCriteria($query)->findOne();
 
+        if ($entityTransfer === null) {
+            return new PaymentAdyenTransfer();
+        }
+
         return $this->getFactory()
             ->createAdyenPersistenceMapper()
             ->mapEntityTransferToPaymentAdyenTransfer($entityTransfer, new PaymentAdyenTransfer());
     }
 
     /**
-     * @param string $reference
+     * @param string $pspReference
      *
-     * @return \Generated\Shared\Transfer\PaymentAdyenOrderItemTransfer[]
+     * @return \Generated\Shared\Transfer\PaymentAdyenTransfer
      */
-    public function getAllPaymentAdyenOrderItemsByReference(string $reference): array
+    public function getPaymentAdyenByPspReference(string $pspReference): PaymentAdyenTransfer
     {
-        $query = $this
-            ->getPaymentAdyenOrderItemQuery()
-            ->useSpyPaymentAdyenQuery()
-            ->filterByReference($reference)
-            ->endUse();
+        $query = $this->getPaymentAdyenQuery()->filterByPspReference($pspReference);
+        $entityTransfer = $this->buildQueryFromCriteria($query)->findOne();
 
-        $entityTransfers = $this->buildQueryFromCriteria($query)->find();
-
-        $mapper = $this->getFactory()->createAdyenPersistenceMapper();
-        $result = [];
-
-        foreach ($entityTransfers as $entityTransfer) {
-            $result[] = $mapper
-                ->mapEntityTransferToPaymentAdyenOrderItemTransfer(
-                    $entityTransfer,
-                    new PaymentAdyenOrderItemTransfer()
-                );
+        if ($entityTransfer === null) {
+            return new PaymentAdyenTransfer();
         }
 
-        return $result;
+        return $this->getFactory()
+            ->createAdyenPersistenceMapper()
+            ->mapEntityTransferToPaymentAdyenTransfer($entityTransfer, new PaymentAdyenTransfer());
     }
 
     /**

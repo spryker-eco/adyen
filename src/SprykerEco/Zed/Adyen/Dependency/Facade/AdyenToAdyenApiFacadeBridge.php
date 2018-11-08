@@ -2,7 +2,7 @@
 
 /**
  * MIT License
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
 namespace SprykerEco\Zed\Adyen\Dependency\Facade;
@@ -50,9 +50,9 @@ class AdyenToAdyenApiFacadeBridge implements AdyenToAdyenApiFacadeInterface
      *
      * @return \Generated\Shared\Transfer\AdyenApiResponseTransfer
      */
-    public function performPaymentsDetailsApiCall(AdyenApiRequestTransfer $requestTransfer): AdyenApiResponseTransfer
+    public function performPaymentDetailsApiCall(AdyenApiRequestTransfer $requestTransfer): AdyenApiResponseTransfer
     {
-        return $this->adyenApiFacade->performPaymentsDetailsApiCall($requestTransfer);
+        return $this->adyenApiFacade->performPaymentDetailsApiCall($requestTransfer);
     }
 
     /**

@@ -2,17 +2,18 @@
 
 /**
  * MIT License
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
 namespace SprykerEco\Client\Adyen;
 
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
+use SprykerEco\Client\Adyen\Dependency\Client\AdyenToZedRequestClientBridge;
 
 class AdyenDependencyProvider extends AbstractDependencyProvider
 {
-    public const SERVICE_ZED = 'SERVICE_ZED';
+    public const CLIENT_ZED_REQUEST = 'CLIENT_ZED_REQUEST';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -34,8 +35,8 @@ class AdyenDependencyProvider extends AbstractDependencyProvider
      */
     protected function addServiceZed(Container $container): Container
     {
-        $container[self::SERVICE_ZED] = function (Container $container) {
-            return $container->getLocator()->zedRequest()->client();
+        $container[self::CLIENT_ZED_REQUEST] = function (Container $container) {
+            return new AdyenToZedRequestClientBridge($container->getLocator()->zedRequest()->client());
         };
 
         return $container;

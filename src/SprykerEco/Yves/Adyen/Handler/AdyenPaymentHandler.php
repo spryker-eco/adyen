@@ -2,16 +2,15 @@
 
 /**
  * MIT License
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
 namespace SprykerEco\Yves\Adyen\Handler;
 
-use Generated\Shared\Transfer\PaymentTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use SprykerEco\Service\Adyen\AdyenServiceInterface;
 use SprykerEco\Shared\Adyen\AdyenConfig;
-use SprykerEco\Shared\Adyen\AdyenSdkConfig;
+use SprykerEco\Yves\Adyen\Plugin\Payment\AdyenPaymentMapperPluginInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 class AdyenPaymentHandler implements AdyenPaymentHandlerInterface
@@ -22,11 +21,20 @@ class AdyenPaymentHandler implements AdyenPaymentHandlerInterface
     protected $service;
 
     /**
-     * @param \SprykerEco\Service\Adyen\AdyenServiceInterface $service
+     * @var array|\SprykerEco\Yves\Adyen\Plugin\Payment\AdyenPaymentMapperPluginInterface[]
      */
-    public function __construct(AdyenServiceInterface $service)
-    {
+    protected $paymentPlugins;
+
+    /**
+     * @param \SprykerEco\Service\Adyen\AdyenServiceInterface $service
+     * @param \SprykerEco\Yves\Adyen\Plugin\Payment\AdyenPaymentMapperPluginInterface[] $paymentPlugins
+     */
+    public function __construct(
+        AdyenServiceInterface $service,
+        array $paymentPlugins
+    ) {
         $this->service = $service;
+        $this->paymentPlugins = $paymentPlugins;
     }
 
     /**
@@ -48,16 +56,23 @@ class AdyenPaymentHandler implements AdyenPaymentHandlerInterface
             ->getAdyenPayment()
             ->setReference($this->service->generateReference($quoteTransfer));
 
-        if ($paymentSelection === PaymentTransfer::ADYEN_CREDIT_CARD) {
-            $quoteTransfer
-                ->getPayment()
-                ->getAdyenCreditCard()
-                ->setEncryptedCardNumber($request->get(AdyenSdkConfig::ENCRYPTED_CARD_NUMBER_FIELD))
-                ->setEncryptedExpiryMonth($request->get(AdyenSdkConfig::ENCRYPTED_EXPIRY_MONTH_FIELD))
-                ->setEncryptedExpiryYear($request->get(AdyenSdkConfig::ENCRYPTED_EXPIRY_YEAR_FIELD))
-                ->setEncryptedSecurityCode($request->get(AdyenSdkConfig::ENCRYPTED_SECURITY_CODE_FIELD));
-        }
+        $this->executeAdyenPaymentPlugins($request, $quoteTransfer);
 
         return $quoteTransfer;
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return void
+     */
+    protected function executeAdyenPaymentPlugins(Request $request, QuoteTransfer $quoteTransfer): void
+    {
+        foreach ($this->paymentPlugins as $plugin) {
+            if ($plugin instanceof AdyenPaymentMapperPluginInterface) {
+                $plugin->setPaymentDataToQuote($quoteTransfer, $request);
+            }
+        }
     }
 }

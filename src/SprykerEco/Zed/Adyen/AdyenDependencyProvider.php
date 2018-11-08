@@ -2,7 +2,7 @@
 
 /**
  * MIT License
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
 namespace SprykerEco\Zed\Adyen;
@@ -13,6 +13,7 @@ use SprykerEco\Zed\Adyen\Dependency\Facade\AdyenToAdyenApiFacadeBridge;
 use SprykerEco\Zed\Adyen\Dependency\Facade\AdyenToCalculationFacadeBridge;
 use SprykerEco\Zed\Adyen\Dependency\Facade\AdyenToOmsFacadeBridge;
 use SprykerEco\Zed\Adyen\Dependency\Facade\AdyenToSalesFacadeBridge;
+use SprykerEco\Zed\Adyen\Dependency\Service\AdyenToUtilEncodingServiceBridge;
 
 class AdyenDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -20,6 +21,8 @@ class AdyenDependencyProvider extends AbstractBundleDependencyProvider
     public const FACADE_SALES = 'FACADE_SALES';
     public const FACADE_CALCULATION = 'FACADE_CALCULATION';
     public const FACADE_OMS = 'FACADE_OMS';
+
+    public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -45,6 +48,7 @@ class AdyenDependencyProvider extends AbstractBundleDependencyProvider
         $container = parent::provideBusinessLayerDependencies($container);
         $container = $this->addAdyenApiFacade($container);
         $container = $this->addOmsFacade($container);
+        $container = $this->addUtilEncodingService($container);
 
         return $container;
     }
@@ -100,6 +104,20 @@ class AdyenDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[static::FACADE_OMS] = function (Container $container) {
             return new AdyenToOmsFacadeBridge($container->getLocator()->oms()->facade());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addUtilEncodingService(Container $container): Container
+    {
+        $container[static::SERVICE_UTIL_ENCODING] = function (Container $container) {
+            return new AdyenToUtilEncodingServiceBridge($container->getLocator()->utilEncoding()->service());
         };
 
         return $container;

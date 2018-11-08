@@ -2,7 +2,7 @@
 
 /**
  * MIT License
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
 namespace SprykerEco\Zed\Adyen\Business\Payment;
@@ -11,6 +11,8 @@ use ArrayObject;
 use Generated\Shared\Transfer\PaymentMethodsTransfer;
 use Generated\Shared\Transfer\PaymentMethodTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use SprykerEco\Zed\Adyen\Business\Payment\Converter\AdyenPaymentMethodFilterConverterInterface;
+use SprykerEco\Zed\Adyen\Business\Payment\Mapper\AdyenPaymentMethodFilterMapperInterface;
 use SprykerEco\Zed\Adyen\Dependency\Facade\AdyenToAdyenApiFacadeInterface;
 
 class AdyenPaymentMethodFilter implements AdyenPaymentMethodFilterInterface
@@ -28,11 +30,28 @@ class AdyenPaymentMethodFilter implements AdyenPaymentMethodFilterInterface
     protected $adyenApiFacade;
 
     /**
-     * @param \SprykerEco\Zed\Adyen\Dependency\Facade\AdyenToAdyenApiFacadeInterface $adyenApiFacade
+     * @var \SprykerEco\Zed\Adyen\Business\Payment\Mapper\AdyenPaymentMethodFilterMapperInterface
      */
-    public function __construct(AdyenToAdyenApiFacadeInterface $adyenApiFacade)
-    {
+    protected $mapper;
+
+    /**
+     * @var \SprykerEco\Zed\Adyen\Business\Payment\Converter\AdyenPaymentMethodFilterConverterInterface
+     */
+    protected $converter;
+
+    /**
+     * @param \SprykerEco\Zed\Adyen\Dependency\Facade\AdyenToAdyenApiFacadeInterface $adyenApiFacade
+     * @param \SprykerEco\Zed\Adyen\Business\Payment\Mapper\AdyenPaymentMethodFilterMapperInterface $mapper
+     * @param \SprykerEco\Zed\Adyen\Business\Payment\Converter\AdyenPaymentMethodFilterConverterInterface $converter
+     */
+    public function __construct(
+        AdyenToAdyenApiFacadeInterface $adyenApiFacade,
+        AdyenPaymentMethodFilterMapperInterface $mapper,
+        AdyenPaymentMethodFilterConverterInterface $converter
+    ) {
         $this->adyenApiFacade = $adyenApiFacade;
+        $this->mapper = $mapper;
+        $this->converter = $converter;
     }
 
     /**
@@ -45,7 +64,7 @@ class AdyenPaymentMethodFilter implements AdyenPaymentMethodFilterInterface
         PaymentMethodsTransfer $paymentMethodsTransfer,
         QuoteTransfer $quoteTransfer
     ): PaymentMethodsTransfer {
-        $this->availableMethods = $this->getAvailablePaymentMethods();
+        $this->availableMethods = $this->getAvailablePaymentMethods($quoteTransfer);
 
         $result = new ArrayObject();
 
@@ -63,11 +82,16 @@ class AdyenPaymentMethodFilter implements AdyenPaymentMethodFilterInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
      * @return string[]
      */
-    protected function getAvailablePaymentMethods()
+    protected function getAvailablePaymentMethods(QuoteTransfer $quoteTransfer)
     {
-        return [];
+        $requestTransfer = $this->mapper->buildRequestTransfer($quoteTransfer);
+        $responseTransfer = $this->adyenApiFacade->performGetPaymentMethodsApiCall($requestTransfer);
+
+        return $this->converter->getAvailablePaymentMethods($responseTransfer->getPaymentMethods()->getArrayCopy());
     }
 
     /**

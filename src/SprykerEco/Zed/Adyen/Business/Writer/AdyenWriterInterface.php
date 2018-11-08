@@ -2,13 +2,14 @@
 
 /**
  * MIT License
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
 namespace SprykerEco\Zed\Adyen\Business\Writer;
 
 use Generated\Shared\Transfer\AdyenApiRequestTransfer;
 use Generated\Shared\Transfer\AdyenApiResponseTransfer;
+use Generated\Shared\Transfer\AdyenNotificationsTransfer;
 use Generated\Shared\Transfer\PaymentAdyenApiLogTransfer;
 use Generated\Shared\Transfer\PaymentAdyenTransfer;
 use Generated\Shared\Transfer\PaymentTransfer;
@@ -49,4 +50,11 @@ interface AdyenWriterInterface
         AdyenApiRequestTransfer $request,
         AdyenApiResponseTransfer $response
     ): PaymentAdyenApiLogTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\AdyenNotificationsTransfer $adyenNotificationsTransfer
+     *
+     * @return void
+     */
+    public function saveNotifications(AdyenNotificationsTransfer $adyenNotificationsTransfer): void;
 }

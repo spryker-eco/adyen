@@ -2,11 +2,14 @@
 
 /**
  * MIT License
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
 namespace SprykerEco\Zed\Adyen\Business\Hook;
 
+use Generated\Shared\Transfer\AdyenApiResponseTransfer;
+use Generated\Shared\Transfer\AdyenRedirectTransfer;
+use Generated\Shared\Transfer\CheckoutErrorTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use SprykerEco\Shared\Adyen\AdyenConfig;
@@ -16,6 +19,11 @@ use SprykerEco\Zed\Adyen\Dependency\Facade\AdyenToAdyenApiFacadeInterface;
 
 class AdyenPostSaveHook implements AdyenHookInterface
 {
+    protected const REDIRECT_METHOD_GET = 'GET';
+    protected const REDIRECT_METHOD_POST = 'POST';
+    protected const ERROR_TYPE_PAYMENT_FAILED = 'payment failed';
+    protected const ERROR_MESSAGE_PAYMENT_FAILED = 'Something went wrong with your payment. Try again!';
+
     /**
      * @var \SprykerEco\Zed\Adyen\Dependency\Facade\AdyenToAdyenApiFacadeInterface
      */
@@ -64,5 +72,86 @@ class AdyenPostSaveHook implements AdyenHookInterface
         $requestTransfer = $mapper->buildPaymentRequestTransfer($quoteTransfer);
         $responseTransfer = $this->adyenApiFacade->performMakePaymentApiCall($requestTransfer);
         $saver->save($requestTransfer, $responseTransfer);
+
+        if (!$responseTransfer->getIsSuccess()) {
+            $this->processFailureResponse($checkoutResponseTransfer);
+
+            return;
+        }
+
+        if (!$this->isMethodWithRedirect($responseTransfer)) {
+            return;
+        }
+
+        if ($responseTransfer->getMakePaymentResponse()->getRedirect()->getMethod() === static::REDIRECT_METHOD_GET) {
+            $this->processGetRedirect($checkoutResponseTransfer, $responseTransfer);
+
+            return;
+        }
+
+        if ($responseTransfer->getMakePaymentResponse()->getRedirect()->getMethod() === static::REDIRECT_METHOD_POST) {
+            $this->processPostRedirect($checkoutResponseTransfer, $responseTransfer);
+
+            return;
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AdyenApiResponseTransfer $responseTransfer
+     *
+     * @return bool
+     */
+    protected function isMethodWithRedirect(AdyenApiResponseTransfer $responseTransfer): bool
+    {
+        return !empty($responseTransfer->getMakePaymentResponse()->getRedirect());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     * @param \Generated\Shared\Transfer\AdyenApiResponseTransfer $responseTransfer
+     *
+     * @return void
+     */
+    protected function processGetRedirect(
+        CheckoutResponseTransfer $checkoutResponseTransfer,
+        AdyenApiResponseTransfer $responseTransfer
+    ): void {
+        $checkoutResponseTransfer->setIsExternalRedirect(true);
+        $checkoutResponseTransfer->setRedirectUrl(
+            $responseTransfer->getMakePaymentResponse()->getRedirect()->getUrl()
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     * @param \Generated\Shared\Transfer\AdyenApiResponseTransfer $responseTransfer
+     *
+     * @return void
+     */
+    protected function processPostRedirect(
+        CheckoutResponseTransfer $checkoutResponseTransfer,
+        AdyenApiResponseTransfer $responseTransfer
+    ): void {
+        $redirectTransfer = (new AdyenRedirectTransfer())
+            ->setAction($responseTransfer->getMakePaymentResponse()->getRedirect()->getUrl())
+            ->setFields($responseTransfer->getMakePaymentResponse()->getRedirect()->getData());
+
+        $checkoutResponseTransfer->setAdyenRedirect($redirectTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     *
+     * @return void
+     */
+    protected function processFailureResponse(
+        CheckoutResponseTransfer $checkoutResponseTransfer
+    ): void {
+        $error = (new CheckoutErrorTransfer())
+            ->setErrorType(static::ERROR_TYPE_PAYMENT_FAILED)
+            ->setMessage(static::ERROR_MESSAGE_PAYMENT_FAILED);
+
+        $checkoutResponseTransfer->setIsSuccess(false);
+        $checkoutResponseTransfer->addError($error);
     }
 }

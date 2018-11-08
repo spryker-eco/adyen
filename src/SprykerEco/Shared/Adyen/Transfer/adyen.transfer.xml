@@ -10,6 +10,35 @@
         <property name="orderReference" type="string" />
         <property name="reference" type="string" />
         <property name="pspReference" type="string" />
+        <property name="details" type="string" />
+        <property name="paymentData" type="string" />
+        <property name="additionalData" type="string" />
+    </transfer>
+
+    <transfer name="PaymentAdyenNotification">
+        <property name="idPaymentAdyenNotification" type="int" />
+        <property name="additionalData" type="string" />
+        <property name="amount" type="string" />
+        <property name="operations" type="string" />
+        <property name="pspReference" type="string" />
+        <property name="eventCode" type="string" />
+        <property name="eventDate" type="string" />
+        <property name="merchantAccountCode" type="string" />
+        <property name="merchantReference" type="string" />
+        <property name="paymentMethod" type="string" />
+        <property name="success" type="string" />
+        <property name="reason" type="string" />
+    </transfer>
+
+    <transfer name="AdyenRedirectResponse">
+        <property name="reference" type="string" />
+        <property name="paymentMethod" type="string" />
+        <property name="payload" type="string" />
+        <property name="type" type="string" />
+        <property name="resultCode" type="string" />
+        <property name="md" type="string" />
+        <property name="paRes" type="string" />
+        <property name="isSuccess" type="bool" />
     </transfer>
 
     <transfer name="PaymentAdyenOrderItem">
@@ -42,14 +71,118 @@
         <property name="holderName" type="string" />
     </transfer>
 
+    <transfer name="AdyenRedirect">
+        <property name="action" type="string" />
+        <property name="fields" type="array" />
+    </transfer>
+
+    <transfer name="AdyenSofortPayment">
+        <property name="redirectUrl" type="string" />
+    </transfer>
+
+    <transfer name="AdyenDirectDebitPayment">
+        <property name="ownerName" type="string" />
+        <property name="ibanNumber" type="string" />
+    </transfer>
+
+    <transfer name="CheckoutResponse">
+        <property name="adyenRedirect" type="AdyenRedirect" />
+    </transfer>
+
+    <transfer name="AdyenKlarnaInvoicePayment">
+        <property name="socialSecurityNumber" type="string" />
+        <property name="dateOfBirth" type="string" />
+    </transfer>
+
+    <transfer name="AdyenKlarnaInvoiceRequest">
+        <property name="personalDetails" type="AdyenKlarnaPersonalDetails" />
+        <property name="billingAddress" type="AdyenKlarnaAddress" />
+        <property name="deliveryAddress" type="AdyenKlarnaAddress" />
+        <property name="separateDeliveryAddress" type="bool" />
+    </transfer>
+
+    <transfer name="AdyenKlarnaPersonalDetails">
+        <property name="firstName" type="string" />
+        <property name="lastName" type="string" />
+        <property name="telephoneNumber" type="string" />
+        <property name="socialSecurityNumber" type="string" />
+        <property name="shopperEmail" type="string" />
+    </transfer>
+
+    <transfer name="AdyenKlarnaAddress">
+        <property name="street" type="string" />
+        <property name="houseNumberOrName" type="string" />
+        <property name="city" type="string" />
+        <property name="postalCode" type="string" />
+        <property name="country" type="string" />
+    </transfer>
+
+    <transfer name="AdyenPrepaymentPayment">
+        <property name="redirectUrl" type="string" />
+    </transfer>
+
+    <transfer name="AdyenIdealPayment">
+        <property name="idealIssuer" type="string" />
+    </transfer>
+
+    <transfer name="AdyenPayPalPayment">
+        <property name="type" type="string" />
+    </transfer>
+
+    <transfer name="AdyenAliPayPayment">
+        <property name="type" type="string" />
+    </transfer>
+
+    <transfer name="AdyenWeChatPayPayment">
+        <property name="type" type="string" />
+    </transfer>
+
     <transfer name="Payment">
         <property name="adyenPayment" type="AdyenPayment" />
         <property name="adyenCreditCard" type="AdyenCreditCardPayment" />
+        <property name="adyenSofort" type="AdyenSofortPayment" />
+        <property name="adyenDirectDebit" type="AdyenDirectDebitPayment" />
+        <property name="adyenRedirect" type="AdyenRedirect" />
+        <property name="adyenKlarnaInvoice" type="AdyenKlarnaInvoicePayment" />
+        <property name="adyenKlarnaInvoiceRequest" type="AdyenKlarnaInvoiceRequest" />
+        <property name="adyenPrepayment" type="AdyenPrepaymentPayment" />
+        <property name="adyenIdeal" type="AdyenIdealPayment" />
+        <property name="adyenPayPal" type="AdyenPayPalPayment" />
+        <property name="adyenAliPay" type="AdyenAliPayPayment" />
+        <property name="adyenWeChatPay" type="AdyenWeChatPayPayment" />
     </transfer>
 
     <transfer name="Order">
         <property name="adyenPayment" type="AdyenPayment" />
         <property name="adyenCreditCard" type="AdyenCreditCardPayment" />
+        <property name="adyenSofort" type="AdyenSofortPayment" />
+        <property name="adyenDirectDebit" type="AdyenDirectDebitPayment" />
+        <property name="adyenKlarnaInvoice" type="AdyenKlarnaInvoicePayment" />
+        <property name="adyenPrepayment" type="AdyenPrepaymentPayment" />
+        <property name="adyenIdeal" type="AdyenIdealPayment" />
+        <property name="adyenPayPal" type="AdyenPayPalPayment" />
+        <property name="adyenAliPay" type="AdyenAliPayPayment" />
+        <property name="adyenWeChatPay" type="AdyenWeChatPayPayment" />
+    </transfer>
+
+    <transfer name="AdyenNotifications">
+        <property name="notificationItems" type="AdyenNotificationRequestItem[]" />
+        <property name="live" type="bool" />
+        <property name="isSuccess" type="bool" />
+    </transfer>
+
+    <transfer name="AdyenNotificationRequestItem">
+        <property name="additionalData" type="array" />
+        <property name="amount" type="AdyenApiAmount" />
+        <property name="operations" type="array" />
+        <property name="pspReference" type="string" />
+        <property name="eventCode" type="string" />
+        <property name="eventDate" type="string" />
+        <property name="merchantAccountCode" type="string" />
+        <property name="merchantReference" type="string" />
+        <property name="paymentMethod" type="string" />
+        <property name="success" type="string" />
+        <property name="reason" type="string" />
     </transfer>
 
 </transfers>

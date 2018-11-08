@@ -2,11 +2,14 @@
 
 /**
  * MIT License
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
 namespace SprykerEco\Yves\Adyen\Form\DataProvider;
 
+use Generated\Shared\Transfer\AdyenPaymentTransfer;
+use Generated\Shared\Transfer\PaymentTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Yves\StepEngine\Dependency\Form\StepEngineFormDataProviderInterface;
 use SprykerEco\Yves\Adyen\Dependency\Client\AdyenToQuoteClientInterface;
@@ -34,5 +37,26 @@ abstract class AbstractFormDataProvider implements StepEngineFormDataProviderInt
     public function getOptions(AbstractTransfer $quoteTransfer): array
     {
         return [];
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function updateQuoteWithPaymentData(QuoteTransfer $quoteTransfer): QuoteTransfer
+    {
+        $paymentTransfer = $quoteTransfer->getPayment();
+
+        if ($paymentTransfer === null) {
+            $paymentTransfer = new PaymentTransfer();
+            $quoteTransfer->setPayment($paymentTransfer);
+        }
+
+        if ($paymentTransfer->getAdyenPayment() === null) {
+            $paymentTransfer->setAdyenPayment(new AdyenPaymentTransfer());
+        }
+
+        return $quoteTransfer;
     }
 }

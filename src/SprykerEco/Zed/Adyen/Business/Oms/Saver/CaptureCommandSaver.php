@@ -2,7 +2,7 @@
 
 /**
  * MIT License
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
 namespace SprykerEco\Zed\Adyen\Business\Oms\Saver;
@@ -19,7 +19,7 @@ class CaptureCommandSaver extends AbstractCommandSaver implements AdyenCommandSa
     public function save(array $orderItems): void
     {
         $this->writer->updatePaymentEntities(
-            $this->config->getOmsStatusCaptured(),
+            $this->config->getOmsStatusCapturePending(),
             $this->reader->getPaymentAdyenOrderItemsByOrderItems($orderItems)
         );
 
@@ -31,7 +31,7 @@ class CaptureCommandSaver extends AbstractCommandSaver implements AdyenCommandSa
 
         if (!$this->config->isMultiplePartialCaptureEnabled()) {
             $this->writer->updatePaymentEntities(
-                $this->config->getOmsStatusCanceled(),
+                $this->config->getOmsStatusCancellationPending(),
                 $remainingItems
             );
 

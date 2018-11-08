@@ -2,12 +2,13 @@
 
 /**
  * MIT License
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
 namespace SprykerEco\Zed\Adyen\Persistence;
 
 use Generated\Shared\Transfer\PaymentAdyenApiLogTransfer;
+use Generated\Shared\Transfer\PaymentAdyenNotificationTransfer;
 use Generated\Shared\Transfer\PaymentAdyenOrderItemTransfer;
 use Generated\Shared\Transfer\PaymentAdyenTransfer;
 
@@ -37,4 +38,13 @@ interface AdyenEntityManagerInterface
     public function savePaymentAdyenApiLog(
         PaymentAdyenApiLogTransfer $paymentAdyenApiLogTransfer
     ): PaymentAdyenApiLogTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\PaymentAdyenNotificationTransfer $paymentAdyenNotificationTransfer
+     *
+     * @return \Generated\Shared\Transfer\PaymentAdyenNotificationTransfer
+     */
+    public function savePaymentAdyenNotification(
+        PaymentAdyenNotificationTransfer $paymentAdyenNotificationTransfer
+    ): PaymentAdyenNotificationTransfer;
 }

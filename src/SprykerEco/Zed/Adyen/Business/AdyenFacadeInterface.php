@@ -2,11 +2,13 @@
 
 /**
  * MIT License
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
 namespace SprykerEco\Zed\Adyen\Business;
 
+use Generated\Shared\Transfer\AdyenNotificationsTransfer;
+use Generated\Shared\Transfer\AdyenRedirectResponseTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\PaymentMethodsTransfer;
@@ -33,7 +35,7 @@ interface AdyenFacadeInterface
 
     /**
      * Specification:
-     * - Handle Authorize OMS command, make request to API, process response.
+     * - Handles Authorize OMS command, make request to API, process response.
      *
      * @api
      *
@@ -51,7 +53,7 @@ interface AdyenFacadeInterface
 
     /**
      * Specification:
-     * - Handle Cancel OMS command, make request to API, process response.
+     * - Handles Cancel OMS command, make request to API, process response.
      *
      * @api
      *
@@ -69,7 +71,7 @@ interface AdyenFacadeInterface
 
     /**
      * Specification:
-     * - Handle Capture OMS command, make request to API, process response.
+     * - Handles Capture OMS command, make request to API, process response.
      *
      * @api
      *
@@ -87,7 +89,7 @@ interface AdyenFacadeInterface
 
     /**
      * Specification:
-     * - Handle Refund OMS command, make request to API, process response.
+     * - Handles Refund OMS command, make request to API, process response.
      *
      * @api
      *
@@ -98,6 +100,24 @@ interface AdyenFacadeInterface
      * @return void
      */
     public function handleRefundCommand(
+        array $orderItems,
+        OrderTransfer $orderTransfer,
+        array $data
+    ): void;
+
+    /**
+     * Specification:
+     * - Handles CancelOrRefund OMS command, make request to API, process response.
+     *
+     * @api
+     *
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $orderItems
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param array $data
+     *
+     * @return void
+     */
+    public function handleCancelOrRefundCommand(
         array $orderItems,
         OrderTransfer $orderTransfer,
         array $data
@@ -119,8 +139,8 @@ interface AdyenFacadeInterface
     /**
      * Specification:
      * - Executes make payment request to API.
-     * - Create PaymentAdyen entities, save them to DB.
-     * - Update order items with necessary OMS statuses.
+     * - Creates PaymentAdyen entities, save them to DB.
+     * - Updates order items with necessary OMS statuses.
      *
      * @api
      *
@@ -130,4 +150,60 @@ interface AdyenFacadeInterface
      * @return void
      */
     public function executePostSaveHook(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse): void;
+
+    /**
+     * Specification:
+     * - Handle notification from API.
+     * - Update payment entities.
+     * - Update order items statuses.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\AdyenNotificationsTransfer $notificationsTransfer
+     *
+     * @return \Generated\Shared\Transfer\AdyenNotificationsTransfer
+     */
+    public function handleNotification(AdyenNotificationsTransfer $notificationsTransfer): AdyenNotificationsTransfer;
+
+    /**
+     * Specification:
+     * - Handles response after redirect customer to the shop.
+     * - Performs Payment Details call.
+     * - Saves result to DB.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\AdyenRedirectResponseTransfer $redirectResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\AdyenRedirectResponseTransfer
+     */
+    public function handleOnlineTransferResponseFromAdyen(AdyenRedirectResponseTransfer $redirectResponseTransfer): AdyenRedirectResponseTransfer;
+
+    /**
+     * Specification:
+     * - Handles response after redirect customer to the shop.
+     * - Performs Payment Details call.
+     * - Saves result to DB.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\AdyenRedirectResponseTransfer $redirectResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\AdyenRedirectResponseTransfer
+     */
+    public function handleCreditCard3dResponseFromAdyen(AdyenRedirectResponseTransfer $redirectResponseTransfer): AdyenRedirectResponseTransfer;
+
+    /**
+     * Specification:
+     * - Handles response after redirect customer to the shop.
+     * - Performs Payment Details call.
+     * - Saves result to DB.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\AdyenRedirectResponseTransfer $redirectResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\AdyenRedirectResponseTransfer
+     */
+    public function handlePayPalResponseFromAdyen(AdyenRedirectResponseTransfer $redirectResponseTransfer): AdyenRedirectResponseTransfer;
 }

@@ -9,6 +9,9 @@
         <column name="order_reference" required="true" type="VARCHAR" />
         <column name="reference" required="true" type="VARCHAR" />
         <column name="psp_reference" required="false" type="VARCHAR" />
+        <column name="details" required="false" type="VARCHAR" />
+        <column name="payment_data" required="false" type="VARCHAR" />
+        <column name="additional_data" required="false" type="VARCHAR" />
 
         <foreign-key name="spy_payment_adyen-fk_sales_order" foreignTable="spy_sales_order" phpName="SpySalesOrder">
             <reference foreign="id_sales_order" local="fk_sales_order"/>
@@ -64,6 +67,27 @@
         <behavior name="timestampable"/>
 
         <id-method-parameter value="spy_payment_adyen_api_log_pk_seq"/>
+    </table>
+
+    <table name="spy_payment_adyen_notification">
+        <column name="id_payment_adyen_notification" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
+
+        <column name="psp_reference" required="true" type="VARCHAR"/>
+        <column name="event_code" required="true" type="VARCHAR"/>
+        <column name="success" required="true" type="VARCHAR"/>
+
+        <column name="additional_data" required="false" type="VARCHAR"/>
+        <column name="amount" required="false" type="VARCHAR"/>
+        <column name="operations" required="false" type="VARCHAR"/>
+        <column name="event_date" required="false" type="VARCHAR"/>
+        <column name="merchant_account_code" required="false" type="VARCHAR"/>
+        <column name="merchant_reference" required="false" type="VARCHAR"/>
+        <column name="payment_method" required="false" type="VARCHAR"/>
+        <column name="reason" required="false" type="VARCHAR"/>
+
+        <behavior name="timestampable"/>
+
+        <id-method-parameter value="spy_payment_adyen_notification_pk_seq"/>
     </table>
 
 </database>

@@ -2,7 +2,7 @@
 
 /**
  * MIT License
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
 namespace SprykerEco\Yves\Adyen\Dependency\Client;
@@ -22,6 +22,14 @@ class AdyenToQuoteClientBridge implements AdyenToQuoteClientInterface
     public function __construct($quoteClient)
     {
         $this->quoteClient = $quoteClient;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function getQuote(): QuoteTransfer
+    {
+        return $this->quoteClient->getQuote();
     }
 
     /**

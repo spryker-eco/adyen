@@ -27,3 +27,4 @@ suites:
                         - 'SprykerEcoTest'
                 - \SprykerTest\Shared\Testify\Helper\DependencyHelper
                 - \SprykerTest\Shared\Propel\Helper\TransactionHelper
+                - \SprykerTest\Shared\Sales\Helper\SalesDataHelper
