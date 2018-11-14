@@ -78,7 +78,8 @@ abstract class AbstractMapper implements AdyenMapperInterface
             ->setReference($quoteTransfer->getPayment()->getAdyenPayment()->getReference())
             ->setAmount($this->createAmountTransfer($quoteTransfer))
             ->setReturnUrl($this->getReturnUrl())
-            ->setCountryCode($quoteTransfer->getBillingAddress()->getIso2Code());
+            ->setCountryCode($quoteTransfer->getBillingAddress()->getIso2Code())
+            ->setShopperIP($quoteTransfer->getPayment()->getAdyenPayment()->getClientIp());
     }
 
     /**

@@ -54,7 +54,8 @@ class AdyenPaymentHandler implements AdyenPaymentHandlerInterface
         $quoteTransfer
             ->getPayment()
             ->getAdyenPayment()
-            ->setReference($this->service->generateReference($quoteTransfer));
+            ->setReference($this->service->generateReference($quoteTransfer))
+            ->setClientIp($request->getClientIp());
 
         $this->executeAdyenPaymentPlugins($request, $quoteTransfer);
 

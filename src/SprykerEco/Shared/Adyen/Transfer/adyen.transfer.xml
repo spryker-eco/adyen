@@ -61,6 +61,7 @@
 
     <transfer name="AdyenPayment">
         <property name="reference" type="string" />
+        <property name="clientIp" type="string" />
     </transfer>
 
     <transfer name="AdyenCreditCardPayment">
