@@ -18,7 +18,6 @@
         </states>
 
         <events>
-            <event name="invalidation" timeout="20min" />
             <event name="capture" onEnter="true" />
             <event name="ship" manual="true" />
             <event name="refund" manual="true" command="Adyen/CancelOrRefund" />
@@ -35,7 +34,6 @@
             <transition condition="Adyen/IsAuthorizationFailed">
                 <source>new</source>
                 <target>authorization failed</target>
-                <event>invalidation</event>
             </transition>
 
             <transition  happy="true">
