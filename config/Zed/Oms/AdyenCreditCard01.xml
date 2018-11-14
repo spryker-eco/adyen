@@ -38,7 +38,7 @@
                 <target>authorized</target>
             </transition>
 
-            <transition>
+            <transition condition="Adyen/IsAuthorizationFailed">
                 <source>new</source>
                 <target>authorization failed</target>
                 <event>invalidation</event>

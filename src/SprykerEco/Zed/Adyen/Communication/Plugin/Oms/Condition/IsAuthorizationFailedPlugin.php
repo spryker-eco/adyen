@@ -16,7 +16,7 @@ use Spryker\Zed\Oms\Dependency\Plugin\Condition\ConditionInterface;
  * @method \SprykerEco\Zed\Adyen\Business\AdyenFacadeInterface getFacade()
  * @method \SprykerEco\Zed\Adyen\Communication\AdyenCommunicationFactory getFactory()
  */
-class IsAuthorizedAndCapturedPlugin extends AbstractPlugin implements ConditionInterface
+class IsAuthorizationFailedPlugin extends AbstractPlugin implements ConditionInterface
 {
     /**
      * {@inheritdoc}
@@ -31,6 +31,6 @@ class IsAuthorizedAndCapturedPlugin extends AbstractPlugin implements ConditionI
     {
         $adyenOrderItem = $orderItem->getSpyPaymentAdyenOrderItems()->getLast();
 
-        return $adyenOrderItem->getStatus() === $this->getConfig()->getOmsStatusAuthorizedAndCaptured();
+        return $adyenOrderItem->getStatus() === $this->getConfig()->getOmsStatusAuthorizationFailed();
     }
 }

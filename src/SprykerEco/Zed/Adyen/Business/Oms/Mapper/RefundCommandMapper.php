@@ -61,7 +61,6 @@ class RefundCommandMapper extends AbstractCommandMapper implements AdyenCommandM
             return $orderTransfer->getTotals()->getRefundTotal();
         }
 
-        // TODO: Clarify this logic.
         $amount = array_map(
             function (SpySalesOrderItem $orderItem) {
                 return $orderItem->getRefundableAmount();

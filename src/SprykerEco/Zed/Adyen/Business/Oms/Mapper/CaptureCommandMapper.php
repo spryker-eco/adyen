@@ -61,7 +61,6 @@ class CaptureCommandMapper extends AbstractCommandMapper implements AdyenCommand
             return $orderTransfer->getTotals()->getGrandTotal();
         }
 
-        // TODO: Clarify this logic.
         $amount = array_map(
             function (SpySalesOrderItem $orderItem) {
                 return $orderItem->getPriceToPayAggregation();

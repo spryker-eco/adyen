@@ -41,7 +41,6 @@ use SprykerEco\Yves\Adyen\Handler\Notification\Mapper\AdyenNotificationMapperInt
 use SprykerEco\Yves\Adyen\Handler\Redirect\AdyenRedirectHandlerInterface;
 use SprykerEco\Yves\Adyen\Handler\Redirect\CreditCard3dRedirectHandler;
 use SprykerEco\Yves\Adyen\Handler\Redirect\OnlineTransferRedirectHandler;
-use SprykerEco\Yves\Adyen\Handler\Redirect\PayPalRedirectHandler;
 
 /**
  * @method \SprykerEco\Yves\Adyen\AdyenConfig getConfig()
@@ -229,17 +228,6 @@ class AdyenFactory extends AbstractFactory
     public function createCreditCard3dRedirectHandler(): AdyenRedirectHandlerInterface
     {
         return new CreditCard3dRedirectHandler(
-            $this->getQuoteClient(),
-            $this->getAdyenClient()
-        );
-    }
-
-    /**
-     * @return \SprykerEco\Yves\Adyen\Handler\Redirect\AdyenRedirectHandlerInterface
-     */
-    public function createPayPalRedirectHandler(): AdyenRedirectHandlerInterface
-    {
-        return new PayPalRedirectHandler(
             $this->getQuoteClient(),
             $this->getAdyenClient()
         );

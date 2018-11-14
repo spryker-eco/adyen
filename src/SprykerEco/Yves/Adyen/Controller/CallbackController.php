@@ -61,7 +61,7 @@ class CallbackController extends AbstractController
      */
     public function redirectPayPalAction(Request $request): RedirectResponse
     {
-        $responseTransfer = $this->getPayPalRedirectResponse($request);
+        $responseTransfer = $this->getOnlineTransferRedirectResponse($request);
 
         return $this->handleRedirectFromAdyen($responseTransfer);
     }
@@ -108,16 +108,6 @@ class CallbackController extends AbstractController
     protected function getCreditCard3dRedirectResponse(Request $request): AdyenRedirectResponseTransfer
     {
         return $this->getFactory()->createCreditCard3dRedirectHandler()->handle($request);
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return \Generated\Shared\Transfer\AdyenRedirectResponseTransfer
-     */
-    protected function getPayPalRedirectResponse(Request $request): AdyenRedirectResponseTransfer
-    {
-        return $this->getFactory()->createPayPalRedirectHandler()->handle($request);
     }
 
     /**

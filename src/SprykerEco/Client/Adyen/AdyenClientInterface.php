@@ -51,17 +51,4 @@ interface AdyenClientInterface
      * @return \Generated\Shared\Transfer\AdyenRedirectResponseTransfer
      */
     public function handleCreditCard3dResponseFromAdyen(AdyenRedirectResponseTransfer $redirectResponseTransfer): AdyenRedirectResponseTransfer;
-
-    /**
-     * Specification:
-     * - Handle response from Adyen after redirect customer back to the shop after authorization on PayPal.
-     * - Save response, update status etc.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\AdyenRedirectResponseTransfer $redirectResponseTransfer
-     *
-     * @return \Generated\Shared\Transfer\AdyenRedirectResponseTransfer
-     */
-    public function handlePayPalResponseFromAdyen(AdyenRedirectResponseTransfer $redirectResponseTransfer): AdyenRedirectResponseTransfer;
 }

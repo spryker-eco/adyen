@@ -13,14 +13,6 @@ use SprykerEco\Shared\Adyen\AdyenApiRequestConfig;
 class CreditCard3dRedirectHandler extends OnlineTransferRedirectHandler
 {
     /**
-     * @return string
-     */
-    protected function getOmsStatus(): string
-    {
-        return $this->config->getOmsStatusAuthorized();
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\AdyenRedirectResponseTransfer $redirectResponseTransfer
      *
      * @return string[]

@@ -21,7 +21,6 @@ class FacadeTest extends BaseSetUpTest
     protected const OMS_STATUS_NEW = 'new';
     protected const OMS_STATUS_AUTHORIZED = 'authorized';
     protected const OMS_STATUS_CAPTURED = 'captured';
-    protected const OMS_STATUS_AUTHORIZED_AND_CAPTURED = 'authorized and captured';
     protected const OMS_STATUS_CANCELLATION_PENDING = 'cancellation pending';
     protected const OMS_STATUS_CAPTURE_PENDING = 'capture pending';
     protected const OMS_STATUS_REFUND_PENDING = 'refund pending';
@@ -113,7 +112,7 @@ class FacadeTest extends BaseSetUpTest
         $facade = $this->createFacade();
         $orderTransfer = $this->setUpCommandTest(
             static::PROCESS_NAME_ADYEN_SOFORT,
-            static::OMS_STATUS_AUTHORIZED_AND_CAPTURED
+            static::OMS_STATUS_CAPTURED
         );
         $items = $this->getSpySalesOrderItems($orderTransfer);
         $facade->handleCancelOrRefundCommand($items, $orderTransfer, []);
@@ -180,7 +179,6 @@ class FacadeTest extends BaseSetUpTest
         foreach ($this->getSpySalesOrderItems($orderTransfer) as $item) {
             /** @var \Orm\Zed\Sales\Persistence\SpySalesOrderItem $item */
             $paymentAdyenOrderItem = $item->getSpyPaymentAdyenOrderItems()->getLast();
-            $this->assertEquals(static::OMS_STATUS_AUTHORIZED_AND_CAPTURED, $paymentAdyenOrderItem->getStatus());
             $this->assertNotEmpty($paymentAdyenOrderItem->getSpyPaymentAdyen()->getPspReference());
         }
     }
@@ -202,29 +200,6 @@ class FacadeTest extends BaseSetUpTest
         foreach ($this->getSpySalesOrderItems($orderTransfer) as $item) {
             /** @var \Orm\Zed\Sales\Persistence\SpySalesOrderItem $item */
             $paymentAdyenOrderItem = $item->getSpyPaymentAdyenOrderItems()->getLast();
-            $this->assertEquals(static::OMS_STATUS_AUTHORIZED, $paymentAdyenOrderItem->getStatus());
-            $this->assertNotEmpty($paymentAdyenOrderItem->getSpyPaymentAdyen()->getPspReference());
-        }
-    }
-
-    /**
-     * @return void
-     */
-    public function testHandlePayPalResponseFromAdyen(): void
-    {
-        $facade = $this->createFacade();
-        $orderTransfer = $this->setUpCommandTest(
-            static::PROCESS_NAME_ADYEN_CREDIT_CARD,
-            static::OMS_STATUS_NEW
-        );
-        $redirectResponseTransfer = $this->createRedirectResponseTransfer($orderTransfer);
-        $result = $facade->handlePayPalResponseFromAdyen($redirectResponseTransfer);
-
-        $this->assertTrue($result->getIsSuccess());
-        foreach ($this->getSpySalesOrderItems($orderTransfer) as $item) {
-            /** @var \Orm\Zed\Sales\Persistence\SpySalesOrderItem $item */
-            $paymentAdyenOrderItem = $item->getSpyPaymentAdyenOrderItems()->getLast();
-            $this->assertEquals(static::OMS_STATUS_AUTHORIZED, $paymentAdyenOrderItem->getStatus());
             $this->assertNotEmpty($paymentAdyenOrderItem->getSpyPaymentAdyen()->getPspReference());
         }
     }

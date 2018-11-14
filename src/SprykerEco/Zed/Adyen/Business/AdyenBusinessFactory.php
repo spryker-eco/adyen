@@ -15,7 +15,6 @@ use SprykerEco\Zed\Adyen\Business\Handler\Notification\AdyenNotificationHandlerI
 use SprykerEco\Zed\Adyen\Business\Handler\Redirect\AdyenRedirectHandlerInterface;
 use SprykerEco\Zed\Adyen\Business\Handler\Redirect\CreditCard3dRedirectHandler;
 use SprykerEco\Zed\Adyen\Business\Handler\Redirect\OnlineTransferRedirectHandler;
-use SprykerEco\Zed\Adyen\Business\Handler\Redirect\PayPalRedirectHandler;
 use SprykerEco\Zed\Adyen\Business\Hook\AdyenHookInterface;
 use SprykerEco\Zed\Adyen\Business\Hook\AdyenPostSaveHook;
 use SprykerEco\Zed\Adyen\Business\Hook\Mapper\AdyenMapperResolver;
@@ -596,19 +595,6 @@ class AdyenBusinessFactory extends AbstractBusinessFactory
     public function createCreditCard3dRedirectHandler(): AdyenRedirectHandlerInterface
     {
         return new CreditCard3dRedirectHandler(
-            $this->getAdyenApiFacade(),
-            $this->createReader(),
-            $this->createWriter(),
-            $this->getConfig()
-        );
-    }
-
-    /**
-     * @return \SprykerEco\Zed\Adyen\Business\Handler\Redirect\AdyenRedirectHandlerInterface
-     */
-    public function createPayPalRedirectHandler(): AdyenRedirectHandlerInterface
-    {
-        return new PayPalRedirectHandler(
             $this->getAdyenApiFacade(),
             $this->createReader(),
             $this->createWriter(),

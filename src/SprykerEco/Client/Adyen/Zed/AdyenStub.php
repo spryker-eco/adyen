@@ -64,17 +64,4 @@ class AdyenStub implements AdyenStubInterface
 
         return $redirectResponseTransfer;
     }
-
-    /**
-     * @param \Generated\Shared\Transfer\AdyenRedirectResponseTransfer $redirectResponseTransfer
-     *
-     * @return \Generated\Shared\Transfer\AdyenRedirectResponseTransfer
-     */
-    public function handlePayPalResponseFromAdyen(AdyenRedirectResponseTransfer $redirectResponseTransfer): AdyenRedirectResponseTransfer
-    {
-        /** @var \Generated\Shared\Transfer\AdyenRedirectResponseTransfer $redirectResponseTransfer */
-        $redirectResponseTransfer = $this->zedRequestClient->call('/adyen/gateway/handle-paypal-response', $redirectResponseTransfer);
-
-        return $redirectResponseTransfer;
-    }
 }

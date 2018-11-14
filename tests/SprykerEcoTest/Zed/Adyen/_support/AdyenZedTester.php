@@ -1,5 +1,13 @@
 <?php
+
+/**
+ * MIT License
+ * For full license information, please view the LICENSE file that was distributed with this source code.
+ */
+
 namespace SprykerEcoTest\Zed\Adyen;
+
+use Codeception\Actor;
 
 /**
  * Inherited Methods
@@ -15,8 +23,8 @@ namespace SprykerEcoTest\Zed\Adyen;
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
  *
  * @SuppressWarnings(PHPMD)
-*/
-class AdyenZedTester extends \Codeception\Actor
+ */
+class AdyenZedTester extends Actor
 {
     use _generated\AdyenZedTesterActions;
 

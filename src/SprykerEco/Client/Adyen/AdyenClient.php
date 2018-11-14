@@ -66,21 +66,4 @@ class AdyenClient extends AbstractClient implements AdyenClientInterface
             ->createZedAdyenStub()
             ->handleCreditCard3dResponseFromAdyen($redirectResponseTransfer);
     }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\AdyenRedirectResponseTransfer $redirectResponseTransfer
-     *
-     * @return \Generated\Shared\Transfer\AdyenRedirectResponseTransfer
-     */
-    public function handlePayPalResponseFromAdyen(AdyenRedirectResponseTransfer $redirectResponseTransfer): AdyenRedirectResponseTransfer
-    {
-        return $this
-            ->getFactory()
-            ->createZedAdyenStub()
-            ->handlePayPalResponseFromAdyen($redirectResponseTransfer);
-    }
 }

@@ -73,7 +73,7 @@ class OnlineTransferRedirectHandler implements AdyenRedirectHandlerInterface
         $responseTransfer = $this->adyenApiFacade->performPaymentDetailsApiCall($requestTransfer);
 
         $this->writer->saveApiLog(
-            sprintf(static::LOG_REQUEST_TYPE, $redirectResponseTransfer->getPaymentMethod()),
+            sprintf(static::LOG_REQUEST_TYPE, $paymentAdyenTransfer->getPaymentMethod()),
             $requestTransfer,
             $responseTransfer
         );
@@ -127,7 +127,7 @@ class OnlineTransferRedirectHandler implements AdyenRedirectHandlerInterface
      */
     protected function getOmsStatus(): string
     {
-        return $this->config->getOmsStatusAuthorizedAndCaptured();
+        return $this->config->getOmsStatusNew();
     }
 
     /**

@@ -7,8 +7,9 @@
     <process name="AdyenSofort01" main="true">
         <states>
             <state name="new" reserved="true" />
-            <state name="authorized and captured" reserved="true" />
-            <state name="authorize and capture failed" reserved="false" />
+            <state name="authorized" reserved="true" />
+            <state name="authorization failed" reserved="false" />
+            <state name="captured" reserved="true" />
             <state name="shipped" reserved="true" />
             <state name="refund pending" reserved="false" />
             <state name="refunded" reserved="false" />
@@ -18,6 +19,7 @@
 
         <events>
             <event name="invalidation" timeout="20min" />
+            <event name="capture" onEnter="true" />
             <event name="ship" manual="true" />
             <event name="refund" manual="true" command="Adyen/CancelOrRefund" />
             <event name="close" manual="true" />
@@ -25,19 +27,25 @@
 
         <transitions>
 
-            <transition condition="Adyen/IsAuthorizedAndCaptured" happy="true">
+            <transition condition="Adyen/IsAuthorized" happy="true">
                 <source>new</source>
-                <target>authorized and captured</target>
+                <target>authorized</target>
             </transition>
 
-            <transition>
+            <transition condition="Adyen/IsAuthorizationFailed">
                 <source>new</source>
-                <target>authorize and capture failed</target>
+                <target>authorization failed</target>
                 <event>invalidation</event>
             </transition>
 
+            <transition  happy="true">
+                <source>authorized</source>
+                <target>captured</target>
+                <event>capture</event>
+            </transition>
+
             <transition condition="Adyen/IsRefundReceived">
-                <source>authorized and captured</source>
+                <source>captured</source>
                 <target>refund pending</target>
                 <event>refund</event>
             </transition>
@@ -53,7 +61,7 @@
             </transition>
 
             <transition happy="true">
-                <source>authorized and captured</source>
+                <source>captured</source>
                 <target>shipped</target>
                 <event>ship</event>
             </transition>
