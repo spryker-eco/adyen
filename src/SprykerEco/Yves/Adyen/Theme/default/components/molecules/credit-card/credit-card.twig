@@ -1,0 +1,42 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'credit-card',
+    tag: 'credit-card'
+} %}
+
+{% define data = {
+    form: required,
+    scriptSrc: data.form.adyenCreditCard.vars.sdkUrl,
+    configKey: data.form.adyenCreditCard.vars.sdkOriginKey
+} %}
+
+{% define attributes = {
+    'client-config-key': data.configKey
+} %}
+
+{% block body %}
+    {% include molecule('script-loader') with {
+        attributes: {
+            src: data.scriptSrc
+        }
+    } only %}
+    <div class="{{ config.jsName }}__form">
+        {{ form_widget(data.form.adyenCreditCard) }}
+        <input type="hidden" name="txvariant" value="card" />
+
+        <div class="form__fields grid grid--bottom">
+            <div class="form__field col col--sm-12">
+                <span class="{{ config.name }}__input input input--expand" data-hosted-id="hostedCardNumberField" data-cse="encryptedCardNumber" />
+            </div>
+
+            <div class="form__field col col--sm-6">
+                <span class="{{ config.name }}__input input input--expand" data-hosted-id="hostedExpiryDateField" data-cse="encryptedExpiryDate" />
+            </div>
+
+            <div class="form__field col col--sm-6">
+                <span class="{{ config.name }}__input input input--expand" data-hosted-id="hostedSecurityCodeField" data-cse="encryptedSecurityCode" />
+            </div>
+        </div>
+    </div>
+{% endblock %}
