@@ -17,7 +17,7 @@
     "spryker/util-text": "^1.0.0",
     "spryker/zed-request": "^3.0.0",
     "spryker-shop/checkout-page": "^1.0.0",
-    "spryker-eco/adyen-api": "dev-feature/eco-1685/dev-adyen"
+    "spryker-eco/adyen-api": "^1.0.0"
   },
   "autoload": {
     "psr-4": {
@@ -36,12 +36,6 @@
     "sort-packages": true,
     "process-timeout": 600
   },
-  "repositories": [
-    {
-      "type": "git",
-      "url": "git@github.com:spryker-eco/adyen-api.git"
-    }
-  ],
   "extra": {
     "branch-alias": {
       "dev-master": "1.0.x-dev"
