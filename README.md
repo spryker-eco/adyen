@@ -1,7 +1,7 @@
 # Adyen Module
 
 [![Build Status](https://travis-ci.org/spryker-eco/adyen.svg?branch=master)](https://travis-ci.org/spryker-eco/adyen)
-[![License](https://img.shields.io/github/license/spryker-eco/adyen.svg?b=dev)](https://github.com/spryker-eco/adyen)
+[![License](https://img.shields.io/github/license/spryker-eco/adyen.svg?b=master)](https://github.com/spryker-eco/adyen)
 
 ## Installation
 
