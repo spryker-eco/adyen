@@ -15,5 +15,5 @@ composer require spryker-eco/adyen
 
 ## Code checks
 
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/spryker-eco/adyen/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/spryker-eco/adyen/?branch=dev)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/spryker-eco/adyen/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/spryker-eco/adyen/?branch=master)
 [![Build Status](https://scrutinizer-ci.com/g/spryker-eco/adyen/badges/build.png?b=master)](https://scrutinizer-ci.com/g/spryker-eco/adyen/build-status/master)
