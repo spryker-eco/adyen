@@ -13,7 +13,4 @@ composer require spryker-eco/adyen
 
 ## Documentation
 
-[TBD](https://academy.spryker.com)
-
-## Code checks
-
+[Documentation](https://documentation.spryker.com/industry_partners/payment/adyen/adyen.htm)
