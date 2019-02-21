@@ -1,6 +1,6 @@
 {
   "name": "spryker-eco/adyen",
-  "description": "Adyen Module",
+  "description": "Adyen module",
   "license": "MIT",
   "require": {
     "php": ">=7.1",
