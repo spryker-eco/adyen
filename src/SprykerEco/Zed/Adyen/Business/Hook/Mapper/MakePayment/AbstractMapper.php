@@ -17,6 +17,8 @@ use SprykerEco\Zed\Adyen\AdyenConfig;
 
 abstract class AbstractMapper implements AdyenMapperInterface
 {
+    protected const GENDER_MAPPING = ['Mr' => 'MALE', 'Ms' => 'FEMALE', 'Mrs' => 'FEMALE', 'Dr' => 'MALE'];
+
     /**
      * @var \SprykerEco\Zed\Adyen\AdyenConfig
      */
@@ -130,10 +132,11 @@ abstract class AbstractMapper implements AdyenMapperInterface
             ->setShopperName(
                 (new AdyenApiNameTransfer())
                     ->setFirstName($quoteTransfer->getBillingAddress()->getFirstName())
+                    ->setGender($this->getGender($quoteTransfer))
                     ->setLastName($quoteTransfer->getBillingAddress()->getLastName())
             )
             ->setShopperEmail($quoteTransfer->getCustomer()->getEmail())
-            ->setTelephoneNumber($quoteTransfer->getBillingAddress()->getPhone())
+            ->setTelephoneNumber($quoteTransfer->getBillingAddress()->getPhone() ?? $quoteTransfer->getCustomer()->getPhone())
             ->setBillingAddress(
                 (new AdyenApiAddressTransfer())
                     ->setCity($quoteTransfer->getBillingAddress()->getCity())
@@ -152,6 +155,16 @@ abstract class AbstractMapper implements AdyenMapperInterface
             );
 
         return $requestTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return string
+     */
+    protected function getGender(QuoteTransfer $quoteTransfer): string
+    {
+        return static::GENDER_MAPPING[$quoteTransfer->getCustomer()->getSalutation()];
     }
 
     /**
