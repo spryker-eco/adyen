@@ -136,7 +136,7 @@ abstract class AbstractMapper implements AdyenMapperInterface
                     ->setLastName($quoteTransfer->getBillingAddress()->getLastName())
             )
             ->setShopperEmail($quoteTransfer->getCustomer()->getEmail())
-            ->setTelephoneNumber($quoteTransfer->getBillingAddress()->getPhone() ?? $quoteTransfer->getCustomer()->getPhone())
+            ->setTelephoneNumber($this->getPhoneNumber($quoteTransfer))
             ->setBillingAddress(
                 (new AdyenApiAddressTransfer())
                     ->setCity($quoteTransfer->getBillingAddress()->getCity())
@@ -160,11 +160,25 @@ abstract class AbstractMapper implements AdyenMapperInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return string
+     * @return string|null
      */
-    protected function getGender(QuoteTransfer $quoteTransfer): string
+    protected function getGender(QuoteTransfer $quoteTransfer): ?string
     {
+        if (!array_key_exists($quoteTransfer->getCustomer()->getSalutation(), static::GENDER_MAPPING)) {
+            return null;
+        }
+
         return static::GENDER_MAPPING[$quoteTransfer->getCustomer()->getSalutation()];
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return string|null
+     */
+    protected function getPhoneNumber(QuoteTransfer $quoteTransfer): ?string
+    {
+        return $quoteTransfer->getBillingAddress()->getPhone() ? $quoteTransfer->getBillingAddress()->getPhone() : $quoteTransfer->getCustomer()->getPhone();
     }
 
     /**
