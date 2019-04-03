@@ -178,7 +178,7 @@ abstract class AbstractMapper implements AdyenMapperInterface
      */
     protected function getPhoneNumber(QuoteTransfer $quoteTransfer): ?string
     {
-        return $quoteTransfer->getBillingAddress()->getPhone() ? $quoteTransfer->getBillingAddress()->getPhone() : $quoteTransfer->getCustomer()->getPhone();
+        return $quoteTransfer->getBillingAddress()->getPhone() ?? $quoteTransfer->getCustomer()->getPhone();
     }
 
     /**
