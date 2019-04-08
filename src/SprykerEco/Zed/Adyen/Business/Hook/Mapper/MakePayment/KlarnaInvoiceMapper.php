@@ -37,7 +37,6 @@ class KlarnaInvoiceMapper extends AbstractMapper
         $payload = [
             AdyenApiRequestConfig::REQUEST_TYPE_FIELD => static::REQUEST_TYPE,
             AdyenApiRequestConfig::BILLING_ADDRESS_FIELD => $klarnaRequestTransfer->getBillingAddress()->modifiedToArray(true, true),
-            AdyenApiRequestConfig::PERSONAL_DETAILS_FIELD => $klarnaRequestTransfer->getPersonalDetails()->modifiedToArray(true, true),
         ];
 
         if (!$quoteTransfer->getBillingSameAsShipping()) {
