@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use SprykerEco\Zed\Adyen\Business\Payment\Converter\AdyenPaymentMethodFilterConverterInterface;
 use SprykerEco\Zed\Adyen\Business\Payment\Mapper\AdyenPaymentMethodFilterMapperInterface;
 use SprykerEco\Zed\Adyen\Dependency\Facade\AdyenToAdyenApiFacadeInterface;
+use SprykerEco\Zed\Adyen\Dependency\Service\AdyenToUtilQuantityServiceInterface;
 
 class AdyenPaymentMethodFilter implements AdyenPaymentMethodFilterInterface
 {
@@ -40,18 +41,26 @@ class AdyenPaymentMethodFilter implements AdyenPaymentMethodFilterInterface
     protected $converter;
 
     /**
+     * @var \SprykerEco\Zed\Adyen\Dependency\Service\AdyenToUtilQuantityServiceInterface
+     */
+    protected $utilQuantityService;
+
+    /**
      * @param \SprykerEco\Zed\Adyen\Dependency\Facade\AdyenToAdyenApiFacadeInterface $adyenApiFacade
      * @param \SprykerEco\Zed\Adyen\Business\Payment\Mapper\AdyenPaymentMethodFilterMapperInterface $mapper
      * @param \SprykerEco\Zed\Adyen\Business\Payment\Converter\AdyenPaymentMethodFilterConverterInterface $converter
+     * @param \SprykerEco\Zed\Adyen\Dependency\Service\AdyenToUtilQuantityServiceInterface $utilQuantityService
      */
     public function __construct(
         AdyenToAdyenApiFacadeInterface $adyenApiFacade,
         AdyenPaymentMethodFilterMapperInterface $mapper,
-        AdyenPaymentMethodFilterConverterInterface $converter
+        AdyenPaymentMethodFilterConverterInterface $converter,
+        AdyenToUtilQuantityServiceInterface $utilQuantityService
     ) {
         $this->adyenApiFacade = $adyenApiFacade;
         $this->mapper = $mapper;
         $this->converter = $converter;
+        $this->utilQuantityService = $utilQuantityService;
     }
 
     /**
@@ -68,9 +77,17 @@ class AdyenPaymentMethodFilter implements AdyenPaymentMethodFilterInterface
 
         $result = new ArrayObject();
 
+        $containsFloatQuantity = $this->utilQuantityService->isQuoteInt($quoteTransfer);
+
         foreach ($paymentMethodsTransfer->getMethods() as $paymentMethod) {
-            if ($this->isPaymentProviderAdyen($paymentMethod) && !$this->isAvailable($paymentMethod)) {
-                continue;
+            if ($this->isPaymentProviderAdyen($paymentMethod)) {
+                if (!$this->isAvailable($paymentMethod)) {
+                    continue;
+                }
+
+                if ($containsFloatQuantity) {
+                    continue;
+                }
             }
 
             $result->append($paymentMethod);

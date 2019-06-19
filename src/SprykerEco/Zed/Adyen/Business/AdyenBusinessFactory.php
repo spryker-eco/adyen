@@ -74,6 +74,7 @@ use SprykerEco\Zed\Adyen\Business\Writer\AdyenWriterInterface;
 use SprykerEco\Zed\Adyen\Dependency\Facade\AdyenToAdyenApiFacadeInterface;
 use SprykerEco\Zed\Adyen\Dependency\Facade\AdyenToOmsFacadeInterface;
 use SprykerEco\Zed\Adyen\Dependency\Service\AdyenToUtilEncodingServiceInterface;
+use SprykerEco\Zed\Adyen\Dependency\Service\AdyenToUtilQuantityServiceInterface;
 
 /**
  * @method \SprykerEco\Zed\Adyen\AdyenConfig getConfig()
@@ -90,7 +91,8 @@ class AdyenBusinessFactory extends AbstractBusinessFactory
         return new AdyenPaymentMethodFilter(
             $this->getAdyenApiFacade(),
             $this->createPaymentMethodsFilterMapper(),
-            $this->createPaymentMethodsFilterConverter()
+            $this->createPaymentMethodsFilterConverter(),
+            $this->getUtilQuantityService()
         );
     }
 
@@ -185,7 +187,7 @@ class AdyenBusinessFactory extends AbstractBusinessFactory
      */
     public function createKlarnaInvoiceMakePaymentMapper(): AdyenMapperInterface
     {
-        return new KlarnaInvoiceMapper($this->getConfig());
+        return new KlarnaInvoiceMapper($this->getConfig(), $this->getUtilQuantityService());
     }
 
     /**
@@ -637,5 +639,13 @@ class AdyenBusinessFactory extends AbstractBusinessFactory
     public function getUtilEncodingService(): AdyenToUtilEncodingServiceInterface
     {
         return $this->getProvidedDependency(AdyenDependencyProvider::SERVICE_UTIL_ENCODING);
+    }
+
+    /**
+     * @return \SprykerEco\Zed\Adyen\Dependency\Service\AdyenToUtilQuantityServiceInterface
+     */
+    public function getUtilQuantityService(): AdyenToUtilQuantityServiceInterface
+    {
+        return $this->getProvidedDependency(AdyenDependencyProvider::SERVICE_UTIL_QUANTITY);
     }
 }

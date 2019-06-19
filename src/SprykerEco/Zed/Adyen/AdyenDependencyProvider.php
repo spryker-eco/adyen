@@ -14,6 +14,7 @@ use SprykerEco\Zed\Adyen\Dependency\Facade\AdyenToCalculationFacadeBridge;
 use SprykerEco\Zed\Adyen\Dependency\Facade\AdyenToOmsFacadeBridge;
 use SprykerEco\Zed\Adyen\Dependency\Facade\AdyenToSalesFacadeBridge;
 use SprykerEco\Zed\Adyen\Dependency\Service\AdyenToUtilEncodingServiceBridge;
+use SprykerEco\Zed\Adyen\Dependency\Service\AdyenToUtilQuantityServiceBridge;
 
 class AdyenDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -23,6 +24,7 @@ class AdyenDependencyProvider extends AbstractBundleDependencyProvider
     public const FACADE_OMS = 'FACADE_OMS';
 
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
+    public const SERVICE_UTIL_QUANTITY = 'SERVICE_UTIL_QUANTITY';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -49,6 +51,7 @@ class AdyenDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addAdyenApiFacade($container);
         $container = $this->addOmsFacade($container);
         $container = $this->addUtilEncodingService($container);
+        $container = $this->addUtilQuantityService($container);
 
         return $container;
     }
@@ -118,6 +121,20 @@ class AdyenDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[static::SERVICE_UTIL_ENCODING] = function (Container $container) {
             return new AdyenToUtilEncodingServiceBridge($container->getLocator()->utilEncoding()->service());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addUtilQuantityService(Container $container): Container
+    {
+        $container[static::SERVICE_UTIL_QUANTITY] = function (Container $container) {
+            return new AdyenToUtilQuantityServiceBridge($container->getLocator()->utilQuantity()->service());
         };
 
         return $container;
