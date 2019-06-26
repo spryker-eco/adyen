@@ -22,7 +22,7 @@ const stylesConfig = {
     }
 };
 
-export default class CreditCard extends Component {
+export default class AdyenCreditCard extends Component {
     scriptLoader: ScriptLoader
 
     protected readyCallback(): void {
