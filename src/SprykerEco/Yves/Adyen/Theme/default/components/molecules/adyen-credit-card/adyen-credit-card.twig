@@ -2,23 +2,23 @@
 
 {% define config = {
     name: 'adyen-credit-card',
-    tag: 'adyen-credit-card'
+    tag: 'adyen-credit-card',
 } %}
 
 {% define data = {
     form: required,
     scriptSrc: data.form.adyenCreditCard.vars.sdkUrl,
-    configKey: data.form.adyenCreditCard.vars.sdkOriginKey
+    configKey: data.form.adyenCreditCard.vars.sdkOriginKey,
 } %}
 
 {% define attributes = {
-    'client-config-key': data.configKey
+    'client-config-key': data.configKey,
 } %}
 
 {% block body %}
     {% include molecule('script-loader') with {
         attributes: {
-            src: data.scriptSrc
+            src: data.scriptSrc,
         }
     } only %}
     <div class="{{ config.jsName }}__form">

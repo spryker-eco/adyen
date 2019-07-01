@@ -23,7 +23,7 @@ const stylesConfig = {
 };
 
 export default class AdyenCreditCard extends Component {
-    scriptLoader: ScriptLoader
+    protected scriptLoader: ScriptLoader
 
     protected readyCallback(): void {
         this.scriptLoader = <ScriptLoader>this.querySelector('script-loader');
@@ -62,13 +62,13 @@ export default class AdyenCreditCard extends Component {
         }
     }
 
-    get stylesIframesConfig(): any {
+    protected get stylesIframesConfig(): any {
         return {
             ...stylesConfig
         }
     }
 
-    get configKey(): string {
+    protected get configKey(): string {
         return this.getAttribute('client-config-key');
     }
 }
