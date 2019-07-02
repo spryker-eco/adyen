@@ -1,0 +1,15 @@
+@mixin adyen-credit-card($name: '.adyen-credit-card') {
+    #{$name} {
+        &__input {
+            height: 35px;
+
+            iframe {
+                margin: 0;
+            }
+        }
+
+        @content;
+    }
+}
+
+@include adyen-credit-card();
