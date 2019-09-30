@@ -10,6 +10,7 @@ namespace SprykerEco\Zed\Adyen\Business\Order;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 use SprykerEco\Shared\Adyen\AdyenConfig;
+use SprykerEco\Zed\Adyen\Business\Exception\AdyenMethodSaverException;
 use SprykerEco\Zed\Adyen\Business\Writer\AdyenWriterInterface;
 
 class AdyenOrderPaymentManager implements AdyenOrderPaymentManagerInterface
@@ -39,6 +40,8 @@ class AdyenOrderPaymentManager implements AdyenOrderPaymentManagerInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
+     *
+     * @throws SprykerEco\Zed\Adyen\Business\Exception\AdyenMethodSaverException
      *
      * @return void
      */
