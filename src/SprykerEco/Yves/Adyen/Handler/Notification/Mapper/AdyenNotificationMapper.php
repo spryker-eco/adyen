@@ -40,6 +40,7 @@ class AdyenNotificationMapper implements AdyenNotificationMapperInterface
     public function mapRequestToNotificationsTransfer(Request $request): AdyenNotificationsTransfer
     {
         $response = $this->utilEncodingService->decodeJson((string)$request->getContent(), true);
+        $response = [static::LIVE_KEY => true, static::NOTIFICATIONS_KEY => []];
         $notificationsTransfer = $this->createNotificationsTransfer($response);
         $notificationsTransfer->setNotificationItems(new ArrayObject($this->getNotificationItemTransfers($response)));
 

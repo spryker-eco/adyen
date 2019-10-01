@@ -27,6 +27,8 @@ class AdyenDoSaveOrderPlugin extends AbstractPlugin implements CheckoutDoSaveOrd
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
      *
+     * @throws \SprykerEco\Zed\Adyen\Business\Exception\AdyenMethodSaverException
+     *
      * @return void
      */
     public function saveOrder(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer)

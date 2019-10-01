@@ -146,6 +146,8 @@ class AdyenFacade extends AbstractFacade implements AdyenFacadeInterface
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
      *
+     * @throws \SprykerEco\Zed\Adyen\Business\Exception\AdyenMethodSaverException
+     *
      * @return void
      */
     public function saveOrderPayment(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer): void

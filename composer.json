@@ -45,6 +45,7 @@
     "spryker/checkout": "*",
     "spryker/payment": "*",
     "spryker/propel": "*",
+    "spryker/router": "*",
     "spryker/testify": "*",
     "spryker-shop/shop-application": "*",
     "spryker/silex": "*"
@@ -52,6 +53,7 @@
   "suggest": {
     "spryker/checkout": "CheckoutPostSaveHookInterface is used.",
     "spryker/payment": "If you want to use payment method filtering.",
+    "spryker/router": "If you want to use RouteProviderPlugins to be added to the Route Module.",
     "spryker-shop/shop-application": "Abstract Yves controller provider is used.",
     "spryker/silex": "Silex application is used."
   }
