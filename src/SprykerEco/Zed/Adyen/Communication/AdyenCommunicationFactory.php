@@ -14,6 +14,9 @@ use SprykerEco\Zed\Adyen\Dependency\Facade\AdyenToSalesFacadeInterface;
 
 /**
  * @method \SprykerEco\Zed\Adyen\AdyenConfig getConfig()
+ * @method \SprykerEco\Zed\Adyen\Persistence\AdyenEntityManagerInterface getEntityManager()
+ * @method \SprykerEco\Zed\Adyen\Business\AdyenFacadeInterface getFacade()
+ * @method \SprykerEco\Zed\Adyen\Persistence\AdyenRepositoryInterface getRepository()
  */
 class AdyenCommunicationFactory extends AbstractCommunicationFactory
 {

@@ -75,7 +75,7 @@ class IdealSubForm extends AbstractSubForm
      *
      * @return $this
      */
-    protected function addIdealIssuerField(FormBuilderInterface $builder, array $choices): self
+    protected function addIdealIssuerField(FormBuilderInterface $builder, array $choices)
     {
         $builder->add(
             static::FIELD_IDEAL_ISSUER,

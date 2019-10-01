@@ -10,6 +10,9 @@ namespace SprykerEco\Yves\Adyen\Plugin\Provider;
 use Silex\Application;
 use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvider;
 
+/**
+ * @deprecated Use `\SprykerEco\Yves\Adyen\Plugin\Router\AdyenRouteProviderPlugin` instead.
+ */
 class AdyenControllerProvider extends AbstractYvesControllerProvider
 {
     protected const BUNDLE_NAME = 'Adyen';

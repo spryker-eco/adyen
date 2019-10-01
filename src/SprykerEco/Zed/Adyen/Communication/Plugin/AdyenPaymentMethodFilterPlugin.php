@@ -15,6 +15,7 @@ use Spryker\Zed\Payment\Dependency\Plugin\Payment\PaymentMethodFilterPluginInter
 /**
  * @method \SprykerEco\Zed\Adyen\Business\AdyenFacadeInterface getFacade()
  * @method \SprykerEco\Zed\Adyen\Communication\AdyenCommunicationFactory getFactory()
+ * @method \SprykerEco\Zed\Adyen\AdyenConfig getConfig()
  */
 class AdyenPaymentMethodFilterPlugin extends AbstractPlugin implements PaymentMethodFilterPluginInterface
 {

@@ -15,11 +15,12 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 /**
  * @method \SprykerEco\Zed\Adyen\Business\AdyenFacadeInterface getFacade()
  * @method \SprykerEco\Zed\Adyen\Communication\AdyenCommunicationFactory getFactory()
+ * @method \SprykerEco\Zed\Adyen\AdyenConfig getConfig()
  */
 class AdyenDoSaveOrderPlugin extends AbstractPlugin implements CheckoutDoSaveOrderInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

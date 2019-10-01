@@ -18,11 +18,13 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \SprykerEco\Zed\Adyen\Business\AdyenBusinessFactory getFactory()
+ * @method \SprykerEco\Zed\Adyen\Persistence\AdyenEntityManagerInterface getEntityManager()
+ * @method \SprykerEco\Zed\Adyen\Persistence\AdyenRepositoryInterface getRepository()
  */
 class AdyenFacade extends AbstractFacade implements AdyenFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -42,7 +44,7 @@ class AdyenFacade extends AbstractFacade implements AdyenFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -61,7 +63,7 @@ class AdyenFacade extends AbstractFacade implements AdyenFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -80,7 +82,7 @@ class AdyenFacade extends AbstractFacade implements AdyenFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -99,7 +101,7 @@ class AdyenFacade extends AbstractFacade implements AdyenFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -118,7 +120,7 @@ class AdyenFacade extends AbstractFacade implements AdyenFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -137,7 +139,7 @@ class AdyenFacade extends AbstractFacade implements AdyenFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -152,7 +154,7 @@ class AdyenFacade extends AbstractFacade implements AdyenFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -167,7 +169,7 @@ class AdyenFacade extends AbstractFacade implements AdyenFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -181,7 +183,7 @@ class AdyenFacade extends AbstractFacade implements AdyenFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -195,7 +197,7 @@ class AdyenFacade extends AbstractFacade implements AdyenFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
