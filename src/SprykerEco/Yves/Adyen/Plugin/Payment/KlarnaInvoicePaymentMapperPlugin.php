@@ -30,7 +30,7 @@ class KlarnaInvoicePaymentMapperPlugin implements AdyenPaymentMapperPluginInterf
         }
 
         $billingAddress = $this->getInvoiceAddress($quoteTransfer->getBillingAddress());
-        $shippingAddress = $this->getInvoiceAddress($quoteTransfer->getShippingAddress());
+        $shippingAddress = $this->getInvoiceAddress($this->getShippingAddress($quoteTransfer));
         $personalDetails = $this->getInvoicePersonalDetails($quoteTransfer);
 
         $klarnaInvoiceRequest = (new AdyenKlarnaInvoiceRequestTransfer())
@@ -41,6 +41,27 @@ class KlarnaInvoicePaymentMapperPlugin implements AdyenPaymentMapperPluginInterf
         $quoteTransfer
             ->getPayment()
             ->setAdyenKlarnaInvoiceRequest($klarnaInvoiceRequest);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\AddressTransfer
+     */
+    protected function getShippingAddress(QuoteTransfer $quoteTransfer): AddressTransfer
+    {
+        if (count($quoteTransfer->getItems()) === 0) {
+            return $quoteTransfer->getShippingAddress();
+        }
+
+        /** @var \Generated\Shared\Transfer\ItemTransfer $itemTransfer */
+        $itemTransfer = current($quoteTransfer->getItems());
+
+        if ($itemTransfer->getShipment() !== null && $itemTransfer->getShipment()->getShippingAddress() !== null) {
+            return $itemTransfer->getShipment()->getShippingAddress();
+        }
+
+        return $quoteTransfer->getShippingAddress();
     }
 
     /**

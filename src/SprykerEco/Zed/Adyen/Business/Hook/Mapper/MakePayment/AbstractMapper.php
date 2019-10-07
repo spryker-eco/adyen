@@ -7,6 +7,7 @@
 
 namespace SprykerEco\Zed\Adyen\Business\Hook\Mapper\MakePayment;
 
+use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\AdyenApiAddressTransfer;
 use Generated\Shared\Transfer\AdyenApiAmountTransfer;
 use Generated\Shared\Transfer\AdyenApiMakePaymentRequestTransfer;
@@ -138,20 +139,10 @@ abstract class AbstractMapper implements AdyenMapperInterface
             ->setShopperEmail($quoteTransfer->getCustomer()->getEmail())
             ->setTelephoneNumber($this->getPhoneNumber($quoteTransfer))
             ->setBillingAddress(
-                (new AdyenApiAddressTransfer())
-                    ->setCity($quoteTransfer->getBillingAddress()->getCity())
-                    ->setCountry($quoteTransfer->getBillingAddress()->getIso2Code())
-                    ->setHouseNumberOrName($quoteTransfer->getBillingAddress()->getAddress2())
-                    ->setPostalCode($quoteTransfer->getBillingAddress()->getZipCode())
-                    ->setStreet($quoteTransfer->getBillingAddress()->getAddress1())
+                $this->getInvoiceAddress($this->getBillingAddress($quoteTransfer))
             )
             ->setDeliveryAddress(
-                (new AdyenApiAddressTransfer())
-                    ->setCity($quoteTransfer->getShippingAddress()->getCity())
-                    ->setCountry($quoteTransfer->getShippingAddress()->getIso2Code())
-                    ->setHouseNumberOrName($quoteTransfer->getShippingAddress()->getAddress2())
-                    ->setPostalCode($quoteTransfer->getShippingAddress()->getZipCode())
-                    ->setStreet($quoteTransfer->getShippingAddress()->getAddress1())
+                $this->getInvoiceAddress($this->getShippingAddress($quoteTransfer))
             );
 
         return $requestTransfer;
@@ -187,5 +178,41 @@ abstract class AbstractMapper implements AdyenMapperInterface
     protected function getAdditionalData(): array
     {
         return [];
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\AddressTransfer
+     */
+    protected function getShippingAddress(QuoteTransfer $quoteTransfer): AddressTransfer
+    {
+        if (count($quoteTransfer->getItems()) === 0) {
+            return $quoteTransfer->getShippingAddress();
+        }
+
+        /** @var \Generated\Shared\Transfer\ItemTransfer $itemTransfer */
+        $itemTransfer = current($quoteTransfer->getItems());
+
+        if ($itemTransfer->getShipment() !== null && $itemTransfer->getShipment()->getShippingAddress() !== null) {
+            return $itemTransfer->getShipment()->getShippingAddress();
+        }
+
+        return $quoteTransfer->getShippingAddress();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
+     *
+     * @return \Generated\Shared\Transfer\AdyenApiAddressTransfer
+     */
+    protected function getInvoiceAddress(AddressTransfer $addressTransfer): AdyenApiAddressTransfer
+    {
+        return (new AdyenApiAddressTransfer())
+            ->setCity($quoteTransfer->getShippingAddress()->getCity())
+            ->setCountry($quoteTransfer->getShippingAddress()->getIso2Code())
+            ->setHouseNumberOrName($quoteTransfer->getShippingAddress()->getAddress2())
+            ->setPostalCode($quoteTransfer->getShippingAddress()->getZipCode())
+            ->setStreet($quoteTransfer->getShippingAddress()->getAddress1());
     }
 }
