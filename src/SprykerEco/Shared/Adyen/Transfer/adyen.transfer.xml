@@ -88,6 +88,10 @@
 
     <transfer name="CheckoutResponse">
         <property name="adyenRedirect" type="AdyenRedirect"/>
+        <property name="isSuccess" type="bool"/>
+        <property name="errors" type="CheckoutError[]" singular="error"/>
+        <property name="isExternalRedirect" type="bool"/>
+        <property name="redirectUrl" type="string"/>
     </transfer>
 
     <transfer name="AdyenKlarnaInvoicePayment">
@@ -151,6 +155,9 @@
         <property name="adyenPayPal" type="AdyenPayPalPayment"/>
         <property name="adyenAliPay" type="AdyenAliPayPayment"/>
         <property name="adyenWeChatPay" type="AdyenWeChatPayPayment"/>
+        <property name="paymentProvider" type="string"/>
+        <property name="paymentMethod" type="string"/>
+        <property name="paymentSelection" type="string"/>
     </transfer>
 
     <transfer name="Order">
@@ -184,6 +191,272 @@
         <property name="paymentMethod" type="string"/>
         <property name="success" type="string"/>
         <property name="reason" type="string"/>
+    </transfer>
+
+    <transfer name="AdyenApiRequest">
+        <property name="paymentMethodsRequest" type="AdyenApiGetPaymentMethodsRequest" />
+        <property name="makePaymentRequest" type="AdyenApiMakePaymentRequest" />
+        <property name="paymentDetailsRequest" type="AdyenApiPaymentDetailsRequest" />
+        <property name="authorizeRequest" type="AdyenApiAuthorizeRequest" />
+        <property name="authorize3dRequest" type="AdyenApiAuthorize3dRequest" />
+        <property name="captureRequest" type="AdyenApiCaptureRequest" />
+        <property name="cancelRequest" type="AdyenApiCancelRequest" />
+        <property name="refundRequest" type="AdyenApiRefundRequest" />
+        <property name="cancelOrRefundRequest" type="AdyenApiCancelOrRefundRequest" />
+        <property name="technicalCancelRequest" type="AdyenApiTechnicalCancelRequest" />
+        <property name="adjustAuthorizationRequest" type="AdyenApiAdjustAuthorizationRequest" />
+    </transfer>
+
+    <transfer name="AdyenApiResponse">
+        <property name="isSuccess" type="bool" />
+        <property name="error" type="AdyenApiErrorResponse" />
+        <property name="paymentMethods" type="AdyenApiPaymentMethod[]" />
+        <property name="makePaymentResponse" type="AdyenApiMakePaymentResponse" />
+        <property name="paymentDetailsResponse" type="AdyenApiPaymentDetailsResponse" />
+        <property name="authorizeResponse" type="AdyenApiAuthorizeResponse" />
+        <property name="authorize3dResponse" type="AdyenApiAuthorize3dResponse" />
+        <property name="captureResponse" type="AdyenApiCaptureResponse" />
+        <property name="cancelResponse" type="AdyenApiCancelResponse" />
+        <property name="refundResponse" type="AdyenApiRefundResponse" />
+        <property name="cancelOrRefundResponse" type="AdyenApiCancelOrRefundResponse" />
+        <property name="technicalCancelResponse" type="AdyenApiTechnicalCancelResponse" />
+        <property name="adjustAuthorizationResponse" type="AdyenApiAdjustAuthorizationResponse" />
+    </transfer>
+
+    <transfer name="AdyenApiAmount">
+        <property name="currency" type="string" />
+        <property name="value" type="int" />
+    </transfer>
+
+    <transfer name="AdyenApiName">
+        <property name="firstName" type="string" />
+        <property name="gender" type="string" />
+        <property name="infix" type="string" />
+        <property name="lastName" type="string" />
+    </transfer>
+
+    <transfer name="AdyenApiAddress">
+        <property name="country" type="string" /> <!-- Required! The two-character country code of the address -->
+        <property name="city" type="string" />
+        <property name="postalCode" type="string" />
+        <property name="street" type="string" />
+        <property name="houseNumberOrName" type="string" />
+        <property name="stateOrProvince" type="string" />
+    </transfer>
+
+    <transfer name="AdyenApiLineItem">
+        <property name="id" type="string" />
+        <property name="quantity" type="int" />
+        <property name="description" type="string" />
+        <property name="amountExcludingTax" type="int" />
+        <property name="amountIncludingTax" type="int" />
+        <property name="taxAmount" type="int" />
+        <property name="taxPercentage" type="int" />
+        <property name="taxCategory" type="string" />
+    </transfer>
+
+    <transfer name="AdyenApiCancelRequest">
+        <property name="additionalData" type="array" />
+        <property name="merchantAccount" type="string" />
+        <property name="originalMerchantReference" type="string" />
+        <property name="originalReference" type="string" />
+        <property name="reference" type="string" />
+        <property name="tenderReference" type="string" />
+        <property name="uniqueTerminalId" type="string" />
+    </transfer>
+
+    <transfer name="AdyenApiCancelOrRefundRequest">
+        <property name="additionalData" type="array" />
+        <property name="merchantAccount" type="string" />
+        <property name="modificationAmount" type="AdyenApiAmount" />
+        <property name="originalMerchantReference" type="string" />
+        <property name="originalReference" type="string" />
+        <property name="reference" type="string" />
+        <property name="tenderReference" type="string" />
+        <property name="uniqueTerminalId" type="string" />
+    </transfer>
+
+    <transfer name="AdyenApiCaptureRequest">
+        <property name="additionalData" type="array" />
+        <property name="merchantAccount" type="string" />
+        <property name="modificationAmount" type="AdyenApiAmount" />
+        <property name="originalMerchantReference" type="string" />
+        <property name="originalReference" type="string" />
+        <property name="reference" type="string" />
+        <property name="tenderReference" type="string" />
+        <property name="uniqueTerminalId" type="string" />
+    </transfer>
+
+    <transfer name="AdyenApiRefundRequest">
+        <property name="additionalData" type="array" />
+        <property name="merchantAccount" type="string" />
+        <property name="modificationAmount" type="AdyenApiAmount" />
+        <property name="originalMerchantReference" type="string" />
+        <property name="originalReference" type="string" />
+        <property name="reference" type="string" />
+        <property name="tenderReference" type="string" />
+        <property name="uniqueTerminalId" type="string" />
+    </transfer>
+
+    <transfer name="AdyenApiPaymentDetailsRequest">
+        <property name="paymentData" type="string" />
+        <property name="details" type="array" />
+    </transfer>
+
+    <transfer name="AdyenApiPaymentDetailsResponse">
+        <property name="pspReference" type="string" />
+        <property name="resultCode" type="string" />
+        <property name="refusalReason" type="string" />
+        <property name="additionalData" type="array" />
+        <property name="details" type="array" />
+        <property name="paymentData" type="string" />
+        <property name="fraudResult" type="array" />
+        <property name="redirect" type="AdyenApiMakePaymentResponseRedirect" />
+    </transfer>
+
+    <transfer name="AdyenApiMakePaymentResponse">
+        <property name="pspReference" type="string" />
+        <property name="resultCode" type="string" />
+        <property name="refusalReason" type="string" />
+        <property name="additionalData" type="array" />
+        <property name="details" type="array" />
+        <property name="paymentData" type="string" />
+        <property name="fraudResult" type="array" />
+        <property name="redirect" type="AdyenApiMakePaymentResponseRedirect" />
+    </transfer>
+
+    <transfer name="AdyenApiMakePaymentRequest">
+        <!-- Required! -->
+        <property name="amount" type="AdyenApiAmount" />
+        <property name="merchantAccount" type="string" />
+        <property name="paymentMethod" type="array" />
+        <property name="reference" type="string" />  <!-- (transaction ID) max length 80 -->
+        <property name="returnUrl" type="string" />
+
+        <!-- Optional -->
+        <property name="selectedBrand" type="string" />
+        <property name="additionalData" type="array" />
+        <property name="billingAddress" type="AdyenApiAddress" />
+        <property name="captureDelayHours" type="int" />
+        <property name="channel" type="string" />   <!-- Web -->
+        <property name="company" type="AdyenApiCompany" />
+        <property name="countryCode" type="string" />   <!-- Format: ISO 3166-1 alpha-2 Example: NL or DE -->
+        <property name="dateOfBirth" type="string" />   <!-- Format ISO-8601: YYYY-MM-DD -->
+        <property name="deliveryAddress" type="AdyenApiAddress" />
+        <property name="deliveryDate" type="string" />   <!-- Format ISO 8601: YYYY-MM-DDThh:mm:ss.sssTZD Example: 2017-07-17T13:42:40.428+01:00 -->
+        <property name="orderReference" type="string" />
+        <property name="shopperEmail" type="string" />
+        <property name="shopperIP" type="string" />
+        <property name="shopperLocale" type="string" />  <!-- en_GB de_DE -->
+        <property name="shopperName" type="AdyenApiName" />  <!-- The shopper's full name and gender (if specified) -->
+        <property name="shopperReference" type="string" />  <!-- Customer ID -->
+        <property name="shopperStatement" type="string" />  <!-- The text to appear on the shopper's bank statement. -->
+        <property name="socialSecurityNumber" type="string" />  <!-- The shopper's social security number -->
+        <property name="telephoneNumber" type="string" />
+        <property name="lineItems" type="AdyenApiLineItem[]" />
+    </transfer>
+
+    <transfer name="AdyenApiPaymentMethod">
+        <property name="name" type="string" />
+        <property name="type" type="string" />
+        <property name="details" type="array" />
+    </transfer>
+
+    <transfer name="AdyenApiGetPaymentMethodsRequest">
+        <property name="merchantAccount" type="string" />
+        <property name="countryCode" type="string" />
+        <property name="amount" type="AdyenApiAmount" />
+        <property name="channel" type="string" />
+    </transfer>
+
+    <transfer name="AdyenApiErrorResponse">
+        <property name="status" type="int" />
+        <property name="errorCode" type="string" />
+        <property name="message" type="string" />
+        <property name="errorType" type="string" />
+    </transfer>
+
+    <transfer name="AdyenApiMakePaymentResponseRedirect">
+        <property name="data" type="array" />
+        <property name="method" type="string" />
+        <property name="url" type="string" />
+    </transfer>
+
+    <transfer name="AdyenApiMakePaymentResponseRedirect">
+        <property name="data" type="array" />
+        <property name="method" type="string" />
+        <property name="url" type="string" />
+    </transfer>
+
+    <transfer name="Address">
+        <property name="firstName" type="string"/>
+        <property name="lastName" type="string"/>
+        <property name="address1" type="string"/>
+        <property name="address2" type="string"/>
+        <property name="address3" type="string"/>
+        <property name="company" type="string"/>
+        <property name="city" type="string"/>
+        <property name="zipCode" type="string"/>
+        <property name="state" type="string"/>
+        <property name="iso2Code" type="string"/>
+        <property name="phone" type="string"/>
+    </transfer>
+
+    <transfer name="Item">
+        <property name="name" type="string"/>
+        <property name="sku" type="string"/>
+        <property name="quantity" type="int"/>
+        <property name="sumTaxAmount" type="int"/>
+        <property name="taxRate" type="float"/>
+        <property name="sumPrice" type="int"/>
+    </transfer>
+
+    <transfer name="SaveOrder">
+        <property name="idSalesOrder" type="int"/>
+        <property name="orderReference" type="string"/>
+        <property name="orderItems" type="Item[]" singular="orderItem"/>
+    </transfer>
+
+    <transfer name="Quote">
+        <property name="items" type="Item[]" singular="item"/>
+        <property name="totals" type="Totals"/>
+        <property name="billingAddress" type="Address"/>
+        <property name="shippingAddress" type="Address" deprecated="Use item level shipping addresses (item.shipment.shippingAddress) instead."/>
+        <property name="billingSameAsShipping" type="bool"/>
+        <property name="customer" type="Customer"/>
+        <property name="customerReference" type="string"/>
+        <property name="currency" type="Currency"/>
+        <property name="payment" type="Payment"/>
+    </transfer>
+
+    <transfer name="Customer">
+        <property name="email" type="string"/>
+        <property name="dateOfBirth" type="string"/>
+        <property name="salutation" type="string"/>
+        <property name="phone" type="string"/>
+    </transfer>
+
+    <transfer name="CheckoutError">
+        <property name="message" type="string"/>
+        <property name="errorType" type="string"/>
+    </transfer>
+
+    <transfer name="Currency">
+        <property name="code" type="string"/>
+    </transfer>
+
+    <transfer name="Totals">
+        <property name="priceToPay" type="int"/>
+        <property name="refundTotal" type="int"/>
+        <property name="hash" type="string"/>
+    </transfer>
+
+    <transfer name="PaymentMethod">
+        <property name="methodName" type="string"/>
+    </transfer>
+
+    <transfer name="PaymentMethods">
+        <property name="methods" singular="method" type="PaymentMethod[]"/>
     </transfer>
 
 </transfers>
