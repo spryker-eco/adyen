@@ -1,9 +1,10 @@
+/* tslint:disable:no-any */
 declare var csf: any;
+/* tslint:enable:no-any */
 
 import Component from 'ShopUi/models/component';
 import ScriptLoader from 'ShopUi/components/molecules/script-loader/script-loader';
 
-// Define a custom style.
 const stylesConfig = {
     base: {
         color: '#333',
@@ -23,7 +24,7 @@ const stylesConfig = {
 };
 
 export default class CreditCard extends Component {
-    scriptLoader: ScriptLoader
+    scriptLoader: ScriptLoader;
 
     protected readyCallback(): void {
         this.scriptLoader = <ScriptLoader>this.querySelector('script-loader');
@@ -43,7 +44,9 @@ export default class CreditCard extends Component {
         const securedFields = csf(this.gethostedIframesConfig());
     }
 
+    /* tslint:disable:no-any */
     protected gethostedIframesConfig(): any {
+    /* tslint:enable:no-any */
         return {
             configObject : {
                 originKey : this.configKey
@@ -59,13 +62,15 @@ export default class CreditCard extends Component {
                     }
                 }
             }
-        }
+        };
     }
 
+    /* tslint:disable:no-any */
     get stylesIframesConfig(): any {
+    /* tslint:enable:no-any */
         return {
             ...stylesConfig
-        }
+        };
     }
 
     get configKey(): string {

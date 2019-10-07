@@ -382,12 +382,6 @@
         <property name="url" type="string" />
     </transfer>
 
-    <transfer name="AdyenApiMakePaymentResponseRedirect">
-        <property name="data" type="array" />
-        <property name="method" type="string" />
-        <property name="url" type="string" />
-    </transfer>
-
     <transfer name="Address">
         <property name="firstName" type="string"/>
         <property name="lastName" type="string"/>
