@@ -139,7 +139,7 @@ abstract class AbstractMapper implements AdyenMapperInterface
             ->setShopperEmail($quoteTransfer->getCustomer()->getEmail())
             ->setTelephoneNumber($this->getPhoneNumber($quoteTransfer))
             ->setBillingAddress(
-                $this->getInvoiceAddress($this->getBillingAddress($quoteTransfer))
+                $this->getInvoiceAddress($quoteTransfer->getBillingAddress())
             )
             ->setDeliveryAddress(
                 $this->getInvoiceAddress($this->getShippingAddress($quoteTransfer))
@@ -209,10 +209,10 @@ abstract class AbstractMapper implements AdyenMapperInterface
     protected function getInvoiceAddress(AddressTransfer $addressTransfer): AdyenApiAddressTransfer
     {
         return (new AdyenApiAddressTransfer())
-            ->setCity($quoteTransfer->getShippingAddress()->getCity())
-            ->setCountry($quoteTransfer->getShippingAddress()->getIso2Code())
-            ->setHouseNumberOrName($quoteTransfer->getShippingAddress()->getAddress2())
-            ->setPostalCode($quoteTransfer->getShippingAddress()->getZipCode())
-            ->setStreet($quoteTransfer->getShippingAddress()->getAddress1());
+            ->setCity($addressTransfer->getCity())
+            ->setCountry($addressTransfer->getIso2Code())
+            ->setHouseNumberOrName($addressTransfer->getAddress2())
+            ->setPostalCode($addressTransfer->getZipCode())
+            ->setStreet($addressTransfer->getAddress1());
     }
 }

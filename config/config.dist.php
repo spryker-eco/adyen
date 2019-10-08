@@ -44,9 +44,9 @@ $config[AdyenConstants::IDEAL_ISSUERS_LIST] = [
 ];
 
 $config[AdyenApiConstants::API_KEY] = 'PUT YOUR API KEY HERE';
-$config[AdyenApiConstants::GET_PAYMENT_METHODS_ACTION_URL] = 'https://checkout-test.adyen.com/v32/paymentMethods';
-$config[AdyenApiConstants::MAKE_PAYMENT_ACTION_URL] = 'https://checkout-test.adyen.com/v32/payments';
-$config[AdyenApiConstants::PAYMENTS_DETAILS_ACTION_URL] = 'https://checkout-test.adyen.com/v32/payments/details';
+$config[AdyenApiConstants::GET_PAYMENT_METHODS_ACTION_URL] = 'https://checkout-test.adyen.com/v50/paymentMethods';
+$config[AdyenApiConstants::MAKE_PAYMENT_ACTION_URL] = 'https://checkout-test.adyen.com/v50/payments';
+$config[AdyenApiConstants::PAYMENTS_DETAILS_ACTION_URL] = 'https://checkout-test.adyen.com/v50/payments/details';
 $config[AdyenApiConstants::AUTHORIZE_ACTION_URL] = 'https://pal-test.adyen.com/pal/servlet/Payment/v30/authorise';
 $config[AdyenApiConstants::AUTHORIZE_3D_ACTION_URL] = 'https://pal-test.adyen.com/pal/servlet/Payment/v30/authorise3d';
 $config[AdyenApiConstants::CAPTURE_ACTION_URL] = 'https://pal-test.adyen.com/pal/servlet/Payment/v30/capture';

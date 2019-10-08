@@ -17,6 +17,7 @@ use SprykerEco\Shared\Adyen\AdyenApiRequestConfig;
 class KlarnaInvoiceMapper extends AbstractMapper
 {
     protected const REQUEST_TYPE = 'klarna';
+    protected const REQUEST_TAX_RATE_MULTIPLIER = 100;
 
     /**
      * @return string
@@ -36,12 +37,7 @@ class KlarnaInvoiceMapper extends AbstractMapper
         $klarnaRequestTransfer = $quoteTransfer->getPayment()->getAdyenKlarnaInvoiceRequest();
         $payload = [
             AdyenApiRequestConfig::REQUEST_TYPE_FIELD => static::REQUEST_TYPE,
-            AdyenApiRequestConfig::BILLING_ADDRESS_FIELD => $klarnaRequestTransfer->getBillingAddress()->modifiedToArray(true, true),
         ];
-
-        if (!$quoteTransfer->getBillingSameAsShipping()) {
-            $payload[AdyenApiRequestConfig::DELIVERY_ADDRESS_FIELD] = $klarnaRequestTransfer->getDeliveryAddress()->modifiedToArray(true, true);
-        }
 
         return $payload;
     }
@@ -77,10 +73,10 @@ class KlarnaInvoiceMapper extends AbstractMapper
                     ->setId($item->getSku())
                     ->setDescription($item->getName())
                     ->setQuantity($item->getQuantity())
-                    ->setTaxAmount($item->getSumTaxAmount())
-                    ->setTaxPercentage((int)$item->getTaxRate())
-                    ->setAmountExcludingTax($item->getSumPrice() - $item->getSumTaxAmount())
-                    ->setAmountIncludingTax($item->getSumPrice());
+                    ->setTaxAmount($item->getSumTaxAmountFullAggregation())
+                    ->setTaxPercentage((int)$item->getTaxRate() * static::REQUEST_TAX_RATE_MULTIPLIER)
+                    ->setAmountExcludingTax($item->getSumPriceToPayAggregation() - $item->getSumTaxAmountFullAggregation())
+                    ->setAmountIncludingTax($item->getSumPriceToPayAggregation());
             },
             $quoteTransfer->getItems()->getArrayCopy()
         );
