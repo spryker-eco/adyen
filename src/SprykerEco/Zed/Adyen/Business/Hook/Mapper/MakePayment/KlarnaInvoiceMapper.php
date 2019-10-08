@@ -24,7 +24,7 @@ class KlarnaInvoiceMapper extends AbstractMapper
      */
     protected function getReturnUrl(): string
     {
-        return '';
+        return $this->config->getKlarnaInvoiceReturnUrl();
     }
 
     /**

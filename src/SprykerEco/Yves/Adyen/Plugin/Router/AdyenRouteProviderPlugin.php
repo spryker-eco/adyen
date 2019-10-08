@@ -23,6 +23,7 @@ class AdyenRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected const ROUTE_REDIRECT_PAYPAL_PATH = '/adyen/callback/redirect-paypal';
     protected const ROUTE_REDIRECT_ALIPAY_PATH = '/adyen/callback/redirect-alipay';
     protected const ROUTE_REDIRECT_WECHATPAY_PATH = '/adyen/callback/redirect-wechatpay';
+    protected const ROUTE_REDIRECT_KLARNA_INVOICE_PATH = '/adyen/callback/redirect-klarna-invoice';
 
     protected const ROUTE_NOTIFICATION_NAME = 'adyen-notification';
     protected const ROUTE_REDIRECT_SOFORT_NAME = 'adyen-redirect-sofort';
@@ -31,6 +32,7 @@ class AdyenRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected const ROUTE_REDIRECT_PAYPAL_NAME = 'adyen-redirect-paypal';
     protected const ROUTE_REDIRECT_ALIPAY_NAME = 'adyen-redirect-alipay';
     protected const ROUTE_REDIRECT_WECHATPAY_NAME = 'adyen-redirect-wechatpay';
+    protected const ROUTE_REDIRECT_KLARNA_INVOICE_NAME = 'adyen-redirect-klarna-invoice';
 
     protected const ROUTE_NOTIFICATION_ACTION = 'indexAction';
     protected const ROUTE_REDIRECT_SOFORT_ACTION = 'redirectSofort';
@@ -39,6 +41,7 @@ class AdyenRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected const ROUTE_REDIRECT_PAYPAL_ACTION = 'redirectPayPal';
     protected const ROUTE_REDIRECT_ALIPAY_ACTION = 'redirectAliPay';
     protected const ROUTE_REDIRECT_WECHATPAY_ACTION = 'redirectWeChatPay';
+    protected const ROUTE_REDIRECT_KLARNA_INVOICE_ACTION = 'redirectKlarnaInvoice';
 
     /**
      * Specification:
@@ -59,6 +62,7 @@ class AdyenRouteProviderPlugin extends AbstractRouteProviderPlugin
         $routeCollection = $this->addRedirectPayPalRoute($routeCollection);
         $routeCollection = $this->addRedirectAliPayRoute($routeCollection);
         $routeCollection = $this->addRedirectWeChatPayRoute($routeCollection);
+        $routeCollection = $this->addRedirectKlarnaInvoiceyRoute($routeCollection);
 
         return $routeCollection;
     }
@@ -200,6 +204,26 @@ class AdyenRouteProviderPlugin extends AbstractRouteProviderPlugin
             static::ROUTE_REDIRECT_WECHATPAY_ACTION
         );
         $routeCollection->add(static::ROUTE_REDIRECT_WECHATPAY_NAME, $route);
+
+        return $routeCollection;
+    }
+
+    /**
+     * @uses \SprykerEco\Yves\Adyen\Controller\CallbackController::redirectKlarnaInvoiceAction()
+     *
+     * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
+     *
+     * @return \Spryker\Yves\Router\Route\RouteCollection
+     */
+    protected function addRedirectKlarnaInvoiceyRoute(RouteCollection $routeCollection): RouteCollection
+    {
+        $route = $this->buildRoute(
+            static::ROUTE_REDIRECT_KLARNA_INVOICE_PATH,
+            static::BUNDLE_NAME,
+            static::CALLBACK_CONTROLLER_NAME,
+            static::ROUTE_REDIRECT_KLARNA_INVOICE_ACTION
+        );
+        $routeCollection->add(static::ROUTE_REDIRECT_KLARNA_INVOICE_NAME, $route);
 
         return $routeCollection;
     }

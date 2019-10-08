@@ -19,6 +19,7 @@ $config[AdyenConstants::IDEAL_RETURN_URL] = 'IDEAL_RETURN_URL';
 $config[AdyenConstants::PAY_PAL_RETURN_URL] = 'PAY_PAL_RETURN_URL';
 $config[AdyenConstants::ALI_PAY_RETURN_URL] = 'ALI_PAY_RETURN_URL';
 $config[AdyenConstants::WE_CHAT_PAY_RETURN_URL] = 'WE_CHAT_PAY_RETURN_URL';
+$config[AdyenConstants::KLARNA_INVOICE_RETURN_URL] = 'KLARNA_INVOICE_RETURN_URL';
 $config[AdyenConstants::CREDIT_CARD_3D_SECURE_ENABLED] = true;
 $config[AdyenConstants::MULTIPLE_PARTIAL_CAPTURE_ENABLED] = false;
 $config[AdyenConstants::SOCIAL_SECURITY_NUMBER_COUNTRIES_MANDATORY] = [
