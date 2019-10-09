@@ -44,7 +44,7 @@ class AdyenRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected const ROUTE_REDIRECT_KLARNA_INVOICE_ACTION = 'redirectKlarnaInvoice';
 
     /**
-     * Specification:
+     * {@inheritDoc}
      * - Adds Adyen specific Routes to the RouteCollection.
      *
      * @api

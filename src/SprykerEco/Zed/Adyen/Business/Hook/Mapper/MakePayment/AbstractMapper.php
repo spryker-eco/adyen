@@ -128,7 +128,6 @@ abstract class AbstractMapper implements AdyenMapperInterface
     ): AdyenApiRequestTransfer {
         $requestTransfer
             ->getMakePaymentRequest()
-            ->setShopperLocale('en_US')
             ->setShopperReference($quoteTransfer->getCustomerReference())
             ->setDateOfBirth($quoteTransfer->getCustomer()->getDateOfBirth())
             ->setShopperName(

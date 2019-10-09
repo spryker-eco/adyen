@@ -74,7 +74,7 @@ class KlarnaInvoiceMapper extends AbstractMapper
                     ->setDescription($item->getName())
                     ->setQuantity($item->getQuantity())
                     ->setTaxAmount($item->getSumTaxAmountFullAggregation())
-                    ->setTaxPercentage((int)$item->getTaxRate() * static::REQUEST_TAX_RATE_MULTIPLIER)
+                    ->setTaxPercentage($this->getTaxPercentage($item))
                     ->setAmountExcludingTax($item->getSumPriceToPayAggregation() - $item->getSumTaxAmountFullAggregation())
                     ->setAmountIncludingTax($item->getSumPriceToPayAggregation());
             },
@@ -82,5 +82,15 @@ class KlarnaInvoiceMapper extends AbstractMapper
         );
 
         return new ArrayObject($items);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return int
+     */
+    protected function getTaxPercentage(ItemTransfer $itemTransfer): int
+    {
+        return (int)$item->getTaxRate() * static::REQUEST_TAX_RATE_MULTIPLIER;
     }
 }
