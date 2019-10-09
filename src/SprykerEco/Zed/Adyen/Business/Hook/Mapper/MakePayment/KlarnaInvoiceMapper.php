@@ -91,6 +91,6 @@ class KlarnaInvoiceMapper extends AbstractMapper
      */
     protected function getTaxPercentage(ItemTransfer $itemTransfer): int
     {
-        return (int)$item->getTaxRate() * static::REQUEST_TAX_RATE_MULTIPLIER;
+        return (int)$itemTransfer->getTaxRate() * static::REQUEST_TAX_RATE_MULTIPLIER;
     }
 }
