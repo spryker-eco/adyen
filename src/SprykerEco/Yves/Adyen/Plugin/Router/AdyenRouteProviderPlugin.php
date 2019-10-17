@@ -62,7 +62,7 @@ class AdyenRouteProviderPlugin extends AbstractRouteProviderPlugin
         $routeCollection = $this->addRedirectPayPalRoute($routeCollection);
         $routeCollection = $this->addRedirectAliPayRoute($routeCollection);
         $routeCollection = $this->addRedirectWeChatPayRoute($routeCollection);
-        $routeCollection = $this->addRedirectKlarnaInvoiceyRoute($routeCollection);
+        $routeCollection = $this->addRedirectKlarnaInvoiceRoute($routeCollection);
 
         return $routeCollection;
     }
@@ -215,7 +215,7 @@ class AdyenRouteProviderPlugin extends AbstractRouteProviderPlugin
      *
      * @return \Spryker\Yves\Router\Route\RouteCollection
      */
-    protected function addRedirectKlarnaInvoiceyRoute(RouteCollection $routeCollection): RouteCollection
+    protected function addRedirectKlarnaInvoiceRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute(
             static::ROUTE_REDIRECT_KLARNA_INVOICE_PATH,

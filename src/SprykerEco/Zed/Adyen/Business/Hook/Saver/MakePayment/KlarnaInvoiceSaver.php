@@ -7,9 +7,6 @@
 
 namespace SprykerEco\Zed\Adyen\Business\Hook\Saver\MakePayment;
 
-use Generated\Shared\Transfer\AdyenApiResponseTransfer;
-use Generated\Shared\Transfer\PaymentAdyenTransfer;
-
 class KlarnaInvoiceSaver extends AbstractSaver
 {
     protected const MAKE_PAYMENT_INVOICE_REQUEST_TYPE = 'MakePayment[KlarnaInvoice]';
@@ -20,21 +17,6 @@ class KlarnaInvoiceSaver extends AbstractSaver
     protected function getRequestType(): string
     {
         return static::MAKE_PAYMENT_INVOICE_REQUEST_TYPE;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\AdyenApiResponseTransfer $response
-     * @param \Generated\Shared\Transfer\PaymentAdyenTransfer $paymentAdyenTransfer
-     *
-     * @return \Generated\Shared\Transfer\PaymentAdyenTransfer
-     */
-    protected function updatePaymentAdyenTransfer(
-        AdyenApiResponseTransfer $response,
-        PaymentAdyenTransfer $paymentAdyenTransfer
-    ): PaymentAdyenTransfer {
-        $paymentAdyenTransfer->setPspReference($response->getMakePaymentResponse()->getPspReference());
-
-        return $paymentAdyenTransfer;
     }
 
     /**

@@ -45,4 +45,14 @@ class GatewayController extends AbstractGatewayController
     {
         return $this->getFacade()->handleCreditCard3dResponseFromAdyen($redirectResponseTransfer);
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\AdyenRedirectResponseTransfer $redirectResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\AdyenRedirectResponseTransfer
+     */
+    public function handleKlarnaInvoiceResponseAction(AdyenRedirectResponseTransfer $redirectResponseTransfer): AdyenRedirectResponseTransfer
+    {
+        return $this->getFacade()->handleKlarnaInvoiceResponseFromAdyen($redirectResponseTransfer);
+    }
 }

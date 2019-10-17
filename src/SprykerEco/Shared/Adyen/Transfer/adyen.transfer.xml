@@ -38,6 +38,8 @@
         <property name="resultCode" type="string"/>
         <property name="md" type="string"/>
         <property name="paRes" type="string"/>
+        <property name="paymentData" type="string"/>
+        <property name="redirectResult" type="string"/>
         <property name="isSuccess" type="bool"/>
     </transfer>
 

@@ -97,7 +97,7 @@ class CallbackController extends AbstractController
      */
     public function redirectKlarnaInvoiceAction(Request $request): RedirectResponse
     {
-        $responseTransfer = $this->getOnlineTransferRedirectResponse($request);
+        $responseTransfer = $this->getKlarnaInvoiceRedirectResponse($request);
 
         return $this->handleRedirectFromAdyen($responseTransfer);
     }
@@ -120,6 +120,16 @@ class CallbackController extends AbstractController
     protected function getCreditCard3dRedirectResponse(Request $request): AdyenRedirectResponseTransfer
     {
         return $this->getFactory()->createCreditCard3dRedirectHandler()->handle($request);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Generated\Shared\Transfer\AdyenRedirectResponseTransfer
+     */
+    protected function getKlarnaInvoiceRedirectResponse(Request $request): AdyenRedirectResponseTransfer
+    {
+        return $this->getFactory()->createKlarnaInvoiceRedirectHandler()->handle($request);
     }
 
     /**
