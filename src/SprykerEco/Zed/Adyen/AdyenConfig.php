@@ -47,10 +47,14 @@ class AdyenConfig extends AbstractBundleConfig
     protected const PAYMENT_METHOD_TYPE_DIRECT_E_BANKING = 'directEbanking';
     protected const PAYMENT_METHOD_TYPE_SEPA_DIRECT_DEBIT = 'sepadirectdebit';
     protected const PAYMENT_METHOD_TYPE_KLARNA = 'klarna';
+    protected const PAYMENT_METHOD_TYPE_BANK_TRANSFER_DE = 'bankTransfer_DE';
     protected const PAYMENT_METHOD_TYPE_BANK_TRANSFER_IBAN = 'bankTransfer_IBAN';
     protected const PAYMENT_METHOD_TYPE_IDEAL = 'ideal';
     protected const PAYMENT_METHOD_TYPE_ALI_PAY = 'alipay';
     protected const PAYMENT_METHOD_TYPE_WE_CHAT_PAY = 'wechatpay';
+
+    protected const BANK_TRANSFER_COUNTRY_ISO_CODE_DE = 'DE';
+    protected const BANK_TRANSFER_COUNTRY_ISO_CODE_IBAN = 'IBAN';
 
     /**
      * @return string
@@ -229,6 +233,14 @@ class AdyenConfig extends AbstractBundleConfig
     }
 
     /**
+     * @return string
+     */
+    public function getPrepaymentReturnUrl(): string
+    {
+        return $this->get(AdyenConstants::PREPAYMENT_RETURN_URL);
+    }
+
+    /**
      * @return bool
      */
     public function isMultiplePartialCaptureEnabled(): bool
@@ -311,5 +323,24 @@ class AdyenConfig extends AbstractBundleConfig
             static::PAYMENT_METHOD_TYPE_ALI_PAY => SharedAdyenConfig::ADYEN_ALI_PAY,
             static::PAYMENT_METHOD_TYPE_WE_CHAT_PAY => SharedAdyenConfig::ADYEN_WE_CHAT_PAY,
         ];
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getBankTransferPaymentMethods(): array
+    {
+        return [
+            static::BANK_TRANSFER_COUNTRY_ISO_CODE_IBAN => static::PAYMENT_METHOD_TYPE_BANK_TRANSFER_IBAN,
+            static::BANK_TRANSFER_COUNTRY_ISO_CODE_DE => static::PAYMENT_METHOD_TYPE_BANK_TRANSFER_DE,
+        ];
+    }
+
+    /**
+     * @return string
+     */
+    public function getBankTransferDefaultPaymentMethod(): string
+    {
+        return static::PAYMENT_METHOD_TYPE_BANK_TRANSFER_IBAN;
     }
 }

@@ -101,7 +101,7 @@ class OnlineTransferRedirectHandler implements AdyenRedirectHandlerInterface
         $requestTransfer = new AdyenApiRequestTransfer();
         $requestTransfer->setPaymentDetailsRequest(
             (new AdyenApiPaymentDetailsRequestTransfer())
-                ->setPaymentData($paymentAdyenTransfer->getPaymentData())
+                ->setPaymentData($this->getPaymentData($paymentAdyenTransfer))
                 ->setDetails($this->getRequestDetails($redirectResponseTransfer))
         );
 
@@ -140,5 +140,15 @@ class OnlineTransferRedirectHandler implements AdyenRedirectHandlerInterface
         return [
             AdyenApiRequestConfig::PAYLOAD_FIELD => $redirectResponseTransfer->getPayload(),
         ];
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PaymentAdyenTransfer $paymentAdyenTransfer
+     *
+     * @return string
+     */
+    protected function getPaymentData(PaymentAdyenTransfer $paymentAdyenTransfer): string
+    {
+        return $paymentAdyenTransfer->getPaymentData() ? $paymentAdyenTransfer->getPaymentData() : '';
     }
 }

@@ -34,12 +34,9 @@ class KlarnaInvoiceMapper extends AbstractMapper
      */
     protected function getPayload(QuoteTransfer $quoteTransfer): array
     {
-        $klarnaRequestTransfer = $quoteTransfer->getPayment()->getAdyenKlarnaInvoiceRequest();
-        $payload = [
+        return [
             AdyenApiRequestConfig::REQUEST_TYPE_FIELD => static::REQUEST_TYPE,
         ];
-
-        return $payload;
     }
 
     /**

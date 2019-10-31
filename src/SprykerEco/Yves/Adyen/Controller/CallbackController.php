@@ -105,6 +105,18 @@ class CallbackController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function redirectPrepaymentAction(Request $request): RedirectResponse
+    {
+        $responseTransfer = $this->getOnlineTransferRedirectResponse($request);
+
+        return $this->handleRedirectFromAdyen($responseTransfer);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
      * @return \Generated\Shared\Transfer\AdyenRedirectResponseTransfer
      */
     protected function getOnlineTransferRedirectResponse(Request $request): AdyenRedirectResponseTransfer

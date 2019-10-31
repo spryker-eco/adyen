@@ -12,14 +12,12 @@ use SprykerEco\Shared\Adyen\AdyenApiRequestConfig;
 
 class PrepaymentMapper extends AbstractMapper
 {
-    protected const REQUEST_TYPE = 'bankTransfer_IBAN';
-
     /**
      * @return string
      */
     protected function getReturnUrl(): string
     {
-        return '';
+        return $this->config->getPrepaymentReturnUrl();
     }
 
     /**
@@ -30,7 +28,20 @@ class PrepaymentMapper extends AbstractMapper
     protected function getPayload(QuoteTransfer $quoteTransfer): array
     {
         return [
-            AdyenApiRequestConfig::REQUEST_TYPE_FIELD => static::REQUEST_TYPE,
+            AdyenApiRequestConfig::REQUEST_TYPE_FIELD => $this->getPaymentType($quoteTransfer),
         ];
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return string
+     */
+    protected function getPaymentType(QuoteTransfer $quoteTransfer): string
+    {
+        $countryIsoCode = $quoteTransfer->getBillingAddress()->getIso2Code();
+        $bankTransferPaymentMethods = $this->config->getBankTransferPaymentMethods();
+
+        return $bankTransferPaymentMethods[$countryIsoCode] ?? $this->config->getBankTransferDefaultPaymentMethod();
     }
 }
