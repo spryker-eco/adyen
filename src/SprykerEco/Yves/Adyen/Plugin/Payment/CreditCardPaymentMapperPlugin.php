@@ -26,12 +26,14 @@ class CreditCardPaymentMapperPlugin implements AdyenPaymentMapperPluginInterface
             return;
         }
 
-        $quoteTransfer
+        $adyenCreditCardPaymentTransfer = $quoteTransfer
             ->getPayment()
-            ->getAdyenCreditCard()
-            ->setEncryptedCardNumber($request->get(AdyenApiRequestConfig::ENCRYPTED_CARD_NUMBER_FIELD))
-            ->setEncryptedExpiryMonth($request->get(AdyenApiRequestConfig::ENCRYPTED_EXPIRY_MONTH_FIELD))
-            ->setEncryptedExpiryYear($request->get(AdyenApiRequestConfig::ENCRYPTED_EXPIRY_YEAR_FIELD))
-            ->setEncryptedSecurityCode($request->get(AdyenApiRequestConfig::ENCRYPTED_SECURITY_CODE_FIELD));
+            ->getAdyenCreditCard();
+
+        $adyenCreditCardPaymentTransfer
+            ->setEncryptedCardNumber($request->get(AdyenApiRequestConfig::ENCRYPTED_CARD_NUMBER_FIELD, $adyenCreditCardPaymentTransfer->getEncryptedCardNumber()))
+            ->setEncryptedExpiryMonth($request->get(AdyenApiRequestConfig::ENCRYPTED_EXPIRY_MONTH_FIELD, $adyenCreditCardPaymentTransfer->getEncryptedExpiryMonth()))
+            ->setEncryptedExpiryYear($request->get(AdyenApiRequestConfig::ENCRYPTED_EXPIRY_YEAR_FIELD, $adyenCreditCardPaymentTransfer->getEncryptedExpiryYear()))
+            ->setEncryptedSecurityCode($request->get(AdyenApiRequestConfig::ENCRYPTED_SECURITY_CODE_FIELD, $adyenCreditCardPaymentTransfer->getEncryptedSecurityCode()));
     }
 }

@@ -57,7 +57,8 @@ export default class AdyenCreditCard extends Component {
                     sfStyles : this.stylesIframesConfig,
                     placeholders: {
                         hostedCardNumberField : '4111 1111 1111 1111',
-                        hostedExpiryDateField : '08/18',
+                        hostedExpiryMonthField : '11',
+                        hostedExpiryYearField : '19',
                         hostedSecurityCodeField : '737'
                     }
                 }

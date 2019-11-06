@@ -25,17 +25,23 @@
         {{ form_widget(data.form.adyenCreditCard) }}
         <input type="hidden" name="txvariant" value="card" />
 
-        <div class="form__fields grid grid--bottom">
+        <div class="js-chckt-pm__pm-holder form__fields grid grid--bottom">
+            <input type="hidden" name="txvariant" value="card" />
+
             <div class="form__field col col--sm-12">
-                <span class="{{ config.name }}__input input input--expand" data-hosted-id="hostedCardNumberField" data-cse="encryptedCardNumber"></span>
+                <span class="{{ config.name }}__input input input--expand input-field" data-hosted-id="hostedCardNumberField" data-cse="encryptedCardNumber"></span>
+            </div>
+
+            <div class="form__field col col--sm-3">
+                <span class="{{ config.name }}__input input input--expand input-field" data-hosted-id="hostedExpiryMonthField" data-cse="encryptedExpiryMonth"></span>
+            </div>
+
+            <div class="form__field col col--sm-3">
+                <span class="{{ config.name }}__input input input--expand input-field" data-hosted-id="hostedExpiryYearField" data-cse="encryptedExpiryYear"></span>
             </div>
 
             <div class="form__field col col--sm-6">
-                <span class="{{ config.name }}__input input input--expand" data-hosted-id="hostedExpiryDateField" data-cse="encryptedExpiryDate"></span>
-            </div>
-
-            <div class="form__field col col--sm-6">
-                <span class="{{ config.name }}__input input input--expand" data-hosted-id="hostedSecurityCodeField" data-cse="encryptedSecurityCode"></span>
+                <span class="{{ config.name }}__input input input--expand input-field" data-hosted-id="hostedSecurityCodeField" data-cse="encryptedSecurityCode"></span>
             </div>
         </div>
     </div>
