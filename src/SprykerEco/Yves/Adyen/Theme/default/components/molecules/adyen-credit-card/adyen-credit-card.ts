@@ -37,11 +37,7 @@ export default class AdyenCreditCard extends Component {
     }
 
     protected onScriptLoad(event: Event): void {
-        this.initIframes();
-    }
-
-    protected initIframes(): void {
-        const securedFields = csf(this.gethostedIframesConfig());
+        csf(this.gethostedIframesConfig());
     }
 
     /* tslint:disable:no-any */
