@@ -187,7 +187,7 @@ abstract class AbstractMapper implements AdyenMapperInterface
      */
     protected function getShippingAddress(QuoteTransfer $quoteTransfer): AddressTransfer
     {
-        if (count($quoteTransfer->getItems()) === 0) {
+        if ($quoteTransfer->getItems()->count() === 0) {
             return $quoteTransfer->getShippingAddress();
         }
 

@@ -41,9 +41,9 @@ class CreditCardPaymentMapperPlugin implements AdyenPaymentMapperPluginInterface
             ->getAdyenCreditCard();
 
         $adyenCreditCardPaymentTransfer
-            ->setEncryptedCardNumber($encryptedCardNumber ?? $adyenCreditCardPaymentTransfer->getEncryptedCardNumber())
-            ->setEncryptedExpiryMonth($encryptedExpiryMonth ?? $adyenCreditCardPaymentTransfer->getEncryptedExpiryMonth())
-            ->setEncryptedExpiryYear($encryptedExpiryYear ?? $adyenCreditCardPaymentTransfer->getEncryptedExpiryYear())
+            ->setEncryptedCardNumber($encryptedCardNumber)
+            ->setEncryptedExpiryMonth($encryptedExpiryMonth)
+            ->setEncryptedExpiryYear($encryptedExpiryYear)
             ->setEncryptedSecurityCode($encryptedSecurityCode ?? $adyenCreditCardPaymentTransfer->getEncryptedSecurityCode());
     }
 }
