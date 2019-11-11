@@ -315,7 +315,7 @@ class BaseSetUpTest extends Test
             ]))
             ->build();
 
-        $notificationsTransfer->addNotificationItems($notification);
+        $notificationsTransfer->addNotificationItem($notification);
 
         return $notificationsTransfer;
     }
