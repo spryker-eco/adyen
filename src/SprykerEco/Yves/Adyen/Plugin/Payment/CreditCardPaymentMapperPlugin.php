@@ -22,17 +22,8 @@ class CreditCardPaymentMapperPlugin implements AdyenPaymentMapperPluginInterface
      */
     public function setPaymentDataToQuote(QuoteTransfer $quoteTransfer, Request $request): void
     {
-        if ($quoteTransfer->getPayment()->getPaymentSelection() !== PaymentTransfer::ADYEN_CREDIT_CARD) {
-            return;
-        }
-
-        $encryptedCardNumber = $request->get(AdyenApiRequestConfig::ENCRYPTED_CARD_NUMBER_FIELD);
-        $encryptedExpiryMonth = $request->get(AdyenApiRequestConfig::ENCRYPTED_EXPIRY_MONTH_FIELD);
-        $encryptedExpiryYear = $request->get(AdyenApiRequestConfig::ENCRYPTED_EXPIRY_YEAR_FIELD);
-        $encryptedSecurityCode = $request->get(AdyenApiRequestConfig::ENCRYPTED_SECURITY_CODE_FIELD);
-
-        if ($encryptedCardNumber === null && $encryptedExpiryMonth === null
-            && $encryptedExpiryYear === null && $encryptedSecurityCode === null) {
+        if ($quoteTransfer->getPayment()->getPaymentSelection() !== PaymentTransfer::ADYEN_CREDIT_CARD
+            || $this->isEmptyCreditCardRequestData($request)) {
             return;
         }
 
@@ -41,9 +32,26 @@ class CreditCardPaymentMapperPlugin implements AdyenPaymentMapperPluginInterface
             ->getAdyenCreditCard();
 
         $adyenCreditCardPaymentTransfer
-            ->setEncryptedCardNumber($encryptedCardNumber)
-            ->setEncryptedExpiryMonth($encryptedExpiryMonth)
-            ->setEncryptedExpiryYear($encryptedExpiryYear)
-            ->setEncryptedSecurityCode($encryptedSecurityCode ?? $adyenCreditCardPaymentTransfer->getEncryptedSecurityCode());
+            ->setEncryptedCardNumber($request->get(AdyenApiRequestConfig::ENCRYPTED_CARD_NUMBER_FIELD))
+            ->setEncryptedExpiryMonth($request->get(AdyenApiRequestConfig::ENCRYPTED_EXPIRY_MONTH_FIELD))
+            ->setEncryptedExpiryYear($request->get(AdyenApiRequestConfig::ENCRYPTED_EXPIRY_YEAR_FIELD))
+            ->setEncryptedSecurityCode($request->get(AdyenApiRequestConfig::ENCRYPTED_SECURITY_CODE_FIELD));
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return bool
+     */
+    protected function isEmptyCreditCardRequestData(Request $request): bool
+    {
+        if ($request->get(AdyenApiRequestConfig::ENCRYPTED_CARD_NUMBER_FIELD) === null
+            && $request->get(AdyenApiRequestConfig::ENCRYPTED_EXPIRY_MONTH_FIELD) === null
+            && $request->get(AdyenApiRequestConfig::ENCRYPTED_EXPIRY_YEAR_FIELD) === null
+            && $request->get(AdyenApiRequestConfig::ENCRYPTED_SECURITY_CODE_FIELD) === null) {
+            return true;
+        }
+
+        return false;
     }
 }
