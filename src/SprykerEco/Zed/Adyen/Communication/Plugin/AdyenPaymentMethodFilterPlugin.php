@@ -13,6 +13,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Payment\Dependency\Plugin\Payment\PaymentMethodFilterPluginInterface;
 
 /**
+ * @method \SprykerEco\Zed\Adyen\AdyenConfig getConfig()
  * @method \SprykerEco\Zed\Adyen\Business\AdyenFacadeInterface getFacade()
  * @method \SprykerEco\Zed\Adyen\Communication\AdyenCommunicationFactory getFactory()
  */

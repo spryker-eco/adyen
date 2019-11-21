@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 use SprykerEco\Shared\Adyen\AdyenConfig;
 use SprykerEco\Zed\Adyen\Business\Exception\AdyenMethodSaverException;
+use SprykerEco\Zed\Adyen\Business\Reader\AdyenReaderInterface;
 use SprykerEco\Zed\Adyen\Business\Writer\AdyenWriterInterface;
 
 class AdyenOrderPaymentManager implements AdyenOrderPaymentManagerInterface
@@ -53,7 +54,7 @@ class AdyenOrderPaymentManager implements AdyenOrderPaymentManagerInterface
 
         $paymentAdyenTransfer = $this->reader->getPaymentAdyenByReference($quoteTransfer->getPayment()->getAdyenPayment()->getReference());
         if ($paymentAdyenTransfer->getIdPaymentAdyen() !== null) {
-            throw new AdyenMethodSaverException(static::ERROR_MESSAGE_REFERENCE_NOT_UNIQUE);
+            throw new AdyenMethodSaverException(static::ERROR_MESSAGE_PAYMENT_REFERENCE_NOT_UNIQUE);
         }
 
         $this->writer->savePaymentEntities($quoteTransfer->getPayment(), $saveOrderTransfer);

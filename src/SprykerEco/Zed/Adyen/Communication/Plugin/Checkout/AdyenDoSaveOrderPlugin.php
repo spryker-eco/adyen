@@ -13,6 +13,7 @@ use Spryker\Zed\CheckoutExtension\Dependency\Plugin\CheckoutDoSaveOrderInterface
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
+ * @method \SprykerEco\Zed\Adyen\AdyenConfig getConfig()
  * @method \SprykerEco\Zed\Adyen\Business\AdyenFacadeInterface getFacade()
  * @method \SprykerEco\Zed\Adyen\Communication\AdyenCommunicationFactory getFactory()
  */

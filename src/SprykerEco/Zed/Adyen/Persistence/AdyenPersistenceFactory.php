@@ -18,6 +18,8 @@ use SprykerEco\Zed\Adyen\Persistence\Mapper\AdyenPersistenceMapperInterface;
 
 /**
  * @method \SprykerEco\Zed\Adyen\AdyenConfig getConfig()
+ * @method \SprykerEco\Zed\Adyen\Persistence\AdyenEntityManagerInterface getEntityManager()
+ * @method \SprykerEco\Zed\Adyen\Persistence\AdyenRepositoryInterface getRepository()
  */
 class AdyenPersistenceFactory extends AbstractPersistenceFactory
 {
