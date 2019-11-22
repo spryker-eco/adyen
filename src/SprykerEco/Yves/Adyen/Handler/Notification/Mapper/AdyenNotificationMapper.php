@@ -67,6 +67,7 @@ class AdyenNotificationMapper implements AdyenNotificationMapperInterface
         $notificationItems = array_map(
             function ($notification) {
                 $item = $notification[static::NOTIFICATION_ITEM_KEY];
+                
                 return (new AdyenNotificationRequestItemTransfer())->fromArray($item, true);
             },
             $response[static::NOTIFICATIONS_KEY]

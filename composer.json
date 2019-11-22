@@ -6,7 +6,7 @@
     "php": ">=7.1",
     "spryker/calculation": "^4.0.0",
     "spryker/checkout-extension": "^1.0.0",
-    "spryker/kernel": "^3.0.0",
+    "spryker/kernel": "^3.30.0",
     "spryker/oms": "^7.0.0 || ^8.0.0 || ^10.0.0",
     "spryker/propel-orm": "^1.0.0",
     "spryker/sales": "^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0 || ^10.0.0",
@@ -54,5 +54,12 @@
     "spryker/payment": "If you want to use payment method filtering.",
     "spryker-shop/shop-application": "Abstract Yves controller provider is used.",
     "spryker/silex": "Silex application is used."
+  },
+  "scripts": {
+    "cs-check": "phpcs --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml -p src/ tests/",
+    "cs-fix": "phpcbf --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml -p src/ tests/",
+    "phpstan": "phpstan analyse -l 6 -c phpstan.neon src/",
+    "test": "codecept run",
+    "test-coverage": "codecept run --coverage-xml"
   }
 }

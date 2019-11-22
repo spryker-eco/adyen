@@ -115,7 +115,7 @@ class AdyenBusinessFactory extends AbstractBusinessFactory
      */
     public function createOrderPaymentManager(): AdyenOrderPaymentManagerInterface
     {
-        return new AdyenOrderPaymentManager($this->createWriter());
+        return new AdyenOrderPaymentManager($this->createWriter(), $this->createReader());
     }
 
     /**
