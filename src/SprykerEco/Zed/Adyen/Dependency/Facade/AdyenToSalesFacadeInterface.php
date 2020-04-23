@@ -14,5 +14,5 @@ interface AdyenToSalesFacadeInterface
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
-    public function getOrderByIdSalesOrder(int $idSalesOrder);
+    public function getOrderByIdSalesOrder($idSalesOrder);
 }

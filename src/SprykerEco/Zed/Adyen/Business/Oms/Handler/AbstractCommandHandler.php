@@ -71,7 +71,8 @@ abstract class AbstractCommandHandler implements AdyenCommandHandlerInterface
      */
     public function handle(array $orderItems, OrderTransfer $orderTransfer, array $data): void
     {
-        if (array_key_exists($this->config->getAdyenAutomaticOmsTrigger(), $data)
+        if (
+            array_key_exists($this->config->getAdyenAutomaticOmsTrigger(), $data)
             && $data[$this->config->getAdyenAutomaticOmsTrigger()] === true
         ) {
             return;

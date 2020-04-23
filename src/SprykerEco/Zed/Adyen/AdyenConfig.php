@@ -53,6 +53,8 @@ class AdyenConfig extends AbstractBundleConfig
     protected const PAYMENT_METHOD_TYPE_WE_CHAT_PAY = 'wechatpay';
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getOmsStatusNew(): string
@@ -61,6 +63,8 @@ class AdyenConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getOmsStatusAuthorized(): string
@@ -69,6 +73,8 @@ class AdyenConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getOmsStatusAuthorizationFailed(): string
@@ -77,6 +83,8 @@ class AdyenConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getOmsStatusCaptured(): string
@@ -85,6 +93,8 @@ class AdyenConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getOmsStatusCapturePending(): string
@@ -93,6 +103,8 @@ class AdyenConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getOmsStatusCaptureFailed(): string
@@ -101,6 +113,8 @@ class AdyenConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getOmsStatusCanceled(): string
@@ -109,6 +123,8 @@ class AdyenConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getOmsStatusCancellationPending(): string
@@ -117,6 +133,8 @@ class AdyenConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getOmsStatusCancellationFailed(): string
@@ -125,6 +143,8 @@ class AdyenConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getOmsStatusRefunded(): string
@@ -133,6 +153,8 @@ class AdyenConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getOmsStatusRefundPending(): string
@@ -141,6 +163,8 @@ class AdyenConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getOmsStatusRefundFailed(): string
@@ -149,6 +173,8 @@ class AdyenConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getOmsEventCancelName(): string
@@ -157,6 +183,8 @@ class AdyenConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getOmsEventRefundName(): string
@@ -165,6 +193,8 @@ class AdyenConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getMerchantAccount(): string
@@ -173,6 +203,8 @@ class AdyenConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getSofortReturnUrl(): string
@@ -181,6 +213,8 @@ class AdyenConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getCreditCard3DReturnUrl(): string
@@ -189,6 +223,8 @@ class AdyenConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getIdealReturnUrl(): string
@@ -197,6 +233,8 @@ class AdyenConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getPayPalReturnUrl(): string
@@ -205,6 +243,8 @@ class AdyenConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getAliPayReturnUrl(): string
@@ -213,6 +253,8 @@ class AdyenConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getWeChatPayReturnUrl(): string
@@ -221,6 +263,8 @@ class AdyenConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return bool
      */
     public function isMultiplePartialCaptureEnabled(): bool
@@ -229,6 +273,8 @@ class AdyenConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getAdyenAutomaticOmsTrigger(): string
@@ -237,6 +283,8 @@ class AdyenConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getMappedOmsStatuses(): array
@@ -272,6 +320,8 @@ class AdyenConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return bool
      */
     public function isCreditCard3dSecureEnabled(): bool
@@ -280,6 +330,8 @@ class AdyenConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getRequestChannel(): string
@@ -288,6 +340,8 @@ class AdyenConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string[]
      */
     public function getMapperPaymentMethods(): array

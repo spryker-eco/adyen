@@ -29,7 +29,7 @@ class AdyenToSalesFacadeBridge implements AdyenToSalesFacadeInterface
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
-    public function getOrderByIdSalesOrder(int $idSalesOrder): OrderTransfer
+    public function getOrderByIdSalesOrder($idSalesOrder): OrderTransfer
     {
         return $this->salesFacade->getOrderByIdSalesOrder($idSalesOrder);
     }

@@ -17,7 +17,7 @@ use Spryker\Client\Kernel\AbstractClient;
 class AdyenClient extends AbstractClient implements AdyenClientInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -34,7 +34,7 @@ class AdyenClient extends AbstractClient implements AdyenClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -51,7 +51,7 @@ class AdyenClient extends AbstractClient implements AdyenClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
