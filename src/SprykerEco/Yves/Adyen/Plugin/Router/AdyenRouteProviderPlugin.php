@@ -43,7 +43,7 @@ class AdyenRouteProviderPlugin extends AbstractRouteProviderPlugin
     {
         $routeCollection->add(
             'adyen-notification',
-            $this->buildRoute('/adyen/notification', static::BUNDLE_NAME, static::NOTIFICATION_CONTROLLER_NAME, 'index')
+            $this->buildPostRoute('/adyen/notification', static::BUNDLE_NAME, static::NOTIFICATION_CONTROLLER_NAME, 'index')
         );
 
         return $routeCollection;

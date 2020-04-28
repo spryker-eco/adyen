@@ -21,7 +21,6 @@ class AdyenPaymentMethodFilterPlugin extends AbstractPlugin implements PaymentMe
 {
     /**
      * {@inheritDoc}
-     * Specification:
      * - Returns filtered by set of plugins array object of payments
      *
      * @api

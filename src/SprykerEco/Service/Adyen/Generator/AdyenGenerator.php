@@ -41,7 +41,7 @@ class AdyenGenerator implements AdyenGeneratorInterface
             $quoteTransfer->getTotals()->getHash(),
         ];
 
-        $string = $this->textService->hashValue(Hash::SHA256, implode(static::PARAMETERS_SEPARATOR, $parameters));
+        $string = $this->textService->hashValue(implode(static::PARAMETERS_SEPARATOR, $parameters), Hash::SHA256);
 
         return $this->getLimitedReference($string);
     }

@@ -30,6 +30,6 @@ class AdyenToUtilTextServiceBridge implements AdyenToUtilTextServiceInterface
      */
     public function hashValue($value, $algorithm): string
     {
-        return $this->textService->hashValue($algorithm, $value);
+        return $this->textService->hashValue($value, $algorithm);
     }
 }
