@@ -18,6 +18,8 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class CallbackController extends AbstractController
 {
+    protected const RESULT_CODE_CANCELLED = 'cancelled';
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -117,6 +119,10 @@ class CallbackController extends AbstractController
      */
     protected function handleRedirectFromAdyen(AdyenRedirectResponseTransfer $responseTransfer): RedirectResponse
     {
+        if ($responseTransfer->getResultCode() === static::RESULT_CODE_CANCELLED) {
+            return $this->redirectResponseInternal(CheckoutPageControllerProvider::CHECKOUT_PAYMENT);
+        }
+
         if ($responseTransfer->getIsSuccess()) {
             return $this->redirectResponseInternal(CheckoutPageControllerProvider::CHECKOUT_SUCCESS);
         }
