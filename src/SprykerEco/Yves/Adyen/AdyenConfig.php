@@ -13,6 +13,8 @@ use SprykerEco\Shared\Adyen\AdyenConstants;
 class AdyenConfig extends AbstractBundleConfig
 {
     /**
+     * @api
+     *
      * @return string[]
      */
     public function getSocialSecurityNumberCountriesMandatory(): array
@@ -21,6 +23,8 @@ class AdyenConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string[]
      */
     public function getIdealIssuersList(): array
@@ -29,6 +33,8 @@ class AdyenConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getSdkCheckoutSecuredFieldsUrl(): string
@@ -37,6 +43,8 @@ class AdyenConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getSdkCheckoutOriginKey(): string

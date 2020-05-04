@@ -23,13 +23,13 @@ class AdyenToUtilTextServiceBridge implements AdyenToUtilTextServiceInterface
     }
 
     /**
-     * @param string $algorithm
      * @param mixed $value
+     * @param string $algorithm
      *
      * @return string
      */
-    public function hashValue($algorithm, $value): string
+    public function hashValue($value, $algorithm): string
     {
-        return $this->textService->hashValue($algorithm, $value);
+        return $this->textService->hashValue($value, $algorithm);
     }
 }

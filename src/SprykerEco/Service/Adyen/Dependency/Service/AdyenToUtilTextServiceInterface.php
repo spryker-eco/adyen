@@ -10,10 +10,10 @@ namespace SprykerEco\Service\Adyen\Dependency\Service;
 interface AdyenToUtilTextServiceInterface
 {
     /**
-     * @param string $algorithm
      * @param mixed $value
+     * @param string $algorithm
      *
      * @return string
      */
-    public function hashValue($algorithm, $value);
+    public function hashValue($value, $algorithm);
 }

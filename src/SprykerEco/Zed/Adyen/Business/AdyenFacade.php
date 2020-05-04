@@ -24,7 +24,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class AdyenFacade extends AbstractFacade implements AdyenFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -44,7 +44,7 @@ class AdyenFacade extends AbstractFacade implements AdyenFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -63,7 +63,7 @@ class AdyenFacade extends AbstractFacade implements AdyenFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -82,7 +82,7 @@ class AdyenFacade extends AbstractFacade implements AdyenFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -101,7 +101,7 @@ class AdyenFacade extends AbstractFacade implements AdyenFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -120,7 +120,7 @@ class AdyenFacade extends AbstractFacade implements AdyenFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -139,7 +139,7 @@ class AdyenFacade extends AbstractFacade implements AdyenFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -154,7 +154,7 @@ class AdyenFacade extends AbstractFacade implements AdyenFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -169,7 +169,7 @@ class AdyenFacade extends AbstractFacade implements AdyenFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -183,7 +183,7 @@ class AdyenFacade extends AbstractFacade implements AdyenFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -197,7 +197,7 @@ class AdyenFacade extends AbstractFacade implements AdyenFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

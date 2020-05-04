@@ -19,7 +19,7 @@ use Spryker\Zed\Oms\Dependency\Plugin\Condition\ConditionInterface;
 class IsAuthorizedPlugin extends AbstractPlugin implements ConditionInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

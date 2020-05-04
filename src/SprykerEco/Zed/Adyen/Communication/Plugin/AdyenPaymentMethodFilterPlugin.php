@@ -20,7 +20,7 @@ use Spryker\Zed\Payment\Dependency\Plugin\Payment\PaymentMethodFilterPluginInter
 class AdyenPaymentMethodFilterPlugin extends AbstractPlugin implements PaymentMethodFilterPluginInterface
 {
     /**
-     * Specification:
+     * {@inheritDoc}
      * - Returns filtered by set of plugins array object of payments
      *
      * @api

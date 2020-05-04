@@ -20,7 +20,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class AdyenDoSaveOrderPlugin extends AbstractPlugin implements CheckoutDoSaveOrderInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

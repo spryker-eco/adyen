@@ -16,7 +16,7 @@ use Spryker\Service\Kernel\AbstractService;
 class AdyenService extends AbstractService implements AdyenServiceInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
