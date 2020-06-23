@@ -9,6 +9,7 @@
     form: required,
     scriptSrc: data.form.adyenCreditCard.vars.sdkUrl,
     configKey: data.form.adyenCreditCard.vars.sdkOriginKey,
+    paymentMethods: data.form.adyenCreditCard.vars.sdkPaymentMethods,
 } %}
 
 {% define attributes = {
@@ -23,7 +24,7 @@
     } only %}
     <div class="{{ config.jsName }}__form">
         {{ form_widget(data.form.adyenCreditCard) }}
-        <input type="hidden" name="txvariant" value="card" />
+        <input type="hidden" name="paymentMethodsResponse" value="{{ data.paymentMethods }}" />
 
         <div class="form__fields grid grid--bottom">
             <div class="form__field col col--sm-12">

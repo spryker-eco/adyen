@@ -35,6 +35,20 @@ interface AdyenFacadeInterface
 
     /**
      * Specification:
+     * - Returns available payment methods by response from Adyen GetPaymentMethods call.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\AdyenApiResponseTransfer
+     */
+    public function getPaymentMethods(
+        QuoteTransfer $quoteTransfer
+    ): AdyenApiResponseTransfer;
+
+    /**
+     * Specification:
      * - Handles Authorize OMS command, make request to API, process response.
      *
      * @api

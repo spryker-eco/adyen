@@ -7,11 +7,22 @@
 
 namespace SprykerEco\Client\Adyen;
 
+use Generated\Shared\Transfer\AdyenApiResponseTransfer;
 use Generated\Shared\Transfer\AdyenNotificationsTransfer;
 use Generated\Shared\Transfer\AdyenRedirectResponseTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 
 interface AdyenClientInterface
 {
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\AdyenApiResponseTransfer
+     */
+    public function getPaymentMethods(QuoteTransfer $quoteTransfer): AdyenApiResponseTransfer;
+
     /**
      * Specification:
      * - Handle notification from API.

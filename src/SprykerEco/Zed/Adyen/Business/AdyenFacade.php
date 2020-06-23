@@ -48,6 +48,24 @@ class AdyenFacade extends AbstractFacade implements AdyenFacadeInterface
      *
      * @api
      *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\AdyenApiResponseTransfer
+     */
+    public function getPaymentMethods(
+        QuoteTransfer $quoteTransfer
+    ): AdyenApiResponseTransfer {
+        return $this
+            ->getFactory()
+            ->createPaymentMethodsFilter()
+            ->getAvailablePaymentMethods($quoteTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $orderItems
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      * @param array $data

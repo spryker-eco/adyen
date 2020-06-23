@@ -7,8 +7,10 @@
 
 namespace SprykerEco\Client\Adyen;
 
+use Generated\Shared\Transfer\AdyenApiResponseTransfer;
 use Generated\Shared\Transfer\AdyenNotificationsTransfer;
 use Generated\Shared\Transfer\AdyenRedirectResponseTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -16,6 +18,23 @@ use Spryker\Client\Kernel\AbstractClient;
  */
 class AdyenClient extends AbstractClient implements AdyenClientInterface
 {
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\AdyenApiResponseTransfer
+     */
+    public function getPaymentMethods(QuoteTransfer $quoteTransfer): AdyenApiResponseTransfer
+    {
+        return $this
+            ->getFactory()
+            ->createZedAdyenStub()
+            ->getPaymentMethods($quoteTransfer);
+    }
+
     /**
      * {@inheritDoc}
      *

@@ -7,8 +7,10 @@
 
 namespace SprykerEco\Client\Adyen\Zed;
 
+use Generated\Shared\Transfer\AdyenApiResponseTransfer;
 use Generated\Shared\Transfer\AdyenNotificationsTransfer;
 use Generated\Shared\Transfer\AdyenRedirectResponseTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use SprykerEco\Client\Adyen\Dependency\Client\AdyenToZedRequestClientInterface;
 
 class AdyenStub implements AdyenStubInterface
@@ -24,6 +26,19 @@ class AdyenStub implements AdyenStubInterface
     public function __construct(AdyenToZedRequestClientInterface $zedRequestClient)
     {
         $this->zedRequestClient = $zedRequestClient;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\AdyenApiResponseTransfer
+     */
+    public function getPaymentMethods(QuoteTransfer $quoteTransfer): AdyenApiResponseTransfer
+    {
+        /** @var \Generated\Shared\Transfer\AdyenApiResponseTransfer $adyenApiResponseTransfer */
+        $adyenApiResponseTransfer = $this->zedRequestClient->call('/adyen/gateway/get-payment-methods', $quoteTransfer);
+
+        return $adyenApiResponseTransfer;
     }
 
     /**

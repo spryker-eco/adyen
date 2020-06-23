@@ -7,8 +7,10 @@
 
 namespace SprykerEco\Zed\Adyen\Communication\Controller;
 
+use Generated\Shared\Transfer\AdyenApiResponseTransfer;
 use Generated\Shared\Transfer\AdyenNotificationsTransfer;
 use Generated\Shared\Transfer\AdyenRedirectResponseTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 
 /**
@@ -16,6 +18,16 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
  */
 class GatewayController extends AbstractGatewayController
 {
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\AdyenApiResponseTransfer
+     */
+    public function getPaymentMethodsAction(QuoteTransfer $quoteTransfer): AdyenApiResponseTransfer
+    {
+        return $this->getFacade()->getPaymentMethods($quoteTransfer);
+    }
+
     /**
      * @param \Generated\Shared\Transfer\AdyenNotificationsTransfer $notificationsTransfer
      *

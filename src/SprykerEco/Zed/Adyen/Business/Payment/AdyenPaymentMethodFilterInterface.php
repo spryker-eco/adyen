@@ -7,6 +7,7 @@
 
 namespace SprykerEco\Zed\Adyen\Business\Payment;
 
+use Generated\Shared\Transfer\AdyenApiResponseTransfer;
 use Generated\Shared\Transfer\PaymentMethodsTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
@@ -22,4 +23,11 @@ interface AdyenPaymentMethodFilterInterface
         PaymentMethodsTransfer $paymentMethodsTransfer,
         QuoteTransfer $quoteTransfer
     ): PaymentMethodsTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\AdyenApiResponseTransfer
+     */
+    public function getAvailablePaymentMethods(QuoteTransfer $quoteTransfer): AdyenApiResponseTransfer;
 }

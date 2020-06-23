@@ -8,6 +8,7 @@
 namespace SprykerEco\Zed\Adyen\Business\Payment;
 
 use ArrayObject;
+use Generated\Shared\Transfer\AdyenApiResponseTransfer;
 use Generated\Shared\Transfer\PaymentMethodsTransfer;
 use Generated\Shared\Transfer\PaymentMethodTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -64,7 +65,9 @@ class AdyenPaymentMethodFilter implements AdyenPaymentMethodFilterInterface
         PaymentMethodsTransfer $paymentMethodsTransfer,
         QuoteTransfer $quoteTransfer
     ): PaymentMethodsTransfer {
-        $this->availableMethods = $this->getAvailablePaymentMethods($quoteTransfer);
+        $this->availableMethods = $this->converter->getAvailablePaymentMethods(
+            $this->getAvailablePaymentMethods($quoteTransfer)->getArrayCopy()
+        );
 
         $result = new ArrayObject();
 
@@ -84,14 +87,13 @@ class AdyenPaymentMethodFilter implements AdyenPaymentMethodFilterInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return string[]
+     * @return \Generated\Shared\Transfer\AdyenApiResponseTransfer
      */
-    protected function getAvailablePaymentMethods(QuoteTransfer $quoteTransfer)
+    public function getAvailablePaymentMethods(QuoteTransfer $quoteTransfer): AdyenApiResponseTransfer
     {
         $requestTransfer = $this->mapper->buildRequestTransfer($quoteTransfer);
-        $responseTransfer = $this->adyenApiFacade->performGetPaymentMethodsApiCall($requestTransfer);
 
-        return $this->converter->getAvailablePaymentMethods($responseTransfer->getPaymentMethods()->getArrayCopy());
+        return $this->adyenApiFacade->performGetPaymentMethodsApiCall($requestTransfer);
     }
 
     /**
