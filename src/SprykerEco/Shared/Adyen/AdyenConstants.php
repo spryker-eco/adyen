@@ -26,4 +26,36 @@ interface AdyenConstants
     public const SOCIAL_SECURITY_NUMBER_COUNTRIES_MANDATORY = 'ADYEN:SOCIAL_SECURITY_NUMBER_COUNTRIES_MANDATORY';
     public const IDEAL_ISSUERS_LIST = 'ADYEN:IDEAL_ISSUERS_LIST';
     public const REQUEST_CHANNEL = 'ADYEN:REQUEST_CHANNEL';
+
+    /**
+     * Specification:
+     * - URL to Adyen Checkout shopper SDK JS file.
+     *
+     * @api
+     */
+    public const SDK_CHECKOUT_SHOPPER_JS_URL = 'ADYEN:SDK_CHECKOUT_SHOPPER_JS_URL';
+
+    /**
+     * Specification:
+     * - URL to Adyen Checkout shopper SDK CSS file.
+     *
+     * @api
+     */
+    public const SDK_CHECKOUT_SHOPPER_CSS_URL = 'ADYEN:SDK_CHECKOUT_SHOPPER_CSS_URL';
+
+    /**
+     * Specification:
+     * - Subresource Integrity (SRI) hash for Checkout shopper SDK JS file.
+     *
+     * @api
+     */
+    public const SDK_CHECKOUT_SHOPPER_JS_INTEGRITY_HASH = 'ADYEN:SDK_CHECKOUT_SHOPPER_JS_INTEGRITY_HASH';
+
+    /**
+     * Specification:
+     * - Subresource Integrity (SRI) hash for Checkout shopper SDK CSS file.
+     *
+     * @api
+     */
+    public const SDK_CHECKOUT_SHOPPER_CSS_INTEGRITY_HASH = 'ADYEN:SDK_CHECKOUT_SHOPPER_CSS_INTEGRITY_HASH';
 }

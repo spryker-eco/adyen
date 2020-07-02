@@ -7,6 +7,7 @@
 
 namespace SprykerEco\Zed\Adyen\Business;
 
+use Generated\Shared\Transfer\AdyenApiResponseTransfer;
 use Generated\Shared\Transfer\AdyenNotificationsTransfer;
 use Generated\Shared\Transfer\AdyenRedirectResponseTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;

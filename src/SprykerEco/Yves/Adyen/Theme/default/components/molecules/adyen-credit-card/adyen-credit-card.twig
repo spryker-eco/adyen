@@ -9,6 +9,10 @@
     form: required,
     scriptSrc: data.form.adyenCreditCard.vars.sdkUrl,
     configKey: data.form.adyenCreditCard.vars.sdkOriginKey,
+    sdkCheckoutShopperJsUrl: data.form.adyenCreditCard.vars.sdkCheckoutShopperJsUrl,
+    sdkCheckoutShopperCssUrl: data.form.adyenCreditCard.vars.sdkCheckoutShopperCssUrl,
+    sdkCheckoutShopperJsIntegrityHash: data.form.adyenCreditCard.vars.sdkCheckoutShopperJsIntegrityHash,
+    sdkCheckoutShopperCssIntegrityHash: data.form.adyenCreditCard.vars.sdkCheckoutShopperCssIntegrityHash,
     paymentMethods: data.form.adyenCreditCard.vars.sdkPaymentMethods,
 } %}
 
@@ -25,7 +29,7 @@
     <div class="{{ config.jsName }}__form">
         {{ form_widget(data.form.adyenCreditCard) }}
         <input type="hidden" name="paymentMethodsResponse" value="{{ data.paymentMethods }}" />
-
+{{ dump(data) }}
         <div class="form__fields grid grid--bottom">
             <div class="form__field col col--sm-12">
                 <span class="{{ config.name }}__input input input--expand" data-hosted-id="hostedCardNumberField" data-cse="encryptedCardNumber"></span>

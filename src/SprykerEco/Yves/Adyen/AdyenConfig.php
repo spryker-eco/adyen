@@ -51,4 +51,36 @@ class AdyenConfig extends AbstractBundleConfig
     {
         return $this->get(AdyenConstants::SDK_CHECKOUT_ORIGIN_KEY);
     }
+
+    /**
+     * @return string
+     */
+    public function getSdkCheckoutShopperJsUrl(): string
+    {
+        return $this->get(AdyenConstants::SDK_CHECKOUT_SHOPPER_JS_URL);
+    }
+
+    /**
+     * @return string
+     */
+    public function getSdkCheckoutShopperCssUrl(): string
+    {
+        return $this->get(AdyenConstants::SDK_CHECKOUT_SHOPPER_CSS_URL);
+    }
+
+    /**
+     * @return string
+     */
+    public function getSdkCheckoutShopperJsIntegrityHash(): string
+    {
+        return $this->get(AdyenConstants::SDK_CHECKOUT_SHOPPER_JS_INTEGRITY_HASH);
+    }
+
+    /**
+     * @return string
+     */
+    public function getSdkCheckoutShopperCssIntegrityHash(): string
+    {
+        return $this->get(AdyenConstants::SDK_CHECKOUT_SHOPPER_CSS_INTEGRITY_HASH);
+    }
 }

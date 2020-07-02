@@ -15,6 +15,10 @@ use Generated\Shared\Transfer\QuoteTransfer;
 interface AdyenClientInterface
 {
     /**
+     * Specification:
+     * - Makes Zed request.
+     * - Queries the available payment methods from the API.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer

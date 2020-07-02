@@ -66,7 +66,7 @@ class AdyenPaymentMethodFilter implements AdyenPaymentMethodFilterInterface
         QuoteTransfer $quoteTransfer
     ): PaymentMethodsTransfer {
         $this->availableMethods = $this->converter->getAvailablePaymentMethods(
-            $this->getAvailablePaymentMethods($quoteTransfer)->getArrayCopy()
+            $this->getAvailablePaymentMethods($quoteTransfer)->getPaymentMethods()->getArrayCopy()
         );
 
         $result = new ArrayObject();

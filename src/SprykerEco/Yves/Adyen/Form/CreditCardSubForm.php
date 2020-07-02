@@ -18,6 +18,10 @@ class CreditCardSubForm extends AbstractSubForm
 {
     public const SDK_CHECKOUT_SECURED_FIELDS_URL = 'sdkUrl';
     public const SDK_CHECKOUT_ORIGIN_KEY = 'sdkOriginKey';
+    public const SDK_CHECKOUT_SHOPPER_JS_URL = 'sdkCheckoutShopperJsUrl';
+    public const SDK_CHECKOUT_SHOPPER_CSS_URL = 'sdkCheckoutShopperCssUrl';
+    public const SDK_CHECKOUT_SHOPPER_JS_INTEGRITY_HASH = 'sdkCheckoutShopperJsIntegrityHash';
+    public const SDK_CHECKOUT_SHOPPER_CSS_INTEGRITY_HASH = 'sdkCheckoutShopperCssIntegrityHash';
     public const SDK_CHECKOUT_PAYMENT_METHODS = 'sdkPaymentMethods';
 
     protected const PAYMENT_METHOD = 'credit-card';
@@ -72,5 +76,10 @@ class CreditCardSubForm extends AbstractSubForm
         $selectedOptions = $options[static::OPTIONS_FIELD_NAME];
         $view->vars[static::SDK_CHECKOUT_SECURED_FIELDS_URL] = $selectedOptions[static::SDK_CHECKOUT_SECURED_FIELDS_URL];
         $view->vars[static::SDK_CHECKOUT_ORIGIN_KEY] = $selectedOptions[static::SDK_CHECKOUT_ORIGIN_KEY];
+        $view->vars[static::SDK_CHECKOUT_SHOPPER_JS_URL] = $selectedOptions[static::SDK_CHECKOUT_SHOPPER_JS_URL];
+        $view->vars[static::SDK_CHECKOUT_SHOPPER_CSS_URL] = $selectedOptions[static::SDK_CHECKOUT_SHOPPER_CSS_URL];
+        $view->vars[static::SDK_CHECKOUT_SHOPPER_JS_INTEGRITY_HASH] = $selectedOptions[static::SDK_CHECKOUT_SHOPPER_JS_INTEGRITY_HASH];
+        $view->vars[static::SDK_CHECKOUT_SHOPPER_CSS_INTEGRITY_HASH] = $selectedOptions[static::SDK_CHECKOUT_SHOPPER_CSS_INTEGRITY_HASH];
+        $view->vars[static::SDK_CHECKOUT_PAYMENT_METHODS] = $selectedOptions[static::SDK_CHECKOUT_PAYMENT_METHODS];
     }
 }
