@@ -57,7 +57,7 @@ class AdyenConfig extends AbstractBundleConfig
      */
     public function getSdkCheckoutShopperJsUrl(): string
     {
-        return $this->get(AdyenConstants::SDK_CHECKOUT_SHOPPER_JS_URL);
+        return $this->get(AdyenConstants::SDK_CHECKOUT_SHOPPER_JS_URL, '');
     }
 
     /**
@@ -65,7 +65,7 @@ class AdyenConfig extends AbstractBundleConfig
      */
     public function getSdkCheckoutShopperCssUrl(): string
     {
-        return $this->get(AdyenConstants::SDK_CHECKOUT_SHOPPER_CSS_URL);
+        return $this->get(AdyenConstants::SDK_CHECKOUT_SHOPPER_CSS_URL, '');
     }
 
     /**
@@ -73,7 +73,7 @@ class AdyenConfig extends AbstractBundleConfig
      */
     public function getSdkCheckoutShopperJsIntegrityHash(): string
     {
-        return $this->get(AdyenConstants::SDK_CHECKOUT_SHOPPER_JS_INTEGRITY_HASH);
+        return $this->get(AdyenConstants::SDK_CHECKOUT_SHOPPER_JS_INTEGRITY_HASH, '');
     }
 
     /**
@@ -81,6 +81,6 @@ class AdyenConfig extends AbstractBundleConfig
      */
     public function getSdkCheckoutShopperCssIntegrityHash(): string
     {
-        return $this->get(AdyenConstants::SDK_CHECKOUT_SHOPPER_CSS_INTEGRITY_HASH);
+        return $this->get(AdyenConstants::SDK_CHECKOUT_SHOPPER_CSS_INTEGRITY_HASH, '');
     }
 }

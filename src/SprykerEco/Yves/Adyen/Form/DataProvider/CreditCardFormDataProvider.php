@@ -19,29 +19,29 @@ use SprykerEco\Yves\Adyen\Form\CreditCardSubForm;
 class CreditCardFormDataProvider extends AbstractFormDataProvider
 {
     /**
-     * @var \SprykerEco\Client\Adyen\AdyenClientInterface
-     */
-    protected $adyenClient;
-
-    /**
      * @var \SprykerEco\Yves\Adyen\AdyenConfig
      */
     protected $config;
 
     /**
+     * @var \SprykerEco\Client\Adyen\AdyenClientInterface
+     */
+    protected $adyenClient;
+
+    /**
      * @param \SprykerEco\Yves\Adyen\Dependency\Client\AdyenToQuoteClientInterface $quoteClient
-     * @param \SprykerEco\Client\Adyen\AdyenClientInterface $adyenClient
      * @param \SprykerEco\Yves\Adyen\AdyenConfig $config
+     * @param \SprykerEco\Client\Adyen\AdyenClientInterface $adyenClient
      */
     public function __construct(
         AdyenToQuoteClientInterface $quoteClient,
-        AdyenClientInterface $adyenClient,
-        AdyenConfig $config
+        AdyenConfig $config,
+        AdyenClientInterface $adyenClient
     ) {
         parent::__construct($quoteClient);
 
-        $this->adyenClient = $adyenClient;
         $this->config = $config;
+        $this->adyenClient = $adyenClient;
     }
 
     /**

@@ -12,8 +12,8 @@ use SprykerEco\Shared\AdyenApi\AdyenApiConstants;
 $config[AdyenConstants::MERCHANT_ACCOUNT] = 'PUT YOUR MERCHANT ACCOUNT HERE';
 $config[AdyenConstants::REQUEST_CHANNEL] = 'Web'; //Has to be "Web"
 $config[AdyenConstants::SDK_CHECKOUT_SECURED_FIELDS_URL] = 'JS_SDK_URL';
-$config[AdyenConstants::SDK_CHECKOUT_SHOPPER_JS_URL] = 'JS_SDK_URL';
-$config[AdyenConstants::SDK_CHECKOUT_SHOPPER_CSS_URL] = 'CSS_SDK_URL';
+$config[AdyenConstants::SDK_CHECKOUT_SHOPPER_JS_URL] = 'SHOPPER_JS_SDK_URL';
+$config[AdyenConstants::SDK_CHECKOUT_SHOPPER_CSS_URL] = 'SHOPPER_CSS_SDK_URL';
 $config[AdyenConstants::SDK_CHECKOUT_SHOPPER_JS_INTEGRITY_HASH] = 'JS_INTEGRITY_HASH';
 $config[AdyenConstants::SDK_CHECKOUT_SHOPPER_CSS_INTEGRITY_HASH] = 'CSS_INTEGRITY_HASH';
 $config[AdyenConstants::SDK_CHECKOUT_ORIGIN_KEY] = 'ORIGIN_KEY';

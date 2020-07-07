@@ -38,8 +38,7 @@ class AdyenFacade extends AbstractFacade implements AdyenFacadeInterface
         PaymentMethodsTransfer $paymentMethodsTransfer,
         QuoteTransfer $quoteTransfer
     ): PaymentMethodsTransfer {
-        return $this
-            ->getFactory()
+        return $this->getFactory()
             ->createPaymentMethodsFilter()
             ->filterPaymentMethods($paymentMethodsTransfer, $quoteTransfer);
     }

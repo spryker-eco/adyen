@@ -29,8 +29,7 @@ class AdyenClient extends AbstractClient implements AdyenClientInterface
      */
     public function getPaymentMethods(QuoteTransfer $quoteTransfer): AdyenApiResponseTransfer
     {
-        return $this
-            ->getFactory()
+        return $this->getFactory()
             ->createZedAdyenStub()
             ->getPaymentMethods($quoteTransfer);
     }
