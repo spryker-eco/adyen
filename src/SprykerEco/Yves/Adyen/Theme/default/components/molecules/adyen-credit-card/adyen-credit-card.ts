@@ -1,74 +1,69 @@
-declare var csf: any;
+/* tslint:disable: no-any */
+declare var AdyenCheckout: any;
+/* tslint:enable: no-any */
 
 import Component from 'ShopUi/models/component';
 import ScriptLoader from 'ShopUi/components/molecules/script-loader/script-loader';
 
-// Define a custom style.
-const stylesConfig = {
-    base: {
-        color: '#333',
-        fontSize: '14px',
-        fontSmoothing: 'antialiased',
-        fontFamily: 'Helvetica'
-    },
-    error: {
-        color: '#b2171a'
-    },
-    placeholder: {
-        color: '#d8d8d8'
-    },
-    validated: {
-        color: '#4fc2a0'
-    }
-};
-
 export default class AdyenCreditCard extends Component {
-    protected scriptLoader: ScriptLoader
+    protected scriptLoader: ScriptLoader;
 
-    protected readyCallback(): void {
-        this.scriptLoader = <ScriptLoader>this.querySelector('script-loader');
+    protected readyCallback(): void {}
+
+    protected init(): void {
+        this.scriptLoader = <ScriptLoader>this.getElementsByClassName(`${this.jsName}__script-loader`)[0];
 
         this.mapEvents();
     }
 
     protected mapEvents(): void {
-        this.scriptLoader.addEventListener('scriptload', (event: Event) => this.onScriptLoad(event));
+        this.onScriptLoad();
     }
 
-    protected onScriptLoad(event: Event): void {
-        this.initIframes();
+    protected onScriptLoad(): void {
+        this.scriptLoader.addEventListener('scriptload', () => this.createCheckout());
     }
 
-    protected initIframes(): void {
-        const securedFields = csf(this.gethostedIframesConfig());
-    }
-
-    protected gethostedIframesConfig(): any {
-        return {
-            configObject : {
-                originKey : this.configKey
+    protected createCheckout(): void {
+        /* tslint:disable: no-unused-expression */
+        const configuration = {
+            locale: this.locale,
+            environment: this.environment,
+            originKey: this.originKey,
+            paymentMethodsResponse: JSON.parse(this.paymentMethodsResponse),
+            onChange: (state, component) => {
+                state.isValid;
+                state.data;
+                component;
             },
-            rootNode: `.${this.jsName}__form`,
-            paymentMethods : {
-                card : {
-                    sfStyles : this.stylesIframesConfig,
-                    placeholders: {
-                        hostedCardNumberField : '4111 1111 1111 1111',
-                        hostedExpiryDateField : '08/18',
-                        hostedSecurityCodeField : '737'
-                    }
-                }
+            onAdditionalDetails: (state, component) => {
+                state.data;
+                component;
             }
-        }
+        };
+        /* tslint:disable: no-unused-expression */
+
+        const checkout = new AdyenCheckout(configuration);
+        checkout.create('card').mount(`#${this.containerId}`);
     }
 
-    protected get stylesIframesConfig(): any {
-        return {
-            ...stylesConfig
-        }
+    protected get originKey(): string {
+        return this.getAttribute('origin-key');
     }
 
-    protected get configKey(): string {
-        return this.getAttribute('client-config-key');
+    protected get paymentMethodsResponse(): string {
+        return this.getAttribute('payment-methods-response');
+    }
+
+    protected get containerId(): string {
+        return this.getAttribute('container-id');
+    }
+
+    protected get locale(): string {
+        return this.getAttribute('locale');
+    }
+
+    protected get environment(): string {
+        return this.getAttribute('environment');
     }
 }

@@ -14,34 +14,27 @@
     sdkCheckoutShopperJsIntegrityHash: data.form.adyenCreditCard.vars.sdkCheckoutShopperJsIntegrityHash,
     sdkCheckoutShopperCssIntegrityHash: data.form.adyenCreditCard.vars.sdkCheckoutShopperCssIntegrityHash,
     paymentMethods: data.form.adyenCreditCard.vars.sdkPaymentMethods,
+    locale: app.locale,
 } %}
 
 {% define attributes = {
     'client-config-key': data.configKey,
+    'payment-methods-response': data.paymentMethods,
+    'container-id': data.form.adyenCreditCard.vars.id,
+    'origin-key': data.form.adyenCreditCard.vars.sdkOriginKey,
+    'locale': data.locale,
+    'environment': 'test',
 } %}
 
 {% block body %}
+    {{ form_widget(data.form.adyenCreditCard) }}
+
     {% include molecule('script-loader') with {
+        class: config.jsName ~ '__script-loader',
         attributes: {
-            src: data.scriptSrc,
+            src: data.sdkCheckoutShopperJsUrl,
         }
     } only %}
-    <div class="{{ config.jsName }}__form">
-        {{ form_widget(data.form.adyenCreditCard) }}
-        <input type="hidden" name="paymentMethodsResponse" value="{{ data.paymentMethods }}" />
-{{ dump(data) }}
-        <div class="form__fields grid grid--bottom">
-            <div class="form__field col col--sm-12">
-                <span class="{{ config.name }}__input input input--expand" data-hosted-id="hostedCardNumberField" data-cse="encryptedCardNumber"></span>
-            </div>
 
-            <div class="form__field col col--sm-6">
-                <span class="{{ config.name }}__input input input--expand" data-hosted-id="hostedExpiryDateField" data-cse="encryptedExpiryDate"></span>
-            </div>
-
-            <div class="form__field col col--sm-6">
-                <span class="{{ config.name }}__input input input--expand" data-hosted-id="hostedSecurityCodeField" data-cse="encryptedSecurityCode"></span>
-            </div>
-        </div>
-    </div>
+    <link rel="stylesheet" href="{{ data.sdkCheckoutShopperCssUrl }}" integrity="{{ data.sdkCheckoutShopperCssIntegrityHash }}" crossorigin="anonymous">
 {% endblock %}
