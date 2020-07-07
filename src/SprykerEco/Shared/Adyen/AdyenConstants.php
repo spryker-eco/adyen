@@ -13,6 +13,15 @@ namespace SprykerEco\Shared\Adyen;
 interface AdyenConstants
 {
     public const MERCHANT_ACCOUNT = 'ADYEN:MERCHANT_ACCOUNT';
+
+    /**
+     * @deprecated Will be removed without replacement. BC-reason only.
+     *
+     * Specification:
+     * - URL to Adyen Checkout security fields SDK JS file.
+     *
+     * @api
+     */
     public const SDK_CHECKOUT_SECURED_FIELDS_URL = 'ADYEN:SDK_CHECKOUT_SECURED_FIELDS_URL';
     public const SDK_CHECKOUT_ORIGIN_KEY = 'ADYEN:SDK_CHECKOUT_ORIGIN_KEY';
     public const SOFORT_RETURN_URL = 'ADYEN:SOFORT_RETURN_URL';
