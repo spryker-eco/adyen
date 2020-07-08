@@ -5,7 +5,10 @@
     tag: 'adyen-credit-card',
 } %}
 
-{# @deprecated property "scriptSrc" is deprecate: kept for BC reasons, will be removed in next major. #}
+{#
+    @deprecated property "scriptSrc" is deprecate: kept for BC reasons, will be removed in next major.
+    @deprecated property "configKey" is deprecate: kept for BC reasons, will be removed in next major.
+#}
 {% define data = {
     form: required,
     scriptSrc: data.form.adyenCreditCard.vars.sdkUrl,
@@ -16,15 +19,15 @@
     sdkCheckoutShopperCssIntegrityHash: data.form.adyenCreditCard.vars.sdkCheckoutShopperCssIntegrityHash,
     paymentMethods: data.form.adyenCreditCard.vars.sdkPaymentMethods,
     locale: app.locale,
+    environment: data.form.adyenCreditCard.vars.sdkEnvironment,
 } %}
 
 {% define attributes = {
-    'client-config-key': data.configKey,
     'payment-methods-response': data.paymentMethods,
     'container-id': data.form.adyenCreditCard.vars.id,
     'origin-key': data.form.adyenCreditCard.vars.sdkOriginKey,
     'locale': data.locale,
-    'environment': 'test',
+    'environment': data.environment,
 } %}
 
 {% block body %}

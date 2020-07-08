@@ -45,6 +45,8 @@ class AdyenConfig extends AbstractBundleConfig
     }
 
     /**
+     * @deprecated Will be removed without replacement. BC-reason only.
+     *
      * @api
      *
      * @return string
@@ -55,6 +57,8 @@ class AdyenConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getSdkCheckoutShopperJsUrl(): string
@@ -63,6 +67,8 @@ class AdyenConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getSdkCheckoutShopperCssUrl(): string
@@ -71,6 +77,8 @@ class AdyenConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getSdkCheckoutShopperJsIntegrityHash(): string
@@ -79,10 +87,22 @@ class AdyenConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getSdkCheckoutShopperCssIntegrityHash(): string
     {
         return $this->get(AdyenConstants::SDK_CHECKOUT_SHOPPER_CSS_INTEGRITY_HASH);
+    }
+
+    /**
+     * @api
+     *
+     * @return string
+     */
+    public function getSdkEnvironment(): string
+    {
+        return $this->get(AdyenConstants::SDK_ENVIRONMENT);
     }
 }

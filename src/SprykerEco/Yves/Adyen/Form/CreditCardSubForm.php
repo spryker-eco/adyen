@@ -22,6 +22,7 @@ class CreditCardSubForm extends AbstractSubForm
     public const SDK_CHECKOUT_SHOPPER_CSS_URL = 'sdkCheckoutShopperCssUrl';
     public const SDK_CHECKOUT_SHOPPER_JS_INTEGRITY_HASH = 'sdkCheckoutShopperJsIntegrityHash';
     public const SDK_CHECKOUT_SHOPPER_CSS_INTEGRITY_HASH = 'sdkCheckoutShopperCssIntegrityHash';
+    public const SDK_ENVIRONMENT = 'sdkEnvironment';
     public const SDK_CHECKOUT_PAYMENT_METHODS = 'sdkPaymentMethods';
 
     protected const PAYMENT_METHOD = 'credit-card';
@@ -80,6 +81,7 @@ class CreditCardSubForm extends AbstractSubForm
         $view->vars[static::SDK_CHECKOUT_SHOPPER_CSS_URL] = $selectedOptions[static::SDK_CHECKOUT_SHOPPER_CSS_URL];
         $view->vars[static::SDK_CHECKOUT_SHOPPER_JS_INTEGRITY_HASH] = $selectedOptions[static::SDK_CHECKOUT_SHOPPER_JS_INTEGRITY_HASH];
         $view->vars[static::SDK_CHECKOUT_SHOPPER_CSS_INTEGRITY_HASH] = $selectedOptions[static::SDK_CHECKOUT_SHOPPER_CSS_INTEGRITY_HASH];
+        $view->vars[static::SDK_ENVIRONMENT] = $selectedOptions[static::SDK_ENVIRONMENT];
         $view->vars[static::SDK_CHECKOUT_PAYMENT_METHODS] = $selectedOptions[static::SDK_CHECKOUT_PAYMENT_METHODS];
     }
 }

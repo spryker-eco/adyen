@@ -23,6 +23,14 @@ interface AdyenConstants
      * @api
      */
     public const SDK_CHECKOUT_SECURED_FIELDS_URL = 'ADYEN:SDK_CHECKOUT_SECURED_FIELDS_URL';
+    /**
+     * @deprecated Will be removed without replacement. BC-reason only.
+     *
+     * Specification:
+     * - Adyen SDK Checkout Origin Key.
+     *
+     * @api
+     */
     public const SDK_CHECKOUT_ORIGIN_KEY = 'ADYEN:SDK_CHECKOUT_ORIGIN_KEY';
     public const SOFORT_RETURN_URL = 'ADYEN:SOFORT_RETURN_URL';
     public const CREDIT_CARD_3D_RETURN_URL = 'ADYEN:CREDIT_CARD_3D_RETURN_URL';
@@ -67,4 +75,12 @@ interface AdyenConstants
      * @api
      */
     public const SDK_CHECKOUT_SHOPPER_CSS_INTEGRITY_HASH = 'ADYEN:SDK_CHECKOUT_SHOPPER_CSS_INTEGRITY_HASH';
+
+    /**
+     * Specification:
+     * - Adyen Environment name for SDK.
+     *
+     * @api
+     */
+    public const SDK_ENVIRONMENT = 'ADYEN:SDK_ENVIRONMENT';
 }

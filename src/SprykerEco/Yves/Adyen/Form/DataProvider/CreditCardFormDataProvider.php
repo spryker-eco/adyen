@@ -87,6 +87,7 @@ class CreditCardFormDataProvider extends AbstractFormDataProvider
             CreditCardSubForm::SDK_CHECKOUT_SHOPPER_CSS_URL => $this->config->getSdkCheckoutShopperCssUrl(),
             CreditCardSubForm::SDK_CHECKOUT_SHOPPER_JS_INTEGRITY_HASH => $this->config->getSdkCheckoutShopperJsIntegrityHash(),
             CreditCardSubForm::SDK_CHECKOUT_SHOPPER_CSS_INTEGRITY_HASH => $this->config->getSdkCheckoutShopperCssIntegrityHash(),
+            CreditCardSubForm::SDK_ENVIRONMENT => $this->config->getSdkEnvironment(),
             CreditCardSubForm::SDK_CHECKOUT_PAYMENT_METHODS => $this->utilEncodingService->encodeJson([AdyenApiResponseTransfer::PAYMENT_METHODS => $availablePaymentMethodsData]),
         ];
     }
