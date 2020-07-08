@@ -1,5 +1,5 @@
 /* tslint:disable: no-any */
-declare var AdyenCheckout: any;
+declare const AdyenCheckout: any;
 /* tslint:enable: no-any */
 
 import Component from 'ShopUi/models/component';
