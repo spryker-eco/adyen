@@ -138,7 +138,8 @@ class AdyenFactory extends AbstractFactory
         return new CreditCardFormDataProvider(
             $this->getQuoteClient(),
             $this->getConfig(),
-            $this->getAdyenClient()
+            $this->getAdyenClient(),
+            $this->getUtilEncodingService()
         );
     }
 

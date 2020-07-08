@@ -14,6 +14,7 @@ use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use SprykerEco\Client\Adyen\AdyenClientInterface;
 use SprykerEco\Yves\Adyen\AdyenConfig;
 use SprykerEco\Yves\Adyen\Dependency\Client\AdyenToQuoteClientInterface;
+use SprykerEco\Yves\Adyen\Dependency\Service\AdyenToUtilEncodingServiceInterface;
 use SprykerEco\Yves\Adyen\Form\CreditCardSubForm;
 
 class CreditCardFormDataProvider extends AbstractFormDataProvider
@@ -29,19 +30,27 @@ class CreditCardFormDataProvider extends AbstractFormDataProvider
     protected $adyenClient;
 
     /**
+     * @var \SprykerEco\Yves\Adyen\Dependency\Service\AdyenToUtilEncodingServiceInterface
+     */
+    protected $utilEncodingService;
+
+    /**
      * @param \SprykerEco\Yves\Adyen\Dependency\Client\AdyenToQuoteClientInterface $quoteClient
      * @param \SprykerEco\Yves\Adyen\AdyenConfig $config
      * @param \SprykerEco\Client\Adyen\AdyenClientInterface $adyenClient
+     * @param \SprykerEco\Yves\Adyen\Dependency\Service\AdyenToUtilEncodingServiceInterface $utilEncodingService
      */
     public function __construct(
         AdyenToQuoteClientInterface $quoteClient,
         AdyenConfig $config,
-        AdyenClientInterface $adyenClient
+        AdyenClientInterface $adyenClient,
+        AdyenToUtilEncodingServiceInterface $utilEncodingService
     ) {
         parent::__construct($quoteClient);
 
         $this->config = $config;
         $this->adyenClient = $adyenClient;
+        $this->utilEncodingService = $utilEncodingService;
     }
 
     /**
@@ -69,7 +78,7 @@ class CreditCardFormDataProvider extends AbstractFormDataProvider
      */
     public function getOptions(AbstractTransfer $quoteTransfer): array
     {
-        $paymentMethodsRawApiResponse = $this->buildPaymentMethodsRawApiResponse($this->adyenClient->getPaymentMethods($quoteTransfer));
+        $availablePaymentMethodsData = $this->getAvailablePaymentMethodsData($quoteTransfer);
 
         return [
             CreditCardSubForm::SDK_CHECKOUT_SECURED_FIELDS_URL => $this->config->getSdkCheckoutSecuredFieldsUrl(),
@@ -78,23 +87,24 @@ class CreditCardFormDataProvider extends AbstractFormDataProvider
             CreditCardSubForm::SDK_CHECKOUT_SHOPPER_CSS_URL => $this->config->getSdkCheckoutShopperCssUrl(),
             CreditCardSubForm::SDK_CHECKOUT_SHOPPER_JS_INTEGRITY_HASH => $this->config->getSdkCheckoutShopperJsIntegrityHash(),
             CreditCardSubForm::SDK_CHECKOUT_SHOPPER_CSS_INTEGRITY_HASH => $this->config->getSdkCheckoutShopperCssIntegrityHash(),
-            CreditCardSubForm::SDK_CHECKOUT_PAYMENT_METHODS => $paymentMethodsRawApiResponse,
+            CreditCardSubForm::SDK_CHECKOUT_PAYMENT_METHODS => $this->utilEncodingService->encodeJson([AdyenApiResponseTransfer::PAYMENT_METHODS => $availablePaymentMethodsData]),
         ];
     }
 
     /**
-     * @param \Generated\Shared\Transfer\AdyenApiResponseTransfer $adyenApiResponseTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return string
+     * @return array
      */
-    protected function buildPaymentMethodsRawApiResponse(AdyenApiResponseTransfer $adyenApiResponseTransfer): string
+    protected function getAvailablePaymentMethodsData(AbstractTransfer $quoteTransfer): array
     {
+        $adyenApiResponseTransfer = $this->adyenClient->getPaymentMethods($quoteTransfer);
         $paymentMethodsData = [];
 
         foreach ($adyenApiResponseTransfer->getPaymentMethods() as $adyenApiPaymentMethodTransfer) {
             $paymentMethodsData[] = $adyenApiPaymentMethodTransfer->toArray();
         }
 
-        return json_encode([AdyenApiResponseTransfer::PAYMENT_METHODS => $paymentMethodsData]);
+        return $paymentMethodsData;
     }
 }
