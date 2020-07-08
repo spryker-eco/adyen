@@ -8,11 +8,6 @@
             }
         }
 
-        .js-iframe-input {
-            @include helper-font-size(default);
-            padding: 100px;
-        }
-
         .adyen-checkout__input {
             @include helper-effect-transition(border-color);
             padding: 4px 8px;
