@@ -8,6 +8,7 @@
             }
         }
 
+        // Styling of external input of Adyen iframes
         .adyen-checkout__input {
             @include helper-effect-transition(border-color);
             padding: 4px 8px;
@@ -16,11 +17,13 @@
             border: 1px solid $setting-color-input-border;
         }
 
+        // Styling of external form field wrapper into Adyen iframes
         .adyen-checkout__field {
             padding: 8px;
             margin: 0;
         }
 
+        // Styling of external label of Adyen iframes
         .adyen-checkout__label__text {
             font-size: inherit;
         }
