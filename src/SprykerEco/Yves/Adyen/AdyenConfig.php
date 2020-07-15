@@ -45,8 +45,6 @@ class AdyenConfig extends AbstractBundleConfig
     }
 
     /**
-     * @deprecated Will be removed without replacement. BC-reason only.
-     *
      * @api
      *
      * @return string

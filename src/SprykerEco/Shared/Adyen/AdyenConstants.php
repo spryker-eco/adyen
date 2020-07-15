@@ -23,14 +23,6 @@ interface AdyenConstants
      * @api
      */
     public const SDK_CHECKOUT_SECURED_FIELDS_URL = 'ADYEN:SDK_CHECKOUT_SECURED_FIELDS_URL';
-    /**
-     * @deprecated Will be removed without replacement. BC-reason only.
-     *
-     * Specification:
-     * - Adyen SDK Checkout Origin Key.
-     *
-     * @api
-     */
     public const SDK_CHECKOUT_ORIGIN_KEY = 'ADYEN:SDK_CHECKOUT_ORIGIN_KEY';
     public const SOFORT_RETURN_URL = 'ADYEN:SOFORT_RETURN_URL';
     public const CREDIT_CARD_3D_RETURN_URL = 'ADYEN:CREDIT_CARD_3D_RETURN_URL';
