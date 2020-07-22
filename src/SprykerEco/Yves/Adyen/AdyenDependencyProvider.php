@@ -117,7 +117,6 @@ class AdyenDependencyProvider extends AbstractBundleDependencyProvider
     protected function getAdyenPaymentPlugins(): array
     {
         return [
-            new CreditCardPaymentMapperPlugin(),
             new KlarnaInvoicePaymentMapperPlugin(),
         ];
     }
