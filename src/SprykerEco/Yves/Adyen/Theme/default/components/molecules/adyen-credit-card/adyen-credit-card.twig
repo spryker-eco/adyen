@@ -28,6 +28,10 @@
     'origin-key': data.form.adyenCreditCard.vars.sdkOriginKey,
     'locale': data.locale,
     'environment': data.environment,
+    'cart-number-selector': '[name="' ~ data.form.adyenCreditCard.children.encryptedCardNumber.vars.full_name ~ '"]',
+    'security-code-selector': '[name="' ~ data.form.adyenCreditCard.children.encryptedSecurityCode.vars.full_name ~ '"]',
+    'expiry-year-selector': '[name="' ~ data.form.adyenCreditCard.children.encryptedExpiryYear.vars.full_name ~ '"]',
+    'expiry-month-selector': '[name="' ~ data.form.adyenCreditCard.children.encryptedExpiryMonth.vars.full_name ~ '"]',
 } %}
 
 {% block body %}

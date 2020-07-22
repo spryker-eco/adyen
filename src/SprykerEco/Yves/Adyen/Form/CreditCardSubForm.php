@@ -28,9 +28,9 @@ class CreditCardSubForm extends AbstractSubForm
     public const SDK_CHECKOUT_SHOPPER_CSS_INTEGRITY_HASH = 'sdkCheckoutShopperCssIntegrityHash';
     public const SDK_ENVIRONMENT = 'sdkEnvironment';
     public const SDK_CHECKOUT_PAYMENT_METHODS = 'sdkPaymentMethods';
-    public const ENCRYPTED_CARD_NUMBER_FIELD = 'encryptedSecurityCode';
-    public const ENCRYPTED_EXPIRY_YEAR_FIELD = 'encryptedCardNumber';
-    public const ENCRYPTED_EXPIRY_MONTH_FIELD = 'encryptedExpiryYear';
+    public const ENCRYPTED_CARD_NUMBER_FIELD = 'encryptedCardNumber';
+    public const ENCRYPTED_EXPIRY_YEAR_FIELD = 'encryptedExpiryYear';
+    public const ENCRYPTED_EXPIRY_MONTH_FIELD = 'encryptedExpiryMonth';
     public const ENCRYPTED_SECURITY_CODE_FIELD = 'encryptedSecurityCode';
 
     protected const PAYMENT_METHOD = 'credit-card';

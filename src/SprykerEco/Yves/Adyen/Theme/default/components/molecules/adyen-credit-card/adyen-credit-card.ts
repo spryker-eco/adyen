@@ -7,10 +7,18 @@ import ScriptLoader from 'ShopUi/components/molecules/script-loader/script-loade
 
 export default class AdyenCreditCard extends Component {
     protected scriptLoader: ScriptLoader;
+    protected cardNumberInput: HTMLInputElement;
+    protected securityCodeInput: HTMLInputElement;
+    protected expiryYearInput: HTMLInputElement;
+    protected expiryMonthInput: HTMLInputElement;
 
     protected readyCallback(): void {}
 
     protected init(): void {
+        this.cardNumberInput = <HTMLInputElement>this.querySelector(this.cardNumberSelector);
+        this.securityCodeInput = <HTMLInputElement>this.querySelector(this.securityCodeSelector);
+        this.expiryYearInput = <HTMLInputElement>this.querySelector(this.expiryYearSelector);
+        this.expiryMonthInput = <HTMLInputElement>this.querySelector(this.expiryMonthSelector);
         this.scriptLoader = <ScriptLoader>this.getElementsByClassName(`${this.jsName}__script-loader`)[0];
 
         this.mapEvents();
@@ -25,23 +33,20 @@ export default class AdyenCreditCard extends Component {
     }
 
     protected createCheckout(): void {
-        /* tslint:disable: no-unused-expression */
         const configuration = {
             locale: this.locale,
             environment: this.environment,
             originKey: this.originKey,
             paymentMethodsResponse: JSON.parse(this.paymentMethodsResponse),
-            onChange: (state, component) => {
-                state.isValid;
-                state.data;
-                component;
-            },
-            onAdditionalDetails: (state, component) => {
-                state.data;
-                component;
+            onChange: state => {
+                if (state.isValid) {
+                    this.cardNumberInput.value = state.data.paymentMethod.encryptedCardNumber;
+                    this.securityCodeInput.value = state.data.paymentMethod.encryptedSecurityCode;
+                    this.expiryYearInput.value = state.data.paymentMethod.encryptedExpiryYear;
+                    this.expiryMonthInput.value = state.data.paymentMethod.encryptedExpiryMonth;
+                }
             }
         };
-        /* tslint:disable: no-unused-expression */
 
         const checkout = new AdyenCheckout(configuration);
         checkout.create('card').mount(`#${this.containerId}`);
@@ -65,5 +70,21 @@ export default class AdyenCreditCard extends Component {
 
     protected get environment(): string {
         return this.getAttribute('environment');
+    }
+
+    protected get cardNumberSelector(): string {
+        return this.getAttribute('cart-number-selector');
+    }
+
+    protected get securityCodeSelector(): string {
+        return this.getAttribute('security-code-selector');
+    }
+
+    protected get expiryYearSelector(): string {
+        return this.getAttribute('expiry-year-selector');
+    }
+
+    protected get expiryMonthSelector(): string {
+        return this.getAttribute('expiry-month-selector');
     }
 }
