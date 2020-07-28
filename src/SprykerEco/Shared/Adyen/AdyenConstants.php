@@ -13,6 +13,15 @@ namespace SprykerEco\Shared\Adyen;
 interface AdyenConstants
 {
     public const MERCHANT_ACCOUNT = 'ADYEN:MERCHANT_ACCOUNT';
+
+    /**
+     * @deprecated Will be removed without replacement. BC-reason only.
+     *
+     * Specification:
+     * - URL to Adyen Checkout security fields SDK JS file.
+     *
+     * @api
+     */
     public const SDK_CHECKOUT_SECURED_FIELDS_URL = 'ADYEN:SDK_CHECKOUT_SECURED_FIELDS_URL';
     public const SDK_CHECKOUT_ORIGIN_KEY = 'ADYEN:SDK_CHECKOUT_ORIGIN_KEY';
     public const SOFORT_RETURN_URL = 'ADYEN:SOFORT_RETURN_URL';
@@ -26,4 +35,44 @@ interface AdyenConstants
     public const SOCIAL_SECURITY_NUMBER_COUNTRIES_MANDATORY = 'ADYEN:SOCIAL_SECURITY_NUMBER_COUNTRIES_MANDATORY';
     public const IDEAL_ISSUERS_LIST = 'ADYEN:IDEAL_ISSUERS_LIST';
     public const REQUEST_CHANNEL = 'ADYEN:REQUEST_CHANNEL';
+
+    /**
+     * Specification:
+     * - URL to Adyen Checkout shopper SDK JS file.
+     *
+     * @api
+     */
+    public const SDK_CHECKOUT_SHOPPER_JS_URL = 'ADYEN:SDK_CHECKOUT_SHOPPER_JS_URL';
+
+    /**
+     * Specification:
+     * - URL to Adyen Checkout shopper SDK CSS file.
+     *
+     * @api
+     */
+    public const SDK_CHECKOUT_SHOPPER_CSS_URL = 'ADYEN:SDK_CHECKOUT_SHOPPER_CSS_URL';
+
+    /**
+     * Specification:
+     * - Subresource Integrity (SRI) hash for Checkout shopper SDK JS file.
+     *
+     * @api
+     */
+    public const SDK_CHECKOUT_SHOPPER_JS_INTEGRITY_HASH = 'ADYEN:SDK_CHECKOUT_SHOPPER_JS_INTEGRITY_HASH';
+
+    /**
+     * Specification:
+     * - Subresource Integrity (SRI) hash for Checkout shopper SDK CSS file.
+     *
+     * @api
+     */
+    public const SDK_CHECKOUT_SHOPPER_CSS_INTEGRITY_HASH = 'ADYEN:SDK_CHECKOUT_SHOPPER_CSS_INTEGRITY_HASH';
+
+    /**
+     * Specification:
+     * - Adyen Environment name for SDK.
+     *
+     * @api
+     */
+    public const SDK_ENVIRONMENT = 'ADYEN:SDK_ENVIRONMENT';
 }

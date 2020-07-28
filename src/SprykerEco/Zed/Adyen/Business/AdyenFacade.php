@@ -7,6 +7,7 @@
 
 namespace SprykerEco\Zed\Adyen\Business;
 
+use Generated\Shared\Transfer\AdyenApiResponseTransfer;
 use Generated\Shared\Transfer\AdyenNotificationsTransfer;
 use Generated\Shared\Transfer\AdyenRedirectResponseTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
@@ -37,10 +38,27 @@ class AdyenFacade extends AbstractFacade implements AdyenFacadeInterface
         PaymentMethodsTransfer $paymentMethodsTransfer,
         QuoteTransfer $quoteTransfer
     ): PaymentMethodsTransfer {
+        return $this->getFactory()
+            ->createPaymentMethodsFilter()
+            ->filterPaymentMethods($paymentMethodsTransfer, $quoteTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\AdyenApiResponseTransfer
+     */
+    public function getPaymentMethods(
+        QuoteTransfer $quoteTransfer
+    ): AdyenApiResponseTransfer {
         return $this
             ->getFactory()
             ->createPaymentMethodsFilter()
-            ->filterPaymentMethods($paymentMethodsTransfer, $quoteTransfer);
+            ->getAvailablePaymentMethods($quoteTransfer);
     }
 
     /**

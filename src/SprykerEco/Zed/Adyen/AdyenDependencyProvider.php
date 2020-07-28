@@ -60,9 +60,9 @@ class AdyenDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addAdyenApiFacade(Container $container): Container
     {
-        $container[static::FACADE_ADYEN_API] = function (Container $container) {
+        $container->set(static::FACADE_ADYEN_API, function (Container $container) {
             return new AdyenToAdyenApiFacadeBridge($container->getLocator()->adyenApi()->facade());
-        };
+        });
 
         return $container;
     }
@@ -74,9 +74,9 @@ class AdyenDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addSalesFacade(Container $container): Container
     {
-        $container[static::FACADE_SALES] = function (Container $container) {
+        $container->set(static::FACADE_SALES, function (Container $container) {
             return new AdyenToSalesFacadeBridge($container->getLocator()->sales()->facade());
-        };
+        });
 
         return $container;
     }
@@ -88,9 +88,9 @@ class AdyenDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCalculationFacade(Container $container): Container
     {
-        $container[static::FACADE_CALCULATION] = function (Container $container) {
+        $container->set(static::FACADE_CALCULATION, function (Container $container) {
             return new AdyenToCalculationFacadeBridge($container->getLocator()->calculation()->facade());
-        };
+        });
 
         return $container;
     }
@@ -102,9 +102,9 @@ class AdyenDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addOmsFacade(Container $container): Container
     {
-        $container[static::FACADE_OMS] = function (Container $container) {
+        $container->set(static::FACADE_OMS, function (Container $container) {
             return new AdyenToOmsFacadeBridge($container->getLocator()->oms()->facade());
-        };
+        });
 
         return $container;
     }
@@ -116,9 +116,9 @@ class AdyenDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addUtilEncodingService(Container $container): Container
     {
-        $container[static::SERVICE_UTIL_ENCODING] = function (Container $container) {
+        $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
             return new AdyenToUtilEncodingServiceBridge($container->getLocator()->utilEncoding()->service());
-        };
+        });
 
         return $container;
     }

@@ -33,6 +33,8 @@ class AdyenConfig extends AbstractBundleConfig
     }
 
     /**
+     * @deprecated Will be removed without replacement. BC-reason only.
+     *
      * @api
      *
      * @return string
@@ -50,5 +52,55 @@ class AdyenConfig extends AbstractBundleConfig
     public function getSdkCheckoutOriginKey(): string
     {
         return $this->get(AdyenConstants::SDK_CHECKOUT_ORIGIN_KEY);
+    }
+
+    /**
+     * @api
+     *
+     * @return string
+     */
+    public function getSdkCheckoutShopperJsUrl(): string
+    {
+        return $this->get(AdyenConstants::SDK_CHECKOUT_SHOPPER_JS_URL);
+    }
+
+    /**
+     * @api
+     *
+     * @return string
+     */
+    public function getSdkCheckoutShopperCssUrl(): string
+    {
+        return $this->get(AdyenConstants::SDK_CHECKOUT_SHOPPER_CSS_URL);
+    }
+
+    /**
+     * @api
+     *
+     * @return string
+     */
+    public function getSdkCheckoutShopperJsIntegrityHash(): string
+    {
+        return $this->get(AdyenConstants::SDK_CHECKOUT_SHOPPER_JS_INTEGRITY_HASH);
+    }
+
+    /**
+     * @api
+     *
+     * @return string
+     */
+    public function getSdkCheckoutShopperCssIntegrityHash(): string
+    {
+        return $this->get(AdyenConstants::SDK_CHECKOUT_SHOPPER_CSS_INTEGRITY_HASH);
+    }
+
+    /**
+     * @api
+     *
+     * @return string
+     */
+    public function getSdkEnvironment(): string
+    {
+        return $this->get(AdyenConstants::SDK_ENVIRONMENT);
     }
 }

@@ -11,7 +11,7 @@ use Silex\Application;
 use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvider;
 
 /**
- * @deprecated Use `\SprykerEco\Yves\Adyen\Plugin\RouterAdyenRouteProviderPlugin` instead.
+ * @deprecated Use {@link \SprykerEco\Yves\Adyen\Plugin\Router\AdyenRouteProviderPlugin} instead.
  */
 class AdyenControllerProvider extends AbstractYvesControllerProvider
 {

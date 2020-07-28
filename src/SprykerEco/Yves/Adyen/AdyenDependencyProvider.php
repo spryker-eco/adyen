@@ -48,9 +48,9 @@ class AdyenDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addAdyenClient(Container $container): Container
     {
-        $container[static::CLIENT_ADYEN] = function (Container $container) {
+        $container->set(static::CLIENT_ADYEN, function (Container $container) {
             return $container->getLocator()->adyen()->client();
-        };
+        });
 
         return $container;
     }
@@ -62,9 +62,9 @@ class AdyenDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addQuoteClient(Container $container): Container
     {
-        $container[static::CLIENT_QUOTE] = function (Container $container) {
+        $container->set(static::CLIENT_QUOTE, function (Container $container) {
             return new AdyenToQuoteClientBridge($container->getLocator()->quote()->client());
-        };
+        });
 
         return $container;
     }
@@ -76,9 +76,9 @@ class AdyenDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addAdyenService(Container $container): Container
     {
-        $container[static::SERVICE_ADYEN] = function (Container $container) {
+        $container->set(static::SERVICE_ADYEN, function (Container $container) {
             return $container->getLocator()->adyen()->service();
-        };
+        });
 
         return $container;
     }
@@ -90,9 +90,9 @@ class AdyenDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addUtilEncodingService(Container $container): Container
     {
-        $container[static::SERVICE_UTIL_ENCODING] = function (Container $container) {
+        $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
             return new AdyenToUtilEncodingServiceBridge($container->getLocator()->utilEncoding()->service());
-        };
+        });
 
         return $container;
     }
@@ -104,9 +104,9 @@ class AdyenDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addAdyenPaymentPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_ADYEN_PAYMENT] = function () {
+        $container->set(static::PLUGINS_ADYEN_PAYMENT, function () {
             return $this->getAdyenPaymentPlugins();
-        };
+        });
 
         return $container;
     }
@@ -117,7 +117,6 @@ class AdyenDependencyProvider extends AbstractBundleDependencyProvider
     protected function getAdyenPaymentPlugins(): array
     {
         return [
-            new CreditCardPaymentMapperPlugin(),
             new KlarnaInvoicePaymentMapperPlugin(),
         ];
     }

@@ -1,74 +1,90 @@
-declare var csf: any;
+/* tslint:disable: no-any */
+declare const AdyenCheckout: any;
+/* tslint:enable: no-any */
 
 import Component from 'ShopUi/models/component';
 import ScriptLoader from 'ShopUi/components/molecules/script-loader/script-loader';
 
-// Define a custom style.
-const stylesConfig = {
-    base: {
-        color: '#333',
-        fontSize: '14px',
-        fontSmoothing: 'antialiased',
-        fontFamily: 'Helvetica'
-    },
-    error: {
-        color: '#b2171a'
-    },
-    placeholder: {
-        color: '#d8d8d8'
-    },
-    validated: {
-        color: '#4fc2a0'
-    }
-};
-
 export default class AdyenCreditCard extends Component {
-    protected scriptLoader: ScriptLoader
+    protected scriptLoader: ScriptLoader;
+    protected cardNumberInput: HTMLInputElement;
+    protected securityCodeInput: HTMLInputElement;
+    protected expiryYearInput: HTMLInputElement;
+    protected expiryMonthInput: HTMLInputElement;
 
-    protected readyCallback(): void {
-        this.scriptLoader = <ScriptLoader>this.querySelector('script-loader');
+    protected readyCallback(): void {}
+
+    protected init(): void {
+        this.cardNumberInput = <HTMLInputElement>this.querySelector(this.cardNumberSelector);
+        this.securityCodeInput = <HTMLInputElement>this.querySelector(this.securityCodeSelector);
+        this.expiryYearInput = <HTMLInputElement>this.querySelector(this.expiryYearSelector);
+        this.expiryMonthInput = <HTMLInputElement>this.querySelector(this.expiryMonthSelector);
+        this.scriptLoader = <ScriptLoader>this.getElementsByClassName(`${this.jsName}__script-loader`)[0];
 
         this.mapEvents();
     }
 
     protected mapEvents(): void {
-        this.scriptLoader.addEventListener('scriptload', (event: Event) => this.onScriptLoad(event));
+        this.onScriptLoad();
     }
 
-    protected onScriptLoad(event: Event): void {
-        this.initIframes();
+    protected onScriptLoad(): void {
+        this.scriptLoader.addEventListener('scriptload', () => this.createCheckout());
     }
 
-    protected initIframes(): void {
-        const securedFields = csf(this.gethostedIframesConfig());
-    }
-
-    protected gethostedIframesConfig(): any {
-        return {
-            configObject : {
-                originKey : this.configKey
-            },
-            rootNode: `.${this.jsName}__form`,
-            paymentMethods : {
-                card : {
-                    sfStyles : this.stylesIframesConfig,
-                    placeholders: {
-                        hostedCardNumberField : '4111 1111 1111 1111',
-                        hostedExpiryDateField : '08/18',
-                        hostedSecurityCodeField : '737'
-                    }
+    protected createCheckout(): void {
+        const configuration = {
+            locale: this.locale,
+            environment: this.environment,
+            originKey: this.originKey,
+            paymentMethodsResponse: JSON.parse(this.paymentMethodsResponse),
+            onChange: state => {
+                if (state.isValid) {
+                    this.cardNumberInput.value = state.data.paymentMethod.encryptedCardNumber;
+                    this.securityCodeInput.value = state.data.paymentMethod.encryptedSecurityCode;
+                    this.expiryYearInput.value = state.data.paymentMethod.encryptedExpiryYear;
+                    this.expiryMonthInput.value = state.data.paymentMethod.encryptedExpiryMonth;
                 }
             }
-        }
+        };
+
+        const checkout = new AdyenCheckout(configuration);
+        checkout.create('card').mount(`#${this.containerId}`);
     }
 
-    protected get stylesIframesConfig(): any {
-        return {
-            ...stylesConfig
-        }
+    protected get originKey(): string {
+        return this.getAttribute('origin-key');
     }
 
-    protected get configKey(): string {
-        return this.getAttribute('client-config-key');
+    protected get paymentMethodsResponse(): string {
+        return this.getAttribute('payment-methods-response');
+    }
+
+    protected get containerId(): string {
+        return this.getAttribute('container-id');
+    }
+
+    protected get locale(): string {
+        return this.getAttribute('locale');
+    }
+
+    protected get environment(): string {
+        return this.getAttribute('environment');
+    }
+
+    protected get cardNumberSelector(): string {
+        return this.getAttribute('cart-number-selector');
+    }
+
+    protected get securityCodeSelector(): string {
+        return this.getAttribute('security-code-selector');
+    }
+
+    protected get expiryYearSelector(): string {
+        return this.getAttribute('expiry-year-selector');
+    }
+
+    protected get expiryMonthSelector(): string {
+        return this.getAttribute('expiry-month-selector');
     }
 }
