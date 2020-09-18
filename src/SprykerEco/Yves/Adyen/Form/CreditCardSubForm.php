@@ -35,6 +35,11 @@ class CreditCardSubForm extends AbstractSubForm
 
     protected const PAYMENT_METHOD = 'credit-card';
 
+    protected const NOT_VALID_CARD_NUMBER_MESSAGE = 'Card number is not valid.';
+    protected const NOT_VALID_EXPIRY_YEAR_MESSAGE = 'Card expiry year is not valid.';
+    protected const NOT_VALID_EXPIRY_MONTH_MESSAGE = 'Card expiry month is not valid.';
+    protected const NOT_VALID_SECURITY_CODE_MESSAGE = 'Security coder is not valid.';
+
     /**
      * @return string
      */
@@ -59,14 +64,22 @@ class CreditCardSubForm extends AbstractSubForm
         return AdyenConfig::PROVIDER_NAME . DIRECTORY_SEPARATOR . static::PAYMENT_METHOD;
     }
 
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     * @return void
+     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+
         $builder->add(
             static::ENCRYPTED_CARD_NUMBER_FIELD,
             HiddenType::class,
             [
                 'constraints' => [
-                    $this->createNotBlankConstraint(),
+                    $this->createNotBlankConstraint([
+                        'message' => static::NOT_VALID_CARD_NUMBER_MESSAGE,
+                    ]),
                 ],
             ]
         );
@@ -76,17 +89,9 @@ class CreditCardSubForm extends AbstractSubForm
             HiddenType::class,
             [
                 'constraints' => [
-                    $this->createNotBlankConstraint(),
-                ],
-            ]
-        );
-
-        $builder->add(
-            static::ENCRYPTED_SECURITY_CODE_FIELD,
-            HiddenType::class,
-            [
-                'constraints' => [
-                    $this->createNotBlankConstraint(),
+                    $this->createNotBlankConstraint([
+                        'message' => static::NOT_VALID_EXPIRY_YEAR_MESSAGE,
+                    ]),
                 ],
             ]
         );
@@ -96,7 +101,21 @@ class CreditCardSubForm extends AbstractSubForm
             HiddenType::class,
             [
                 'constraints' => [
-                    $this->createNotBlankConstraint(),
+                    $this->createNotBlankConstraint([
+                        'message' => static::NOT_VALID_EXPIRY_MONTH_MESSAGE,
+                    ]),
+                ],
+            ]
+        );
+
+        $builder->add(
+            static::ENCRYPTED_SECURITY_CODE_FIELD,
+            HiddenType::class,
+            [
+                'constraints' => [
+                    $this->createNotBlankConstraint([
+                        'message' => static::NOT_VALID_SECURITY_CODE_MESSAGE,
+                    ]),
                 ],
             ]
         );
