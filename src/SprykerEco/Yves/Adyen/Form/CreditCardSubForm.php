@@ -61,13 +61,45 @@ class CreditCardSubForm extends AbstractSubForm
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $builder->add(static::ENCRYPTED_CARD_NUMBER_FIELD, HiddenType::class);
+        $builder->add(
+            static::ENCRYPTED_CARD_NUMBER_FIELD,
+            HiddenType::class,
+            [
+                'constraints' => [
+                    $this->createNotBlankConstraint(),
+                ],
+            ]
+        );
 
-        $builder->add(static::ENCRYPTED_EXPIRY_YEAR_FIELD, HiddenType::class);
+        $builder->add(
+            static::ENCRYPTED_EXPIRY_YEAR_FIELD,
+            HiddenType::class,
+            [
+                'constraints' => [
+                    $this->createNotBlankConstraint(),
+                ],
+            ]
+        );
 
-        $builder->add(static::ENCRYPTED_SECURITY_CODE_FIELD, HiddenType::class);
+        $builder->add(
+            static::ENCRYPTED_SECURITY_CODE_FIELD,
+            HiddenType::class,
+            [
+                'constraints' => [
+                    $this->createNotBlankConstraint(),
+                ],
+            ]
+        );
 
-        $builder->add(static::ENCRYPTED_EXPIRY_MONTH_FIELD, HiddenType::class);
+        $builder->add(
+            static::ENCRYPTED_EXPIRY_MONTH_FIELD,
+            HiddenType::class,
+            [
+                'constraints' => [
+                    $this->createNotBlankConstraint(),
+                ],
+            ]
+        );
     }
 
     /**
