@@ -11,12 +11,10 @@ use Generated\Shared\Transfer\AdyenCreditCardPaymentTransfer;
 use Generated\Shared\Transfer\PaymentTransfer;
 use SprykerEco\Shared\Adyen\AdyenConfig;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\NotBlank;
 
 class CreditCardSubForm extends AbstractSubForm
 {
@@ -65,13 +63,13 @@ class CreditCardSubForm extends AbstractSubForm
     }
 
     /**
-     * @param FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
+     *
      * @return void
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-
         $builder->add(
             static::ENCRYPTED_CARD_NUMBER_FIELD,
             HiddenType::class,

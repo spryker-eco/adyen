@@ -25,7 +25,7 @@ abstract class AbstractSubForm extends AbstractSubFormType implements SubFormInt
     }
 
     /**
-     * @param null|array $options
+     * @param array|null $options
      *
      * @return \Symfony\Component\Validator\Constraint
      */
@@ -33,7 +33,7 @@ abstract class AbstractSubForm extends AbstractSubFormType implements SubFormInt
     {
         $nonBlank = new NotBlank(['groups' => $this->getPropertyPath()]);
 
-        if (null !== $options && is_string($options['message'])) {
+        if ($options !== null && is_string($options['message'])) {
             $nonBlank->message = $options['message'];
         }
 
