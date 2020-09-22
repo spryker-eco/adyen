@@ -5,12 +5,27 @@ declare const AdyenCheckout: any;
 import Component from 'ShopUi/models/component';
 import ScriptLoader from 'ShopUi/components/molecules/script-loader/script-loader';
 
+interface PaymentState {
+    data: {
+        paymentMethod: {
+            encryptedCardNumber: string;
+            encryptedSecurityCode: string;
+            encryptedExpiryYear: string;
+            encryptedExpiryMonth: string;
+        };
+    };
+    isValid: boolean;
+}
+
 export default class AdyenCreditCard extends Component {
     protected scriptLoader: ScriptLoader;
     protected cardNumberInput: HTMLInputElement;
     protected securityCodeInput: HTMLInputElement;
     protected expiryYearInput: HTMLInputElement;
     protected expiryMonthInput: HTMLInputElement;
+    protected submitButton: HTMLButtonElement;
+    protected paymentMethodTriggers: HTMLInputElement[];
+    protected isFormValid: boolean = false;
 
     protected readyCallback(): void {}
 
@@ -20,12 +35,27 @@ export default class AdyenCreditCard extends Component {
         this.expiryYearInput = <HTMLInputElement>this.querySelector(this.expiryYearSelector);
         this.expiryMonthInput = <HTMLInputElement>this.querySelector(this.expiryMonthSelector);
         this.scriptLoader = <ScriptLoader>this.getElementsByClassName(`${this.jsName}__script-loader`)[0];
+        this.submitButton = <HTMLButtonElement>document.getElementsByClassName(this.submitButtonClassName)[0];
+        this.paymentMethodTriggers = <HTMLInputElement[]>Array.from(
+            document.getElementsByClassName(this.paymentMethodTriggerClassName)
+        );
 
         this.mapEvents();
     }
 
     protected mapEvents(): void {
         this.onScriptLoad();
+        this.onPaymentMethodTriggersChange();
+    }
+
+    protected onPaymentMethodTriggersChange(): void {
+        this.paymentMethodTriggers.forEach((trigger: HTMLInputElement) => {
+            trigger.addEventListener('change', () => {
+                this.toggleSubmitButtonDisablingOnPaymentChange(trigger);
+            });
+
+            this.disableSubmitButtonOnLoad(trigger);
+        });
     }
 
     protected onScriptLoad(): void {
@@ -38,18 +68,54 @@ export default class AdyenCreditCard extends Component {
             environment: this.environment,
             originKey: this.originKey,
             paymentMethodsResponse: JSON.parse(this.paymentMethodsResponse),
-            onChange: state => {
-                if (state.isValid) {
-                    this.cardNumberInput.value = state.data.paymentMethod.encryptedCardNumber;
-                    this.securityCodeInput.value = state.data.paymentMethod.encryptedSecurityCode;
-                    this.expiryYearInput.value = state.data.paymentMethod.encryptedExpiryYear;
-                    this.expiryMonthInput.value = state.data.paymentMethod.encryptedExpiryMonth;
-                }
-            }
+            onChange: (state: PaymentState) => {
+                this.onPaymentFormFieldsChange(state);
+            },
         };
 
         const checkout = new AdyenCheckout(configuration);
         checkout.create('card').mount(`#${this.containerId}`);
+    }
+
+    protected onPaymentFormFieldsChange(state: PaymentState): void {
+        const paymentMethod = state.data.paymentMethod;
+        const encryptedData = [
+            paymentMethod.encryptedCardNumber,
+            paymentMethod.encryptedSecurityCode,
+            paymentMethod.encryptedExpiryYear,
+            paymentMethod.encryptedExpiryMonth,
+        ];
+
+        this.isFormValid = state.isValid;
+        this.toggleSubmitButtonDisabling(!this.isFormValid);
+        this.isFormValid ? this.fillFormHiddenFields(encryptedData) : this.fillFormHiddenFields(['', '', '', '']);
+    }
+
+    protected fillFormHiddenFields([cardNumber, securityCode, expiryYear, expiryMonth]: string[]): void {
+        this.cardNumberInput.value = cardNumber;
+        this.securityCodeInput.value = securityCode;
+        this.expiryYearInput.value = expiryYear;
+        this.expiryMonthInput.value = expiryMonth;
+    }
+
+    protected toggleSubmitButtonDisabling(state: boolean): void {
+        this.submitButton.disabled = state;
+    }
+
+    protected toggleSubmitButtonDisablingOnPaymentChange(trigger: HTMLInputElement): void {
+        if (trigger.value !== this.creditCardTriggerValue) {
+            this.toggleSubmitButtonDisabling(false);
+
+            return;
+        }
+
+        this.toggleSubmitButtonDisabling(!this.isFormValid);
+    }
+
+    protected disableSubmitButtonOnLoad(trigger: HTMLInputElement): void {
+        if ((trigger.value === this.creditCardTriggerValue) && trigger.checked) {
+            this.toggleSubmitButtonDisabling(true);
+        }
     }
 
     protected get originKey(): string {
@@ -86,5 +152,17 @@ export default class AdyenCreditCard extends Component {
 
     protected get expiryMonthSelector(): string {
         return this.getAttribute('expiry-month-selector');
+    }
+
+    protected get submitButtonClassName(): string {
+        return this.getAttribute('submit-button-class-name');
+    }
+
+    protected get paymentMethodTriggerClassName(): string {
+        return this.getAttribute('payment-method-trigger-class-name');
+    }
+
+    protected get creditCardTriggerValue(): string {
+        return this.getAttribute('credit-card-trigger-value');
     }
 }

@@ -32,6 +32,9 @@
     'security-code-selector': '[name="' ~ data.form.adyenCreditCard.children.encryptedSecurityCode.vars.full_name ~ '"]',
     'expiry-year-selector': '[name="' ~ data.form.adyenCreditCard.children.encryptedExpiryYear.vars.full_name ~ '"]',
     'expiry-month-selector': '[name="' ~ data.form.adyenCreditCard.children.encryptedExpiryMonth.vars.full_name ~ '"]',
+    'submit-button-class-name': 'js-payment-form__submit',
+    'payment-method-trigger-class-name': 'js-toggler-radio__trigger',
+    'credit-card-trigger-value': 'adyenCreditCard',
 } %}
 
 {% block body %}
@@ -41,7 +44,7 @@
         class: config.jsName ~ '__script-loader',
         attributes: {
             src: data.jsUrl,
-        }
+        },
     } only %}
 
     <link rel="stylesheet" href="{{ data.cssUrl }}" integrity="{{ data.cssIntegrityHash }}" crossorigin="anonymous">
