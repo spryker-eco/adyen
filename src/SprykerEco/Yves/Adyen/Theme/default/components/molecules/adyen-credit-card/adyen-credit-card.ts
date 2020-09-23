@@ -45,17 +45,33 @@ export default class AdyenCreditCard extends Component {
 
     protected mapEvents(): void {
         this.onScriptLoad();
-        this.onPaymentMethodTriggersChange();
+        this.onPaymentMethodTriggerChange();
     }
 
-    protected onPaymentMethodTriggersChange(): void {
+    protected onPaymentMethodTriggerChange(): void {
         this.paymentMethodTriggers.forEach((trigger: HTMLInputElement) => {
             trigger.addEventListener('change', () => {
-                this.toggleSubmitButtonDisablingOnPaymentChange(trigger);
+                this.toggleSubmitButtonStateOnPaymentChange(trigger);
             });
 
             this.disableSubmitButtonOnLoad(trigger);
         });
+    }
+
+    protected toggleSubmitButtonStateOnPaymentChange(trigger: HTMLInputElement): void {
+        if (trigger.value !== this.creditCardTriggerValue) {
+            this.submitButtonState = false;
+
+            return;
+        }
+
+        this.submitButtonState = !this.isFormValid;
+    }
+
+    protected disableSubmitButtonOnLoad(trigger: HTMLInputElement): void {
+        if ((trigger.value === this.creditCardTriggerValue) && trigger.checked) {
+            this.submitButtonState = true;
+        }
     }
 
     protected onScriptLoad(): void {
@@ -87,35 +103,21 @@ export default class AdyenCreditCard extends Component {
         ];
 
         this.isFormValid = state.isValid;
-        this.toggleSubmitButtonDisabling(!this.isFormValid);
-        this.isFormValid ? this.fillFormHiddenFields(encryptedData) : this.fillFormHiddenFields(['', '', '', '']);
+        this.submitButtonState = !this.isFormValid;
+        this.isFormValid ? this.fillFormHiddenFields(encryptedData) : this.fillFormHiddenFields();
     }
 
-    protected fillFormHiddenFields([cardNumber, securityCode, expiryYear, expiryMonth]: string[]): void {
+    protected fillFormHiddenFields(
+        [cardNumber, securityCode, expiryYear, expiryMonth]: string[] = ['', '', '', '']
+    ): void {
         this.cardNumberInput.value = cardNumber;
         this.securityCodeInput.value = securityCode;
         this.expiryYearInput.value = expiryYear;
         this.expiryMonthInput.value = expiryMonth;
     }
 
-    protected toggleSubmitButtonDisabling(state: boolean): void {
+    protected set submitButtonState(state: boolean) {
         this.submitButton.disabled = state;
-    }
-
-    protected toggleSubmitButtonDisablingOnPaymentChange(trigger: HTMLInputElement): void {
-        if (trigger.value !== this.creditCardTriggerValue) {
-            this.toggleSubmitButtonDisabling(false);
-
-            return;
-        }
-
-        this.toggleSubmitButtonDisabling(!this.isFormValid);
-    }
-
-    protected disableSubmitButtonOnLoad(trigger: HTMLInputElement): void {
-        if ((trigger.value === this.creditCardTriggerValue) && trigger.checked) {
-            this.toggleSubmitButtonDisabling(true);
-        }
     }
 
     protected get originKey(): string {
