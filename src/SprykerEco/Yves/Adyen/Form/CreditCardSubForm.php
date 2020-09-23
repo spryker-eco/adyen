@@ -33,10 +33,10 @@ class CreditCardSubForm extends AbstractSubForm
 
     protected const PAYMENT_METHOD = 'credit-card';
 
-    protected const NOT_VALID_CARD_NUMBER_MESSAGE = 'Card number is not valid.';
-    protected const NOT_VALID_EXPIRY_YEAR_MESSAGE = 'Card expiry year is not valid.';
-    protected const NOT_VALID_EXPIRY_MONTH_MESSAGE = 'Card expiry month is not valid.';
-    protected const NOT_VALID_SECURITY_CODE_MESSAGE = 'Security coder is not valid.';
+    protected const NOT_VALID_CARD_NUMBER_MESSAGE = 'adyen.payment.error.cc_number';
+    protected const NOT_VALID_EXPIRY_YEAR_MESSAGE = 'adyen.payment.error.cc_year';
+    protected const NOT_VALID_EXPIRY_MONTH_MESSAGE = 'adyen.payment.error.cc_month.';
+    protected const NOT_VALID_SECURITY_CODE_MESSAGE = 'adyen.payment.error.cc_cvv';
 
     /**
      * @return string
