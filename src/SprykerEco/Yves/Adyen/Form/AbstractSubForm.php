@@ -25,7 +25,7 @@ abstract class AbstractSubForm extends AbstractSubFormType implements SubFormInt
     }
 
     /**
-     * @param array|null $options
+     * @param array $options
      *
      * @return \Symfony\Component\Validator\Constraint
      */

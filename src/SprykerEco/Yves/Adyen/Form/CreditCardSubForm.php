@@ -33,10 +33,10 @@ class CreditCardSubForm extends AbstractSubForm
 
     protected const PAYMENT_METHOD = 'credit-card';
 
-    protected const NOT_VALID_CARD_NUMBER_MESSAGE = 'adyen.payment.error.cc_number';
-    protected const NOT_VALID_EXPIRY_YEAR_MESSAGE = 'adyen.payment.error.cc_year';
-    protected const NOT_VALID_EXPIRY_MONTH_MESSAGE = 'adyen.payment.error.cc_month.';
-    protected const NOT_VALID_SECURITY_CODE_MESSAGE = 'adyen.payment.error.cc_cvv';
+    protected const GLOSSARY_KEY_CONSTRAINT_MESSAGE_NOT_VALID_CARD_NUMBER_MESSAGE = 'adyen.payment.error.cc_number';
+    protected const GLOSSARY_KEY_CONSTRAINT_MESSAGE_NOT_VALID_EXPIRY_YEAR_MESSAGE = 'adyen.payment.error.cc_year';
+    protected const GLOSSARY_KEY_CONSTRAINT_MESSAGE_NOT_VALID_EXPIRY_MONTH_MESSAGE = 'adyen.payment.error.cc_month.';
+    protected const GLOSSARY_KEY_CONSTRAINT_MESSAGE_NOT_VALID_SECURITY_CODE_MESSAGE = 'adyen.payment.error.cc_cvv';
 
     /**
      * @return string
@@ -76,7 +76,7 @@ class CreditCardSubForm extends AbstractSubForm
             [
                 'constraints' => [
                     $this->createNotBlankConstraint([
-                        'message' => static::NOT_VALID_CARD_NUMBER_MESSAGE,
+                        'message' => static::GLOSSARY_KEY_CONSTRAINT_MESSAGE_NOT_VALID_CARD_NUMBER_MESSAGE,
                     ]),
                 ],
             ]
@@ -88,7 +88,7 @@ class CreditCardSubForm extends AbstractSubForm
             [
                 'constraints' => [
                     $this->createNotBlankConstraint([
-                        'message' => static::NOT_VALID_EXPIRY_YEAR_MESSAGE,
+                        'message' => static::GLOSSARY_KEY_CONSTRAINT_MESSAGE_NOT_VALID_EXPIRY_YEAR_MESSAGE,
                     ]),
                 ],
             ]
@@ -100,7 +100,7 @@ class CreditCardSubForm extends AbstractSubForm
             [
                 'constraints' => [
                     $this->createNotBlankConstraint([
-                        'message' => static::NOT_VALID_EXPIRY_MONTH_MESSAGE,
+                        'message' => static::GLOSSARY_KEY_CONSTRAINT_MESSAGE_NOT_VALID_EXPIRY_MONTH_MESSAGE,
                     ]),
                 ],
             ]
@@ -112,7 +112,7 @@ class CreditCardSubForm extends AbstractSubForm
             [
                 'constraints' => [
                     $this->createNotBlankConstraint([
-                        'message' => static::NOT_VALID_SECURITY_CODE_MESSAGE,
+                        'message' => static::GLOSSARY_KEY_CONSTRAINT_MESSAGE_NOT_VALID_SECURITY_CODE_MESSAGE,
                     ]),
                 ],
             ]
