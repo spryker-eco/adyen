@@ -11,7 +11,6 @@ use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 use SprykerEco\Yves\Adyen\Dependency\Client\AdyenToQuoteClientBridge;
 use SprykerEco\Yves\Adyen\Dependency\Service\AdyenToUtilEncodingServiceBridge;
-use SprykerEco\Yves\Adyen\Plugin\Payment\CreditCardPaymentMapperPlugin;
 use SprykerEco\Yves\Adyen\Plugin\Payment\KlarnaInvoicePaymentMapperPlugin;
 
 class AdyenDependencyProvider extends AbstractBundleDependencyProvider
