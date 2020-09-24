@@ -95,20 +95,29 @@ export default class AdyenCreditCard extends Component {
 
     protected onPaymentFormFieldsChange(state: PaymentState): void {
         const paymentMethod = state.data.paymentMethod;
-        const encryptedData = [
+
+        this.isFormValid = state.isValid;
+        this.submitButtonState = !this.isFormValid;
+
+        if (!this.isFormValid) {
+            this.fillFormHiddenFields();
+
+            return;
+        }
+
+        this.fillFormHiddenFields(
             paymentMethod.encryptedCardNumber,
             paymentMethod.encryptedSecurityCode,
             paymentMethod.encryptedExpiryYear,
             paymentMethod.encryptedExpiryMonth,
-        ];
-
-        this.isFormValid = state.isValid;
-        this.submitButtonState = !this.isFormValid;
-        this.isFormValid ? this.fillFormHiddenFields(encryptedData) : this.fillFormHiddenFields();
+        );
     }
 
     protected fillFormHiddenFields(
-        [cardNumber, securityCode, expiryYear, expiryMonth]: string[] = ['', '', '', '']
+        cardNumber: string = '',
+        securityCode: string = '',
+        expiryYear: string = '',
+        expiryMonth: string = ''
     ): void {
         this.cardNumberInput.value = cardNumber;
         this.securityCodeInput.value = securityCode;
