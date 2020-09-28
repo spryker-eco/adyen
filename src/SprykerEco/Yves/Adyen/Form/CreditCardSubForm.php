@@ -11,12 +11,10 @@ use Generated\Shared\Transfer\AdyenCreditCardPaymentTransfer;
 use Generated\Shared\Transfer\PaymentTransfer;
 use SprykerEco\Shared\Adyen\AdyenConfig;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\NotBlank;
 
 class CreditCardSubForm extends AbstractSubForm
 {
@@ -34,6 +32,11 @@ class CreditCardSubForm extends AbstractSubForm
     public const ENCRYPTED_SECURITY_CODE_FIELD = 'encryptedSecurityCode';
 
     protected const PAYMENT_METHOD = 'credit-card';
+
+    protected const GLOSSARY_KEY_CONSTRAINT_MESSAGE_INVALID_CARD_NUMBER = 'adyen.payment.error.cc_number';
+    protected const GLOSSARY_KEY_CONSTRAINT_MESSAGE_INVALID_EXPIRY_YEAR = 'adyen.payment.error.cc_year';
+    protected const GLOSSARY_KEY_CONSTRAINT_MESSAGE_INVALID_EXPIRY_MONTH = 'adyen.payment.error.cc_month.';
+    protected const GLOSSARY_KEY_CONSTRAINT_MESSAGE_INVALID_SECURITY_CODE = 'adyen.payment.error.cc_cvv';
 
     /**
      * @return string
@@ -59,15 +62,61 @@ class CreditCardSubForm extends AbstractSubForm
         return AdyenConfig::PROVIDER_NAME . DIRECTORY_SEPARATOR . static::PAYMENT_METHOD;
     }
 
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
+     *
+     * @return void
+     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $builder->add(static::ENCRYPTED_CARD_NUMBER_FIELD, HiddenType::class);
+        $builder->add(
+            static::ENCRYPTED_CARD_NUMBER_FIELD,
+            HiddenType::class,
+            [
+                'constraints' => [
+                    $this->createNotBlankConstraint([
+                        'message' => static::GLOSSARY_KEY_CONSTRAINT_MESSAGE_INVALID_CARD_NUMBER,
+                    ]),
+                ],
+            ]
+        );
 
-        $builder->add(static::ENCRYPTED_EXPIRY_YEAR_FIELD, HiddenType::class);
+        $builder->add(
+            static::ENCRYPTED_EXPIRY_YEAR_FIELD,
+            HiddenType::class,
+            [
+                'constraints' => [
+                    $this->createNotBlankConstraint([
+                        'message' => static::GLOSSARY_KEY_CONSTRAINT_MESSAGE_INVALID_EXPIRY_YEAR,
+                    ]),
+                ],
+            ]
+        );
 
-        $builder->add(static::ENCRYPTED_SECURITY_CODE_FIELD, HiddenType::class);
+        $builder->add(
+            static::ENCRYPTED_EXPIRY_MONTH_FIELD,
+            HiddenType::class,
+            [
+                'constraints' => [
+                    $this->createNotBlankConstraint([
+                        'message' => static::GLOSSARY_KEY_CONSTRAINT_MESSAGE_INVALID_EXPIRY_MONTH,
+                    ]),
+                ],
+            ]
+        );
 
-        $builder->add(static::ENCRYPTED_EXPIRY_MONTH_FIELD, HiddenType::class);
+        $builder->add(
+            static::ENCRYPTED_SECURITY_CODE_FIELD,
+            HiddenType::class,
+            [
+                'constraints' => [
+                    $this->createNotBlankConstraint([
+                        'message' => static::GLOSSARY_KEY_CONSTRAINT_MESSAGE_INVALID_SECURITY_CODE,
+                    ]),
+                ],
+            ]
+        );
     }
 
     /**
