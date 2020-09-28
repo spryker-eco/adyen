@@ -87,7 +87,9 @@ class DirectDebitSubForm extends AbstractSubForm
             [
                 'label' => static::OWNER_NAME_LABEL,
                 'required' => true,
-                'constraints' => [],
+                'constraints' => [
+                    $this->createNotBlankConstraint(),
+                ],
             ]
         );
 
@@ -107,7 +109,9 @@ class DirectDebitSubForm extends AbstractSubForm
             [
                 'label' => static::IBAN_NUMBER_LABEL,
                 'required' => true,
-                'constraints' => [],
+                'constraints' => [
+                    $this->createNotBlankConstraint(),
+                ],
             ]
         );
 
