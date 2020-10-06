@@ -35,7 +35,7 @@ class CreditCardSubForm extends AbstractSubForm
 
     protected const GLOSSARY_KEY_CONSTRAINT_MESSAGE_INVALID_CARD_NUMBER = 'adyen.payment.error.cc_number';
     protected const GLOSSARY_KEY_CONSTRAINT_MESSAGE_INVALID_EXPIRY_YEAR = 'adyen.payment.error.cc_year';
-    protected const GLOSSARY_KEY_CONSTRAINT_MESSAGE_INVALID_EXPIRY_MONTH = 'adyen.payment.error.cc_month.';
+    protected const GLOSSARY_KEY_CONSTRAINT_MESSAGE_INVALID_EXPIRY_MONTH = 'adyen.payment.error.cc_month';
     protected const GLOSSARY_KEY_CONSTRAINT_MESSAGE_INVALID_SECURITY_CODE = 'adyen.payment.error.cc_cvv';
 
     /**
