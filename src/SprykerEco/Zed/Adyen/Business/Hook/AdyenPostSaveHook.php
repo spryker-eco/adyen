@@ -24,6 +24,8 @@ class AdyenPostSaveHook implements AdyenHookInterface
     protected const ERROR_TYPE_PAYMENT_FAILED = 'payment failed';
     protected const ERROR_MESSAGE_PAYMENT_FAILED = 'Something went wrong with your payment. Try again!';
 
+    protected const ADYEN_OMS_STATUS_REFUSED = 'Refused';
+
     /**
      * @var \SprykerEco\Zed\Adyen\Dependency\Facade\AdyenToAdyenApiFacadeInterface
      */
@@ -73,7 +75,7 @@ class AdyenPostSaveHook implements AdyenHookInterface
         $responseTransfer = $this->adyenApiFacade->performMakePaymentApiCall($requestTransfer);
         $saver->save($requestTransfer, $responseTransfer);
 
-        if (!$responseTransfer->getIsSuccess()) {
+        if (!$responseTransfer->getIsSuccess() || $responseTransfer->getMakePaymentResponse()->getResultCode() === static::ADYEN_OMS_STATUS_REFUSED) {
             $this->processFailureResponse($checkoutResponseTransfer);
 
             return;
