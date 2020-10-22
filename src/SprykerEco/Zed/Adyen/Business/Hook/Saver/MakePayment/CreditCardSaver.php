@@ -15,6 +15,11 @@ class CreditCardSaver extends AbstractSaver
     protected const MAKE_PAYMENT_CREDIT_CARD_REQUEST_TYPE = 'MakePayment[CreditCard]';
 
     /**
+     * @var \Generated\Shared\Transfer\AdyenApiResponseTransfer
+    */
+    protected $adyenApiResponseTransfer;
+
+    /**
      * @return string
      */
     protected function getRequestType(): string
@@ -38,6 +43,8 @@ class CreditCardSaver extends AbstractSaver
             $paymentAdyenTransfer->setPaymentData($response->getMakePaymentResponse()->getPaymentData());
         }
 
+        $this->adyenApiResponseTransfer = $response;
+
         return $paymentAdyenTransfer;
     }
 
@@ -46,6 +53,14 @@ class CreditCardSaver extends AbstractSaver
      */
     protected function getPaymentStatus(): string
     {
+        if ($this->adyenApiResponseTransfer) {
+            $adyenApiResultCode = strtolower($this->adyenApiResponseTransfer->getMakePaymentResponse()->getResultCode());
+            if ($adyenApiResultCode === $this->config->getOmsStatusRefused()) {
+
+                return $this->config->getOmsStatusRefused();
+            }
+        }
+
         return $this->config->getOmsStatusAuthorized();
     }
 }

@@ -75,7 +75,8 @@ class AdyenPostSaveHook implements AdyenHookInterface
         $responseTransfer = $this->adyenApiFacade->performMakePaymentApiCall($requestTransfer);
         $saver->save($requestTransfer, $responseTransfer);
 
-        if (!$responseTransfer->getIsSuccess() || $responseTransfer->getMakePaymentResponse()->getResultCode() === static::ADYEN_OMS_STATUS_REFUSED) {
+        if (!$responseTransfer->getIsSuccess() ||
+            $responseTransfer->getMakePaymentResponse()->getResultCode() === static::ADYEN_OMS_STATUS_REFUSED) {
             $this->processFailureResponse($checkoutResponseTransfer);
 
             return;
