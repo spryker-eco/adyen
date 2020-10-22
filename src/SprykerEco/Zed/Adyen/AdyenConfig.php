@@ -25,6 +25,7 @@ class AdyenConfig extends AbstractBundleConfig
     protected const OMS_STATUS_REFUNDED = 'refunded';
     protected const OMS_STATUS_REFUND_PENDING = 'refund pending';
     protected const OMS_STATUS_REFUND_FAILED = 'refund failed';
+    protected const OMS_STATUS_REFUSED = 'refused';
 
     protected const OMS_EVENT_CANCEL_NAME = 'cancel';
     protected const OMS_EVENT_REFUND_NAME = 'refund';
@@ -37,6 +38,7 @@ class AdyenConfig extends AbstractBundleConfig
     protected const ADYEN_NOTIFICATION_EVENT_CODE_CANCELLATION = 'CANCELLATION';
     protected const ADYEN_NOTIFICATION_EVENT_CODE_REFUND = 'REFUND';
     protected const ADYEN_NOTIFICATION_EVENT_CODE_REFUND_FAILED = 'REFUND_FAILED';
+    protected const ADYEN_NOTIFICATION_EVENT_CODE_REFUSED = 'REFUSED';
     protected const ADYEN_NOTIFICATION_EVENT_CODE_CANCEL_OR_REFUND = 'CANCEL_OR_REFUND';
     protected const ADYEN_NOTIFICATION_EVENT_CODE_AUTHORISATION_ADJUSTMENT = 'AUTHORISATION_ADJUSTMENT';
     protected const ADYEN_NOTIFICATION_SUCCESS_TRUE = 'true';
@@ -170,6 +172,16 @@ class AdyenConfig extends AbstractBundleConfig
     public function getOmsStatusRefundFailed(): string
     {
         return static::OMS_STATUS_REFUND_FAILED;
+    }
+
+    /**
+     * @api
+     *
+     * @return string
+     */
+    public function getOmsStatusRefused(): string
+    {
+        return static::OMS_STATUS_REFUSED;
     }
 
     /**
@@ -311,6 +323,9 @@ class AdyenConfig extends AbstractBundleConfig
             ],
             static::ADYEN_NOTIFICATION_EVENT_CODE_REFUND_FAILED => [
                 static::ADYEN_NOTIFICATION_SUCCESS_TRUE => $this->getOmsStatusRefundFailed(),
+            ],
+            static::ADYEN_NOTIFICATION_EVENT_CODE_REFUSED => [
+                static::ADYEN_NOTIFICATION_SUCCESS_TRUE => $this->getOmsStatusRefused(),
             ],
             static::ADYEN_NOTIFICATION_EVENT_CODE_CANCEL_OR_REFUND => [
                 static::ADYEN_NOTIFICATION_SUCCESS_TRUE => $this->getOmsStatusRefunded(),
