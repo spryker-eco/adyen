@@ -96,6 +96,7 @@ abstract class AbstractSaver implements AdyenSaverInterface
             $this->encodingService->encodeJson($response->getMakePaymentResponse()->getDetails())
         );
         $paymentAdyenTransfer->setPaymentData($response->getMakePaymentResponse()->getPaymentData());
+        $paymentAdyenTransfer->setResultCode(strtolower($response->getMakePaymentResponse()->getResultCode()));
 
         return $paymentAdyenTransfer;
     }
@@ -113,16 +114,18 @@ abstract class AbstractSaver implements AdyenSaverInterface
             );
 
         $this->writer->updatePaymentEntities(
-            $this->getPaymentStatus(),
+            $this->getPaymentStatus($paymentAdyenTransfer),
             $paymentAdyenOrderItemTransfers,
             $paymentAdyenTransfer
         );
     }
 
     /**
+     * @param \Generated\Shared\Transfer\PaymentAdyenTransfer|null $paymentAdyenTransfer
+     *
      * @return string
      */
-    protected function getPaymentStatus(): string
+    protected function getPaymentStatus(PaymentAdyenTransfer $paymentAdyenTransfer = null): string
     {
         return $this->config->getOmsStatusNew();
     }
