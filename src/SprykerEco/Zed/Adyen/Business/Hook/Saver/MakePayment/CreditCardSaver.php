@@ -48,9 +48,8 @@ class CreditCardSaver extends AbstractSaver
      */
     protected function getPaymentStatus(PaymentAdyenTransfer $paymentAdyenTransfer = null): string
     {
-        if ($paymentAdyenTransfer) {
-            if ($paymentAdyenTransfer->getResultCode() === $this->config->getOmsStatusRefused())
-             return $this->config->getOmsStatusRefused();
+        if ($paymentAdyenTransfer && $paymentAdyenTransfer->getResultCode() === $this->config->getOmsStatusRefused()) {
+                return $this->config->getOmsStatusRefused();
         }
 
         return $this->config->getOmsStatusAuthorized();
