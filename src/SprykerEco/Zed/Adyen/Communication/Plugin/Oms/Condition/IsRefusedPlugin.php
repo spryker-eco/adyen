@@ -20,7 +20,7 @@ class IsRefusedPlugin extends AbstractPlugin implements ConditionInterface
 {
     /**
      * {@inheritDoc}
-     * - Checks if the SpyPaymentAdyenOrderItem has the the 'refused' status.
+     * - Checks if the `SpyPaymentAdyenOrderItem` has the `refused` status.
      *
      * @api
      *

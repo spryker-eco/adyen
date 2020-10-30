@@ -51,8 +51,7 @@ class CreditCardSaver extends AbstractSaver
     {
         if (
             $paymentAdyenTransfer
-            && $paymentAdyenTransfer->getResultCode() ===
-            $this->config->getOmsStatusRefused()
+            && $paymentAdyenTransfer->getResultCode() === $this->config->getOmsStatusRefused()
         ) {
                 return $this->config->getOmsStatusRefused();
         }
