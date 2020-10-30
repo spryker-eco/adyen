@@ -96,7 +96,6 @@ abstract class AbstractSaver implements AdyenSaverInterface
             $this->encodingService->encodeJson($response->getMakePaymentResponse()->getDetails())
         );
         $paymentAdyenTransfer->setPaymentData($response->getMakePaymentResponse()->getPaymentData());
-        $paymentAdyenTransfer->setResultCode(strtolower($response->getMakePaymentResponse()->getResultCode()));
 
         return $paymentAdyenTransfer;
     }
