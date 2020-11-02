@@ -3,7 +3,7 @@
   "description": "Adyen module",
   "license": "MIT",
   "require": {
-    "php": ">=7.3",
+    "php": ">=7.2",
     "spryker-eco/adyen-api": "^1.0.0",
     "spryker-shop/checkout-page": "^1.0.0 || ^2.0.0 || ^3.0.0",
     "spryker/calculation": "^4.0.0",
