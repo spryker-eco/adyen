@@ -72,5 +72,5 @@ before_install:
   - phpenv config-rm xdebug.ini
 
 script:
-  - git clone -b 'bugfix/adyen/supesc-147-credit-cart-payment-validation-2' --single-branch https://github.com/spryker-eco/eco-ci.git ecoci
+  - git clone -b 'master' --single-branch https://github.com/spryker-eco/eco-ci.git ecoci
   - ./ecoci/build/travis.sh
