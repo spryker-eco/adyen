@@ -1,5 +1,6 @@
 {
   "name": "spryker-eco/adyen",
+  "type": "library",
   "description": "Adyen module",
   "license": "MIT",
   "require": {
@@ -19,29 +20,8 @@
     "spryker/util-text": "^1.0.0",
     "spryker/zed-request": "^3.0.0"
   },
-  "autoload": {
-    "psr-4": {
-      "SprykerEco\\": "src/SprykerEco/"
-    }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "SprykerEcoTest\\": "tests/SprykerEcoTest/"
-    }
-  },
-  "minimum-stability": "dev",
-  "prefer-stable": true,
-  "config": {
-    "preferred-install": "dist",
-    "sort-packages": true,
-    "process-timeout": 600
-  },
-  "extra": {
-    "branch-alias": {
-      "dev-master": "1.0.x-dev"
-    }
-  },
   "require-dev": {
+    "phpstan/phpstan": "*",
     "spryker-shop/shop-application": "*",
     "spryker/checkout": "*",
     "spryker/code-sniffer": "*",
@@ -58,11 +38,33 @@
     "spryker/router": "Abstract router provider is used.",
     "spryker/silex": "Silex application is used."
   },
+  "autoload": {
+    "psr-4": {
+      "SprykerEco\\": "src/SprykerEco/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "SprykerEcoTest\\": "tests/SprykerEcoTest/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
   "scripts": {
-    "cs-check": "phpcs --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml -p src/ tests/",
-    "cs-fix": "phpcbf --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml -p src/ tests/",
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
     "phpstan": "phpstan analyse -l 6 -c phpstan.neon src/",
     "test": "codecept run",
     "test-coverage": "codecept run --coverage-xml"
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "config": {
+    "preferred-install": "dist",
+    "sort-packages": true,
+    "process-timeout": 600
   }
 }
