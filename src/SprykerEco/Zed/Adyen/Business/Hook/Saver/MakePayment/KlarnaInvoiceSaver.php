@@ -38,9 +38,11 @@ class KlarnaInvoiceSaver extends AbstractSaver
     }
 
     /**
+     * @param \Generated\Shared\Transfer\PaymentAdyenTransfer|null $paymentAdyenTransfer
+     *
      * @return string
      */
-    protected function getPaymentStatus(): string
+    protected function getPaymentStatus(PaymentAdyenTransfer $paymentAdyenTransfer = null): string
     {
         return $this->config->getOmsStatusAuthorized();
     }

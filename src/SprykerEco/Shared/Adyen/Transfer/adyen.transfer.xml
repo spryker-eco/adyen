@@ -13,6 +13,7 @@
         <property name="details" type="string"/>
         <property name="paymentData" type="string"/>
         <property name="additionalData" type="string"/>
+        <property name="resultCode" type="string"/>
     </transfer>
 
     <transfer name="PaymentAdyenNotification">

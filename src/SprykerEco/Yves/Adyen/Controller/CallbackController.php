@@ -20,6 +20,8 @@ class CallbackController extends AbstractController
 {
     protected const RESULT_CODE_CANCELLED = 'cancelled';
 
+    protected const RESULT_CODE_REFUSED = 'refused';
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -121,6 +123,10 @@ class CallbackController extends AbstractController
     {
         if ($responseTransfer->getResultCode() === static::RESULT_CODE_CANCELLED) {
             return $this->redirectResponseInternal(CheckoutPageControllerProvider::CHECKOUT_PAYMENT);
+        }
+
+        if ($responseTransfer->getResultCode() === static::RESULT_CODE_REFUSED) {
+            return $this->redirectResponseInternal(CheckoutPageControllerProvider::CHECKOUT_ERROR);
         }
 
         if ($responseTransfer->getIsSuccess()) {

@@ -33,6 +33,7 @@ class CreditCardSaver extends AbstractSaver
         PaymentAdyenTransfer $paymentAdyenTransfer
     ): PaymentAdyenTransfer {
         $paymentAdyenTransfer->setPspReference($response->getMakePaymentResponse()->getPspReference());
+        $paymentAdyenTransfer->setResultCode(strtolower($response->getMakePaymentResponse()->getResultCode()));
 
         if ($this->config->isCreditCard3dSecureEnabled()) {
             $paymentAdyenTransfer->setPaymentData($response->getMakePaymentResponse()->getPaymentData());
@@ -42,10 +43,19 @@ class CreditCardSaver extends AbstractSaver
     }
 
     /**
+     * @param \Generated\Shared\Transfer\PaymentAdyenTransfer|null $paymentAdyenTransfer
+     *
      * @return string
      */
-    protected function getPaymentStatus(): string
+    protected function getPaymentStatus(PaymentAdyenTransfer $paymentAdyenTransfer = null): string
     {
+        if (
+            $paymentAdyenTransfer
+            && $paymentAdyenTransfer->getResultCode() === $this->config->getOmsStatusRefused()
+        ) {
+                return $this->config->getOmsStatusRefused();
+        }
+
         return $this->config->getOmsStatusAuthorized();
     }
 }
