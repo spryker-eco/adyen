@@ -25,6 +25,10 @@ class DirectDebitSubForm extends AbstractSubForm
     protected const OWNER_NAME_LABEL = 'Owner Name';
     protected const IBAN_NUMBER_LABEL = 'IBAN';
 
+    protected const GLOSSARY_KEY_CONSTRAINT_MESSAGE_INVALID_OWNER_NAME = 'adyen.payment.error.owner_name';
+    protected const GLOSSARY_KEY_CONSTRAINT_MESSAGE_INVALID_IBAN_NUMBER = 'adyen.payment.error.iban_number';
+
+
     /**
      * @return string
      */
@@ -87,7 +91,9 @@ class DirectDebitSubForm extends AbstractSubForm
             [
                 'label' => static::OWNER_NAME_LABEL,
                 'required' => true,
-                'constraints' => [],
+                'constraints' => [
+                    $this->createNotBlankConstraint(static::GLOSSARY_KEY_CONSTRAINT_MESSAGE_INVALID_OWNER_NAME),
+                ],
             ]
         );
 
@@ -107,7 +113,9 @@ class DirectDebitSubForm extends AbstractSubForm
             [
                 'label' => static::IBAN_NUMBER_LABEL,
                 'required' => true,
-                'constraints' => [],
+                'constraints' => [
+                    $this->createNotBlankConstraint(static::GLOSSARY_KEY_CONSTRAINT_MESSAGE_INVALID_IBAN_NUMBER),
+                ],
             ]
         );
 
