@@ -72,6 +72,7 @@
     <table name="spy_payment_adyen_notification">
         <column name="id_payment_adyen_notification" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
 
+<<<<<<< Updated upstream
         <column name="psp_reference" required="true" type="VARCHAR"/>
         <column name="event_code" required="true" type="VARCHAR"/>
         <column name="success" required="true" type="VARCHAR"/>
@@ -84,6 +85,20 @@
         <column name="merchant_reference" required="false" type="VARCHAR"/>
         <column name="payment_method" required="false" type="VARCHAR"/>
         <column name="reason" required="false" type="VARCHAR"/>
+=======
+        <column name="psp_reference" required="true" type="VARCHAR" size="64"/>
+        <column name="event_code" required="true" type="VARCHAR" size="128"/>
+        <column name="success" required="true" type="VARCHAR" size="32"/>
+
+        <column name="additional_data" required="false" type="LONGVARCHAR"/>
+        <column name="amount" required="false" type="VARCHAR" size="255"/>
+        <column name="operations" required="false" type="VARCHAR" size="255"/>
+        <column name="event_date" required="false" type="VARCHAR" size="255"/>
+        <column name="merchant_account_code" required="false" type="VARCHAR" size="255"/>
+        <column name="merchant_reference" required="false" type="VARCHAR" size="128"/>
+        <column name="payment_method" required="false" type="VARCHAR" size="128"/>
+        <column name="reason" required="false" type="VARCHAR" size="255"/>
+>>>>>>> Stashed changes
 
         <behavior name="timestampable"/>
 
