@@ -77,7 +77,7 @@
         <column name="success" required="true" type="VARCHAR" size="32"/>
 
         <column name="additional_data" required="false" type="LONGVARCHAR"/>
-        <column name="amount" required="false" type="VARCHAR" size="32"/>
+        <column name="amount" required="false" type="VARCHAR" size="255"/>
         <column name="operations" required="false" type="VARCHAR" size="255"/>
         <column name="event_date" required="false" type="VARCHAR" size="255"/>
         <column name="merchant_account_code" required="false" type="VARCHAR" size="255"/>
