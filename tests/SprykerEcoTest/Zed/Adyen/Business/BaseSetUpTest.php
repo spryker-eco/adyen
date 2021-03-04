@@ -288,6 +288,7 @@ class BaseSetUpTest extends Test
 
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param string $eventCode
      *
      * @return \Generated\Shared\Transfer\AdyenNotificationsTransfer
      */
