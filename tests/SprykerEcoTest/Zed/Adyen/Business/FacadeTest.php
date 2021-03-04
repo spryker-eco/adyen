@@ -165,6 +165,46 @@ class FacadeTest extends BaseSetUpTest
     /**
      * @return void
      */
+    public function testHandleNotificationWithAuthorizeAfterCapture(): void
+    {
+        $facade = $this->createFacade();
+        $orderTransfer = $this->setUpCommandTest(
+            static::PROCESS_NAME_ADYEN_CREDIT_CARD,
+            static::OMS_STATUS_NEW
+        );
+
+        $notificationsTransferAuthorize = $this->createNotificationsTransfer($orderTransfer, 'AUTHORISATION');
+        $facade->handleNotification($notificationsTransferAuthorize);
+
+        foreach ($this->getSpySalesOrderItems($orderTransfer) as $item) {
+            /** @var \Orm\Zed\Sales\Persistence\SpySalesOrderItem $item */
+            $paymentAdyenOrderItem = $item->getSpyPaymentAdyenOrderItems()->getLast();
+            $this->assertEquals(static::OMS_STATUS_AUTHORIZED, $paymentAdyenOrderItem->getStatus());
+            $this->assertNotEmpty($paymentAdyenOrderItem->getSpyPaymentAdyen()->getPspReference());
+        }
+
+        $notificationsTransferCapture = $this->createNotificationsTransfer($orderTransfer);
+        $facade->handleNotification($notificationsTransferCapture);
+
+        foreach ($this->getSpySalesOrderItems($orderTransfer) as $item) {
+            /** @var \Orm\Zed\Sales\Persistence\SpySalesOrderItem $item */
+            $paymentAdyenOrderItem = $item->getSpyPaymentAdyenOrderItems()->getLast();
+            $this->assertEquals(static::OMS_STATUS_CAPTURED, $paymentAdyenOrderItem->getStatus());
+            $this->assertNotEmpty($paymentAdyenOrderItem->getSpyPaymentAdyen()->getPspReference());
+        }
+
+        $facade->handleNotification($notificationsTransferAuthorize);
+        foreach ($this->getSpySalesOrderItems($orderTransfer) as $item) {
+            /** @var \Orm\Zed\Sales\Persistence\SpySalesOrderItem $item */
+            $paymentAdyenOrderItem = $item->getSpyPaymentAdyenOrderItems()->getLast();
+            $this->assertEquals(static::OMS_STATUS_CAPTURED, $paymentAdyenOrderItem->getStatus());
+            $this->assertNotEmpty($paymentAdyenOrderItem->getSpyPaymentAdyen()->getPspReference());
+        }
+    }
+
+    /**
+     * @return void
+     */
     public function testHandleOnlineTransferResponseFromAdyen(): void
     {
         $facade = $this->createFacade();

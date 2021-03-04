@@ -291,8 +291,12 @@ class BaseSetUpTest extends Test
      *
      * @return \Generated\Shared\Transfer\AdyenNotificationsTransfer
      */
-    protected function createNotificationsTransfer(OrderTransfer $orderTransfer): AdyenNotificationsTransfer
+    protected function createNotificationsTransfer(OrderTransfer $orderTransfer, string $eventCode = ''): AdyenNotificationsTransfer
     {
+        if (!$eventCode) {
+            $eventCode = static::EVENT_CODE_CAPTURE;
+        }
+
         $amount = (new AdyenApiAmountBuilder([
                 AdyenApiAmountTransfer::CURRENCY => static::CURRENCY,
                 AdyenApiAmountTransfer::VALUE => static::AMOUNT,
@@ -301,7 +305,7 @@ class BaseSetUpTest extends Test
 
         $notification = (new AdyenNotificationRequestItemBuilder([
                 AdyenNotificationRequestItemTransfer::PSP_REFERENCE => static::RESPONSE_REFERENCE,
-                AdyenNotificationRequestItemTransfer::EVENT_CODE => static::EVENT_CODE_CAPTURE,
+                AdyenNotificationRequestItemTransfer::EVENT_CODE => $eventCode,
                 AdyenNotificationRequestItemTransfer::MERCHANT_ACCOUNT_CODE => static::MERCHANT_ACCOUNT,
                 AdyenNotificationRequestItemTransfer::MERCHANT_REFERENCE => sprintf(static::PAYMENT_ADYEN_REFERENCE, $orderTransfer->getIdSalesOrder()),
                 AdyenNotificationRequestItemTransfer::SUCCESS => static::RESPONSE_SUCCESS_TRUE,
