@@ -93,6 +93,14 @@ class AdyenNotificationHandler implements AdyenNotificationHandlerInterface
             $this->utilEncodingService->encodeJson($notificationTransfer->getAdditionalData())
         );
 
+        if ($notificationTransfer->getEventCode() === $this->config->getAdyenNotificationEventCodeAuthorisation()) {
+            foreach ($paymentAdyenOrderItems as $item) {
+                if ($item->getStatus() !== $this->config->getOmsStatusNew()) {
+                    return;
+                }
+            }
+        }
+
         $this->writer->updatePaymentEntities(
             $statuses[$notificationTransfer->getEventCode()][$notificationTransfer->getSuccess()],
             $paymentAdyenOrderItems,

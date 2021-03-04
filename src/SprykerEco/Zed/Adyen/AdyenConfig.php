@@ -337,6 +337,16 @@ class AdyenConfig extends AbstractBundleConfig
     /**
      * @api
      *
+     * @return string
+     */
+    public function getAdyenNotificationEventCodeAuthorisation(): string
+    {
+        return static::ADYEN_NOTIFICATION_EVENT_CODE_AUTHORISATION;
+    }
+
+    /**
+     * @api
+     *
      * @return bool
      */
     public function isCreditCard3dSecureEnabled(): bool
