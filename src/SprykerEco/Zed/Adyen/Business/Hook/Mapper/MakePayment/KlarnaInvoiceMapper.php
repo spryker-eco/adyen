@@ -23,7 +23,10 @@ class KlarnaInvoiceMapper extends AbstractMapper
      */
     protected function getReturnUrl(): string
     {
-        return '';
+        /** @var SprykerEco\Zed\Adyen\AdyenConfig $config */
+        $config = $this->config;
+
+        return $config->getKlarnaPayReturnUrl();
     }
 
     /**
@@ -78,7 +81,8 @@ class KlarnaInvoiceMapper extends AbstractMapper
                     ->setDescription($item->getName())
                     ->setQuantity($item->getQuantity())
                     ->setTaxAmount($item->getSumTaxAmount())
-                    ->setTaxPercentage((int)$item->getTaxRate())
+                    // Multiplying by 100 is necessary for klarna's side validation
+                    ->setTaxPercentage((int)$item->getTaxRate() * 100)
                     ->setAmountExcludingTax($item->getSumPrice() - $item->getSumTaxAmount())
                     ->setAmountIncludingTax($item->getSumPrice());
             },

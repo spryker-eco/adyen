@@ -277,6 +277,16 @@ class AdyenConfig extends AbstractBundleConfig
     /**
      * @api
      *
+     * @return string
+     */
+    public function getKlarnaPayReturnUrl(): string
+    {
+        return $this->get(AdyenConstants::KLARNA_RETURN_URL);
+    }
+
+    /**
+     * @api
+     *
      * @return bool
      */
     public function isMultiplePartialCaptureEnabled(): bool
