@@ -43,7 +43,7 @@ class KlarnaInvoiceSaver extends AbstractSaver
      *
      * @return string
      */
-    protected function getPaymentStatus(PaymentAdyenTransfer $paymentAdyenTransfer = null): string
+    protected function getPaymentStatus(?PaymentAdyenTransfer $paymentAdyenTransfer = null): string
     {
         return $this->config->getOmsStatusAuthorized();
     }

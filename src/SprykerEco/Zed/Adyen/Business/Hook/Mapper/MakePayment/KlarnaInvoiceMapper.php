@@ -23,7 +23,7 @@ class KlarnaInvoiceMapper extends AbstractMapper
      */
     protected function getReturnUrl(): string
     {
-        /** @var SprykerEco\Zed\Adyen\AdyenConfig $config */
+        /** @var \SprykerEco\Zed\Adyen\AdyenConfig $config */
         $config = $this->config;
 
         return $config->getKlarnaPayReturnUrl();

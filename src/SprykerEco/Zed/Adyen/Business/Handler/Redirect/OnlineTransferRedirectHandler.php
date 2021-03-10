@@ -139,7 +139,7 @@ class OnlineTransferRedirectHandler implements AdyenRedirectHandlerInterface
     {
         return [
             AdyenApiRequestConfig::PAYLOAD_FIELD => $redirectResponseTransfer->getPayload(),
-            AdyenApiRequestConfig::REDIRECT_RESULT_FIELD => $redirectResponseTransfer->getRedirectResult()
+            AdyenApiRequestConfig::REDIRECT_RESULT_FIELD => $redirectResponseTransfer->getRedirectResult(),
         ];
     }
 }
