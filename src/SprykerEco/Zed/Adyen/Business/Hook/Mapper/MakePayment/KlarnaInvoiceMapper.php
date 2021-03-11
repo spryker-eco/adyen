@@ -17,6 +17,7 @@ use SprykerEco\Shared\Adyen\AdyenApiRequestConfig;
 class KlarnaInvoiceMapper extends AbstractMapper
 {
     protected const REQUEST_TYPE = 'klarna';
+    protected const KLARNA_TAX_RATE_MULTIPLIER = 100;
 
     /**
      * @return string
@@ -81,8 +82,7 @@ class KlarnaInvoiceMapper extends AbstractMapper
                     ->setDescription($item->getName())
                     ->setQuantity($item->getQuantity())
                     ->setTaxAmount($item->getSumTaxAmount())
-                    // Multiplying by 100 is necessary for klarna's side validation
-                    ->setTaxPercentage((int)$item->getTaxRate() * 100)
+                    ->setTaxPercentage((int)$item->getTaxRate() * static::KLARNA_TAX_RATE_MULTIPLIER)
                     ->setAmountExcludingTax($item->getSumPrice() - $item->getSumTaxAmount())
                     ->setAmountIncludingTax($item->getSumPrice());
             },
