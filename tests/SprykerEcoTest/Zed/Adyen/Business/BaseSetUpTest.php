@@ -60,6 +60,7 @@ class BaseSetUpTest extends Test
     protected const CURRENCY = 'EUR';
     protected const FIELD_UNIT_PRICE = 'unitPrice';
     protected const FIELD_SUM_PRICE = 'sumPrice';
+    protected const EVENT_CODE_AUTHORISATION = 'AUTHORISATION';
     protected const EVENT_CODE_CAPTURE = 'CAPTURE';
     protected const MERCHANT_ACCOUNT = 'TestMerchant';
     protected const RESPONSE_SUCCESS_TRUE = 'true';
@@ -292,12 +293,8 @@ class BaseSetUpTest extends Test
      *
      * @return \Generated\Shared\Transfer\AdyenNotificationsTransfer
      */
-    protected function createNotificationsTransfer(OrderTransfer $orderTransfer, string $eventCode = ''): AdyenNotificationsTransfer
+    protected function createNotificationsTransfer(OrderTransfer $orderTransfer, string $eventCode): AdyenNotificationsTransfer
     {
-        if (!$eventCode) {
-            $eventCode = static::EVENT_CODE_CAPTURE;
-        }
-
         $amount = (new AdyenApiAmountBuilder([
                 AdyenApiAmountTransfer::CURRENCY => static::CURRENCY,
                 AdyenApiAmountTransfer::VALUE => static::AMOUNT,

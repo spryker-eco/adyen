@@ -93,7 +93,7 @@ class AdyenNotificationHandler implements AdyenNotificationHandlerInterface
             $this->utilEncodingService->encodeJson($notificationTransfer->getAdditionalData())
         );
 
-        if ($this->isDuplicatedAuthorisationNotification()) {
+        if ($this->isDuplicatedAuthorisationNotification($notificationTransfer, $paymentAdyenOrderItems)) {
             return;
         }
 
