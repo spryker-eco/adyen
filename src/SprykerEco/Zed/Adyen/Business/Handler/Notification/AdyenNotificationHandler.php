@@ -114,7 +114,7 @@ class AdyenNotificationHandler implements AdyenNotificationHandlerInterface
     {
         if ($notificationTransfer->getEventCode() === $this->config->getAdyenNotificationEventCodeAuthorisation()) {
             foreach ($paymentAdyenOrderItems as $item) {
-                if ($item->getStatus() !== $this->config->getOmsStatusNew()) {
+                if (!in_array($item->getStatus(), $this->config->getOmsStatusAuthorizedAvailableTransitions()) ) {
                     return true;
                 }
             }
