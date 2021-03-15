@@ -194,6 +194,9 @@ class FacadeTest extends BaseSetUpTest
         $this->assertSalesOrderItemStatus($orderTransfer, static::OMS_STATUS_CAPTURED);
     }
 
+    /**
+     * @return void
+     */
     private function assertSalesOrderItemStatus(OrderTransfer $orderTransfer, string $status)
     {
         foreach ($this->getSpySalesOrderItems($orderTransfer) as $item) {
