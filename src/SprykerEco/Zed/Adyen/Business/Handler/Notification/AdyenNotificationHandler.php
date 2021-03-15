@@ -93,12 +93,8 @@ class AdyenNotificationHandler implements AdyenNotificationHandlerInterface
             $this->utilEncodingService->encodeJson($notificationTransfer->getAdditionalData())
         );
 
-        if ($notificationTransfer->getEventCode() === $this->config->getAdyenNotificationEventCodeAuthorisation()) {
-            foreach ($paymentAdyenOrderItems as $item) {
-                if ($item->getStatus() !== $this->config->getOmsStatusNew()) {
-                    return;
-                }
-            }
+        if ($this->isDuplicatedAuthorisationNotification($notificationTransfer, $paymentAdyenOrderItems)) {
+            return;
         }
 
         $this->writer->updatePaymentEntities(
@@ -106,5 +102,24 @@ class AdyenNotificationHandler implements AdyenNotificationHandlerInterface
             $paymentAdyenOrderItems,
             $paymentAdyenTransfer
         );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AdyenNotificationRequestItemTransfer $notificationTransfer
+     * @param \Generated\Shared\Transfer\PaymentAdyenOrderItemTransfer[] $paymentAdyenOrderItems
+     *
+     * @return bool
+     */
+    private function isDuplicatedAuthorisationNotification(AdyenNotificationRequestItemTransfer $notificationTransfer, array $paymentAdyenOrderItems): bool
+    {
+        if ($notificationTransfer->getEventCode() === $this->config->getAdyenNotificationEventCodeAuthorisation()) {
+            foreach ($paymentAdyenOrderItems as $item) {
+                if (!in_array($item->getStatus(), $this->config->getOmsStatusAuthorizedAvailableTransitions())) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 }

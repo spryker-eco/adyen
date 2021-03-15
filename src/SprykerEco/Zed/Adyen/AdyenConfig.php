@@ -77,6 +77,19 @@ class AdyenConfig extends AbstractBundleConfig
     /**
      * @api
      *
+     * @return array
+     */
+    public function getOmsStatusAuthorizedAvailableTransitions(): array
+    {
+        return [
+            static::OMS_STATUS_NEW,
+            static::OMS_STATUS_AUTHORIZATION_FAILED,
+        ];
+    }
+
+    /**
+     * @api
+     *
      * @return string
      */
     public function getOmsStatusAuthorizationFailed(): string
