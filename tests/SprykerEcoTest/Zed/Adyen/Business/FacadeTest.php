@@ -167,7 +167,7 @@ class FacadeTest extends BaseSetUpTest
     /**
      * @return void
      */
-    public function testHandleNotificationWithAuthorizeAfterCapture(): void
+    public function testHandleNotificationWithAuthorizeEventAfterCaptureEvent(): void
     {
         // Arrange
         $facade = $this->createFacade();
@@ -197,7 +197,7 @@ class FacadeTest extends BaseSetUpTest
     /**
      * @return void
      */
-    private function assertSalesOrderItemStatus(OrderTransfer $orderTransfer, string $status): void
+    protected function assertSalesOrderItemStatus(OrderTransfer $orderTransfer, string $status): void
     {
         foreach ($this->getSpySalesOrderItems($orderTransfer) as $item) {
             /** @var \Orm\Zed\Sales\Persistence\SpySalesOrderItem $item */

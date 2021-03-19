@@ -9,6 +9,7 @@ namespace SprykerEco\Zed\Adyen\Business\Handler\Notification;
 
 use Generated\Shared\Transfer\AdyenNotificationRequestItemTransfer;
 use Generated\Shared\Transfer\AdyenNotificationsTransfer;
+use Generated\Shared\Transfer\PaymentAdyenOrderItemTransfer;
 use SprykerEco\Zed\Adyen\AdyenConfig;
 use SprykerEco\Zed\Adyen\Business\Reader\AdyenReaderInterface;
 use SprykerEco\Zed\Adyen\Business\Writer\AdyenWriterInterface;
@@ -110,16 +111,28 @@ class AdyenNotificationHandler implements AdyenNotificationHandlerInterface
      *
      * @return bool
      */
-    private function isDuplicatedAuthorisationNotification(AdyenNotificationRequestItemTransfer $notificationTransfer, array $paymentAdyenOrderItems): bool
+    protected function isDuplicatedAuthorisationNotification(AdyenNotificationRequestItemTransfer $notificationTransfer, array $paymentAdyenOrderItems): bool
     {
-        if ($notificationTransfer->getEventCode() === $this->config->getAdyenNotificationEventCodeAuthorisation()) {
-            foreach ($paymentAdyenOrderItems as $item) {
-                if (!in_array($item->getStatus(), $this->config->getOmsStatusAuthorizedAvailableTransitions())) {
-                    return true;
-                }
+        if ($notificationTransfer->getEventCode() !== $this->config->getAdyenNotificationEventCodeAuthorisation()) {
+            return false;
+        }
+
+        foreach ($paymentAdyenOrderItems as $itemTransfer) {
+            if ($this->isItemStatusValid($itemTransfer)) {
+                return true;
             }
         }
 
         return false;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PaymentAdyenOrderItemTransfer $paymentAdyenOrderItemTransfer
+     *
+     * @return bool
+     */
+    protected function isItemStatusValid(PaymentAdyenOrderItemTransfer $paymentAdyenOrderItemTransfer): bool
+    {
+        return (!in_array($paymentAdyenOrderItemTransfer->getStatus(), $this->config->getOmsStatusAuthorizedAvailableTransitions()));
     }
 }
