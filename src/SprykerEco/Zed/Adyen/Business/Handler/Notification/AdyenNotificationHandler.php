@@ -9,6 +9,7 @@ namespace SprykerEco\Zed\Adyen\Business\Handler\Notification;
 
 use Generated\Shared\Transfer\AdyenNotificationRequestItemTransfer;
 use Generated\Shared\Transfer\AdyenNotificationsTransfer;
+use Generated\Shared\Transfer\PaymentAdyenOrderItemTransfer;
 use SprykerEco\Zed\Adyen\AdyenConfig;
 use SprykerEco\Zed\Adyen\Business\Reader\AdyenReaderInterface;
 use SprykerEco\Zed\Adyen\Business\Writer\AdyenWriterInterface;
@@ -93,10 +94,45 @@ class AdyenNotificationHandler implements AdyenNotificationHandlerInterface
             $this->utilEncodingService->encodeJson($notificationTransfer->getAdditionalData())
         );
 
+        if ($this->isDuplicatedAuthorisationNotification($notificationTransfer, $paymentAdyenOrderItems)) {
+            return;
+        }
+
         $this->writer->updatePaymentEntities(
             $statuses[$notificationTransfer->getEventCode()][$notificationTransfer->getSuccess()],
             $paymentAdyenOrderItems,
             $paymentAdyenTransfer
         );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AdyenNotificationRequestItemTransfer $notificationTransfer
+     * @param \Generated\Shared\Transfer\PaymentAdyenOrderItemTransfer[] $paymentAdyenOrderItems
+     *
+     * @return bool
+     */
+    protected function isDuplicatedAuthorisationNotification(AdyenNotificationRequestItemTransfer $notificationTransfer, array $paymentAdyenOrderItems): bool
+    {
+        if ($notificationTransfer->getEventCode() !== $this->config->getAdyenNotificationEventCodeAuthorisation()) {
+            return false;
+        }
+
+        foreach ($paymentAdyenOrderItems as $itemTransfer) {
+            if (!$this->isItemStatusValid($itemTransfer)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PaymentAdyenOrderItemTransfer $paymentAdyenOrderItemTransfer
+     *
+     * @return bool
+     */
+    protected function isItemStatusValid(PaymentAdyenOrderItemTransfer $paymentAdyenOrderItemTransfer): bool
+    {
+        return (in_array($paymentAdyenOrderItemTransfer->getStatus(), $this->config->getOmsStatusAuthorizedAvailableTransitions()));
     }
 }

@@ -77,6 +77,19 @@ class AdyenConfig extends AbstractBundleConfig
     /**
      * @api
      *
+     * @return string[]
+     */
+    public function getOmsStatusAuthorizedAvailableTransitions(): array
+    {
+        return [
+            static::OMS_STATUS_NEW,
+            static::OMS_STATUS_AUTHORIZATION_FAILED,
+        ];
+    }
+
+    /**
+     * @api
+     *
      * @return string
      */
     public function getOmsStatusAuthorizationFailed(): string
@@ -332,6 +345,16 @@ class AdyenConfig extends AbstractBundleConfig
                 static::ADYEN_NOTIFICATION_SUCCESS_FALSE => $this->getOmsStatusRefundFailed(),
             ],
         ];
+    }
+
+    /**
+     * @api
+     *
+     * @return string
+     */
+    public function getAdyenNotificationEventCodeAuthorisation(): string
+    {
+        return static::ADYEN_NOTIFICATION_EVENT_CODE_AUTHORISATION;
     }
 
     /**
