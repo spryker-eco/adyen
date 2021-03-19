@@ -118,7 +118,7 @@ class AdyenNotificationHandler implements AdyenNotificationHandlerInterface
         }
 
         foreach ($paymentAdyenOrderItems as $itemTransfer) {
-            if ($this->isItemStatusValid($itemTransfer)) {
+            if (!$this->isItemStatusValid($itemTransfer)) {
                 return true;
             }
         }
@@ -133,6 +133,6 @@ class AdyenNotificationHandler implements AdyenNotificationHandlerInterface
      */
     protected function isItemStatusValid(PaymentAdyenOrderItemTransfer $paymentAdyenOrderItemTransfer): bool
     {
-        return (!in_array($paymentAdyenOrderItemTransfer->getStatus(), $this->config->getOmsStatusAuthorizedAvailableTransitions()));
+        return (in_array($paymentAdyenOrderItemTransfer->getStatus(), $this->config->getOmsStatusAuthorizedAvailableTransitions()));
     }
 }
