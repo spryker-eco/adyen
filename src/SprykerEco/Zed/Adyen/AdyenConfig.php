@@ -55,11 +55,6 @@ class AdyenConfig extends AbstractBundleConfig
     protected const PAYMENT_METHOD_TYPE_WE_CHAT_PAY = 'wechatpay';
 
     /**
-     * @uses \SprykerEco\Shared\Adyen\AdyenApiRequestConfig::REDIRECT_RESULT_FIELD
-     */
-    public const REDIRECT_RESULT_FIELD = 'redirectResult';
-
-    /**
      * @api
      *
      * @return string
@@ -280,6 +275,9 @@ class AdyenConfig extends AbstractBundleConfig
     }
 
     /**
+     * Specification:
+     * - Returns the klarna payment method return url.
+     *
      * @api
      *
      * @return string
