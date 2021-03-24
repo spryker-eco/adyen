@@ -7,6 +7,8 @@
 
 namespace SprykerEcoTest\Zed\Adyen\Business;
 
+use Generated\Shared\Transfer\OrderTransfer;
+
 /**
  * @group Functional
  * @group SprykerEco
@@ -151,13 +153,56 @@ class FacadeTest extends BaseSetUpTest
             static::PROCESS_NAME_ADYEN_CREDIT_CARD,
             static::OMS_STATUS_CAPTURE_PENDING
         );
-        $notificationsTransfer = $this->createNotificationsTransfer($orderTransfer);
+        $notificationsTransfer = $this->createNotificationsTransfer($orderTransfer, static::EVENT_CODE_CAPTURE);
         $facade->handleNotification($notificationsTransfer);
 
         foreach ($this->getSpySalesOrderItems($orderTransfer) as $item) {
             /** @var \Orm\Zed\Sales\Persistence\SpySalesOrderItem $item */
             $paymentAdyenOrderItem = $item->getSpyPaymentAdyenOrderItems()->getLast();
             $this->assertEquals(static::OMS_STATUS_CAPTURED, $paymentAdyenOrderItem->getStatus());
+            $this->assertNotEmpty($paymentAdyenOrderItem->getSpyPaymentAdyen()->getPspReference());
+        }
+    }
+
+    /**
+     * @return void
+     */
+    public function testHandleNotificationWithAuthorizeEventAfterCaptureEvent(): void
+    {
+        // Arrange
+        $facade = $this->createFacade();
+        $orderTransfer = $this->setUpCommandTest(
+            static::PROCESS_NAME_ADYEN_CREDIT_CARD,
+            static::OMS_STATUS_NEW
+        );
+
+        // Act
+        $notificationsTransferAuthorize = $this->createNotificationsTransfer($orderTransfer, static::EVENT_CODE_AUTHORISATION);
+        $facade->handleNotification($notificationsTransferAuthorize);
+        // Assert
+        $this->assertSalesOrderItemStatus($orderTransfer, static::OMS_STATUS_AUTHORIZED);
+
+        // Act
+        $notificationsTransferCapture = $this->createNotificationsTransfer($orderTransfer, static::EVENT_CODE_CAPTURE);
+        $facade->handleNotification($notificationsTransferCapture);
+        // Assert
+        $this->assertSalesOrderItemStatus($orderTransfer, static::OMS_STATUS_CAPTURED);
+
+        //Act
+        $facade->handleNotification($notificationsTransferAuthorize);
+        // Assert
+        $this->assertSalesOrderItemStatus($orderTransfer, static::OMS_STATUS_CAPTURED);
+    }
+
+    /**
+     * @return void
+     */
+    protected function assertSalesOrderItemStatus(OrderTransfer $orderTransfer, string $status): void
+    {
+        foreach ($this->getSpySalesOrderItems($orderTransfer) as $item) {
+            /** @var \Orm\Zed\Sales\Persistence\SpySalesOrderItem $item */
+            $paymentAdyenOrderItem = $item->getSpyPaymentAdyenOrderItems()->getLast();
+            $this->assertEquals($status, $paymentAdyenOrderItem->getStatus());
             $this->assertNotEmpty($paymentAdyenOrderItem->getSpyPaymentAdyen()->getPspReference());
         }
     }
