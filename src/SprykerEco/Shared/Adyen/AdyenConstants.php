@@ -83,12 +83,4 @@ interface AdyenConstants
      * @api
      */
     public const SDK_ENVIRONMENT = 'ADYEN:SDK_ENVIRONMENT';
-
-    /**
-     * Specification:
-     * - Adyen Klarna tax rate multiplier.
-     *
-     * @api
-     */
-    public const KLARNA_TAX_RATE_MULTIPLIER = 'ADYEN:KLARNA_TAX_RATE_MULTIPLIER';
 }

@@ -28,7 +28,6 @@ $config[AdyenConstants::WE_CHAT_PAY_RETURN_URL] = 'WE_CHAT_PAY_RETURN_URL';
 $config[AdyenConstants::KLARNA_RETURN_URL] = 'KLARNA_RETURN_URL';
 $config[AdyenConstants::CREDIT_CARD_3D_SECURE_ENABLED] = true;
 $config[AdyenConstants::MULTIPLE_PARTIAL_CAPTURE_ENABLED] = false;
-$config[AdyenConstants::KLARNA_TAX_RATE_MULTIPLIER] = 100;
 $config[AdyenConstants::SOCIAL_SECURITY_NUMBER_COUNTRIES_MANDATORY] = [
     'SE',
     'FI',

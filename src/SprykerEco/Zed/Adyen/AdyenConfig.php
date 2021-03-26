@@ -54,6 +54,8 @@ class AdyenConfig extends AbstractBundleConfig
     protected const PAYMENT_METHOD_TYPE_ALI_PAY = 'alipay';
     protected const PAYMENT_METHOD_TYPE_WE_CHAT_PAY = 'wechatpay';
 
+    protected const KLARNA_TAX_RATE_MULTIPLIER = 100;
+
     /**
      * @api
      *
@@ -420,6 +422,6 @@ class AdyenConfig extends AbstractBundleConfig
      */
     public function getKlarnaTaxRateMultiplier(): int
     {
-        return $this->get(AdyenConstants::KLARNA_TAX_RATE_MULTIPLIER);
+        return static::KLARNA_TAX_RATE_MULTIPLIER;
     }
 }
