@@ -14,20 +14,19 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use SprykerEco\Shared\Adyen\AdyenApiRequestConfig;
 
+/**
+ * @property \SprykerEco\Zed\Adyen\AdyenConfig $config
+ */
 class KlarnaInvoiceMapper extends AbstractMapper
 {
     protected const REQUEST_TYPE = 'klarna';
-    protected const KLARNA_TAX_RATE_MULTIPLIER = 100;
 
     /**
      * @return string
      */
     protected function getReturnUrl(): string
     {
-        /** @var \SprykerEco\Zed\Adyen\AdyenConfig $config */
-        $config = $this->config;
-
-        return $config->getKlarnaPayReturnUrl();
+        return $this->config->getKlarnaPayReturnUrl();
     }
 
     /**
@@ -75,14 +74,16 @@ class KlarnaInvoiceMapper extends AbstractMapper
      */
     protected function getLineItems(QuoteTransfer $quoteTransfer): ArrayObject
     {
+        $taxMultiplier = $this->config->getKlarnaTaxRateMultiplier();
+
         $items = array_map(
-            function (ItemTransfer $item) {
+            function (ItemTransfer $item) use ($taxMultiplier) {
                 return (new AdyenApiLineItemTransfer())
                     ->setId($item->getSku())
                     ->setDescription($item->getName())
                     ->setQuantity($item->getQuantity())
                     ->setTaxAmount($item->getSumTaxAmount())
-                    ->setTaxPercentage((int)$item->getTaxRate() * static::KLARNA_TAX_RATE_MULTIPLIER)
+                    ->setTaxPercentage((int)$item->getTaxRate() * $taxMultiplier)
                     ->setAmountExcludingTax($item->getSumPrice() - $item->getSumTaxAmount())
                     ->setAmountIncludingTax($item->getSumPrice());
             },

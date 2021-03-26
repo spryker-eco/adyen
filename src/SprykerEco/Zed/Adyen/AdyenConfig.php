@@ -289,7 +289,7 @@ class AdyenConfig extends AbstractBundleConfig
 
     /**
      * Specification:
-     * - Returns the klarna payment method return url.
+     * - Returns the Klarna's payment method return url.
      *
      * @api
      *
@@ -408,5 +408,18 @@ class AdyenConfig extends AbstractBundleConfig
             static::PAYMENT_METHOD_TYPE_ALI_PAY => SharedAdyenConfig::ADYEN_ALI_PAY,
             static::PAYMENT_METHOD_TYPE_WE_CHAT_PAY => SharedAdyenConfig::ADYEN_WE_CHAT_PAY,
         ];
+    }
+
+    /**
+     * Specification:
+     * - Returns the Klarna's tax rate multiplier.
+     *
+     * @api
+     *
+     * @return int
+     */
+    public function getKlarnaTaxRateMultiplier(): int
+    {
+        return $this->get(AdyenConstants::KLARNA_TAX_RATE_MULTIPLIER);
     }
 }
