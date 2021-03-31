@@ -30,6 +30,7 @@ class AdyenRouteProviderPlugin extends AbstractRouteProviderPlugin
         $routeCollection = $this->addAdyenRedirectPaypalRoute($routeCollection);
         $routeCollection = $this->addAdyenRedirectAlipayRoute($routeCollection);
         $routeCollection = $this->addAdyenRedirectWechatPayRoute($routeCollection);
+        $routeCollection = $this->addAdyenRedirectKlarnaRoute($routeCollection);
 
         return $routeCollection;
     }
@@ -134,6 +135,21 @@ class AdyenRouteProviderPlugin extends AbstractRouteProviderPlugin
         $routeCollection->add(
             'adyen-redirect-wechatpay',
             $this->buildRoute('/adyen/callback/redirect-wechatpay', static::BUNDLE_NAME, static::CALLBACK_CONTROLLER_NAME, 'redirectWeChatPay')
+        );
+
+        return $routeCollection;
+    }
+
+    /**
+     * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
+     *
+     * @return \Spryker\Yves\Router\Route\RouteCollection
+     */
+    protected function addAdyenRedirectKlarnaRoute(RouteCollection $routeCollection): RouteCollection
+    {
+        $routeCollection->add(
+            'adyen-redirect-klarna',
+            $this->buildRoute('/adyen/callback/redirect-klarna', static::BUNDLE_NAME, static::CALLBACK_CONTROLLER_NAME, 'redirectKlarna')
         );
 
         return $routeCollection;
