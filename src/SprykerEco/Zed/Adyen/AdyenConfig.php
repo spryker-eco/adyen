@@ -396,4 +396,21 @@ class AdyenConfig extends AbstractBundleConfig
             static::PAYMENT_METHOD_TYPE_WE_CHAT_PAY => SharedAdyenConfig::ADYEN_WE_CHAT_PAY,
         ];
     }
+
+    /**
+     * Specification:
+     * - Return Adyen api valid statuses for credit card payment status
+     *
+     * @api
+     *
+     * @return string[]
+     */
+    public function getCreditCardPaymentOmsStatusList(): array
+    {
+        return [
+            static::OMS_STATUS_AUTHORIZED,
+            static::OMS_STATUS_REFUSED,
+            static::OMS_STATUS_CANCELED,
+        ];
+    }
 }

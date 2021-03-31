@@ -10,6 +10,9 @@ namespace SprykerEco\Zed\Adyen\Business\Hook\Saver\MakePayment;
 use Generated\Shared\Transfer\AdyenApiResponseTransfer;
 use Generated\Shared\Transfer\PaymentAdyenTransfer;
 
+/**
+ * @property \SprykerEco\Zed\Adyen\AdyenConfig $config
+ */
 class CreditCardSaver extends AbstractSaver
 {
     protected const MAKE_PAYMENT_CREDIT_CARD_REQUEST_TYPE = 'MakePayment[CreditCard]';
@@ -63,9 +66,6 @@ class CreditCardSaver extends AbstractSaver
      */
     protected function hasValidResultCode(PaymentAdyenTransfer $paymentAdyenTransfer): bool
     {
-        return in_array($paymentAdyenTransfer->getResultCode(), [
-            $this->config->getOmsStatusAuthorized(),
-            $this->config->getOmsStatusRefused(),
-        ]);
+        return in_array($paymentAdyenTransfer->getResultCode(), $this->config->getCreditCardPaymentOmsStatusList());
     }
 }
