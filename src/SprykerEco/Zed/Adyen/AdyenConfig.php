@@ -54,6 +54,8 @@ class AdyenConfig extends AbstractBundleConfig
     protected const PAYMENT_METHOD_TYPE_ALI_PAY = 'alipay';
     protected const PAYMENT_METHOD_TYPE_WE_CHAT_PAY = 'wechatpay';
 
+    protected const KLARNA_TAX_RATE_MULTIPLIER = 100;
+
     /**
      * @api
      *
@@ -288,6 +290,19 @@ class AdyenConfig extends AbstractBundleConfig
     }
 
     /**
+     * Specification:
+     * - Returns the Klarna's payment method return url.
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getKlarnaPayReturnUrl(): string
+    {
+        return $this->get(AdyenConstants::KLARNA_RETURN_URL);
+    }
+
+    /**
      * @api
      *
      * @return bool
@@ -412,5 +427,18 @@ class AdyenConfig extends AbstractBundleConfig
             static::OMS_STATUS_REFUSED,
             static::OMS_STATUS_CANCELED,
         ];
+    }
+  
+    /**
+     * Specification:
+     * - Returns the Klarna's tax rate multiplier.
+     *
+     * @api
+     *
+     * @return int
+     */
+    public function getKlarnaTaxRateMultiplier(): int
+    {
+        return static::KLARNA_TAX_RATE_MULTIPLIER;
     }
 }
