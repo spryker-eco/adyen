@@ -35,10 +35,8 @@ class AdyenPaymentMethodFilterMapper implements AdyenPaymentMethodFilterMapperIn
      */
     public function buildRequestTransfer(QuoteTransfer $quoteTransfer): AdyenApiRequestTransfer
     {
-        $requestTransfer = (new AdyenApiRequestTransfer())
+        return (new AdyenApiRequestTransfer())
             ->setPaymentMethodsRequest($this->createGetPaymentMethodsRequestTransfer($quoteTransfer));
-
-        return $requestTransfer;
     }
 
     /**
@@ -48,11 +46,18 @@ class AdyenPaymentMethodFilterMapper implements AdyenPaymentMethodFilterMapperIn
      */
     protected function createGetPaymentMethodsRequestTransfer(QuoteTransfer $quoteTransfer): AdyenApiGetPaymentMethodsRequestTransfer
     {
-        return (new AdyenApiGetPaymentMethodsRequestTransfer())
+        $adyenApiGetPaymentMethodsRequestTransfer = new AdyenApiGetPaymentMethodsRequestTransfer();
+        $adyenApiGetPaymentMethodsRequestTransfer
             ->setMerchantAccount($this->config->getMerchantAccount())
             ->setAmount($this->createAmountTransfer($quoteTransfer))
-            ->setCountryCode($quoteTransfer->getBillingAddress()->getIso2Code())
             ->setChannel($this->config->getRequestChannel());
+
+        $billingAddress = $quoteTransfer->getBillingAddress();
+        if ($billingAddress) {
+            $adyenApiGetPaymentMethodsRequestTransfer->setCountryCode($billingAddress->getIso2Code());
+        }
+
+        return $adyenApiGetPaymentMethodsRequestTransfer;
     }
 
     /**
