@@ -26,4 +26,5 @@ interface AdyenApiRequestConfig
     public const DELIVERY_ADDRESS_FIELD = 'deliveryAddress';
     public const PERSONAL_DETAILS_FIELD = 'personalDetails';
     public const IDEAL_ISSUER_FIELD = 'idealIssuer';
+    public const REDIRECT_RESULT_FIELD = 'redirectResult';
 }

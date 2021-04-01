@@ -38,6 +38,14 @@ interface AdyenConstants
 
     /**
      * Specification:
+     * - Return URL for Klarna payment method.
+     *
+     * @api
+     */
+    public const KLARNA_RETURN_URL = 'ADYEN:KLARNA_RETURN_URL';
+
+    /**
+     * Specification:
      * - URL to Adyen Checkout shopper SDK JS file.
      *
      * @api

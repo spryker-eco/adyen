@@ -3,6 +3,7 @@
  * Copy over the following configs to your config
  */
 
+use Spryker\Shared\Kernel\KernelConstants;
 use Spryker\Shared\Oms\OmsConstants;
 use Spryker\Shared\Sales\SalesConstants;
 use SprykerEco\Shared\Adyen\AdyenConfig;
@@ -24,6 +25,7 @@ $config[AdyenConstants::IDEAL_RETURN_URL] = 'IDEAL_RETURN_URL';
 $config[AdyenConstants::PAY_PAL_RETURN_URL] = 'PAY_PAL_RETURN_URL';
 $config[AdyenConstants::ALI_PAY_RETURN_URL] = 'ALI_PAY_RETURN_URL';
 $config[AdyenConstants::WE_CHAT_PAY_RETURN_URL] = 'WE_CHAT_PAY_RETURN_URL';
+$config[AdyenConstants::KLARNA_RETURN_URL] = 'KLARNA_RETURN_URL';
 $config[AdyenConstants::CREDIT_CARD_3D_SECURE_ENABLED] = true;
 $config[AdyenConstants::MULTIPLE_PARTIAL_CAPTURE_ENABLED] = false;
 $config[AdyenConstants::SOCIAL_SECURITY_NUMBER_COUNTRIES_MANDATORY] = [
@@ -89,4 +91,9 @@ $config[SalesConstants::PAYMENT_METHOD_STATEMACHINE_MAPPING] = [
     AdyenConfig::ADYEN_PAY_PAL => 'AdyenPayPal01',
     AdyenConfig::ADYEN_ALI_PAY => 'AdyenAliPay01',
     AdyenConfig::ADYEN_WE_CHAT_PAY => 'AdyenWeChatPay01',
+];
+$config[KernelConstants::DOMAIN_WHITELIST] = [
+    /* ... */
+    'adyen.com', // trusted Adyen domains,
+    'test.adyen.com', // For test env
 ];

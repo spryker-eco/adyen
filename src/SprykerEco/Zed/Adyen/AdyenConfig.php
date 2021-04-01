@@ -54,6 +54,8 @@ class AdyenConfig extends AbstractBundleConfig
     protected const PAYMENT_METHOD_TYPE_ALI_PAY = 'alipay';
     protected const PAYMENT_METHOD_TYPE_WE_CHAT_PAY = 'wechatpay';
 
+    protected const KLARNA_TAX_RATE_MULTIPLIER = 100;
+
     /**
      * @api
      *
@@ -72,6 +74,19 @@ class AdyenConfig extends AbstractBundleConfig
     public function getOmsStatusAuthorized(): string
     {
         return static::OMS_STATUS_AUTHORIZED;
+    }
+
+    /**
+     * @api
+     *
+     * @return string[]
+     */
+    public function getOmsStatusAuthorizedAvailableTransitions(): array
+    {
+        return [
+            static::OMS_STATUS_NEW,
+            static::OMS_STATUS_AUTHORIZATION_FAILED,
+        ];
     }
 
     /**
@@ -275,6 +290,19 @@ class AdyenConfig extends AbstractBundleConfig
     }
 
     /**
+     * Specification:
+     * - Returns the Klarna's payment method return url.
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getKlarnaPayReturnUrl(): string
+    {
+        return $this->get(AdyenConstants::KLARNA_RETURN_URL);
+    }
+
+    /**
      * @api
      *
      * @return bool
@@ -337,6 +365,16 @@ class AdyenConfig extends AbstractBundleConfig
     /**
      * @api
      *
+     * @return string
+     */
+    public function getAdyenNotificationEventCodeAuthorisation(): string
+    {
+        return static::ADYEN_NOTIFICATION_EVENT_CODE_AUTHORISATION;
+    }
+
+    /**
+     * @api
+     *
      * @return bool
      */
     public function isCreditCard3dSecureEnabled(): bool
@@ -372,5 +410,35 @@ class AdyenConfig extends AbstractBundleConfig
             static::PAYMENT_METHOD_TYPE_ALI_PAY => SharedAdyenConfig::ADYEN_ALI_PAY,
             static::PAYMENT_METHOD_TYPE_WE_CHAT_PAY => SharedAdyenConfig::ADYEN_WE_CHAT_PAY,
         ];
+    }
+
+    /**
+     * Specification:
+     * - Return Adyen api valid statuses for credit card payment status
+     *
+     * @api
+     *
+     * @return string[]
+     */
+    public function getCreditCardPaymentOmsStatusList(): array
+    {
+        return [
+            static::OMS_STATUS_AUTHORIZED,
+            static::OMS_STATUS_REFUSED,
+            static::OMS_STATUS_CANCELED,
+        ];
+    }
+  
+    /**
+     * Specification:
+     * - Returns the Klarna's tax rate multiplier.
+     *
+     * @api
+     *
+     * @return int
+     */
+    public function getKlarnaTaxRateMultiplier(): int
+    {
+        return static::KLARNA_TAX_RATE_MULTIPLIER;
     }
 }
