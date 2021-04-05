@@ -428,7 +428,7 @@ class AdyenConfig extends AbstractBundleConfig
             static::OMS_STATUS_CANCELED,
         ];
     }
-  
+
     /**
      * Specification:
      * - Returns the Klarna's tax rate multiplier.

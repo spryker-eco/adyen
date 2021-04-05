@@ -195,6 +195,9 @@ class FacadeTest extends BaseSetUpTest
     }
 
     /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param string $status
+     *
      * @return void
      */
     protected function assertSalesOrderItemStatus(OrderTransfer $orderTransfer, string $status): void
