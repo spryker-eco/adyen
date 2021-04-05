@@ -1,5 +1,2 @@
 parameters:
     checkMissingIterableValueType: false
-
-    ignoreErrors:
-    - '#Call to method (utilEncoding|adyenApi|sales|utilText|adyen|quote|calculation|oms)\(\) on an unknown class .+AutoCompletion#'
