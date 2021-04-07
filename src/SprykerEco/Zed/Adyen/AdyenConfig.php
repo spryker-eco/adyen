@@ -414,7 +414,7 @@ class AdyenConfig extends AbstractBundleConfig
 
     /**
      * Specification:
-     * - Return Adyen api valid statuses for credit card payment status
+     * - Returns a list of valid OMS statuses for credit card payment.
      *
      * @api
      *
