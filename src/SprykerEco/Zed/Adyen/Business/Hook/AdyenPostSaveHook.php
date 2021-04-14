@@ -23,8 +23,16 @@ class AdyenPostSaveHook implements AdyenHookInterface
     protected const REDIRECT_METHOD_POST = 'POST';
     protected const ERROR_TYPE_PAYMENT_FAILED = 'payment failed';
     protected const ERROR_MESSAGE_PAYMENT_FAILED = 'Something went wrong with your payment. Try again!';
+    protected const ERROR_CODE_PAYMENT_FAILED = 399;
 
     protected const ADYEN_OMS_STATUS_REFUSED = 'Refused';
+    protected const ADYEN_OMS_STATUS_ERROR = 'Error';
+    protected const ADYEN_OMS_STATUS_CANCELLED = 'Cancelled';
+    protected const ADYEN_OMS_STATUS_REFUSAL_REASONS = [
+        self::ADYEN_OMS_STATUS_REFUSED,
+        self::ADYEN_OMS_STATUS_ERROR,
+        self::ADYEN_OMS_STATUS_CANCELLED,
+    ];
 
     /**
      * @var \SprykerEco\Zed\Adyen\Dependency\Facade\AdyenToAdyenApiFacadeInterface
@@ -77,7 +85,7 @@ class AdyenPostSaveHook implements AdyenHookInterface
 
         if (
             !$responseTransfer->getIsSuccess()
-            || $responseTransfer->getMakePaymentResponse()->getResultCode() === static::ADYEN_OMS_STATUS_REFUSED
+            || array_search($responseTransfer->getMakePaymentResponse()->getResultCode(), static::ADYEN_OMS_STATUS_REFUSAL_REASONS) !== false
         ) {
             $this->processFailureResponse($checkoutResponseTransfer);
 
@@ -154,7 +162,8 @@ class AdyenPostSaveHook implements AdyenHookInterface
     ): void {
         $error = (new CheckoutErrorTransfer())
             ->setErrorType(static::ERROR_TYPE_PAYMENT_FAILED)
-            ->setMessage(static::ERROR_MESSAGE_PAYMENT_FAILED);
+            ->setMessage(static::ERROR_MESSAGE_PAYMENT_FAILED)
+            ->setErrorCode(static::ERROR_CODE_PAYMENT_FAILED);
 
         $checkoutResponseTransfer->setIsSuccess(false);
         $checkoutResponseTransfer->addError($error);
