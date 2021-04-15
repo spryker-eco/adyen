@@ -17,6 +17,8 @@ use SprykerEco\Zed\Adyen\Business\Hook\Mapper\AdyenMapperResolverInterface;
 use SprykerEco\Zed\Adyen\Business\Hook\Saver\AdyenSaverResolverInterface;
 use SprykerEco\Zed\Adyen\Dependency\Facade\AdyenToAdyenApiFacadeInterface;
 
+use function in_array;
+
 class AdyenPostSaveHook implements AdyenHookInterface
 {
     protected const REDIRECT_METHOD_GET = 'GET';
@@ -85,7 +87,7 @@ class AdyenPostSaveHook implements AdyenHookInterface
 
         if (
             !$responseTransfer->getIsSuccess()
-            || array_search($responseTransfer->getMakePaymentResponse()->getResultCode(), static::ADYEN_OMS_STATUS_REFUSAL_REASONS) !== false
+            || in_array($responseTransfer->getMakePaymentResponse()->getResultCode(), static::ADYEN_OMS_STATUS_REFUSAL_REASONS) == true
         ) {
             $this->processFailureResponse($checkoutResponseTransfer);
 
