@@ -17,8 +17,6 @@ use SprykerEco\Zed\Adyen\Business\Hook\Mapper\AdyenMapperResolverInterface;
 use SprykerEco\Zed\Adyen\Business\Hook\Saver\AdyenSaverResolverInterface;
 use SprykerEco\Zed\Adyen\Dependency\Facade\AdyenToAdyenApiFacadeInterface;
 
-use function in_array;
-
 class AdyenPostSaveHook implements AdyenHookInterface
 {
     protected const REDIRECT_METHOD_GET = 'GET';
