@@ -6,7 +6,7 @@ on: [
 
 jobs:
     validation:
-        name: "CS, ArchSniffer, PHPStan"
+        name: "Composer, CS, ArchSniffer"
         runs-on: ubuntu-18.04
         strategy:
             fail-fast: false
