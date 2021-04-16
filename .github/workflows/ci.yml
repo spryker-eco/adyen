@@ -17,7 +17,7 @@ jobs:
 
         env:
             APPLICATION_ENV: devtest
-            APPLICATION_STORE: DE
+            #APPLICATION_STORE: DE
             PROJECT: adyen
 
         steps:
@@ -91,34 +91,8 @@ jobs:
                   extensions: mbstring, intl, pdo_mysql
                   tools: composer:v2
 
-            - name: Generate transfer objects
-              run: vendor/bin/console transfer:generate
-
-            - name: Generate transfer databuilder objects
-              run: vendor/bin/console transfer:databuilder:generate
-
-            - name: Propel install
-              run: |
-                  vendor/bin/console propel:schema:copy
-                  vendor/bin/console propel:model:build
-                  vendor/bin/console transfer:entity:generate
-
-            - name: Setup search
-              run: vendor/bin/console setup:search
-
             - name: Codecept build
               run: vendor/bin/codecept build --ansi
-
-            - name: Generate autocompletion files
-              run: vendor/bin/console dev:ide-auto-completion:generate
-
-            - name: Generate rest API dcoumentation
-              run: vendor/bin/console rest-api:generate:documentation
-
-            - name: Frontend install-dependencies
-              run: |
-                  vendor/bin/console frontend:project:install-dependencies
-                  vendor/bin/console frontend:yves:install-dependencies
 
             - name: Install NPM packages
               run: |
@@ -136,22 +110,11 @@ jobs:
             - name: Front-end Formatter
               run: node ./frontend/libs/formatter
 
-            - name: Validate propel files
-              run: |
-                  vendor/bin/console propel:schema:validate
-                  vendor/bin/console propel:schema:validate-xml-names
-
-            - name: Validate transfer files
-              run: vendor/bin/console transfer:validate
-
             - name: Run CodeStyle checks
-              run: vendor/bin/console code:sniff:style
+              run: vendor/bin/phpcs -p -s --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/
 
             - name: Run Architecture rules
               run: vendor/bin/phpmd src/ text vendor/spryker/architecture-sniffer/src/ruleset.xml --minimumpriority 2
 
             - name: Run PHPStan
               run: vendor/bin/phpstan analyze -l 5 -c phpstan.neon src/
-
-            - name: Run Security check
-              run: vendor/bin/console security:check
