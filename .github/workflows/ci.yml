@@ -6,7 +6,7 @@ on: [
 
 jobs:
     validation:
-        name: "FE Lint, CS, ArchSniffer, PHPStan"
+        name: "CS, ArchSniffer, PHPStan"
         runs-on: ubuntu-18.04
         strategy:
             fail-fast: false
@@ -17,7 +17,7 @@ jobs:
 
         env:
             APPLICATION_ENV: devtest
-            #APPLICATION_STORE: DE
+            APPLICATION_STORE: DE
             PROJECT: adyen
 
         steps:
@@ -31,37 +31,6 @@ jobs:
                   sudo sysctl -w vm.swappiness=1
                   sudo sysctl -w fs.file-max=262144
                   sudo sysctl -w vm.max_map_count=262144
-
-            - name: Runs Elasticsearch
-              uses: elastic/elastic-github-actions/elasticsearch@master
-              with:
-                  stack-version: 7.6.0
-                  port: 10005
-
-            - uses: actions/setup-node@v1
-              with:
-                  node-version: '12'
-
-            - name: NPM cache
-              uses: actions/cache@v2
-              with:
-                  path: ~/.npm
-                  key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-                  restore-keys: |
-                      ${{ runner.os }}-node-
-
-            - name: Yarn get cache directory
-              id: yarn-cache-dir-path
-              run: echo "::set-output name=dir::$(yarn cache dir)"
-
-            - name: Yarn cache
-              uses: actions/cache@v2
-              id: yarn-cache
-              with:
-                  path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-                  key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-                  restore-keys: |
-                      ${{ runner.os }}-yarn-
 
             - name: Composer get cache directory
               id: composer-cache
@@ -94,19 +63,6 @@ jobs:
             - name: Codecept build
               run: vendor/bin/codecept build --ansi
 
-            - name: Install NPM packages
-              run: |
-                  sudo npm install -g --unsafe-perm speccy@0.11.0
-
-            - name: Style lint
-              run: node ./frontend/libs/stylelint
-
-            - name: TS lint
-              run: node ./frontend/libs/tslint --format stylish
-
-            - name: Front-end Formatter
-              run: node ./frontend/libs/formatter
-
             - name: Run CodeStyle checks
               run: vendor/bin/phpcs -p -s --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/
 
@@ -115,3 +71,23 @@ jobs:
 
             - name: Run PHPStan
               run: vendor/bin/phpstan analyze -l 5 -c phpstan.neon src/
+    suite-tests:
+        name: "Suite tests"
+        runs-on: ubuntu-18.04
+        env:
+            PROGRESS_TYPE: plain
+            SPRYKER_PLATFORM_IMAGE: spryker/php:7.3
+            PRODUCT_NAME: suite
+            APPLICATION_ENV: ci.pgsql
+            SPRYKER_TESTING_ENABLED: 1
+            APPLICATION_STORE: DE
+            MODULE_DIR: module
+            SHOP_DIR: current
+            MODULE_NAME: adyen
+            POSTGRES_PORT: 5433
+
+        steps:
+            -   name: Initialize env and run tests
+                run: |
+                    git clone -b bugfix/spryker-shop-suite-contains-no-ci-scripts --single-branch https://github.com/spryker-eco/eco-ci.git ecoci
+                    ./ecoci/build/travis.sh
