@@ -73,7 +73,7 @@ jobs:
               run: vendor/bin/phpstan analyze -l 5 -c phpstan.neon src/
 
     suite-tests:
-        name: "Suite tests"
+        name: "Suite tests(Stub)"
         runs-on: ubuntu-18.04
         env:
             PROGRESS_TYPE: plain
