@@ -6,7 +6,7 @@ on: [
 
 jobs:
     validation:
-        name: "CS, ArchSniffer, PHPStan, Security"
+        name: "FE Lint, CS, ArchSniffer, PHPStan"
         runs-on: ubuntu-18.04
         strategy:
             fail-fast: false
