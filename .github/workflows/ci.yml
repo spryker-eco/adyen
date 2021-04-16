@@ -69,9 +69,6 @@ jobs:
             - name: Run Architecture rules
               run: vendor/bin/phpmd src/ text vendor/spryker/architecture-sniffer/src/ruleset.xml --minimumpriority 2
 
-            - name: Run PHPStan
-              run: vendor/bin/phpstan analyze -l 5 -c phpstan.neon src/
-
 #       suite-tests:
 #        name: "Suite tests(Stub)"
 #        runs-on: ubuntu-18.04
