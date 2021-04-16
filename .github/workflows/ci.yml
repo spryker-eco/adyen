@@ -11,9 +11,8 @@ jobs:
         strategy:
             fail-fast: false
             matrix:
-                php-version: [
-                        '7.4'
-                ]
+                include:
+                    - php: '7.4'
 
         env:
             APPLICATION_ENV: devtest
@@ -56,7 +55,7 @@ jobs:
             - name: Setup PHP
               uses: shivammathur/setup-php@v2
               with:
-                  php-version: ${{ matrix.php-version }}
+                  php-version: ${{ matrix.php }}
                   extensions: mbstring, intl, pdo_mysql
                   tools: composer:v2
 
@@ -65,9 +64,6 @@ jobs:
 
             - name: Run CodeStyle checks
               run: vendor/bin/phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/
-
-            - name: Run Architecture rules
-              run: vendor/bin/phpmd src/ text vendor/spryker/architecture-sniffer/src/ruleset.xml --minimumpriority 2
 
 #       suite-tests:
 #        name: "Suite tests(Stub)"
