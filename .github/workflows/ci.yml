@@ -64,7 +64,7 @@ jobs:
               run: vendor/bin/codecept build --ansi
 
             - name: Run CodeStyle checks
-              run: vendor/bin/phpcs -p -s --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/
+              run: vendor/bin/phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/
 
             - name: Run Architecture rules
               run: vendor/bin/phpmd src/ text vendor/spryker/architecture-sniffer/src/ruleset.xml --minimumpriority 2
@@ -72,25 +72,14 @@ jobs:
             - name: Run PHPStan
               run: vendor/bin/phpstan analyze -l 5 -c phpstan.neon src/
 
-    suite-tests:
-        name: "Suite tests(Stub)"
-        runs-on: ubuntu-18.04
-        env:
-            PROGRESS_TYPE: plain
-            SPRYKER_PLATFORM_IMAGE: spryker/php:7.3
-            PRODUCT_NAME: suite
-            APPLICATION_ENV: ci.pgsql
-            SPRYKER_TESTING_ENABLED: 1
-            APPLICATION_STORE: DE
-            MODULE_DIR: module
-            SHOP_DIR: current
-            MODULE_NAME: adyen
-            POSTGRES_PORT: 5433
-
-        steps:
-            -   name: Initialize env and run tests
-                run: |
-                     echo 'stub'
-        #            TODO need to add to spryker-eco/eco-ci github action for testing modules
-        #            git clone -b bugfix/spryker-shop-suite-contains-no-ci-scripts --single-branch https://github.com/spryker-eco/eco-ci.git ecoci
-        #            ./ecoci/build/travis.sh
+#       suite-tests:
+#        name: "Suite tests(Stub)"
+#        runs-on: ubuntu-18.04
+#
+#        steps:
+#            -   name: Initialize env and run tests
+#                run: |
+#                     echo 'not implemented yet'
+#                     TODO need to add to spryker-eco/eco-ci github action for testing modules
+#                     git clone -b bugfix/spryker-shop-suite-contains-no-ci-scripts --single-branch https://github.com/spryker-eco/eco-ci.git ecoci
+#                     ./ecoci/build/travis.sh
