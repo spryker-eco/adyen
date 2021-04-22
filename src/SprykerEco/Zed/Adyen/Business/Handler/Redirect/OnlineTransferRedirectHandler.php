@@ -119,7 +119,13 @@ class OnlineTransferRedirectHandler implements AdyenRedirectHandlerInterface
         $paymentAdyenTransfer->setPspReference($responseTransfer->getPaymentDetailsResponse()->getPspReference());
         $paymentAdyenOrderItems = $this->reader->getAllPaymentAdyenOrderItemsByIdSalesOrder($paymentAdyenTransfer->getFkSalesOrder());
 
-        $this->writer->updatePaymentEntities($this->getOmsStatus(), $paymentAdyenOrderItems, $paymentAdyenTransfer);
+        $defaultOmsStatus = $this->getOmsStatus();
+        $paymentOrderItem = reset($paymentAdyenOrderItems);
+        if ($paymentOrderItem->getStatus() !== $defaultOmsStatus) {
+            $defaultOmsStatus = $paymentOrderItem->getStatus();
+        }
+
+        $this->writer->updatePaymentEntities($defaultOmsStatus, $paymentAdyenOrderItems, $paymentAdyenTransfer);
     }
 
     /**
