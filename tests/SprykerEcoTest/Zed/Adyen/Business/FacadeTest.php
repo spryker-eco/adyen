@@ -233,16 +233,22 @@ class FacadeTest extends BaseSetUpTest
      */
     public function testHandleOnlineTransferResponseFromAdyenAfterNotification(): void
     {
+        // Arrange
         $facade = $this->createFacade();
         $orderTransfer = $this->setUpCommandTest(
             static::PROCESS_NAME_ADYEN_SOFORT,
             static::OMS_STATUS_AUTHORIZED
         );
         $redirectResponseTransfer = $this->createRedirectResponseTransfer($orderTransfer);
+
+        //Act
         $result = $facade->handleOnlineTransferResponseFromAdyen($redirectResponseTransfer);
 
+        // Assert
         $this->assertTrue($result->getIsSuccess());
+
         foreach ($this->getSpySalesOrderItems($orderTransfer) as $item) {
+            // Assert
             /** @var \Orm\Zed\Sales\Persistence\SpySalesOrderItem $item */
             $paymentAdyenOrderItem = $item->getSpyPaymentAdyenOrderItems()->getLast();
             $this->assertNotEmpty($paymentAdyenOrderItem->getSpyPaymentAdyen()->getPspReference());
