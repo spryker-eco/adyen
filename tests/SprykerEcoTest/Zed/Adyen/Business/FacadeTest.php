@@ -248,7 +248,6 @@ class FacadeTest extends BaseSetUpTest
         $this->assertTrue($result->getIsSuccess());
 
         foreach ($this->getSpySalesOrderItems($orderTransfer) as $item) {
-            // Assert
             /** @var \Orm\Zed\Sales\Persistence\SpySalesOrderItem $item */
             $paymentAdyenOrderItem = $item->getSpyPaymentAdyenOrderItems()->getLast();
             $this->assertNotEmpty($paymentAdyenOrderItem->getSpyPaymentAdyen()->getPspReference());
