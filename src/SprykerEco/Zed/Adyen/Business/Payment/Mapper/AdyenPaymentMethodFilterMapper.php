@@ -48,10 +48,12 @@ class AdyenPaymentMethodFilterMapper implements AdyenPaymentMethodFilterMapperIn
      */
     protected function createGetPaymentMethodsRequestTransfer(QuoteTransfer $quoteTransfer): AdyenApiGetPaymentMethodsRequestTransfer
     {
+        $countryCode = $quoteTransfer->getBillingAddress() ? $quoteTransfer->getBillingAddress()->getIso2Code() : null;
+
         return (new AdyenApiGetPaymentMethodsRequestTransfer())
             ->setMerchantAccount($this->config->getMerchantAccount())
             ->setAmount($this->createAmountTransfer($quoteTransfer))
-            ->setCountryCode($quoteTransfer->getBillingAddress()->getIso2Code())
+            ->setCountryCode($countryCode)
             ->setChannel($this->config->getRequestChannel());
     }
 
