@@ -18,6 +18,8 @@ use Symfony\Component\HttpFoundation\Request;
 class KlarnaInvoicePaymentMapperPlugin implements AdyenPaymentMapperPluginInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Symfony\Component\HttpFoundation\Request $request
      *

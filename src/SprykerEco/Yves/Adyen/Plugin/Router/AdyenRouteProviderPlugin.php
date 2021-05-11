@@ -17,6 +17,8 @@ class AdyenRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected const NOTIFICATION_CONTROLLER_NAME = 'Notification';
 
     /**
+     * {@inheritDoc}
+     *
      * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
      *
      * @return \Spryker\Yves\Router\Route\RouteCollection
