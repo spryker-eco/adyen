@@ -20,6 +20,8 @@ class KlarnaInvoicePaymentMapperPlugin implements AdyenPaymentMapperPluginInterf
     /**
      * {@inheritDoc}
      *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Symfony\Component\HttpFoundation\Request $request
      *

@@ -20,6 +20,8 @@ class AdyenDirectDebitSubFormPlugin extends AbstractPlugin implements SubFormPlu
     /**
      * {@inheritDoc}
      *
+     * @api
+     *
      * @return \Spryker\Yves\StepEngine\Dependency\Form\SubFormInterface
      */
     public function createSubForm(): SubFormInterface
@@ -29,6 +31,8 @@ class AdyenDirectDebitSubFormPlugin extends AbstractPlugin implements SubFormPlu
 
     /**
      * {@inheritDoc}
+     *
+     * @api
      *
      * @return \Spryker\Yves\StepEngine\Dependency\Form\StepEngineFormDataProviderInterface
      */

@@ -20,6 +20,8 @@ class AdyenWeChatPaySubFormPlugin extends AbstractPlugin implements SubFormPlugi
     /**
      * {@inheritDoc}
      *
+     * @api
+     *
      * @return \Spryker\Yves\StepEngine\Dependency\Form\SubFormInterface
      */
     public function createSubForm(): SubFormInterface
@@ -29,6 +31,8 @@ class AdyenWeChatPaySubFormPlugin extends AbstractPlugin implements SubFormPlugi
 
     /**
      * {@inheritDoc}
+     *
+     * @api
      *
      * @return \Spryker\Yves\StepEngine\Dependency\Form\StepEngineFormDataProviderInterface
      */

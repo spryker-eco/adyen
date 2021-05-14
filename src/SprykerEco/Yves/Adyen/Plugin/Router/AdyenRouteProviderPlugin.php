@@ -19,6 +19,8 @@ class AdyenRouteProviderPlugin extends AbstractRouteProviderPlugin
     /**
      * {@inheritDoc}
      *
+     * @api
+     *
      * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
      *
      * @return \Spryker\Yves\Router\Route\RouteCollection

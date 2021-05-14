@@ -21,6 +21,8 @@ class AdyenPaymentHandlerPlugin extends AbstractPlugin implements StepHandlerPlu
     /**
      * {@inheritDoc}
      *
+     * @api
+     *
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
