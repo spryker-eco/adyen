@@ -1,4 +1,5 @@
 <?php
+//phpcs:ignoreFile
 
 /**
  * MIT License
@@ -42,6 +43,7 @@ class AdyenToUtilEncodingServiceBridge implements AdyenToUtilEncodingServiceInte
      *
      * @return mixed|null
      */
+    //phpcs:ignore
     public function decodeJson($jsonValue, $assoc = false, $depth = null, $options = null)
     {
         return $this->encodingService->decodeJson($jsonValue, $assoc, $depth, $options);
