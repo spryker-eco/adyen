@@ -29,7 +29,8 @@ class AdyenToCalculationFacadeBridge implements AdyenToCalculationFacadeInterfac
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
-    public function recalculateOrder(OrderTransfer $orderTransfer): OrderTransfer
+    //phpcs:ignore
+    public function recalculateOrder(OrderTransfer $orderTransfer)
     {
         return $this->calculationFacade->recalculateOrder($orderTransfer);
     }

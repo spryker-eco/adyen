@@ -18,6 +18,9 @@ use Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginInterface;
 class AdyenKlarnaInvoiceSubFormPlugin extends AbstractPlugin implements SubFormPluginInterface
 {
     /**
+     * Specification:
+     * - Creates Klarna subform.
+     *
      * {@inheritDoc}
      *
      * @api
@@ -30,6 +33,9 @@ class AdyenKlarnaInvoiceSubFormPlugin extends AbstractPlugin implements SubFormP
     }
 
     /**
+     * Specification:
+     * - Creates Klarna subform DataProvider.
+     *
      * {@inheritDoc}
      *
      * @api

@@ -15,5 +15,6 @@ interface AdyenToUtilTextServiceInterface
      *
      * @return string
      */
-    public function hashValue($value, string $algorithm): string;
+    //phpcs:ignore
+    public function hashValue($value, $algorithm): string;
 }

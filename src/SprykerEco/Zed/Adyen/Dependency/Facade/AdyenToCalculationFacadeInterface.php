@@ -16,5 +16,6 @@ interface AdyenToCalculationFacadeInterface
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
-    public function recalculateOrder(OrderTransfer $orderTransfer): OrderTransfer;
+    //phpcs:ignore
+    public function recalculateOrder(OrderTransfer $orderTransfer);
 }

@@ -18,6 +18,9 @@ use Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginInterface;
 class AdyenSofortSubFormPlugin extends AbstractPlugin implements SubFormPluginInterface
 {
     /**
+     * Specification:
+     * - Creates Sofort subform.
+     *
      * {@inheritDoc}
      *
      * @api
@@ -30,6 +33,9 @@ class AdyenSofortSubFormPlugin extends AbstractPlugin implements SubFormPluginIn
     }
 
     /**
+     * Specification:
+     * - Creates Sofort subform DataProvider.
+     *
      * {@inheritDoc}
      *
      * @api

@@ -18,6 +18,9 @@ use Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginInterface;
 class AdyenPrepaymentSubFormPlugin extends AbstractPlugin implements SubFormPluginInterface
 {
     /**
+     * Specification:
+     * - Creates Prepayment subform.
+     *
      * {@inheritDoc}
      *
      * @api
@@ -30,6 +33,9 @@ class AdyenPrepaymentSubFormPlugin extends AbstractPlugin implements SubFormPlug
     }
 
     /**
+     * Specification:
+     * - Creates Prepayment subform DataProvider.
+     *
      * {@inheritDoc}
      *
      * @api

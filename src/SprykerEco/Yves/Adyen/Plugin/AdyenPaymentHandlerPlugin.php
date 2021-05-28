@@ -19,6 +19,9 @@ use Symfony\Component\HttpFoundation\Request;
 class AdyenPaymentHandlerPlugin extends AbstractPlugin implements StepHandlerPluginInterface
 {
     /**
+     * Specification:
+     * - Adds AdyenPayment to Quote.
+     *
      * {@inheritDoc}
      *
      * @api

@@ -17,6 +17,9 @@ class AdyenRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected const NOTIFICATION_CONTROLLER_NAME = 'Notification';
 
     /**
+     * Specification:
+     * - Adds Adyen routes to the RouteCollection.
+     *
      * {@inheritDoc}
      *
      * @api
