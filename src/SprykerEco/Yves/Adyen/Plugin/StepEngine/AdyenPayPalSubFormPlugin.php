@@ -18,10 +18,10 @@ use Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginInterface;
 class AdyenPayPalSubFormPlugin extends AbstractPlugin implements SubFormPluginInterface
 {
     /**
-     * Specification:
-     * - Creates PayPal subform.
-     *
      * {@inheritDoc}
+     *
+     * Specification:
+     * - Creates `PayPal` subform.
      *
      * @api
      *
@@ -33,10 +33,10 @@ class AdyenPayPalSubFormPlugin extends AbstractPlugin implements SubFormPluginIn
     }
 
     /**
-     * Specification:
-     * - Creates PayPal subform DataProvider.
-     *
      * {@inheritDoc}
+     *
+     * Specification:
+     * - Creates `PayPal` subform data provider.
      *
      * @api
      *

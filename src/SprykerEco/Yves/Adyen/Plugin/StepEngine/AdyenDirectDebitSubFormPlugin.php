@@ -18,8 +18,10 @@ use Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginInterface;
 class AdyenDirectDebitSubFormPlugin extends AbstractPlugin implements SubFormPluginInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * Specification:
-     * - Creates DirectDebit subform.
+     * - Creates `DirectDebit` subform.
      *
      * {@inheritDoc}
      *
@@ -33,8 +35,10 @@ class AdyenDirectDebitSubFormPlugin extends AbstractPlugin implements SubFormPlu
     }
 
     /**
+     * {@inheritDoc}
+     *
      * Specification:
-     * - Creates DirectDebit subform DataProvider.
+     * - Creates `DirectDebit` subform data provider.
      *
      * {@inheritDoc}
      *

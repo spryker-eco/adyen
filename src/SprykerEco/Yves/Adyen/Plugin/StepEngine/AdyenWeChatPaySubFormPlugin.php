@@ -18,10 +18,10 @@ use Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginInterface;
 class AdyenWeChatPaySubFormPlugin extends AbstractPlugin implements SubFormPluginInterface
 {
     /**
-     * Specification:
-     * - Creates WeChatPay subform.
-     *
      * {@inheritDoc}
+     *
+     * Specification:
+     * - Creates `WeChatPay` subform.
      *
      * @api
      *
@@ -33,10 +33,10 @@ class AdyenWeChatPaySubFormPlugin extends AbstractPlugin implements SubFormPlugi
     }
 
     /**
-     * Specification:
-     * - Creates WeChatPay subform DataProvider.
-     *
      * {@inheritDoc}
+     *
+     * Specification:
+     * - Creates `WeChatPay` subform data provider.
      *
      * @api
      *

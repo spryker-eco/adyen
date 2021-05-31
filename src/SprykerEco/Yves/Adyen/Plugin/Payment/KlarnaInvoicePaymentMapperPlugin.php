@@ -18,10 +18,10 @@ use Symfony\Component\HttpFoundation\Request;
 class KlarnaInvoicePaymentMapperPlugin implements AdyenPaymentMapperPluginInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * Specification:
      *  - Sets Klarna payment data to Quote.
-     *
-     * {@inheritDoc}
      *
      * @api
      *

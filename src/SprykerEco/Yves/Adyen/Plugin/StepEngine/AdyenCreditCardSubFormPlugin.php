@@ -18,10 +18,10 @@ use Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginInterface;
 class AdyenCreditCardSubFormPlugin extends AbstractPlugin implements SubFormPluginInterface
 {
     /**
-     * Specification:
-     * - Creates CreditCard subform.
-     *
      * {@inheritDoc}
+     *
+     * Specification:
+     * - Creates `CreditCard` subform.
      *
      * @api
      *
@@ -33,10 +33,10 @@ class AdyenCreditCardSubFormPlugin extends AbstractPlugin implements SubFormPlug
     }
 
     /**
-     * Specification:
-     * - Creates CreditCard subform DataProvider.
-     *
      * {@inheritDoc}
+     *
+     * Specification:
+     * - Creates `CreditCard` subform data provider.
      *
      * @api
      *

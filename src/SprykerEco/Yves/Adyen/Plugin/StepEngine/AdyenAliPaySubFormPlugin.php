@@ -18,10 +18,10 @@ use Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginInterface;
 class AdyenAliPaySubFormPlugin extends AbstractPlugin implements SubFormPluginInterface
 {
     /**
-     * Specification:
-     * - Creates AliPay subform.
-     *
      * {@inheritDoc}
+     *
+     * Specification:
+     * - Creates `AliPay` subform.
      *
      * @api
      *
@@ -33,10 +33,10 @@ class AdyenAliPaySubFormPlugin extends AbstractPlugin implements SubFormPluginIn
     }
 
     /**
-     * Specification:
-     * - Creates AliPay subform DataProvider.
-     *
      * {@inheritDoc}
+     *
+     * Specification:
+     * - Creates `AliPay` subform data provider.
      *
      * @api
      *
