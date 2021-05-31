@@ -15,7 +15,6 @@ use Symfony\Component\HttpFoundation\Request;
 class CreditCardPaymentMapperPlugin implements AdyenPaymentMapperPluginInterface
 {
     /**
-
      * {@inheritDoc}
      *
      * Specification:
