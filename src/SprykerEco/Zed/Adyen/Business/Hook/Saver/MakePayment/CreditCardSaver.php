@@ -52,20 +52,20 @@ class CreditCardSaver extends AbstractSaver
      */
     protected function getPaymentStatus(?PaymentAdyenTransfer $paymentAdyenTransfer = null): string
     {
-        if ($paymentAdyenTransfer && $this->hasValidResultCode($paymentAdyenTransfer)) {
-            return $paymentAdyenTransfer->getResultCode();
+        if (
+            $paymentAdyenTransfer
+            && $paymentAdyenTransfer->getResultCode() === 'refused'
+        ) {
+            return $this->config->getOmsStatusRefused();
+        }
+
+        if (
+            $paymentAdyenTransfer
+            && $paymentAdyenTransfer->getResultCode() === 'authorised'
+        ) {
+            return $this->config->getOmsStatusAuthorized();
         }
 
         return $this->config->getOmsStatusNew();
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\PaymentAdyenTransfer $paymentAdyenTransfer
-     *
-     * @return bool
-     */
-    protected function hasValidResultCode(PaymentAdyenTransfer $paymentAdyenTransfer): bool
-    {
-        return in_array($paymentAdyenTransfer->getResultCode(), $this->config->getCreditCardPaymentOmsStatusList());
     }
 }
