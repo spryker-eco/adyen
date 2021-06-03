@@ -21,8 +21,6 @@ class AdyenDirectDebitSubFormPlugin extends AbstractPlugin implements SubFormPlu
      * {@inheritDoc}
      * - Creates `DirectDebit` subform.
      *
-     * {@inheritDoc}
-     *
      * @api
      *
      * @return \Spryker\Yves\StepEngine\Dependency\Form\SubFormInterface
