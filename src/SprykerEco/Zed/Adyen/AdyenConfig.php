@@ -44,6 +44,11 @@ class AdyenConfig extends AbstractBundleConfig
     protected const ADYEN_NOTIFICATION_SUCCESS_TRUE = 'true';
     protected const ADYEN_NOTIFICATION_SUCCESS_FALSE = 'false';
 
+    protected const ADYEN_PAYMENT_STATUS_REFUSED = 'refused';
+    protected const ADYEN_PAYMENT_STATUS_ERROR = 'error';
+    protected const ADYEN_PAYMENT_STATUS_CANCELLED = 'cancelled';
+    protected const ADYEN_PAYMENT_STATUS_AUTHORISED = 'authorised';
+
     protected const PAYMENT_METHOD_TYPE_PAY_PAL = 'paypal';
     protected const PAYMENT_METHOD_TYPE_SCHEME = 'scheme';
     protected const PAYMENT_METHOD_TYPE_DIRECT_E_BANKING = 'directEbanking';
@@ -423,5 +428,31 @@ class AdyenConfig extends AbstractBundleConfig
     public function getKlarnaTaxRateMultiplier(): int
     {
         return static::KLARNA_TAX_RATE_MULTIPLIER;
+    }
+
+    /**
+     * @api
+     *
+     * @return string[]
+     */
+    public function getInvalidAdyenPaymentStatus(): array
+    {
+        return [
+            static::ADYEN_PAYMENT_STATUS_REFUSED,
+            static::ADYEN_PAYMENT_STATUS_ERROR,
+            static::ADYEN_PAYMENT_STATUS_CANCELLED,
+        ];
+    }
+
+    /**
+     * @api
+     *
+     * @return string[]
+     */
+    public function getValidAdyenPaymentStatus(): array
+    {
+        return [
+            static::ADYEN_PAYMENT_STATUS_AUTHORISED,
+        ];
     }
 }
