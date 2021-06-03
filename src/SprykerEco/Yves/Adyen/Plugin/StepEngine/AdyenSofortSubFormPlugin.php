@@ -19,8 +19,6 @@ class AdyenSofortSubFormPlugin extends AbstractPlugin implements SubFormPluginIn
 {
     /**
      * {@inheritDoc}
-     *
-     * Specification:
      * - Creates `Sofort` subform.
      *
      * @api
@@ -34,8 +32,6 @@ class AdyenSofortSubFormPlugin extends AbstractPlugin implements SubFormPluginIn
 
     /**
      * {@inheritDoc}
-     *
-     * Specification:
      * - Creates `Sofort` subform data provider.
      *
      * @api

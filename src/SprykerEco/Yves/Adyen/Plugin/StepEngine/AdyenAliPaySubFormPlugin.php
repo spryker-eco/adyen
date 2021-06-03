@@ -19,8 +19,6 @@ class AdyenAliPaySubFormPlugin extends AbstractPlugin implements SubFormPluginIn
 {
     /**
      * {@inheritDoc}
-     *
-     * Specification:
      * - Creates `AliPay` subform.
      *
      * @api
@@ -34,8 +32,6 @@ class AdyenAliPaySubFormPlugin extends AbstractPlugin implements SubFormPluginIn
 
     /**
      * {@inheritDoc}
-     *
-     * Specification:
      * - Creates `AliPay` subform data provider.
      *
      * @api

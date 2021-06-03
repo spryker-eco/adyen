@@ -17,7 +17,7 @@ interface AdyenToUtilEncodingServiceInterface
      * @return string|null
      */
     //phpcs:ignore
-    public function encodeJson($value, $options = null, $depth = null): ?string;
+    public function encodeJson($value, $options = null, $depth = null);
 
     /**
      * @param string $jsonValue

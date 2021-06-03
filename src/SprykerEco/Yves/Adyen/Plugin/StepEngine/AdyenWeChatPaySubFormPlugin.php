@@ -19,8 +19,6 @@ class AdyenWeChatPaySubFormPlugin extends AbstractPlugin implements SubFormPlugi
 {
     /**
      * {@inheritDoc}
-     *
-     * Specification:
      * - Creates `WeChatPay` subform.
      *
      * @api
@@ -34,8 +32,6 @@ class AdyenWeChatPaySubFormPlugin extends AbstractPlugin implements SubFormPlugi
 
     /**
      * {@inheritDoc}
-     *
-     * Specification:
      * - Creates `WeChatPay` subform data provider.
      *
      * @api

@@ -37,7 +37,8 @@ class AdyenToQuoteClientBridge implements AdyenToQuoteClientInterface
      *
      * @return void
      */
-    public function setQuote(QuoteTransfer $quoteTransfer): void
+    //phpcs:ignore
+    public function setQuote(QuoteTransfer $quoteTransfer)
     {
         $this->quoteClient->setQuote($quoteTransfer);
     }

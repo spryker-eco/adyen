@@ -19,8 +19,6 @@ class AdyenCreditCardSubFormPlugin extends AbstractPlugin implements SubFormPlug
 {
     /**
      * {@inheritDoc}
-     *
-     * Specification:
      * - Creates `CreditCard` subform.
      *
      * @api
@@ -34,8 +32,6 @@ class AdyenCreditCardSubFormPlugin extends AbstractPlugin implements SubFormPlug
 
     /**
      * {@inheritDoc}
-     *
-     * Specification:
      * - Creates `CreditCard` subform data provider.
      *
      * @api

@@ -19,8 +19,6 @@ class KlarnaInvoicePaymentMapperPlugin implements AdyenPaymentMapperPluginInterf
 {
     /**
      * {@inheritDoc}
-     *
-     * Specification:
      *  - Sets Klarna payment data to Quote.
      *
      * @api

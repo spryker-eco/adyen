@@ -19,8 +19,6 @@ class AdyenIdealSubFormPlugin extends AbstractPlugin implements SubFormPluginInt
 {
     /**
      * {@inheritDoc}
-     *
-     * Specification:
      * - Creates `Ideal` subform.
      *
      * @api
@@ -34,8 +32,6 @@ class AdyenIdealSubFormPlugin extends AbstractPlugin implements SubFormPluginInt
 
     /**
      * {@inheritDoc}
-     *
-     * Specification:
      * - Creates `Ideal` subform data provider.
      *
      * @api

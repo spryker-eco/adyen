@@ -19,8 +19,6 @@ class AdyenPrepaymentSubFormPlugin extends AbstractPlugin implements SubFormPlug
 {
     /**
      * {@inheritDoc}
-     *
-     * Specification:
      * - Creates `Prepayment` subform.
      *
      * @api
@@ -34,8 +32,6 @@ class AdyenPrepaymentSubFormPlugin extends AbstractPlugin implements SubFormPlug
 
     /**
      * {@inheritDoc}
-     *
-     * Specification:
      * - Creates `Prepayment` subform data provider.
      *
      * @api

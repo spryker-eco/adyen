@@ -16,8 +16,6 @@ class CreditCardPaymentMapperPlugin implements AdyenPaymentMapperPluginInterface
 {
     /**
      * {@inheritDoc}
-     *
-     * Specification:
      *  - Sets `CreditCard` payment data to `Quote`.
      *
      * @api

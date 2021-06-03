@@ -19,8 +19,6 @@ class AdyenKlarnaInvoiceSubFormPlugin extends AbstractPlugin implements SubFormP
 {
     /**
      * {@inheritDoc}
-     *
-     * Specification:
      * - Creates `Klarna` subform.
      *
      * @api
@@ -34,8 +32,6 @@ class AdyenKlarnaInvoiceSubFormPlugin extends AbstractPlugin implements SubFormP
 
     /**
      * {@inheritDoc}
-     *
-     * Specification:
      * - Creates `Klarna` subform data provider.
      *
      * @api

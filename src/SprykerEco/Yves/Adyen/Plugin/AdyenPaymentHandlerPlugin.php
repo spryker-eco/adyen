@@ -20,8 +20,6 @@ class AdyenPaymentHandlerPlugin extends AbstractPlugin implements StepHandlerPlu
 {
     /**
      * {@inheritDoc}
-     *
-     * Specification:
      * - Adds `AdyenPayment` to `Quote`.
      *
      * @api

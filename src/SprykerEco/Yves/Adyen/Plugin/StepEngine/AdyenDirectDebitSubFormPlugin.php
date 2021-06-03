@@ -19,8 +19,6 @@ class AdyenDirectDebitSubFormPlugin extends AbstractPlugin implements SubFormPlu
 {
     /**
      * {@inheritDoc}
-     *
-     * Specification:
      * - Creates `DirectDebit` subform.
      *
      * {@inheritDoc}
@@ -36,8 +34,6 @@ class AdyenDirectDebitSubFormPlugin extends AbstractPlugin implements SubFormPlu
 
     /**
      * {@inheritDoc}
-     *
-     * Specification:
      * - Creates `DirectDebit` subform data provider.
      *
      * {@inheritDoc}

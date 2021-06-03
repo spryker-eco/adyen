@@ -32,7 +32,7 @@ class AdyenToZedRequestClientBridge implements AdyenToZedRequestClientInterface
      * @return \Spryker\Shared\Kernel\Transfer\TransferInterface
      */
     //phpcs:ignore
-    public function call($url, TransferInterface $object, $requestOptions = null): TransferInterface
+    public function call($url, TransferInterface $object, $requestOptions = null)
     {
         return $this->zedRequestClient->call($url, $object, $requestOptions);
     }

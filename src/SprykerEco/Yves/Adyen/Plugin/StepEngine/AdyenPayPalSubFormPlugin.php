@@ -19,8 +19,6 @@ class AdyenPayPalSubFormPlugin extends AbstractPlugin implements SubFormPluginIn
 {
     /**
      * {@inheritDoc}
-     *
-     * Specification:
      * - Creates `PayPal` subform.
      *
      * @api
@@ -34,8 +32,6 @@ class AdyenPayPalSubFormPlugin extends AbstractPlugin implements SubFormPluginIn
 
     /**
      * {@inheritDoc}
-     *
-     * Specification:
      * - Creates `PayPal` subform data provider.
      *
      * @api
