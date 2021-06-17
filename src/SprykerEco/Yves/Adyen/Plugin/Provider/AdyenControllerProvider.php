@@ -24,7 +24,6 @@ class AdyenControllerProvider extends AbstractYvesControllerProvider
      *
      * @return void
      */
-    //phpcs:ignore
     protected function defineControllers(Application $app)
     {
         $this->createController(

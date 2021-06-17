@@ -16,7 +16,6 @@ interface AdyenToUtilEncodingServiceInterface
      *
      * @return string|null
      */
-    //phpcs:ignore
     public function encodeJson($value, $options = null, $depth = null);
 
     /**
@@ -27,6 +26,5 @@ interface AdyenToUtilEncodingServiceInterface
      *
      * @return mixed|null
      */
-    //phpcs:ignore
     public function decodeJson($jsonValue, $assoc = false, $depth = null, $options = null);
 }
