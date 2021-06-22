@@ -18,6 +18,11 @@ use Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginInterface;
 class AdyenIdealSubFormPlugin extends AbstractPlugin implements SubFormPluginInterface
 {
     /**
+     * {@inheritDoc}
+     * - Creates `Ideal` subform.
+     *
+     * @api
+     *
      * @return \Spryker\Yves\StepEngine\Dependency\Form\SubFormInterface
      */
     public function createSubForm(): SubFormInterface
@@ -26,6 +31,11 @@ class AdyenIdealSubFormPlugin extends AbstractPlugin implements SubFormPluginInt
     }
 
     /**
+     * {@inheritDoc}
+     * - Creates `Ideal` subform data provider.
+     *
+     * @api
+     *
      * @return \Spryker\Yves\StepEngine\Dependency\Form\StepEngineFormDataProviderInterface
      */
     public function createSubFormDataProvider(): StepEngineFormDataProviderInterface

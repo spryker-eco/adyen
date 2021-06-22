@@ -119,7 +119,9 @@ class OnlineTransferRedirectHandler implements AdyenRedirectHandlerInterface
         $paymentAdyenTransfer->setPspReference($responseTransfer->getPaymentDetailsResponse()->getPspReference());
         $paymentAdyenOrderItems = $this->reader->getAllPaymentAdyenOrderItemsByIdSalesOrder($paymentAdyenTransfer->getFkSalesOrder());
 
-        $this->writer->updatePaymentEntities($this->getOmsStatus(), $paymentAdyenOrderItems, $paymentAdyenTransfer);
+        $omsStatus = $this->resolveOmsStatus($paymentAdyenOrderItems);
+
+        $this->writer->updatePaymentEntities($omsStatus, $paymentAdyenOrderItems, $paymentAdyenTransfer);
     }
 
     /**
@@ -141,5 +143,21 @@ class OnlineTransferRedirectHandler implements AdyenRedirectHandlerInterface
             AdyenApiRequestConfig::PAYLOAD_FIELD => $redirectResponseTransfer->getPayload(),
             AdyenApiRequestConfig::REDIRECT_RESULT_FIELD => $redirectResponseTransfer->getRedirectResult(),
         ];
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PaymentAdyenOrderItemTransfer[] $paymentAdyenOrderItems
+     *
+     * @return string
+     */
+    protected function resolveOmsStatus(array $paymentAdyenOrderItems): string
+    {
+        $defaultOmsStatus = $this->getOmsStatus();
+        $paymentOrderItem = reset($paymentAdyenOrderItems);
+        if ($paymentOrderItem->getStatus() !== $defaultOmsStatus) {
+            return $paymentOrderItem->getStatus();
+        }
+
+        return $defaultOmsStatus;
     }
 }

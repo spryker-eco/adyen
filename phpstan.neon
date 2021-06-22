@@ -1,2 +1,15 @@
 parameters:
+    checkGenericClassInNonGenericObjectType: false
     checkMissingIterableValueType: false
+    ignoreErrors:
+        - '#Call to method .+\(\) on an unknown class Generated\\Zed\\Ide\\AutoCompletion#'
+        - '#Call to static method create\(\) on an unknown class .+Query.#'
+        - '#Call to method .+\(\) on an unknown class Orm\\.+#'
+        - '#Return typehint of method .+ has invalid type Orm\\.+#'
+        - '#Parameter \$.+ of method .+ has invalid typehint type Orm\\.+#'
+        - '#Call to method.+on an unknown class.+AutoCompletion#'
+        - '#.+Transfer.+#'
+        - '#PHPDoc tag @var for variable.+contains unknown class Orm\\.+#'
+        - '#Parameter.+of anonymous function has invalid typehint type.+#'
+    excludePaths:
+        - src/SprykerEco/Zed/Adyen/Persistence/Propel/Abstract*.php

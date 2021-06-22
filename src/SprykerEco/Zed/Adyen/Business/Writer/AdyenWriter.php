@@ -85,7 +85,7 @@ class AdyenWriter implements AdyenWriterInterface
         ?PaymentAdyenTransfer $paymentAdyenTransfer = null
     ): void {
         $this->getTransactionHandler()->handleTransaction(
-            function () use ($status, $paymentAdyenOrderItemTransfers, $paymentAdyenTransfer) {
+            function () use ($status, $paymentAdyenOrderItemTransfers, $paymentAdyenTransfer): void {
                 if ($paymentAdyenTransfer !== null) {
                     $this->entityManager->savePaymentAdyen($paymentAdyenTransfer);
                 }
@@ -136,7 +136,7 @@ class AdyenWriter implements AdyenWriterInterface
      */
     public function saveNotifications(AdyenNotificationsTransfer $adyenNotificationsTransfer): void
     {
-        $this->getTransactionHandler()->handleTransaction(function () use ($adyenNotificationsTransfer) {
+        $this->getTransactionHandler()->handleTransaction(function () use ($adyenNotificationsTransfer): void {
             foreach ($adyenNotificationsTransfer->getNotificationItems() as $adyenNotificationRequestItem) {
                 $this->saveAdyenNotification($adyenNotificationRequestItem);
             }
