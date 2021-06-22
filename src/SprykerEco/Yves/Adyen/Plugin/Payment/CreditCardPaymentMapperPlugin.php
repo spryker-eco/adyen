@@ -15,6 +15,11 @@ use Symfony\Component\HttpFoundation\Request;
 class CreditCardPaymentMapperPlugin implements AdyenPaymentMapperPluginInterface
 {
     /**
+     * {@inheritDoc}
+     *  - Sets `CreditCard` payment data to `Quote`.
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
