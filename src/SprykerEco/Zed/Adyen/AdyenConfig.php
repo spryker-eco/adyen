@@ -435,7 +435,7 @@ class AdyenConfig extends AbstractBundleConfig
      *
      * @return string[]
      */
-    public function getInvalidAdyenPaymentStatus(): array
+    public function getInvalidAdyenPaymentStatusList(): array
     {
         return [
             static::ADYEN_PAYMENT_STATUS_REFUSED,
@@ -449,7 +449,7 @@ class AdyenConfig extends AbstractBundleConfig
      *
      * @return string[]
      */
-    public function getValidAdyenPaymentStatus(): array
+    public function getValidAdyenPaymentStatusList(): array
     {
         return [
             static::ADYEN_PAYMENT_STATUS_AUTHORISED,
