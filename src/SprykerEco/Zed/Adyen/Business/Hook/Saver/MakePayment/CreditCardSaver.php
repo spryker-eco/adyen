@@ -10,6 +10,9 @@ namespace SprykerEco\Zed\Adyen\Business\Hook\Saver\MakePayment;
 use Generated\Shared\Transfer\AdyenApiResponseTransfer;
 use Generated\Shared\Transfer\PaymentAdyenTransfer;
 
+/**
+ * @property \SprykerEco\Zed\Adyen\AdyenConfig $config
+ */
 class CreditCardSaver extends AbstractSaver
 {
     protected const MAKE_PAYMENT_CREDIT_CARD_REQUEST_TYPE = 'MakePayment[CreditCard]';
@@ -50,12 +53,37 @@ class CreditCardSaver extends AbstractSaver
     protected function getPaymentStatus(?PaymentAdyenTransfer $paymentAdyenTransfer = null): string
     {
         if (
-            $paymentAdyenTransfer
-            && $paymentAdyenTransfer->getResultCode() === $this->config->getOmsStatusRefused()
+            $paymentAdyenTransfer && $this->hasInvalidResultCode($paymentAdyenTransfer)
         ) {
-                return $this->config->getOmsStatusRefused();
+            return $this->config->getOmsStatusRefused();
         }
 
-        return $this->config->getOmsStatusAuthorized();
+        if (
+            $paymentAdyenTransfer && $this->hasValidResultCode($paymentAdyenTransfer)
+        ) {
+            return $this->config->getOmsStatusAuthorized();
+        }
+
+        return $this->config->getOmsStatusNew();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PaymentAdyenTransfer $paymentAdyenTransfer
+     *
+     * @return bool
+     */
+    protected function hasInvalidResultCode(PaymentAdyenTransfer $paymentAdyenTransfer): bool
+    {
+        return in_array($paymentAdyenTransfer->getResultCode(), $this->config->getInvalidAdyenPaymentStatusList());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PaymentAdyenTransfer $paymentAdyenTransfer
+     *
+     * @return bool
+     */
+    protected function hasValidResultCode(PaymentAdyenTransfer $paymentAdyenTransfer): bool
+    {
+        return in_array($paymentAdyenTransfer->getResultCode(), $this->config->getValidAdyenPaymentStatusList());
     }
 }
