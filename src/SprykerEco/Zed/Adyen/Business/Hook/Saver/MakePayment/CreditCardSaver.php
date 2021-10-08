@@ -77,7 +77,7 @@ class CreditCardSaver extends AbstractSaver
      */
     protected function hasInvalidResultCode(PaymentAdyenTransfer $paymentAdyenTransfer): bool
     {
-        return in_array($paymentAdyenTransfer->getResultCode(), $this->config->getInvalidAdyenPaymentStatusList());
+        return in_array($paymentAdyenTransfer->getResultCode(), $this->config->getInvalidAdyenPaymentStatusList(), true);
     }
 
     /**
@@ -87,6 +87,6 @@ class CreditCardSaver extends AbstractSaver
      */
     protected function hasValidResultCode(PaymentAdyenTransfer $paymentAdyenTransfer): bool
     {
-        return in_array($paymentAdyenTransfer->getResultCode(), $this->config->getValidAdyenPaymentStatusList());
+        return in_array($paymentAdyenTransfer->getResultCode(), $this->config->getValidAdyenPaymentStatusList(), true);
     }
 }
