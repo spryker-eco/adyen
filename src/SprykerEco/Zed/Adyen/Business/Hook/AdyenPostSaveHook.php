@@ -19,11 +19,29 @@ use SprykerEco\Zed\Adyen\Dependency\Facade\AdyenToAdyenApiFacadeInterface;
 
 class AdyenPostSaveHook implements AdyenHookInterface
 {
+    /**
+     * @var string
+     */
     protected const REDIRECT_METHOD_GET = 'GET';
+
+    /**
+     * @var string
+     */
     protected const REDIRECT_METHOD_POST = 'POST';
+
+    /**
+     * @var string
+     */
     protected const ERROR_TYPE_PAYMENT_FAILED = 'payment failed';
+
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGE_PAYMENT_FAILED = 'Something went wrong with your payment. Try again!';
 
+    /**
+     * @var string
+     */
     protected const ADYEN_OMS_STATUS_REFUSED = 'Refused';
 
     /**

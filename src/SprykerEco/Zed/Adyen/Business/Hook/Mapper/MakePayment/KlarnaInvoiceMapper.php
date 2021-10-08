@@ -19,6 +19,9 @@ use SprykerEco\Shared\Adyen\AdyenApiRequestConfig;
  */
 class KlarnaInvoiceMapper extends AbstractMapper
 {
+    /**
+     * @var string
+     */
     protected const REQUEST_TYPE = 'klarna';
 
     /**

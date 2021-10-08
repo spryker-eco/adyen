@@ -15,6 +15,9 @@ use Generated\Shared\Transfer\PaymentAdyenTransfer;
  */
 class CreditCardSaver extends AbstractSaver
 {
+    /**
+     * @var string
+     */
     protected const MAKE_PAYMENT_CREDIT_CARD_REQUEST_TYPE = 'MakePayment[CreditCard]';
 
     /**

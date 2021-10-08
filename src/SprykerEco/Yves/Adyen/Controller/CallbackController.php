@@ -18,8 +18,14 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class CallbackController extends AbstractController
 {
+    /**
+     * @var string
+     */
     protected const RESULT_CODE_CANCELLED = 'cancelled';
 
+    /**
+     * @var string
+     */
     protected const RESULT_CODE_REFUSED = 'refused';
 
     /**

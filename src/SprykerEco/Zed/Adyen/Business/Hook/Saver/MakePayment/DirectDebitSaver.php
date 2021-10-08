@@ -12,6 +12,9 @@ use Generated\Shared\Transfer\PaymentAdyenTransfer;
 
 class DirectDebitSaver extends AbstractSaver
 {
+    /**
+     * @var string
+     */
     protected const MAKE_PAYMENT_DIRECT_DEBIT_REQUEST_TYPE = 'MakePayment[DirectDebit]';
 
     /**

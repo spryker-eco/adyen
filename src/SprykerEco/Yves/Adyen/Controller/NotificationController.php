@@ -16,7 +16,14 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class NotificationController extends AbstractController
 {
+    /**
+     * @var array
+     */
     protected const NOTIFICATION_ACCEPTED_RESPONSE_HEADER = ['Content-Type' => 'application/json'];
+
+    /**
+     * @var array
+     */
     protected const NOTIFICATION_ACCEPTED_RESPONSE_BODY = ['notificationResponse' => '[accepted]'];
 
     /**

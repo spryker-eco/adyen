@@ -12,6 +12,9 @@ use Generated\Shared\Transfer\PaymentAdyenTransfer;
 
 class PrepaymentSaver extends AbstractSaver
 {
+    /**
+     * @var string
+     */
     protected const MAKE_PAYMENT_PREPAYMENT_REQUEST_TYPE = 'MakePayment[Prepayment]';
 
     /**

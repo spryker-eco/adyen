@@ -20,6 +20,9 @@ use SprykerEco\Zed\Adyen\Dependency\Facade\AdyenToAdyenApiFacadeInterface;
 
 class OnlineTransferRedirectHandler implements AdyenRedirectHandlerInterface
 {
+    /**
+     * @var string
+     */
     protected const LOG_REQUEST_TYPE = 'PaymentDetails[%s]';
 
     /**

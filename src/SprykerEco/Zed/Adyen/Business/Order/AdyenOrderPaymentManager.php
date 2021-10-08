@@ -16,6 +16,9 @@ use SprykerEco\Zed\Adyen\Business\Writer\AdyenWriterInterface;
 
 class AdyenOrderPaymentManager implements AdyenOrderPaymentManagerInterface
 {
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGE_PAYMENT_REFERENCE_NOT_UNIQUE = 'Adyen payment reference should be unique';
 
     /**

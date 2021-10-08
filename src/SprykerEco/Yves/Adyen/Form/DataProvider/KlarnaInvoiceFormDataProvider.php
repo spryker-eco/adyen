@@ -15,6 +15,9 @@ use SprykerEco\Yves\Adyen\Dependency\Client\AdyenToQuoteClientInterface;
 
 class KlarnaInvoiceFormDataProvider extends AbstractFormDataProvider
 {
+    /**
+     * @var string
+     */
     public const SOCIAL_SECURITY_NUMBER_REQUIRED = 'SOCIAL_SECURITY_NUMBER_REQUIRED';
 
     /**

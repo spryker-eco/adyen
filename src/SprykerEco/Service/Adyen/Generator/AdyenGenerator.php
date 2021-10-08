@@ -13,7 +13,14 @@ use SprykerEco\Service\Adyen\Dependency\Service\AdyenToUtilTextServiceInterface;
 
 class AdyenGenerator implements AdyenGeneratorInterface
 {
+    /**
+     * @var string
+     */
     protected const PARAMETERS_SEPARATOR = '-';
+
+    /**
+     * @var int
+     */
     protected const REFERENCE_LENGTH = 80;
 
     /**

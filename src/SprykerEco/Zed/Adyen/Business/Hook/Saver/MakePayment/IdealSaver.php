@@ -9,6 +9,9 @@ namespace SprykerEco\Zed\Adyen\Business\Hook\Saver\MakePayment;
 
 class IdealSaver extends AbstractSaver
 {
+    /**
+     * @var string
+     */
     protected const MAKE_PAYMENT_IDEAL_REQUEST_TYPE = 'MakePayment[iDeal]';
 
     /**

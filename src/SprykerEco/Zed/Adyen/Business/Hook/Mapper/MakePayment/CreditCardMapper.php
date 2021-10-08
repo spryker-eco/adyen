@@ -12,7 +12,14 @@ use SprykerEco\Shared\Adyen\AdyenApiRequestConfig;
 
 class CreditCardMapper extends AbstractMapper
 {
+    /**
+     * @var string
+     */
     protected const REQUEST_TYPE = 'scheme';
+
+    /**
+     * @var array
+     */
     protected const THREE_D_SECURE_DATA = ['executeThreeD' => 'true'];
 
     /**

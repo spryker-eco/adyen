@@ -48,24 +48,99 @@ use SprykerEco\Zed\Adyen\Persistence\AdyenRepositoryInterface;
 
 class BaseSetUpTest extends Test
 {
+    /**
+     * @var string
+     */
     protected const PAYMENT_ADYEN_REFERENCE = 'random-reference-string--%s';
+
+    /**
+     * @var string
+     */
     protected const PAYMENT_ADYEN_PSP_REFERENCE = 'random-psp-reference-string--%s';
+
+    /**
+     * @var string
+     */
     protected const RESPONSE_REFERENCE = '8535408002754771';
+
+    /**
+     * @var string
+     */
     protected const RESPONSE_CANCEL_RECEIVED = '[cancel-received]';
+
+    /**
+     * @var string
+     */
     protected const RESPONSE_CAPTURE_RECEIVED = '[capture-received]';
+
+    /**
+     * @var string
+     */
     protected const RESPONSE_REFUND_RECEIVED = '[refund-received]';
+
+    /**
+     * @var string
+     */
     protected const RESPONSE_CANCEL_OR_REFUND_RECEIVED = '[cancelOrRefund-received]';
+
+    /**
+     * @var string
+     */
     protected const RESPONSE_AUTHORISED = 'Authorised';
+
+    /**
+     * @var int
+     */
     protected const AMOUNT = 1990;
+
+    /**
+     * @var string
+     */
     protected const CURRENCY = 'EUR';
+
+    /**
+     * @var string
+     */
     protected const FIELD_UNIT_PRICE = 'unitPrice';
+
+    /**
+     * @var string
+     */
     protected const FIELD_SUM_PRICE = 'sumPrice';
+
+    /**
+     * @var string
+     */
     protected const EVENT_CODE_AUTHORISATION = 'AUTHORISATION';
+
+    /**
+     * @var string
+     */
     protected const EVENT_CODE_CAPTURE = 'CAPTURE';
+
+    /**
+     * @var string
+     */
     protected const MERCHANT_ACCOUNT = 'TestMerchant';
+
+    /**
+     * @var string
+     */
     protected const RESPONSE_SUCCESS_TRUE = 'true';
+
+    /**
+     * @var string
+     */
     protected const REDIRECT_RESPONSE_PAYLOAD = 'random-payload-string';
+
+    /**
+     * @var string
+     */
     protected const REDIRECT_RESPONSE_TYPE = 'complete';
+
+    /**
+     * @var string
+     */
     protected const REDIRECT_RESPONSE_RESULT_CODE = 'authorised';
 
     /**
