@@ -1,11 +1,10 @@
 parameters:
+    level: 6
     checkGenericClassInNonGenericObjectType: false
     checkMissingIterableValueType: false
     excludePaths:
         - src/SprykerEco/Zed/Adyen/Persistence/Propel/Abstract*.php
     ignoreErrors:
-        - '#Call to an undefined method Generated\\Zed\\Ide\\AutoCompletion|Spryker\\Shared\\Kernel\\LocatorLocatorInterface::.+#'
-        - '#Return typehint of method .+\(\) has invalid type .+Transfer.#'
-        - '#Parameter .+\(\) has invalid typehint type Generated\\Shared\\Transfer\\.+#'
-        - '#Call to method .+\(\) on an unknown class Generated\\Shared\\Transfer\\.+#'
-        - '#Instantiated class Generated\\Shared\\Transfer\\.+ not found#'
+        - '#Call to method .+\(\) on an unknown class Generated\\.+.\\Ide\\AutoCompletion#'
+        - '#.+Generated\\Shared\\Transfer.+.#'
+        - '#.Persistence\\Spy.+.#'
