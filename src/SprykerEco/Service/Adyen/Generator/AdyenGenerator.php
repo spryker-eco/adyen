@@ -45,7 +45,7 @@ class AdyenGenerator implements AdyenGeneratorInterface
     {
         $parameters = [
             $this->generateUniqueSalt(),
-            $quoteTransfer->getTotals()->getHash(),
+            $quoteTransfer->getTotalsOrFail()->getHash(),
         ];
 
         $string = $this->textService->hashValue(implode(static::PARAMETERS_SEPARATOR, $parameters), Hash::SHA256);

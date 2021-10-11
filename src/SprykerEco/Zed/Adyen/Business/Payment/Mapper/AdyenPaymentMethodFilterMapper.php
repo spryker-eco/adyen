@@ -66,7 +66,7 @@ class AdyenPaymentMethodFilterMapper implements AdyenPaymentMethodFilterMapperIn
     protected function createAmountTransfer(QuoteTransfer $quoteTransfer): AdyenApiAmountTransfer
     {
         return (new AdyenApiAmountTransfer())
-            ->setCurrency($quoteTransfer->getCurrency()->getCode())
-            ->setValue($quoteTransfer->getTotals()->getPriceToPay());
+            ->setCurrency($quoteTransfer->getCurrencyOrFail()->getCode())
+            ->setValue($quoteTransfer->getTotalsOrFail()->getPriceToPay());
     }
 }

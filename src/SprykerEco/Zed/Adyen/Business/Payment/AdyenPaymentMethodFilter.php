@@ -116,6 +116,6 @@ class AdyenPaymentMethodFilter implements AdyenPaymentMethodFilterInterface
      */
     protected function isPaymentProviderAdyen(PaymentMethodTransfer $paymentMethodTransfer): bool
     {
-        return strpos($paymentMethodTransfer->getMethodName(), static::ADYEN_PAYMENT_METHOD) !== false;
+        return !empty($paymentMethodTransfer->getMethodName()) && strpos($paymentMethodTransfer->getMethodName(), static::ADYEN_PAYMENT_METHOD) !== false;
     }
 }

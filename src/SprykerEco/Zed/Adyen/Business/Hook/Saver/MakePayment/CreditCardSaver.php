@@ -38,11 +38,16 @@ class CreditCardSaver extends AbstractSaver
         AdyenApiResponseTransfer $response,
         PaymentAdyenTransfer $paymentAdyenTransfer
     ): PaymentAdyenTransfer {
-        $paymentAdyenTransfer->setPspReference($response->getMakePaymentResponse()->getPspReference());
-        $paymentAdyenTransfer->setResultCode(strtolower($response->getMakePaymentResponse()->getResultCode()));
+        $makePaymentResponse = $response->getMakePaymentResponseOrFail();
+
+        $paymentAdyenTransfer->setPspReference($makePaymentResponse->getPspReference());
+
+        if ($makePaymentResponse->getResultCode() !== null) {
+            $paymentAdyenTransfer->setResultCode(strtolower($makePaymentResponse->getResultCode()));
+        }
 
         if ($this->config->isCreditCard3dSecureEnabled()) {
-            $paymentAdyenTransfer->setPaymentData($response->getMakePaymentResponse()->getPaymentData());
+            $paymentAdyenTransfer->setPaymentData($makePaymentResponse->getPaymentData());
         }
 
         return $paymentAdyenTransfer;

@@ -51,15 +51,17 @@ class AdyenOrderPaymentManager implements AdyenOrderPaymentManagerInterface
      */
     public function saveOrderPayment(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer): void
     {
-        if ($quoteTransfer->getPayment()->getPaymentProvider() !== AdyenConfig::PROVIDER_NAME) {
+        $payment = $quoteTransfer->getPaymentOrFail();
+
+        if ($payment->getPaymentProvider() !== AdyenConfig::PROVIDER_NAME) {
             return;
         }
 
-        $paymentAdyenTransfer = $this->reader->getPaymentAdyenByReference($quoteTransfer->getPayment()->getAdyenPayment()->getReference());
+        $paymentAdyenTransfer = $this->reader->getPaymentAdyenByReference($payment->getAdyenPaymentOrFail()->getReferenceOrFail());
         if ($paymentAdyenTransfer->getIdPaymentAdyen() !== null) {
             throw new AdyenMethodSaverException(static::ERROR_MESSAGE_PAYMENT_REFERENCE_NOT_UNIQUE);
         }
 
-        $this->writer->savePaymentEntities($quoteTransfer->getPayment(), $saveOrderTransfer);
+        $this->writer->savePaymentEntities($payment, $saveOrderTransfer);
     }
 }

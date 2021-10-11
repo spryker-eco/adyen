@@ -70,7 +70,7 @@ class OnlineTransferRedirectHandler implements AdyenRedirectHandlerInterface
      */
     public function handle(AdyenRedirectResponseTransfer $redirectResponseTransfer): AdyenRedirectResponseTransfer
     {
-        $paymentAdyenTransfer = $this->reader->getPaymentAdyenByReference($redirectResponseTransfer->getReference());
+        $paymentAdyenTransfer = $this->reader->getPaymentAdyenByReference($redirectResponseTransfer->getReferenceOrFail());
 
         $requestTransfer = $this->createDetailsRequestTransfer($redirectResponseTransfer, $paymentAdyenTransfer);
         $responseTransfer = $this->adyenApiFacade->performPaymentDetailsApiCall($requestTransfer);
@@ -119,8 +119,8 @@ class OnlineTransferRedirectHandler implements AdyenRedirectHandlerInterface
      */
     protected function processPaymentDetailsResponse(PaymentAdyenTransfer $paymentAdyenTransfer, AdyenApiResponseTransfer $responseTransfer): void
     {
-        $paymentAdyenTransfer->setPspReference($responseTransfer->getPaymentDetailsResponse()->getPspReference());
-        $paymentAdyenOrderItems = $this->reader->getAllPaymentAdyenOrderItemsByIdSalesOrder($paymentAdyenTransfer->getFkSalesOrder());
+        $paymentAdyenTransfer->setPspReference($responseTransfer->getPaymentDetailsResponseOrFail()->getPspReferenceOrFail());
+        $paymentAdyenOrderItems = $this->reader->getAllPaymentAdyenOrderItemsByIdSalesOrder($paymentAdyenTransfer->getFkSalesOrderOrFail());
 
         $omsStatus = $this->resolveOmsStatus($paymentAdyenOrderItems);
 
@@ -138,7 +138,7 @@ class OnlineTransferRedirectHandler implements AdyenRedirectHandlerInterface
     /**
      * @param \Generated\Shared\Transfer\AdyenRedirectResponseTransfer $redirectResponseTransfer
      *
-     * @return string[]
+     * @return array<string, string|null>
      */
     protected function getRequestDetails(AdyenRedirectResponseTransfer $redirectResponseTransfer): array
     {
@@ -157,8 +157,9 @@ class OnlineTransferRedirectHandler implements AdyenRedirectHandlerInterface
     {
         $defaultOmsStatus = $this->getOmsStatus();
         $paymentOrderItem = reset($paymentAdyenOrderItems);
-        if ($paymentOrderItem->getStatus() !== $defaultOmsStatus) {
-            return $paymentOrderItem->getStatus();
+
+        if ($paymentOrderItem !== false && $paymentOrderItem->getStatus() !== $defaultOmsStatus) {
+            return $paymentOrderItem->getStatusOrFail();
         }
 
         return $defaultOmsStatus;

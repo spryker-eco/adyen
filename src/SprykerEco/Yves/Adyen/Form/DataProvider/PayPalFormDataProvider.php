@@ -22,8 +22,8 @@ class PayPalFormDataProvider extends AbstractFormDataProvider
     {
         $quoteTransfer = $this->updateQuoteWithPaymentData($quoteTransfer);
 
-        if ($quoteTransfer->getPayment()->getAdyenPayPal() === null) {
-            $quoteTransfer->getPayment()->setAdyenPayPal(new AdyenPayPalPaymentTransfer());
+        if ($quoteTransfer->getPaymentOrFail()->getAdyenPayPal() === null) {
+            $quoteTransfer->getPaymentOrFail()->setAdyenPayPal(new AdyenPayPalPaymentTransfer());
         }
 
         $this->quoteClient->setQuote($quoteTransfer);

@@ -83,7 +83,8 @@ class AdyenNotificationHandler implements AdyenNotificationHandlerInterface
             return;
         }
 
-        $paymentAdyenTransfer = $this->reader->getPaymentAdyenByReference($notificationTransfer->getMerchantReference());
+        $paymentAdyenTransfer = $this->reader->getPaymentAdyenByReference($notificationTransfer->getMerchantReferenceOrFail());
+
         if ($paymentAdyenTransfer->getFkSalesOrder() === null) {
             return;
         }

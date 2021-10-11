@@ -27,13 +27,13 @@ class CreditCardPaymentMapperPlugin implements AdyenPaymentMapperPluginInterface
      */
     public function setPaymentDataToQuote(QuoteTransfer $quoteTransfer, Request $request): void
     {
-        if ($quoteTransfer->getPayment()->getPaymentSelection() !== PaymentTransfer::ADYEN_CREDIT_CARD) {
+        $payment = $quoteTransfer->getPaymentOrFail();
+
+        if ($payment->getPaymentSelection() !== PaymentTransfer::ADYEN_CREDIT_CARD) {
             return;
         }
 
-        $quoteTransfer
-            ->getPayment()
-            ->getAdyenCreditCard()
+        $payment->getAdyenCreditCardOrFail()
             ->setEncryptedCardNumber($request->get(AdyenApiRequestConfig::ENCRYPTED_CARD_NUMBER_FIELD))
             ->setEncryptedExpiryMonth($request->get(AdyenApiRequestConfig::ENCRYPTED_EXPIRY_MONTH_FIELD))
             ->setEncryptedExpiryYear($request->get(AdyenApiRequestConfig::ENCRYPTED_EXPIRY_YEAR_FIELD))

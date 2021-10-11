@@ -22,8 +22,8 @@ class AliPayFormDataProvider extends AbstractFormDataProvider
     {
         $quoteTransfer = $this->updateQuoteWithPaymentData($quoteTransfer);
 
-        if ($quoteTransfer->getPayment()->getAdyenAliPay() === null) {
-            $quoteTransfer->getPayment()->setAdyenAliPay(new AdyenAliPayPaymentTransfer());
+        if ($quoteTransfer->getPaymentOrFail()->getAdyenAliPay() === null) {
+            $quoteTransfer->getPaymentOrFail()->setAdyenAliPay(new AdyenAliPayPaymentTransfer());
         }
 
         $this->quoteClient->setQuote($quoteTransfer);

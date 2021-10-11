@@ -35,8 +35,10 @@ class KlarnaInvoiceSaver extends AbstractSaver
         AdyenApiResponseTransfer $response,
         PaymentAdyenTransfer $paymentAdyenTransfer
     ): PaymentAdyenTransfer {
-        $paymentAdyenTransfer->setPspReference($response->getMakePaymentResponse()->getPspReference());
-        $paymentAdyenTransfer->setPaymentData($response->getMakePaymentResponse()->getPaymentData());
+        $makePaymentResponse = $response->getMakePaymentResponseOrFail();
+
+        $paymentAdyenTransfer->setPspReference($makePaymentResponse->getPspReference());
+        $paymentAdyenTransfer->setPaymentData($makePaymentResponse->getPaymentData());
 
         return $paymentAdyenTransfer;
     }

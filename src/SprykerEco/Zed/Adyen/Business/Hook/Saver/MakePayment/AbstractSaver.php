@@ -75,7 +75,7 @@ abstract class AbstractSaver implements AdyenSaverInterface
         }
 
         $paymentAdyenTransfer = $this->reader->getPaymentAdyenByReference(
-            $request->getMakePaymentRequest()->getReference()
+            $request->getMakePaymentRequestOrFail()->getReferenceOrFail()
         );
 
         $paymentAdyenTransfer = $this->updatePaymentAdyenTransfer($response, $paymentAdyenTransfer);
@@ -92,10 +92,12 @@ abstract class AbstractSaver implements AdyenSaverInterface
         AdyenApiResponseTransfer $response,
         PaymentAdyenTransfer $paymentAdyenTransfer
     ): PaymentAdyenTransfer {
+        $makePaymentResponse = $response->getMakePaymentResponseOrFail();
+
         $paymentAdyenTransfer->setDetails(
-            $this->encodingService->encodeJson($response->getMakePaymentResponse()->getDetails())
+            $this->encodingService->encodeJson($makePaymentResponse->getDetails())
         );
-        $paymentAdyenTransfer->setPaymentData($response->getMakePaymentResponse()->getPaymentData());
+        $paymentAdyenTransfer->setPaymentData($makePaymentResponse->getPaymentData());
 
         return $paymentAdyenTransfer;
     }
@@ -109,7 +111,7 @@ abstract class AbstractSaver implements AdyenSaverInterface
     {
         $paymentAdyenOrderItemTransfers = $this->reader
             ->getAllPaymentAdyenOrderItemsByIdSalesOrder(
-                $paymentAdyenTransfer->getFkSalesOrder()
+                $paymentAdyenTransfer->getFkSalesOrderOrFail()
             );
 
         $this->writer->updatePaymentEntities(

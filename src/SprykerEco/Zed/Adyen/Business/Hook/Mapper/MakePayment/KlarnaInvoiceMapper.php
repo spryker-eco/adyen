@@ -39,14 +39,14 @@ class KlarnaInvoiceMapper extends AbstractMapper
      */
     protected function getPayload(QuoteTransfer $quoteTransfer): array
     {
-        $klarnaRequestTransfer = $quoteTransfer->getPayment()->getAdyenKlarnaInvoiceRequest();
+        $klarnaRequestTransfer = $quoteTransfer->getPaymentOrFail()->getAdyenKlarnaInvoiceRequestOrFail();
         $payload = [
             AdyenApiRequestConfig::REQUEST_TYPE_FIELD => static::REQUEST_TYPE,
-            AdyenApiRequestConfig::BILLING_ADDRESS_FIELD => $klarnaRequestTransfer->getBillingAddress()->modifiedToArray(true, true),
+            AdyenApiRequestConfig::BILLING_ADDRESS_FIELD => $klarnaRequestTransfer->getBillingAddressOrFail()->modifiedToArray(true, true),
         ];
 
         if (!$quoteTransfer->getBillingSameAsShipping()) {
-            $payload[AdyenApiRequestConfig::DELIVERY_ADDRESS_FIELD] = $klarnaRequestTransfer->getDeliveryAddress()->modifiedToArray(true, true);
+            $payload[AdyenApiRequestConfig::DELIVERY_ADDRESS_FIELD] = $klarnaRequestTransfer->getDeliveryAddressOrFail()->modifiedToArray(true, true);
         }
 
         return $payload;
@@ -63,8 +63,8 @@ class KlarnaInvoiceMapper extends AbstractMapper
         AdyenApiRequestTransfer $requestTransfer
     ): AdyenApiRequestTransfer {
         $requestTransfer = parent::updateRequestTransfer($quoteTransfer, $requestTransfer);
-        $requestTransfer
-            ->getMakePaymentRequest()
+
+        $requestTransfer->getMakePaymentRequestOrFail()
             ->setLineItems($this->getLineItems($quoteTransfer));
 
         return $requestTransfer;

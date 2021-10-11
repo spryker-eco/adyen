@@ -33,11 +33,11 @@ class CreditCardMapper extends AbstractMapper
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return string[]
+     * @return array<string, string|null>
      */
     protected function getPayload(QuoteTransfer $quoteTransfer): array
     {
-        $creditCardTransfer = $quoteTransfer->getPayment()->getAdyenCreditCard();
+        $creditCardTransfer = $quoteTransfer->getPaymentOrFail()->getAdyenCreditCardOrFail();
 
         return [
             AdyenApiRequestConfig::REQUEST_TYPE_FIELD => static::REQUEST_TYPE,

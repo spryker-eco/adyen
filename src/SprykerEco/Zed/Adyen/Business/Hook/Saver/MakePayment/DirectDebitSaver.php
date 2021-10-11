@@ -36,10 +36,10 @@ class DirectDebitSaver extends AbstractSaver
         PaymentAdyenTransfer $paymentAdyenTransfer
     ): PaymentAdyenTransfer {
         $paymentAdyenTransfer->setAdditionalData(
-            $this->encodingService->encodeJson($response->getMakePaymentResponse()->getAdditionalData())
+            $this->encodingService->encodeJson($response->getMakePaymentResponseOrFail()->getAdditionalData())
         );
 
-        $paymentAdyenTransfer->setPspReference($response->getMakePaymentResponse()->getPspReference());
+        $paymentAdyenTransfer->setPspReference($response->getMakePaymentResponseOrFail()->getPspReference());
 
         return $paymentAdyenTransfer;
     }

@@ -34,7 +34,7 @@ class AdyenReader implements AdyenReaderInterface
      */
     public function getPaymentAdyenByOrderTransfer(OrderTransfer $orderTransfer): PaymentAdyenTransfer
     {
-        return $this->repository->getPaymentAdyenByIdSalesOrder($orderTransfer->getIdSalesOrder());
+        return $this->repository->getPaymentAdyenByIdSalesOrder($orderTransfer->getIdSalesOrderOrFail());
     }
 
     /**

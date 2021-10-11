@@ -3,3 +3,5 @@ parameters:
     checkMissingIterableValueType: false
     excludePaths:
         - src/SprykerEco/Zed/Adyen/Persistence/Propel/Abstract*.php
+    ignoreErrors:
+        - '# Call to an undefined method Generated\\Zed\\Ide\\AutoCompletion|Spryker\\Shared\\Kernel\\LocatorLocatorInterface::.+#'

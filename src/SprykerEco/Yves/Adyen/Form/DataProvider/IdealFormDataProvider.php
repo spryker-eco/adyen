@@ -43,8 +43,8 @@ class IdealFormDataProvider extends AbstractFormDataProvider
     {
         $quoteTransfer = $this->updateQuoteWithPaymentData($quoteTransfer);
 
-        if ($quoteTransfer->getPayment()->getAdyenIdeal() === null) {
-            $quoteTransfer->getPayment()->setAdyenIdeal(new AdyenIdealPaymentTransfer());
+        if ($quoteTransfer->getPaymentOrFail()->getAdyenIdeal() === null) {
+            $quoteTransfer->getPaymentOrFail()->setAdyenIdeal(new AdyenIdealPaymentTransfer());
         }
 
         $this->quoteClient->setQuote($quoteTransfer);
