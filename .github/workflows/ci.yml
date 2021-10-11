@@ -12,10 +12,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        include:
-          php:
-            - '7.4'
-            - '8.0'
+        php: ['7.4', '8.0']
 
     env:
       APPLICATION_ENV: devtest
