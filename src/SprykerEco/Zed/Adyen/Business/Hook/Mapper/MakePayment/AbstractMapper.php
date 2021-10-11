@@ -83,7 +83,6 @@ abstract class AbstractMapper implements AdyenMapperInterface
         $adyenPayment = $payment->getAdyenPaymentOrFail();
         $billingAddress = $quoteTransfer->getBillingAddressOrFail();
 
-
         return (new AdyenApiMakePaymentRequestTransfer())
             ->setMerchantAccount($this->config->getMerchantAccount())
             ->setReference($adyenPayment->getReference())
@@ -201,7 +200,8 @@ abstract class AbstractMapper implements AdyenMapperInterface
      *
      * @return string|null
      */
-    protected function getPhoneNumberByBillingAddress(QuoteTransfer $quoteTransfer): ?string {
+    protected function getPhoneNumberByBillingAddress(QuoteTransfer $quoteTransfer): ?string
+    {
         try {
             return $quoteTransfer->getBillingAddressOrFail()->getPhoneOrFail();
         } catch (NullValueException $e) {
@@ -214,7 +214,8 @@ abstract class AbstractMapper implements AdyenMapperInterface
      *
      * @return string|null
      */
-    protected function getPhoneNumberByCustomer(QuoteTransfer $quoteTransfer): ?string {
+    protected function getPhoneNumberByCustomer(QuoteTransfer $quoteTransfer): ?string
+    {
         try {
             return $quoteTransfer->getCustomerOrFail()->getPhoneOrFail();
         } catch (NullValueException $e) {
