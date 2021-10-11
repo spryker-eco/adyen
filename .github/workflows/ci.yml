@@ -18,15 +18,14 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version-version: '7.4'
-          extensions: mbstring, intl
-          tools: composer:v2
+          php-version: '7.4'
+          extensions: mbstring, intl, bcmath
           coverage: none
 
-      - name: Composer install
+      - name: Composer Install
         run: composer install --prefer-dist --no-interaction --profile
 
-      - name: Composer validate
+      - name: Run validation
         run: composer validate
 
       - name: Syntax check
@@ -41,28 +40,28 @@ jobs:
       - name: Run PHPStan
         run: composer stan
 
-    lowest:
-      name: Prefer Lowest
-      runs-on: ubuntu-20.04
+  lowest:
+    name: Prefer Lowest
+    runs-on: ubuntu-20.04
 
-      steps:
-        - uses: actions/checkout@v2
+    steps:
+      - uses: actions/checkout@v2
 
-        - name: Setup PHP
-          uses: shivammathur/setup-php@v2
-          with:
-            php-version: '7.3'
-            extensions: mbstring, intl, bcmath
-            coverage: none
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '7.4'
+          extensions: mbstring, intl, bcmath
+          coverage: none
 
-        - name: Composer Install
-          run: composer install --prefer-dist --no-interaction --profile
+      - name: Composer Install
+        run: composer install --prefer-dist --no-interaction --profile
 
-        - name: Composer Update
-          run: composer update --prefer-lowest --prefer-dist --no-interaction --profile -vvv
+      - name: Composer Update
+        run: composer update --prefer-lowest --prefer-dist --no-interaction --profile -vvv
 
-        - name: Composer Install prefer lowest tool
-          run: composer require --dev dereuromark/composer-prefer-lowest;
+      - name: Composer Install prefer lowest tool
+        run: composer require --dev dereuromark/composer-prefer-lowest;
 
-        - name: Run validation
-          run: vendor/bin/validate-prefer-lowest -m
+      - name: Run validation
+        run: vendor/bin/validate-prefer-lowest -m
