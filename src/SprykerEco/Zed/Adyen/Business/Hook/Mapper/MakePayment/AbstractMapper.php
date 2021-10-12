@@ -19,7 +19,7 @@ use SprykerEco\Zed\Adyen\AdyenConfig;
 abstract class AbstractMapper implements AdyenMapperInterface
 {
     /**
-     * @var array
+     * @var array<string, string>
      */
     protected const GENDER_MAPPING = ['Mr' => 'MALE', 'Ms' => 'FEMALE', 'Mrs' => 'FEMALE', 'Dr' => 'MALE'];
 
