@@ -71,9 +71,11 @@ class KlarnaInvoiceMapper extends AbstractMapper
     }
 
     /**
+     * @phpstan-return \ArrayObject<int, \Generated\Shared\Transfer\AdyenApiLineItemTransfer&static>
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return ArrayObject<int, \Generated\Shared\Transfer\AdyenApiLineItemTransfer>
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\AdyenApiLineItemTransfer>
      */
     protected function getLineItems(QuoteTransfer $quoteTransfer): ArrayObject
     {
