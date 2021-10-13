@@ -58,7 +58,7 @@ class RefundCommandMapper extends AbstractCommandMapper implements AdyenCommandM
     protected function getAmountToModify(array $orderItems, OrderTransfer $orderTransfer): int
     {
         if (count($orderTransfer->getItems()) === count($orderItems)) {
-            return $orderTransfer->getTotals()->getRefundTotal();
+            return $orderTransfer->getTotalsOrFail()->getRefundTotalOrFail();
         }
 
         $amount = array_map(

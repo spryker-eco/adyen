@@ -9,6 +9,9 @@ namespace SprykerEco\Zed\Adyen\Business\Oms\Saver;
 
 class RefundCommandSaver extends AbstractCommandSaver implements AdyenCommandSaverInterface
 {
+    /**
+     * @var string
+     */
     protected const REQUEST_TYPE = 'REFUND';
 
     /**

@@ -184,7 +184,7 @@ class AdyenRepository extends AbstractRepository implements AdyenRepositoryInter
 
         $remainingOrderItemIds = array_map(
             function (SpySalesOrderItemEntityTransfer $entityTransfer) {
-                return $entityTransfer->getIdSalesOrderItem();
+                return $entityTransfer->getIdSalesOrderItemOrFail();
             },
             $entityTransfers
         );

@@ -13,6 +13,9 @@ use SprykerEco\Client\Adyen\Dependency\Client\AdyenToZedRequestClientBridge;
 
 class AdyenDependencyProvider extends AbstractDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_ZED_REQUEST = 'CLIENT_ZED_REQUEST';
 
     /**

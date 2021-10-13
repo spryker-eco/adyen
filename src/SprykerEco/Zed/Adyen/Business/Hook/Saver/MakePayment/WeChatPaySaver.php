@@ -9,6 +9,9 @@ namespace SprykerEco\Zed\Adyen\Business\Hook\Saver\MakePayment;
 
 class WeChatPaySaver extends AbstractSaver
 {
+    /**
+     * @var string
+     */
     protected const MAKE_PAYMENT_WE_CHAT_PAY_REQUEST_TYPE = 'MakePayment[WeChatPay]';
 
     /**

@@ -12,6 +12,9 @@ use SprykerEco\Shared\Adyen\AdyenApiRequestConfig;
 
 class AliPayMapper extends AbstractMapper
 {
+    /**
+     * @var string
+     */
     protected const REQUEST_TYPE = 'alipay';
 
     /**

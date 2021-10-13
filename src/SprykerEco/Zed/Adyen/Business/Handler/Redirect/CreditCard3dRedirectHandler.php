@@ -15,7 +15,7 @@ class CreditCard3dRedirectHandler extends OnlineTransferRedirectHandler
     /**
      * @param \Generated\Shared\Transfer\AdyenRedirectResponseTransfer $redirectResponseTransfer
      *
-     * @return string[]
+     * @return array<string, string|null>
      */
     protected function getRequestDetails(AdyenRedirectResponseTransfer $redirectResponseTransfer): array
     {

@@ -18,9 +18,24 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class KlarnaInvoiceSubForm extends AbstractSubForm
 {
+    /**
+     * @var string
+     */
     protected const PAYMENT_METHOD = 'klarna-invoice';
+
+    /**
+     * @var string
+     */
     protected const SELECT_OPTIONS_FIELD = 'select_options';
+
+    /**
+     * @var string
+     */
     protected const SOCIAL_SECURITY_NUMBER_FIELD = 'social_security_number';
+
+    /**
+     * @var string
+     */
     protected const SOCIAL_SECURITY_NUMBER_LABEL = 'Social Security Number';
 
     /**

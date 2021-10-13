@@ -13,10 +13,14 @@ use Generated\Shared\Transfer\AdyenApiMakePaymentRequestTransfer;
 use Generated\Shared\Transfer\AdyenApiNameTransfer;
 use Generated\Shared\Transfer\AdyenApiRequestTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Shared\Kernel\Transfer\Exception\NullValueException;
 use SprykerEco\Zed\Adyen\AdyenConfig;
 
 abstract class AbstractMapper implements AdyenMapperInterface
 {
+    /**
+     * @var array<string, string>
+     */
     protected const GENDER_MAPPING = ['Mr' => 'MALE', 'Ms' => 'FEMALE', 'Mrs' => 'FEMALE', 'Dr' => 'MALE'];
 
     /**
@@ -75,13 +79,17 @@ abstract class AbstractMapper implements AdyenMapperInterface
      */
     protected function createMakePaymentRequestTransfer(QuoteTransfer $quoteTransfer): AdyenApiMakePaymentRequestTransfer
     {
+        $payment = $quoteTransfer->getPaymentOrFail();
+        $adyenPayment = $payment->getAdyenPaymentOrFail();
+        $billingAddress = $quoteTransfer->getBillingAddressOrFail();
+
         return (new AdyenApiMakePaymentRequestTransfer())
             ->setMerchantAccount($this->config->getMerchantAccount())
-            ->setReference($quoteTransfer->getPayment()->getAdyenPayment()->getReference())
+            ->setReference($adyenPayment->getReference())
             ->setAmount($this->createAmountTransfer($quoteTransfer))
             ->setReturnUrl($this->getReturnUrl())
-            ->setCountryCode($quoteTransfer->getBillingAddress()->getIso2Code())
-            ->setShopperIP($quoteTransfer->getPayment()->getAdyenPayment()->getClientIp());
+            ->setCountryCode($billingAddress->getIso2Code())
+            ->setShopperIP($adyenPayment->getClientIp());
     }
 
     /**
@@ -92,8 +100,8 @@ abstract class AbstractMapper implements AdyenMapperInterface
     protected function createAmountTransfer(QuoteTransfer $quoteTransfer): AdyenApiAmountTransfer
     {
         return (new AdyenApiAmountTransfer())
-            ->setCurrency($quoteTransfer->getCurrency()->getCode())
-            ->setValue($quoteTransfer->getTotals()->getPriceToPay());
+            ->setCurrency($quoteTransfer->getCurrencyOrFail()->getCode())
+            ->setValue($quoteTransfer->getTotalsOrFail()->getPriceToPay());
     }
 
     /**
@@ -108,7 +116,7 @@ abstract class AbstractMapper implements AdyenMapperInterface
     ): AdyenApiRequestTransfer {
         $requestTransfer = $this->addFraudCheckData($quoteTransfer, $requestTransfer);
         $requestTransfer
-            ->getMakePaymentRequest()
+            ->getMakePaymentRequestOrFail()
             ->setPaymentMethod($this->getPayload($quoteTransfer))
             ->setAdditionalData($this->getAdditionalData());
 
@@ -125,33 +133,37 @@ abstract class AbstractMapper implements AdyenMapperInterface
         QuoteTransfer $quoteTransfer,
         AdyenApiRequestTransfer $requestTransfer
     ): AdyenApiRequestTransfer {
+        $customer = $quoteTransfer->getCustomerOrFail();
+        $billingAddress = $quoteTransfer->getBillingAddressOrFail();
+        $shippingAddress = $quoteTransfer->getShippingAddressOrFail();
+
         $requestTransfer
-            ->getMakePaymentRequest()
+            ->getMakePaymentRequestOrFail()
             ->setShopperReference($quoteTransfer->getCustomerReference())
-            ->setDateOfBirth($quoteTransfer->getCustomer()->getDateOfBirth())
+            ->setDateOfBirth($customer->getDateOfBirth())
             ->setShopperName(
                 (new AdyenApiNameTransfer())
-                    ->setFirstName($quoteTransfer->getBillingAddress()->getFirstName())
+                    ->setFirstName($billingAddress->getFirstName())
                     ->setGender($this->getGender($quoteTransfer))
-                    ->setLastName($quoteTransfer->getBillingAddress()->getLastName())
+                    ->setLastName($billingAddress->getLastName())
             )
-            ->setShopperEmail($quoteTransfer->getCustomer()->getEmail())
+            ->setShopperEmail($customer->getEmail())
             ->setTelephoneNumber($this->getPhoneNumber($quoteTransfer))
             ->setBillingAddress(
                 (new AdyenApiAddressTransfer())
-                    ->setCity($quoteTransfer->getBillingAddress()->getCity())
-                    ->setCountry($quoteTransfer->getBillingAddress()->getIso2Code())
-                    ->setHouseNumberOrName($quoteTransfer->getBillingAddress()->getAddress2())
-                    ->setPostalCode($quoteTransfer->getBillingAddress()->getZipCode())
-                    ->setStreet($quoteTransfer->getBillingAddress()->getAddress1())
+                    ->setCity($billingAddress->getCity())
+                    ->setCountry($billingAddress->getIso2Code())
+                    ->setHouseNumberOrName($billingAddress->getAddress2())
+                    ->setPostalCode($billingAddress->getZipCode())
+                    ->setStreet($billingAddress->getAddress1())
             )
             ->setDeliveryAddress(
                 (new AdyenApiAddressTransfer())
-                    ->setCity($quoteTransfer->getShippingAddress()->getCity())
-                    ->setCountry($quoteTransfer->getShippingAddress()->getIso2Code())
-                    ->setHouseNumberOrName($quoteTransfer->getShippingAddress()->getAddress2())
-                    ->setPostalCode($quoteTransfer->getShippingAddress()->getZipCode())
-                    ->setStreet($quoteTransfer->getShippingAddress()->getAddress1())
+                    ->setCity($shippingAddress->getCity())
+                    ->setCountry($shippingAddress->getIso2Code())
+                    ->setHouseNumberOrName($shippingAddress->getAddress2())
+                    ->setPostalCode($shippingAddress->getZipCode())
+                    ->setStreet($shippingAddress->getAddress1())
             );
 
         return $requestTransfer;
@@ -164,11 +176,13 @@ abstract class AbstractMapper implements AdyenMapperInterface
      */
     protected function getGender(QuoteTransfer $quoteTransfer): ?string
     {
-        if (!array_key_exists($quoteTransfer->getCustomer()->getSalutation(), static::GENDER_MAPPING)) {
+        $customer = $quoteTransfer->getCustomerOrFail();
+
+        if ($customer->getSalutation() !== null && !array_key_exists($customer->getSalutation(), static::GENDER_MAPPING)) {
             return null;
         }
 
-        return static::GENDER_MAPPING[$quoteTransfer->getCustomer()->getSalutation()];
+        return static::GENDER_MAPPING[$customer->getSalutation()];
     }
 
     /**
@@ -178,7 +192,35 @@ abstract class AbstractMapper implements AdyenMapperInterface
      */
     protected function getPhoneNumber(QuoteTransfer $quoteTransfer): ?string
     {
-        return $quoteTransfer->getBillingAddress()->getPhone() ?? $quoteTransfer->getCustomer()->getPhone();
+        return $this->getPhoneNumberByBillingAddress($quoteTransfer) ?? $this->getPhoneNumberByCustomer($quoteTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return string|null
+     */
+    protected function getPhoneNumberByBillingAddress(QuoteTransfer $quoteTransfer): ?string
+    {
+        try {
+            return $quoteTransfer->getBillingAddressOrFail()->getPhoneOrFail();
+        } catch (NullValueException $e) {
+            return null;
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return string|null
+     */
+    protected function getPhoneNumberByCustomer(QuoteTransfer $quoteTransfer): ?string
+    {
+        try {
+            return $quoteTransfer->getCustomerOrFail()->getPhoneOrFail();
+        } catch (NullValueException $e) {
+            return null;
+        }
     }
 
     /**

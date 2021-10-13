@@ -22,9 +22,9 @@ class CreditCard3dRedirectHandler extends OnlineTransferRedirectHandler
     {
         $quoteTransfer = $this->quoteClient->getQuote();
         $redirectResponseTransfer = (new AdyenRedirectResponseTransfer())
-            ->setMd($request->request->get(AdyenApiRequestConfig::MD_FIELD))
-            ->setPaRes($request->request->get(AdyenApiRequestConfig::PA_RES_FIELD))
-            ->setReference($quoteTransfer->getPayment()->getAdyenPayment()->getReference());
+            ->setMd((string)$request->request->get(AdyenApiRequestConfig::MD_FIELD))
+            ->setPaRes((string)$request->request->get(AdyenApiRequestConfig::PA_RES_FIELD))
+            ->setReference($quoteTransfer->getPaymentOrFail()->getAdyenPaymentOrFail()->getReference());
 
         return $redirectResponseTransfer;
     }

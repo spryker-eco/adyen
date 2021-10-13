@@ -15,12 +15,29 @@ use SprykerEco\Yves\Adyen\Plugin\Payment\KlarnaInvoicePaymentMapperPlugin;
 
 class AdyenDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_QUOTE = 'CLIENT_QUOTE';
+
+    /**
+     * @var string
+     */
     public const CLIENT_ADYEN = 'CLIENT_ADYEN';
 
+    /**
+     * @var string
+     */
     public const SERVICE_ADYEN = 'SERVICE_ADYEN';
+
+    /**
+     * @var string
+     */
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
+    /**
+     * @var string
+     */
     public const PLUGINS_ADYEN_PAYMENT = 'PLUGINS_ADYEN_PAYMENT';
 
     /**

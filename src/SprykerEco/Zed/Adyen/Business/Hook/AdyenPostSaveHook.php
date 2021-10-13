@@ -19,11 +19,29 @@ use SprykerEco\Zed\Adyen\Dependency\Facade\AdyenToAdyenApiFacadeInterface;
 
 class AdyenPostSaveHook implements AdyenHookInterface
 {
+    /**
+     * @var string
+     */
     protected const REDIRECT_METHOD_GET = 'GET';
+
+    /**
+     * @var string
+     */
     protected const REDIRECT_METHOD_POST = 'POST';
+
+    /**
+     * @var string
+     */
     protected const ERROR_TYPE_PAYMENT_FAILED = 'payment failed';
+
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGE_PAYMENT_FAILED = 'Something went wrong with your payment. Try again!';
 
+    /**
+     * @var string
+     */
     protected const ADYEN_OMS_STATUS_REFUSED = 'Refused';
 
     /**
@@ -64,20 +82,24 @@ class AdyenPostSaveHook implements AdyenHookInterface
      */
     public function execute(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): void
     {
-        if ($quoteTransfer->getPayment()->getPaymentProvider() !== AdyenConfig::PROVIDER_NAME) {
+        $payment = $quoteTransfer->getPaymentOrFail();
+
+        if ($payment->getPaymentProvider() !== AdyenConfig::PROVIDER_NAME) {
             return;
         }
 
-        $mapper = $this->mapperResolver->resolve($quoteTransfer->getPayment()->getPaymentSelection());
-        $saver = $this->saverResolver->resolve($quoteTransfer->getPayment()->getPaymentSelection());
-
+        $paymentSelection = $payment->getPaymentSelectionOrFail();
+        $mapper = $this->mapperResolver->resolve($paymentSelection);
+        $saver = $this->saverResolver->resolve($paymentSelection);
         $requestTransfer = $mapper->buildPaymentRequestTransfer($quoteTransfer);
         $responseTransfer = $this->adyenApiFacade->performMakePaymentApiCall($requestTransfer);
+
         $saver->save($requestTransfer, $responseTransfer);
 
+        $makePaymentResponse = $responseTransfer->getMakePaymentResponseOrFail();
+
         if (
-            !$responseTransfer->getIsSuccess()
-            || $responseTransfer->getMakePaymentResponse()->getResultCode() === static::ADYEN_OMS_STATUS_REFUSED
+            !$responseTransfer->getIsSuccess() || $makePaymentResponse->getResultCode() === static::ADYEN_OMS_STATUS_REFUSED
         ) {
             $this->processFailureResponse($checkoutResponseTransfer);
 
@@ -88,13 +110,13 @@ class AdyenPostSaveHook implements AdyenHookInterface
             return;
         }
 
-        if ($responseTransfer->getMakePaymentResponse()->getRedirect()->getMethod() === static::REDIRECT_METHOD_GET) {
+        if ($makePaymentResponse->getRedirectOrFail()->getMethod() === static::REDIRECT_METHOD_GET) {
             $this->processGetRedirect($checkoutResponseTransfer, $responseTransfer);
 
             return;
         }
 
-        if ($responseTransfer->getMakePaymentResponse()->getRedirect()->getMethod() === static::REDIRECT_METHOD_POST) {
+        if ($makePaymentResponse->getRedirectOrFail()->getMethod() === static::REDIRECT_METHOD_POST) {
             $this->processPostRedirect($checkoutResponseTransfer, $responseTransfer);
 
             return;
@@ -123,7 +145,7 @@ class AdyenPostSaveHook implements AdyenHookInterface
     ): void {
         $checkoutResponseTransfer->setIsExternalRedirect(true);
         $checkoutResponseTransfer->setRedirectUrl(
-            $responseTransfer->getMakePaymentResponse()->getRedirect()->getUrl()
+            $responseTransfer->getMakePaymentResponseOrFail()->getRedirectOrFail()->getUrl()
         );
     }
 
@@ -137,9 +159,11 @@ class AdyenPostSaveHook implements AdyenHookInterface
         CheckoutResponseTransfer $checkoutResponseTransfer,
         AdyenApiResponseTransfer $responseTransfer
     ): void {
+        $redirect = $responseTransfer->getMakePaymentResponseOrFail()->getRedirectOrFail();
+
         $redirectTransfer = (new AdyenRedirectTransfer())
-            ->setAction($responseTransfer->getMakePaymentResponse()->getRedirect()->getUrl())
-            ->setFields($responseTransfer->getMakePaymentResponse()->getRedirect()->getData());
+            ->setAction($redirect->getUrl())
+            ->setFields($redirect->getData());
 
         $checkoutResponseTransfer->setAdyenRedirect($redirectTransfer);
     }

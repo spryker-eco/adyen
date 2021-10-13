@@ -30,12 +30,12 @@ class KlarnaInvoicePaymentMapperPlugin implements AdyenPaymentMapperPluginInterf
      */
     public function setPaymentDataToQuote(QuoteTransfer $quoteTransfer, Request $request): void
     {
-        if ($quoteTransfer->getPayment()->getPaymentSelection() !== PaymentTransfer::ADYEN_KLARNA_INVOICE) {
+        if ($quoteTransfer->getPaymentOrFail()->getPaymentSelection() !== PaymentTransfer::ADYEN_KLARNA_INVOICE) {
             return;
         }
 
-        $billingAddress = $this->getInvoiceAddress($quoteTransfer->getBillingAddress());
-        $shippingAddress = $this->getInvoiceAddress($quoteTransfer->getShippingAddress());
+        $billingAddress = $this->getInvoiceAddress($quoteTransfer->getBillingAddressOrFail());
+        $shippingAddress = $this->getInvoiceAddress($quoteTransfer->getShippingAddressOrFail());
         $personalDetails = $this->getInvoicePersonalDetails($quoteTransfer);
 
         $klarnaInvoiceRequest = (new AdyenKlarnaInvoiceRequestTransfer())
@@ -44,7 +44,7 @@ class KlarnaInvoicePaymentMapperPlugin implements AdyenPaymentMapperPluginInterf
             ->setPersonalDetails($personalDetails);
 
         $quoteTransfer
-            ->getPayment()
+            ->getPaymentOrFail()
             ->setAdyenKlarnaInvoiceRequest($klarnaInvoiceRequest);
     }
 
@@ -71,11 +71,11 @@ class KlarnaInvoicePaymentMapperPlugin implements AdyenPaymentMapperPluginInterf
     protected function getInvoicePersonalDetails(QuoteTransfer $quoteTransfer): AdyenKlarnaPersonalDetailsTransfer
     {
         $personalDetailsTransfer = (new AdyenKlarnaPersonalDetailsTransfer())
-            ->setFirstName($quoteTransfer->getBillingAddress()->getFirstName())
-            ->setLastName($quoteTransfer->getBillingAddress()->getLastName())
-            ->setShopperEmail($quoteTransfer->getCustomer()->getEmail())
-            ->setTelephoneNumber($quoteTransfer->getBillingAddress()->getPhone())
-            ->setSocialSecurityNumber($quoteTransfer->getPayment()->getAdyenKlarnaInvoice()->getSocialSecurityNumber());
+            ->setFirstName($quoteTransfer->getBillingAddressOrFail()->getFirstName())
+            ->setLastName($quoteTransfer->getBillingAddressOrFail()->getLastName())
+            ->setShopperEmail($quoteTransfer->getCustomerOrFail()->getEmail())
+            ->setTelephoneNumber($quoteTransfer->getBillingAddressOrFail()->getPhone())
+            ->setSocialSecurityNumber($quoteTransfer->getPaymentOrFail()->getAdyenKlarnaInvoiceOrFail()->getSocialSecurityNumber());
 
         return $personalDetailsTransfer;
     }

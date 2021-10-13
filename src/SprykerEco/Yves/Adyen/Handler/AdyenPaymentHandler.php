@@ -45,15 +45,15 @@ class AdyenPaymentHandler implements AdyenPaymentHandlerInterface
      */
     public function addPaymentToQuote(Request $request, QuoteTransfer $quoteTransfer): QuoteTransfer
     {
-        $paymentSelection = $quoteTransfer->getPayment()->getPaymentSelection();
+        $paymentSelection = $quoteTransfer->getPaymentOrFail()->getPaymentSelectionOrFail();
         $quoteTransfer
-            ->getPayment()
+            ->getPaymentOrFail()
             ->setPaymentProvider(AdyenConfig::PROVIDER_NAME)
             ->setPaymentMethod($paymentSelection);
 
         $quoteTransfer
-            ->getPayment()
-            ->getAdyenPayment()
+            ->getPaymentOrFail()
+            ->getAdyenPaymentOrFail()
             ->setReference($this->service->generateReference($quoteTransfer))
             ->setClientIp($request->getClientIp());
 

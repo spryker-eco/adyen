@@ -16,6 +16,11 @@ use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 class CaptureCommandMapper extends AbstractCommandMapper implements AdyenCommandMapperInterface
 {
     /**
+     * @var int
+     */
+    protected const AMOUNT_TO_MODIFY_DEFAULT = 0;
+
+    /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $orderItems
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
@@ -58,12 +63,12 @@ class CaptureCommandMapper extends AbstractCommandMapper implements AdyenCommand
     protected function getAmountToModify(array $orderItems, OrderTransfer $orderTransfer): int
     {
         if ($orderTransfer->getItems()->count() === count($orderItems)) {
-            return $orderTransfer->getTotals()->getGrandTotal();
+            return $orderTransfer->getTotalsOrFail()->getGrandTotal() ?? static::AMOUNT_TO_MODIFY_DEFAULT;
         }
 
         $amount = array_map(
             function (SpySalesOrderItem $orderItem) {
-                return $orderItem->getPriceToPayAggregation();
+                return $orderItem->getPriceToPayAggregation() ?? static::AMOUNT_TO_MODIFY_DEFAULT;
             },
             $orderItems
         );

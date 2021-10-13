@@ -35,7 +35,7 @@ class AdyenPaymentMethodFilterConverter implements AdyenPaymentMethodFilterConve
         $methodsFromConfig = $this->config->getMapperPaymentMethods();
 
         foreach ($paymentMethods as $paymentMethod) {
-            if (array_key_exists($paymentMethod->getType(), $methodsFromConfig)) {
+            if ($paymentMethod->getType() !== null && array_key_exists($paymentMethod->getType(), $methodsFromConfig)) {
                 $availablePaymentMethods[] = $methodsFromConfig[$paymentMethod->getType()];
             }
         }

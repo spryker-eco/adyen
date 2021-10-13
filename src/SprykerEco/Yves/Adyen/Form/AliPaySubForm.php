@@ -14,6 +14,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class AliPaySubForm extends AbstractSubForm
 {
+    /**
+     * @var string
+     */
     protected const PAYMENT_METHOD = 'alipay';
 
     /**

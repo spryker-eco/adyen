@@ -1,0 +1,6 @@
+{
+    "include": {
+        "spryker-eco/adyen-api": "Provides the REST Client for making API calls to the Adyen Payment Provider.",
+        "spryker/transfer": "Provides transfer objects definition with `::get*OrFail()` functionality."
+    }
+}

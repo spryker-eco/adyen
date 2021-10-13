@@ -18,13 +18,44 @@ use Generated\Shared\Transfer\OrderTransfer;
  */
 class FacadeTest extends BaseSetUpTest
 {
+    /**
+     * @var string
+     */
     protected const PROCESS_NAME_ADYEN_CREDIT_CARD = 'AdyenCreditCard01';
+
+    /**
+     * @var string
+     */
     protected const PROCESS_NAME_ADYEN_SOFORT = 'AdyenSofort01';
+
+    /**
+     * @var string
+     */
     protected const OMS_STATUS_NEW = 'new';
+
+    /**
+     * @var string
+     */
     protected const OMS_STATUS_AUTHORIZED = 'authorized';
+
+    /**
+     * @var string
+     */
     protected const OMS_STATUS_CAPTURED = 'captured';
+
+    /**
+     * @var string
+     */
     protected const OMS_STATUS_CANCELLATION_PENDING = 'cancellation pending';
+
+    /**
+     * @var string
+     */
     protected const OMS_STATUS_CAPTURE_PENDING = 'capture pending';
+
+    /**
+     * @var string
+     */
     protected const OMS_STATUS_REFUND_PENDING = 'refund pending';
 
     /**

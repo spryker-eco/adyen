@@ -17,15 +17,39 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class DirectDebitSubForm extends AbstractSubForm
 {
+    /**
+     * @var string
+     */
     protected const PAYMENT_METHOD = 'direct-debit';
 
+    /**
+     * @var string
+     */
     protected const OWNER_NAME_FIELD = 'owner_name';
+
+    /**
+     * @var string
+     */
     protected const IBAN_NUMBER_FIELD = 'iban_number';
 
+    /**
+     * @var string
+     */
     protected const OWNER_NAME_LABEL = 'Owner Name';
+
+    /**
+     * @var string
+     */
     protected const IBAN_NUMBER_LABEL = 'IBAN';
 
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_CONSTRAINT_MESSAGE_INVALID_OWNER_NAME = 'adyen.payment.error.owner_name';
+
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_CONSTRAINT_MESSAGE_INVALID_IBAN_NUMBER = 'adyen.payment.error.iban_number';
 
     /**
@@ -91,7 +115,7 @@ class DirectDebitSubForm extends AbstractSubForm
                 'label' => static::OWNER_NAME_LABEL,
                 'required' => true,
                 'constraints' => [
-                    $this->createNotBlankConstraint(static::GLOSSARY_KEY_CONSTRAINT_MESSAGE_INVALID_OWNER_NAME),
+                    $this->createNotBlankConstraint([static::GLOSSARY_KEY_CONSTRAINT_MESSAGE_INVALID_OWNER_NAME]),
                 ],
             ]
         );
@@ -113,7 +137,7 @@ class DirectDebitSubForm extends AbstractSubForm
                 'label' => static::IBAN_NUMBER_LABEL,
                 'required' => true,
                 'constraints' => [
-                    $this->createNotBlankConstraint(static::GLOSSARY_KEY_CONSTRAINT_MESSAGE_INVALID_IBAN_NUMBER),
+                    $this->createNotBlankConstraint([static::GLOSSARY_KEY_CONSTRAINT_MESSAGE_INVALID_IBAN_NUMBER]),
                 ],
             ]
         );

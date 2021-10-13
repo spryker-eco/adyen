@@ -62,8 +62,8 @@ class CreditCardFormDataProvider extends AbstractFormDataProvider
     {
         $quoteTransfer = $this->updateQuoteWithPaymentData($quoteTransfer);
 
-        if ($quoteTransfer->getPayment()->getAdyenCreditCard() === null) {
-            $quoteTransfer->getPayment()->setAdyenCreditCard(new AdyenCreditCardPaymentTransfer());
+        if ($quoteTransfer->getPaymentOrFail()->getAdyenCreditCard() === null) {
+            $quoteTransfer->getPaymentOrFail()->setAdyenCreditCard(new AdyenCreditCardPaymentTransfer());
         }
 
         $this->quoteClient->setQuote($quoteTransfer);
