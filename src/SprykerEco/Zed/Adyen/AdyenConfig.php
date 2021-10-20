@@ -13,47 +13,209 @@ use SprykerEco\Shared\Adyen\AdyenConstants;
 
 class AdyenConfig extends AbstractBundleConfig
 {
+    /**
+     * @var string
+     */
     protected const OMS_STATUS_NEW = 'new';
+
+    /**
+     * @var string
+     */
     protected const OMS_STATUS_AUTHORIZED = 'authorized';
+
+    /**
+     * @var string
+     */
     protected const OMS_STATUS_AUTHORIZATION_FAILED = 'authorization failed';
+
+    /**
+     * @var string
+     */
     protected const OMS_STATUS_CAPTURED = 'captured';
+
+    /**
+     * @var string
+     */
     protected const OMS_STATUS_CAPTURE_PENDING = 'capture pending';
+
+    /**
+     * @var string
+     */
     protected const OMS_STATUS_CAPTURE_FAILED = 'capture failed';
+
+    /**
+     * @var string
+     */
     protected const OMS_STATUS_CANCELED = 'canceled';
+
+    /**
+     * @var string
+     */
     protected const OMS_STATUS_CANCELLATION_PENDING = 'cancellation pending';
+
+    /**
+     * @var string
+     */
     protected const OMS_STATUS_CANCELLATION_FAILED = 'cancellation failed';
+
+    /**
+     * @var string
+     */
     protected const OMS_STATUS_REFUNDED = 'refunded';
+
+    /**
+     * @var string
+     */
     protected const OMS_STATUS_REFUND_PENDING = 'refund pending';
+
+    /**
+     * @var string
+     */
     protected const OMS_STATUS_REFUND_FAILED = 'refund failed';
+
+    /**
+     * @var string
+     */
     protected const OMS_STATUS_REFUSED = 'refused';
 
+    /**
+     * @var string
+     */
     protected const OMS_EVENT_CANCEL_NAME = 'cancel';
+
+    /**
+     * @var string
+     */
     protected const OMS_EVENT_REFUND_NAME = 'refund';
 
+    /**
+     * @var string
+     */
     protected const ADYEN_AUTOMATIC_OMS_TRIGGER = 'ADYEN_AUTOMATIC_OMS_TRIGGER';
 
+    /**
+     * @var string
+     */
     protected const ADYEN_NOTIFICATION_EVENT_CODE_AUTHORISATION = 'AUTHORISATION';
+
+    /**
+     * @var string
+     */
     protected const ADYEN_NOTIFICATION_EVENT_CODE_CAPTURE = 'CAPTURE';
+
+    /**
+     * @var string
+     */
     protected const ADYEN_NOTIFICATION_EVENT_CODE_CAPTURE_FAILED = 'CAPTURE_FAILED';
+
+    /**
+     * @var string
+     */
     protected const ADYEN_NOTIFICATION_EVENT_CODE_CANCELLATION = 'CANCELLATION';
+
+    /**
+     * @var string
+     */
     protected const ADYEN_NOTIFICATION_EVENT_CODE_REFUND = 'REFUND';
+
+    /**
+     * @var string
+     */
     protected const ADYEN_NOTIFICATION_EVENT_CODE_REFUND_FAILED = 'REFUND_FAILED';
+
+    /**
+     * @var string
+     */
     protected const ADYEN_NOTIFICATION_EVENT_CODE_REFUSED = 'REFUSED';
+
+    /**
+     * @var string
+     */
     protected const ADYEN_NOTIFICATION_EVENT_CODE_CANCEL_OR_REFUND = 'CANCEL_OR_REFUND';
+
+    /**
+     * @var string
+     */
     protected const ADYEN_NOTIFICATION_EVENT_CODE_AUTHORISATION_ADJUSTMENT = 'AUTHORISATION_ADJUSTMENT';
+
+    /**
+     * @var string
+     */
     protected const ADYEN_NOTIFICATION_SUCCESS_TRUE = 'true';
+
+    /**
+     * @var string
+     */
     protected const ADYEN_NOTIFICATION_SUCCESS_FALSE = 'false';
 
+    /**
+     * @var string
+     */
+    protected const ADYEN_PAYMENT_STATUS_REFUSED = 'refused';
+
+    /**
+     * @var string
+     */
+    protected const ADYEN_PAYMENT_STATUS_ERROR = 'error';
+
+    /**
+     * @var string
+     */
+    protected const ADYEN_PAYMENT_STATUS_CANCELLED = 'cancelled';
+
+    /**
+     * @var string
+     */
+    protected const ADYEN_PAYMENT_STATUS_AUTHORISED = 'authorised';
+
+    /**
+     * @var string
+     */
     protected const PAYMENT_METHOD_TYPE_PAY_PAL = 'paypal';
+
+    /**
+     * @var string
+     */
     protected const PAYMENT_METHOD_TYPE_SCHEME = 'scheme';
+
+    /**
+     * @var string
+     */
     protected const PAYMENT_METHOD_TYPE_DIRECT_E_BANKING = 'directEbanking';
+
+    /**
+     * @var string
+     */
     protected const PAYMENT_METHOD_TYPE_SEPA_DIRECT_DEBIT = 'sepadirectdebit';
+
+    /**
+     * @var string
+     */
     protected const PAYMENT_METHOD_TYPE_KLARNA = 'klarna';
+
+    /**
+     * @var string
+     */
     protected const PAYMENT_METHOD_TYPE_BANK_TRANSFER_IBAN = 'bankTransfer_IBAN';
+
+    /**
+     * @var string
+     */
     protected const PAYMENT_METHOD_TYPE_IDEAL = 'ideal';
+
+    /**
+     * @var string
+     */
     protected const PAYMENT_METHOD_TYPE_ALI_PAY = 'alipay';
+
+    /**
+     * @var string
+     */
     protected const PAYMENT_METHOD_TYPE_WE_CHAT_PAY = 'wechatpay';
 
+    /**
+     * @var int
+     */
     protected const KLARNA_TAX_RATE_MULTIPLIER = 100;
 
     /**
@@ -423,5 +585,31 @@ class AdyenConfig extends AbstractBundleConfig
     public function getKlarnaTaxRateMultiplier(): int
     {
         return static::KLARNA_TAX_RATE_MULTIPLIER;
+    }
+
+    /**
+     * @api
+     *
+     * @return string[]
+     */
+    public function getInvalidAdyenPaymentStatusList(): array
+    {
+        return [
+            static::ADYEN_PAYMENT_STATUS_REFUSED,
+            static::ADYEN_PAYMENT_STATUS_ERROR,
+            static::ADYEN_PAYMENT_STATUS_CANCELLED,
+        ];
+    }
+
+    /**
+     * @api
+     *
+     * @return string[]
+     */
+    public function getValidAdyenPaymentStatusList(): array
+    {
+        return [
+            static::ADYEN_PAYMENT_STATUS_AUTHORISED,
+        ];
     }
 }

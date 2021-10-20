@@ -18,24 +18,89 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class CreditCardSubForm extends AbstractSubForm
 {
+    /**
+     * @var string
+     */
     public const SDK_CHECKOUT_SECURED_FIELDS_URL = 'sdkUrl';
+
+    /**
+     * @var string
+     */
     public const SDK_CHECKOUT_ORIGIN_KEY = 'sdkOriginKey';
+
+    /**
+     * @var string
+     */
     public const SDK_CHECKOUT_SHOPPER_JS_URL = 'sdkCheckoutShopperJsUrl';
+
+    /**
+     * @var string
+     */
     public const SDK_CHECKOUT_SHOPPER_CSS_URL = 'sdkCheckoutShopperCssUrl';
+
+    /**
+     * @var string
+     */
     public const SDK_CHECKOUT_SHOPPER_JS_INTEGRITY_HASH = 'sdkCheckoutShopperJsIntegrityHash';
+
+    /**
+     * @var string
+     */
     public const SDK_CHECKOUT_SHOPPER_CSS_INTEGRITY_HASH = 'sdkCheckoutShopperCssIntegrityHash';
+
+    /**
+     * @var string
+     */
     public const SDK_ENVIRONMENT = 'sdkEnvironment';
+
+    /**
+     * @var string
+     */
     public const SDK_CHECKOUT_PAYMENT_METHODS = 'sdkPaymentMethods';
+
+    /**
+     * @var string
+     */
     public const ENCRYPTED_CARD_NUMBER_FIELD = 'encryptedCardNumber';
+
+    /**
+     * @var string
+     */
     public const ENCRYPTED_EXPIRY_YEAR_FIELD = 'encryptedExpiryYear';
+
+    /**
+     * @var string
+     */
     public const ENCRYPTED_EXPIRY_MONTH_FIELD = 'encryptedExpiryMonth';
+
+    /**
+     * @var string
+     */
     public const ENCRYPTED_SECURITY_CODE_FIELD = 'encryptedSecurityCode';
 
+    /**
+     * @var string
+     */
     protected const PAYMENT_METHOD = 'credit-card';
 
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_CONSTRAINT_MESSAGE_INVALID_CARD_NUMBER = 'adyen.payment.error.cc_number';
+
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_CONSTRAINT_MESSAGE_INVALID_EXPIRY_YEAR = 'adyen.payment.error.cc_year';
+
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_CONSTRAINT_MESSAGE_INVALID_EXPIRY_MONTH = 'adyen.payment.error.cc_month';
+
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_CONSTRAINT_MESSAGE_INVALID_SECURITY_CODE = 'adyen.payment.error.cc_cvv';
 
     /**

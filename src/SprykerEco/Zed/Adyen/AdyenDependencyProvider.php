@@ -17,11 +17,29 @@ use SprykerEco\Zed\Adyen\Dependency\Service\AdyenToUtilEncodingServiceBridge;
 
 class AdyenDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_ADYEN_API = 'FACADE_ADYEN_API';
+
+    /**
+     * @var string
+     */
     public const FACADE_SALES = 'FACADE_SALES';
+
+    /**
+     * @var string
+     */
     public const FACADE_CALCULATION = 'FACADE_CALCULATION';
+
+    /**
+     * @var string
+     */
     public const FACADE_OMS = 'FACADE_OMS';
 
+    /**
+     * @var string
+     */
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
     /**

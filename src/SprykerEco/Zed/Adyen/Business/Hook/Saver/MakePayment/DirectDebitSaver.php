@@ -12,6 +12,9 @@ use Generated\Shared\Transfer\PaymentAdyenTransfer;
 
 class DirectDebitSaver extends AbstractSaver
 {
+    /**
+     * @var string
+     */
     protected const MAKE_PAYMENT_DIRECT_DEBIT_REQUEST_TYPE = 'MakePayment[DirectDebit]';
 
     /**
@@ -33,10 +36,10 @@ class DirectDebitSaver extends AbstractSaver
         PaymentAdyenTransfer $paymentAdyenTransfer
     ): PaymentAdyenTransfer {
         $paymentAdyenTransfer->setAdditionalData(
-            $this->encodingService->encodeJson($response->getMakePaymentResponse()->getAdditionalData())
+            $this->encodingService->encodeJson($response->getMakePaymentResponseOrFail()->getAdditionalData())
         );
 
-        $paymentAdyenTransfer->setPspReference($response->getMakePaymentResponse()->getPspReference());
+        $paymentAdyenTransfer->setPspReference($response->getMakePaymentResponseOrFail()->getPspReference());
 
         return $paymentAdyenTransfer;
     }

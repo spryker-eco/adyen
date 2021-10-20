@@ -22,8 +22,8 @@ class PrepaymentFormDataProvider extends AbstractFormDataProvider
     {
         $quoteTransfer = $this->updateQuoteWithPaymentData($quoteTransfer);
 
-        if ($quoteTransfer->getPayment()->getAdyenPrepayment() === null) {
-            $quoteTransfer->getPayment()->setAdyenPrepayment(new AdyenPrepaymentPaymentTransfer());
+        if ($quoteTransfer->getPaymentOrFail()->getAdyenPrepayment() === null) {
+            $quoteTransfer->getPaymentOrFail()->setAdyenPrepayment(new AdyenPrepaymentPaymentTransfer());
         }
 
         $this->quoteClient->setQuote($quoteTransfer);

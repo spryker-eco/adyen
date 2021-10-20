@@ -16,8 +16,19 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class IdealSubForm extends AbstractSubForm
 {
+    /**
+     * @var string
+     */
     protected const PAYMENT_METHOD = 'ideal';
+
+    /**
+     * @var string
+     */
     protected const FIELD_IDEAL_ISSUER = 'idealIssuer';
+
+    /**
+     * @var string
+     */
     public const OPTIONS_IDEAL_ISSUER = 'OPTIONS_IDEAL_ISSUER';
 
     /**

@@ -7,6 +7,7 @@
 
 namespace SprykerEco\Zed\Adyen\Business\Payment\Mapper;
 
+use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\AdyenApiAmountTransfer;
 use Generated\Shared\Transfer\AdyenApiGetPaymentMethodsRequestTransfer;
 use Generated\Shared\Transfer\AdyenApiRequestTransfer;
@@ -48,10 +49,12 @@ class AdyenPaymentMethodFilterMapper implements AdyenPaymentMethodFilterMapperIn
      */
     protected function createGetPaymentMethodsRequestTransfer(QuoteTransfer $quoteTransfer): AdyenApiGetPaymentMethodsRequestTransfer
     {
+        $billingAddressTransfer = $quoteTransfer->getBillingAddress() ?: new AddressTransfer();
+
         return (new AdyenApiGetPaymentMethodsRequestTransfer())
             ->setMerchantAccount($this->config->getMerchantAccount())
             ->setAmount($this->createAmountTransfer($quoteTransfer))
-            ->setCountryCode($quoteTransfer->getBillingAddress()->getIso2Code())
+            ->setCountryCode($billingAddressTransfer->getIso2Code())
             ->setChannel($this->config->getRequestChannel());
     }
 
@@ -63,7 +66,7 @@ class AdyenPaymentMethodFilterMapper implements AdyenPaymentMethodFilterMapperIn
     protected function createAmountTransfer(QuoteTransfer $quoteTransfer): AdyenApiAmountTransfer
     {
         return (new AdyenApiAmountTransfer())
-            ->setCurrency($quoteTransfer->getCurrency()->getCode())
-            ->setValue($quoteTransfer->getTotals()->getPriceToPay());
+            ->setCurrency($quoteTransfer->getCurrencyOrFail()->getCode())
+            ->setValue($quoteTransfer->getTotalsOrFail()->getPriceToPay());
     }
 }

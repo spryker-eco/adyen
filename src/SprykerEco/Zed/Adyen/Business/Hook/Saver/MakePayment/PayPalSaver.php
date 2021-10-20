@@ -9,6 +9,9 @@ namespace SprykerEco\Zed\Adyen\Business\Hook\Saver\MakePayment;
 
 class PayPalSaver extends AbstractSaver
 {
+    /**
+     * @var string
+     */
     protected const MAKE_PAYMENT_PAY_PAL_REQUEST_TYPE = 'MakePayment[PayPal]';
 
     /**

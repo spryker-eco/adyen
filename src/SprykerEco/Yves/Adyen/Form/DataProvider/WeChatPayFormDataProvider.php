@@ -22,8 +22,8 @@ class WeChatPayFormDataProvider extends AbstractFormDataProvider
     {
         $quoteTransfer = $this->updateQuoteWithPaymentData($quoteTransfer);
 
-        if ($quoteTransfer->getPayment()->getAdyenWeChatPay() === null) {
-            $quoteTransfer->getPayment()->setAdyenWeChatPay(new AdyenWeChatPayPaymentTransfer());
+        if ($quoteTransfer->getPaymentOrFail()->getAdyenWeChatPay() === null) {
+            $quoteTransfer->getPaymentOrFail()->setAdyenWeChatPay(new AdyenWeChatPayPaymentTransfer());
         }
 
         $this->quoteClient->setQuote($quoteTransfer);

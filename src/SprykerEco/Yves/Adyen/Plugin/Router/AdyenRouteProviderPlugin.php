@@ -12,11 +12,27 @@ use Spryker\Yves\Router\Route\RouteCollection;
 
 class AdyenRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
+    /**
+     * @var string
+     */
     protected const BUNDLE_NAME = 'Adyen';
+
+    /**
+     * @var string
+     */
     protected const CALLBACK_CONTROLLER_NAME = 'Callback';
+
+    /**
+     * @var string
+     */
     protected const NOTIFICATION_CONTROLLER_NAME = 'Notification';
 
     /**
+     * {@inheritDoc}
+     * - Adds Adyen routes to the RouteCollection.
+     *
+     * @api
+     *
      * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
      *
      * @return \Spryker\Yves\Router\Route\RouteCollection

@@ -85,7 +85,7 @@ class AdyenWriter implements AdyenWriterInterface
         ?PaymentAdyenTransfer $paymentAdyenTransfer = null
     ): void {
         $this->getTransactionHandler()->handleTransaction(
-            function () use ($status, $paymentAdyenOrderItemTransfers, $paymentAdyenTransfer) {
+            function () use ($status, $paymentAdyenOrderItemTransfers, $paymentAdyenTransfer): void {
                 if ($paymentAdyenTransfer !== null) {
                     $this->entityManager->savePaymentAdyen($paymentAdyenTransfer);
                 }
@@ -118,10 +118,10 @@ class AdyenWriter implements AdyenWriterInterface
 
         if (!$response->getIsSuccess()) {
             $paymentAdyenApiLog
-                ->setStatusCode($response->getError()->getStatus())
-                ->setErrorCode($response->getError()->getErrorCode())
-                ->setErrorMessage($response->getError()->getMessage())
-                ->setErrorType($response->getError()->getErrorType());
+                ->setStatusCode($response->getErrorOrFail()->getStatus())
+                ->setErrorCode($response->getErrorOrFail()->getErrorCode())
+                ->setErrorMessage($response->getErrorOrFail()->getMessage())
+                ->setErrorType($response->getErrorOrFail()->getErrorType());
         }
 
         return $this->getTransactionHandler()->handleTransaction(function () use ($paymentAdyenApiLog) {
@@ -136,7 +136,7 @@ class AdyenWriter implements AdyenWriterInterface
      */
     public function saveNotifications(AdyenNotificationsTransfer $adyenNotificationsTransfer): void
     {
-        $this->getTransactionHandler()->handleTransaction(function () use ($adyenNotificationsTransfer) {
+        $this->getTransactionHandler()->handleTransaction(function () use ($adyenNotificationsTransfer): void {
             foreach ($adyenNotificationsTransfer->getNotificationItems() as $adyenNotificationRequestItem) {
                 $this->saveAdyenNotification($adyenNotificationRequestItem);
             }
@@ -157,7 +157,7 @@ class AdyenWriter implements AdyenWriterInterface
             ->setFkSalesOrder($saveOrderTransfer->getIdSalesOrder())
             ->setOrderReference($saveOrderTransfer->getOrderReference())
             ->setPaymentMethod($paymentTransfer->getPaymentSelection())
-            ->setReference($paymentTransfer->getAdyenPayment()->getReference());
+            ->setReference($paymentTransfer->getAdyenPaymentOrFail()->getReference());
 
         return $this->entityManager->savePaymentAdyen($paymentAdyenTransfer);
     }
@@ -197,7 +197,7 @@ class AdyenWriter implements AdyenWriterInterface
             ->setReason($adyenNotificationRequestItem->getReason())
             ->setMerchantAccountCode($adyenNotificationRequestItem->getMerchantAccountCode())
             ->setMerchantReference($adyenNotificationRequestItem->getMerchantReference())
-            ->setAmount($adyenNotificationRequestItem->getAmount()->serialize())
+            ->setAmount($adyenNotificationRequestItem->getAmountOrFail()->serialize())
             ->setAdditionalData($this->encodingService->encodeJson($adyenNotificationRequestItem->getAdditionalData()))
             ->setOperations($this->encodingService->encodeJson($adyenNotificationRequestItem->getOperations()));
 

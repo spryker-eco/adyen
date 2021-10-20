@@ -9,6 +9,9 @@ namespace SprykerEco\Zed\Adyen\Business\Hook\Saver\MakePayment;
 
 class SofortSaver extends AbstractSaver
 {
+    /**
+     * @var string
+     */
     protected const MAKE_PAYMENT_SOFORT_REQUEST_TYPE = 'MakePayment[Sofort]';
 
     /**

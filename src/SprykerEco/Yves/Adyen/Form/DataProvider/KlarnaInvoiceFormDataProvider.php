@@ -15,6 +15,9 @@ use SprykerEco\Yves\Adyen\Dependency\Client\AdyenToQuoteClientInterface;
 
 class KlarnaInvoiceFormDataProvider extends AbstractFormDataProvider
 {
+    /**
+     * @var string
+     */
     public const SOCIAL_SECURITY_NUMBER_REQUIRED = 'SOCIAL_SECURITY_NUMBER_REQUIRED';
 
     /**
@@ -44,8 +47,8 @@ class KlarnaInvoiceFormDataProvider extends AbstractFormDataProvider
     {
         $quoteTransfer = $this->updateQuoteWithPaymentData($quoteTransfer);
 
-        if ($quoteTransfer->getPayment()->getAdyenKlarnaInvoice() === null) {
-            $quoteTransfer->getPayment()->setAdyenKlarnaInvoice(new AdyenKlarnaInvoicePaymentTransfer());
+        if ($quoteTransfer->getPaymentOrFail()->getAdyenKlarnaInvoice() === null) {
+            $quoteTransfer->getPaymentOrFail()->setAdyenKlarnaInvoice(new AdyenKlarnaInvoicePaymentTransfer());
         }
 
         $this->quoteClient->setQuote($quoteTransfer);
@@ -73,7 +76,7 @@ class KlarnaInvoiceFormDataProvider extends AbstractFormDataProvider
     protected function isSocialSecurityNumberRequired(QuoteTransfer $quoteTransfer): bool
     {
         return in_array(
-            $quoteTransfer->getBillingAddress()->getIso2Code(),
+            $quoteTransfer->getBillingAddressOrFail()->getIso2Code(),
             $this->config->getSocialSecurityNumberCountriesMandatory()
         );
     }

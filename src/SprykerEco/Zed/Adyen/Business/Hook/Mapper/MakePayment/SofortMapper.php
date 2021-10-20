@@ -12,6 +12,9 @@ use SprykerEco\Shared\Adyen\AdyenApiRequestConfig;
 
 class SofortMapper extends AbstractMapper
 {
+    /**
+     * @var string
+     */
     protected const REQUEST_TYPE = 'directEbanking';
 
     /**

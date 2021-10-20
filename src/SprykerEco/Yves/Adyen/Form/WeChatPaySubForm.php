@@ -14,6 +14,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class WeChatPaySubForm extends AbstractSubForm
 {
+    /**
+     * @var string
+     */
     protected const PAYMENT_METHOD = 'wechatpay';
 
     /**

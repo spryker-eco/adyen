@@ -30,6 +30,9 @@ class IsAuthorizedPlugin extends AbstractPlugin implements ConditionInterface
     public function check(SpySalesOrderItem $orderItem): bool
     {
         $adyenOrderItem = $orderItem->getSpyPaymentAdyenOrderItems()->getLast();
+        if (!$adyenOrderItem) {
+            return false;
+        }
 
         return $adyenOrderItem->getStatus() === $this->getConfig()->getOmsStatusAuthorized();
     }

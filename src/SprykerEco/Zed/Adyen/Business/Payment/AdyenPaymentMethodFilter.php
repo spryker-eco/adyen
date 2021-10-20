@@ -18,6 +18,9 @@ use SprykerEco\Zed\Adyen\Dependency\Facade\AdyenToAdyenApiFacadeInterface;
 
 class AdyenPaymentMethodFilter implements AdyenPaymentMethodFilterInterface
 {
+    /**
+     * @var string
+     */
     protected const ADYEN_PAYMENT_METHOD = 'adyen';
 
     /**
@@ -113,6 +116,6 @@ class AdyenPaymentMethodFilter implements AdyenPaymentMethodFilterInterface
      */
     protected function isPaymentProviderAdyen(PaymentMethodTransfer $paymentMethodTransfer): bool
     {
-        return strpos($paymentMethodTransfer->getMethodName(), static::ADYEN_PAYMENT_METHOD) !== false;
+        return !empty($paymentMethodTransfer->getMethodName()) && strpos($paymentMethodTransfer->getMethodName(), static::ADYEN_PAYMENT_METHOD) !== false;
     }
 }

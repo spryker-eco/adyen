@@ -12,6 +12,9 @@ use SprykerEco\Shared\Adyen\AdyenApiRequestConfig;
 
 class WeChatPayMapper extends AbstractMapper
 {
+    /**
+     * @var string
+     */
     protected const REQUEST_TYPE = 'wechatpayWeb';
 
     /**

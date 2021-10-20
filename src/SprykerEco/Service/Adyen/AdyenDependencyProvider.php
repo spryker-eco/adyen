@@ -13,6 +13,9 @@ use SprykerEco\Service\Adyen\Dependency\Service\AdyenToUtilTextServiceBridge;
 
 class AdyenDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const SERVICE_UTIL_TEXT = 'SERVICE_UTIL_TEXT';
 
     /**

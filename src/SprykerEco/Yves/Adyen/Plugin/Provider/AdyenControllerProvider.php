@@ -15,8 +15,19 @@ use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvi
  */
 class AdyenControllerProvider extends AbstractYvesControllerProvider
 {
+    /**
+     * @var string
+     */
     protected const BUNDLE_NAME = 'Adyen';
+
+    /**
+     * @var string
+     */
     protected const CALLBACK_CONTROLLER_NAME = 'Callback';
+
+    /**
+     * @var string
+     */
     protected const NOTIFICATION_CONTROLLER_NAME = 'Notification';
 
     /**

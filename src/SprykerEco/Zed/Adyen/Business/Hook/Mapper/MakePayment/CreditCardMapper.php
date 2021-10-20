@@ -12,7 +12,14 @@ use SprykerEco\Shared\Adyen\AdyenApiRequestConfig;
 
 class CreditCardMapper extends AbstractMapper
 {
+    /**
+     * @var string
+     */
     protected const REQUEST_TYPE = 'scheme';
+
+    /**
+     * @var array
+     */
     protected const THREE_D_SECURE_DATA = ['executeThreeD' => 'true'];
 
     /**
@@ -26,11 +33,11 @@ class CreditCardMapper extends AbstractMapper
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return string[]
+     * @return array<string, string|null>
      */
     protected function getPayload(QuoteTransfer $quoteTransfer): array
     {
-        $creditCardTransfer = $quoteTransfer->getPayment()->getAdyenCreditCard();
+        $creditCardTransfer = $quoteTransfer->getPaymentOrFail()->getAdyenCreditCardOrFail();
 
         return [
             AdyenApiRequestConfig::REQUEST_TYPE_FIELD => static::REQUEST_TYPE,

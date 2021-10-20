@@ -12,6 +12,9 @@ use SprykerEco\Shared\Adyen\AdyenApiRequestConfig;
 
 class DirectDebitMapper extends AbstractMapper
 {
+    /**
+     * @var string
+     */
     protected const REQUEST_TYPE = 'sepadirectdebit';
 
     /**
@@ -25,11 +28,11 @@ class DirectDebitMapper extends AbstractMapper
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return string[]
+     * @return array<string, string|null>
      */
     protected function getPayload(QuoteTransfer $quoteTransfer): array
     {
-        $directDebitTransfer = $quoteTransfer->getPayment()->getAdyenDirectDebit();
+        $directDebitTransfer = $quoteTransfer->getPaymentOrFail()->getAdyenDirectDebitOrFail();
 
         return [
             AdyenApiRequestConfig::REQUEST_TYPE_FIELD => static::REQUEST_TYPE,

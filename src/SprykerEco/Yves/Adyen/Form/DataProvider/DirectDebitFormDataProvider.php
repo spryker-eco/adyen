@@ -22,8 +22,8 @@ class DirectDebitFormDataProvider extends AbstractFormDataProvider
     {
         $quoteTransfer = $this->updateQuoteWithPaymentData($quoteTransfer);
 
-        if ($quoteTransfer->getPayment()->getAdyenDirectDebit() === null) {
-            $quoteTransfer->getPayment()->setAdyenDirectDebit(new AdyenDirectDebitPaymentTransfer());
+        if ($quoteTransfer->getPaymentOrFail()->getAdyenDirectDebit() === null) {
+            $quoteTransfer->getPaymentOrFail()->setAdyenDirectDebit(new AdyenDirectDebitPaymentTransfer());
         }
 
         $this->quoteClient->setQuote($quoteTransfer);

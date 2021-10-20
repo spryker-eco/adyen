@@ -19,6 +19,9 @@ use SprykerEco\Shared\Adyen\AdyenApiRequestConfig;
  */
 class KlarnaInvoiceMapper extends AbstractMapper
 {
+    /**
+     * @var string
+     */
     protected const REQUEST_TYPE = 'klarna';
 
     /**
@@ -36,14 +39,14 @@ class KlarnaInvoiceMapper extends AbstractMapper
      */
     protected function getPayload(QuoteTransfer $quoteTransfer): array
     {
-        $klarnaRequestTransfer = $quoteTransfer->getPayment()->getAdyenKlarnaInvoiceRequest();
+        $klarnaRequestTransfer = $quoteTransfer->getPaymentOrFail()->getAdyenKlarnaInvoiceRequestOrFail();
         $payload = [
             AdyenApiRequestConfig::REQUEST_TYPE_FIELD => static::REQUEST_TYPE,
-            AdyenApiRequestConfig::BILLING_ADDRESS_FIELD => $klarnaRequestTransfer->getBillingAddress()->modifiedToArray(true, true),
+            AdyenApiRequestConfig::BILLING_ADDRESS_FIELD => $klarnaRequestTransfer->getBillingAddressOrFail()->modifiedToArray(true, true),
         ];
 
         if (!$quoteTransfer->getBillingSameAsShipping()) {
-            $payload[AdyenApiRequestConfig::DELIVERY_ADDRESS_FIELD] = $klarnaRequestTransfer->getDeliveryAddress()->modifiedToArray(true, true);
+            $payload[AdyenApiRequestConfig::DELIVERY_ADDRESS_FIELD] = $klarnaRequestTransfer->getDeliveryAddressOrFail()->modifiedToArray(true, true);
         }
 
         return $payload;
@@ -60,17 +63,19 @@ class KlarnaInvoiceMapper extends AbstractMapper
         AdyenApiRequestTransfer $requestTransfer
     ): AdyenApiRequestTransfer {
         $requestTransfer = parent::updateRequestTransfer($quoteTransfer, $requestTransfer);
-        $requestTransfer
-            ->getMakePaymentRequest()
+
+        $requestTransfer->getMakePaymentRequestOrFail()
             ->setLineItems($this->getLineItems($quoteTransfer));
 
         return $requestTransfer;
     }
 
     /**
+     * @phpstan-return \ArrayObject<int, \Generated\Shared\Transfer\AdyenApiLineItemTransfer&static>
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\AdyenApiLineItemTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\AdyenApiLineItemTransfer>
      */
     protected function getLineItems(QuoteTransfer $quoteTransfer): ArrayObject
     {
@@ -90,6 +95,6 @@ class KlarnaInvoiceMapper extends AbstractMapper
             $quoteTransfer->getItems()->getArrayCopy()
         );
 
-        return new ArrayObject($items);
+        return new ArrayObject(array_values($items));
     }
 }

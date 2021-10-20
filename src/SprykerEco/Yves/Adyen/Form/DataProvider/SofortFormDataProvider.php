@@ -22,8 +22,8 @@ class SofortFormDataProvider extends AbstractFormDataProvider
     {
         $quoteTransfer = $this->updateQuoteWithPaymentData($quoteTransfer);
 
-        if ($quoteTransfer->getPayment()->getAdyenSofort() === null) {
-            $quoteTransfer->getPayment()->setAdyenSofort(new AdyenSofortPaymentTransfer());
+        if ($quoteTransfer->getPaymentOrFail()->getAdyenSofort() === null) {
+            $quoteTransfer->getPaymentOrFail()->setAdyenSofort(new AdyenSofortPaymentTransfer());
         }
 
         $this->quoteClient->setQuote($quoteTransfer);

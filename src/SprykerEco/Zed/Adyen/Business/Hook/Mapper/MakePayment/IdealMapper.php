@@ -12,6 +12,9 @@ use SprykerEco\Shared\Adyen\AdyenApiRequestConfig;
 
 class IdealMapper extends AbstractMapper
 {
+    /**
+     * @var string
+     */
     protected const REQUEST_TYPE = 'ideal';
 
     /**
@@ -25,11 +28,11 @@ class IdealMapper extends AbstractMapper
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return string[]
+     * @return array<string, string|null>
      */
     protected function getPayload(QuoteTransfer $quoteTransfer): array
     {
-        $idealTransfer = $quoteTransfer->getPayment()->getAdyenIdeal();
+        $idealTransfer = $quoteTransfer->getPaymentOrFail()->getAdyenIdealOrFail();
 
         return [
             AdyenApiRequestConfig::REQUEST_TYPE_FIELD => static::REQUEST_TYPE,

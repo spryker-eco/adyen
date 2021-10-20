@@ -59,7 +59,7 @@ class OnlineTransferRedirectHandler implements AdyenRedirectHandlerInterface
         $redirectResponseTransfer = (new AdyenRedirectResponseTransfer())
             ->fromArray($request->query->all(), true);
 
-        $redirectResponseTransfer->setReference($quoteTransfer->getPayment()->getAdyenPayment()->getReference());
+        $redirectResponseTransfer->setReference($quoteTransfer->getPaymentOrFail()->getAdyenPaymentOrFail()->getReference());
 
         return $redirectResponseTransfer;
     }

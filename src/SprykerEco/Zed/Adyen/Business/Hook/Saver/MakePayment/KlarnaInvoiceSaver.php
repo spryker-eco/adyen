@@ -12,6 +12,9 @@ use Generated\Shared\Transfer\PaymentAdyenTransfer;
 
 class KlarnaInvoiceSaver extends AbstractSaver
 {
+    /**
+     * @var string
+     */
     protected const MAKE_PAYMENT_INVOICE_REQUEST_TYPE = 'MakePayment[KlarnaInvoice]';
 
     /**
@@ -32,8 +35,10 @@ class KlarnaInvoiceSaver extends AbstractSaver
         AdyenApiResponseTransfer $response,
         PaymentAdyenTransfer $paymentAdyenTransfer
     ): PaymentAdyenTransfer {
-        $paymentAdyenTransfer->setPspReference($response->getMakePaymentResponse()->getPspReference());
-        $paymentAdyenTransfer->setPaymentData($response->getMakePaymentResponse()->getPaymentData());
+        $makePaymentResponse = $response->getMakePaymentResponseOrFail();
+
+        $paymentAdyenTransfer->setPspReference($makePaymentResponse->getPspReference());
+        $paymentAdyenTransfer->setPaymentData($makePaymentResponse->getPaymentData());
 
         return $paymentAdyenTransfer;
     }
