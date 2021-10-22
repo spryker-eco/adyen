@@ -85,6 +85,15 @@ class OnlineTransferRedirectHandler implements AdyenRedirectHandlerInterface
             return $redirectResponseTransfer;
         }
 
+        $resultCode = $responseTransfer->getPaymentDetailsResponseOrFail()->getResultCode();
+        if (!$this->hasInvalidResultCode($paymentAdyenTransfer, $resultCode)) {
+            $redirectResponseTransfer
+                ->setResultCode(strtolower($resultCode))
+                ->setIsSuccess(false);
+
+            return $redirectResponseTransfer;
+        }
+
         $this->processPaymentDetailsResponse($paymentAdyenTransfer, $responseTransfer);
         $redirectResponseTransfer->setIsSuccess(true);
 
@@ -163,5 +172,15 @@ class OnlineTransferRedirectHandler implements AdyenRedirectHandlerInterface
         }
 
         return $defaultOmsStatus;
+    }
+
+    /**
+     * @param string $resultCode
+     *
+     * @return bool
+     */
+    protected function hasInvalidResultCode(string $resultCode): bool
+    {
+        return in_array($resultCode, $this->config->getInvalidAdyenPaymentStatusList(), true);
     }
 }
