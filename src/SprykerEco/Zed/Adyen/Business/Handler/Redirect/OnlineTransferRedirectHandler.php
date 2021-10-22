@@ -23,6 +23,11 @@ class OnlineTransferRedirectHandler implements AdyenRedirectHandlerInterface
     /**
      * @var string
      */
+    protected const RESULT_CODE_REFUSED = 'Refused';
+
+    /**
+     * @var string
+     */
     protected const LOG_REQUEST_TYPE = 'PaymentDetails[%s]';
 
     /**
@@ -85,10 +90,9 @@ class OnlineTransferRedirectHandler implements AdyenRedirectHandlerInterface
             return $redirectResponseTransfer;
         }
 
-        $resultCode = $responseTransfer->getPaymentDetailsResponseOrFail()->getResultCode();
-        if (!$this->hasInvalidResultCode($paymentAdyenTransfer, $resultCode)) {
+        if ($responseTransfer->getPaymentDetailsResponseOrFail()->getResultCode() === static::RESULT_CODE_REFUSED) {
             $redirectResponseTransfer
-                ->setResultCode(strtolower($resultCode))
+                ->setResultCode(strtolower(static::RESULT_CODE_REFUSED))
                 ->setIsSuccess(false);
 
             return $redirectResponseTransfer;
@@ -172,15 +176,5 @@ class OnlineTransferRedirectHandler implements AdyenRedirectHandlerInterface
         }
 
         return $defaultOmsStatus;
-    }
-
-    /**
-     * @param string $resultCode
-     *
-     * @return bool
-     */
-    protected function hasInvalidResultCode(string $resultCode): bool
-    {
-        return in_array($resultCode, $this->config->getInvalidAdyenPaymentStatusList(), true);
     }
 }
