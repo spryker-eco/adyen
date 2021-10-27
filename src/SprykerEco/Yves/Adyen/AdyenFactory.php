@@ -54,7 +54,7 @@ class AdyenFactory extends AbstractFactory
     {
         return new AdyenPaymentHandler(
             $this->getAdyenService(),
-            $this->getAdyenPaymentPlugins()
+            $this->getAdyenPaymentPlugins(),
         );
     }
 
@@ -139,7 +139,7 @@ class AdyenFactory extends AbstractFactory
             $this->getQuoteClient(),
             $this->getConfig(),
             $this->getAdyenClient(),
-            $this->getUtilEncodingService()
+            $this->getUtilEncodingService(),
         );
     }
 
@@ -166,7 +166,7 @@ class AdyenFactory extends AbstractFactory
     {
         return new KlarnaInvoiceFormDataProvider(
             $this->getQuoteClient(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -185,7 +185,7 @@ class AdyenFactory extends AbstractFactory
     {
         return new IdealFormDataProvider(
             $this->getQuoteClient(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -220,7 +220,7 @@ class AdyenFactory extends AbstractFactory
     {
         return new OnlineTransferRedirectHandler(
             $this->getQuoteClient(),
-            $this->getAdyenClient()
+            $this->getAdyenClient(),
         );
     }
 
@@ -231,7 +231,7 @@ class AdyenFactory extends AbstractFactory
     {
         return new CreditCard3dRedirectHandler(
             $this->getQuoteClient(),
-            $this->getAdyenClient()
+            $this->getAdyenClient(),
         );
     }
 
@@ -242,7 +242,7 @@ class AdyenFactory extends AbstractFactory
     {
         return new AdyenNotificationHandler(
             $this->getAdyenClient(),
-            $this->createNotificationMapper()
+            $this->createNotificationMapper(),
         );
     }
 

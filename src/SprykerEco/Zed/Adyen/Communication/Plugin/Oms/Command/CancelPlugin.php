@@ -33,7 +33,7 @@ class CancelPlugin extends AbstractCommandPlugin implements CommandByOrderInterf
             ->handleCancelCommand(
                 $orderItems,
                 $this->getOrderTransfer($orderEntity),
-                $data->getArrayCopy()
+                $data->getArrayCopy(),
             );
 
         return [];

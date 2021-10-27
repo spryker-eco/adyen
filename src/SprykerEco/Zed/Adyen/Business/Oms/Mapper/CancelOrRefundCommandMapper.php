@@ -27,7 +27,7 @@ class CancelOrRefundCommandMapper extends AbstractCommandMapper implements Adyen
             (new AdyenApiCancelOrRefundRequestTransfer())
                 ->setMerchantAccount($this->config->getMerchantAccount())
                 ->setOriginalReference($paymentAdyen->getPspReference())
-                ->setOriginalMerchantReference($paymentAdyen->getReference())
+                ->setOriginalMerchantReference($paymentAdyen->getReference()),
         );
 
         return $request;

@@ -27,7 +27,7 @@ class CancelCommandMapper extends AbstractCommandMapper implements AdyenCommandM
             (new AdyenApiCancelRequestTransfer())
                 ->setMerchantAccount($this->config->getMerchantAccount())
                 ->setOriginalReference($paymentAdyen->getPspReference())
-                ->setOriginalMerchantReference($paymentAdyen->getReference())
+                ->setOriginalMerchantReference($paymentAdyen->getReference()),
         );
 
         return $request;

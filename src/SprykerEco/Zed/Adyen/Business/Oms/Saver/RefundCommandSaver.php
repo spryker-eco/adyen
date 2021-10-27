@@ -23,7 +23,7 @@ class RefundCommandSaver extends AbstractCommandSaver implements AdyenCommandSav
     {
         $this->writer->updatePaymentEntities(
             $this->config->getOmsStatusRefundPending(),
-            $this->reader->getPaymentAdyenOrderItemsByOrderItems($orderItems)
+            $this->reader->getPaymentAdyenOrderItemsByOrderItems($orderItems),
         );
     }
 

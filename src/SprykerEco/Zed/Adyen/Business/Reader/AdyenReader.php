@@ -78,7 +78,7 @@ class AdyenReader implements AdyenReaderInterface
             function (SpySalesOrderItem $orderItem) {
                 return $orderItem->getIdSalesOrderItem();
             },
-            $orderItems
+            $orderItems,
         );
 
         return $this->repository->getOrderItemsByIdsSalesOrderItems($orderItemIds);
@@ -98,7 +98,7 @@ class AdyenReader implements AdyenReaderInterface
             function (SpySalesOrderItem $orderItem) {
                 return $orderItem->getIdSalesOrderItem();
             },
-            $orderItems
+            $orderItems,
         );
 
         return $this->repository->getRemainingPaymentAdyenOrderItems($orderItem->getFkSalesOrder(), $orderItemIds);
@@ -118,7 +118,7 @@ class AdyenReader implements AdyenReaderInterface
             function (SpySalesOrderItem $orderItem) {
                 return $orderItem->getIdSalesOrderItem();
             },
-            $orderItems
+            $orderItems,
         );
 
         return $this->repository->getRemainingSalesOrderItemIds($orderItem->getFkSalesOrder(), $orderItemIds);

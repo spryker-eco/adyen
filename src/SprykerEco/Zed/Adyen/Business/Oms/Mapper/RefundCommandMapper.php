@@ -30,7 +30,7 @@ class RefundCommandMapper extends AbstractCommandMapper implements AdyenCommandM
                 ->setMerchantAccount($this->config->getMerchantAccount())
                 ->setOriginalReference($paymentAdyen->getPspReference())
                 ->setOriginalMerchantReference($paymentAdyen->getReference())
-                ->setModificationAmount($this->createAmountTransfer($orderItems, $orderTransfer))
+                ->setModificationAmount($this->createAmountTransfer($orderItems, $orderTransfer)),
         );
 
         return $request;
@@ -65,7 +65,7 @@ class RefundCommandMapper extends AbstractCommandMapper implements AdyenCommandM
             function (SpySalesOrderItem $orderItem) {
                 return $orderItem->getRefundableAmount();
             },
-            $orderItems
+            $orderItems,
         );
 
         return (int)array_sum($amount);

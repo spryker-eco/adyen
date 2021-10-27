@@ -26,7 +26,7 @@ class CancelOrRefundCommandSaver extends AbstractCommandSaver implements AdyenCo
 
         $this->writer->updatePaymentEntities(
             $this->config->getOmsStatusRefundPending(),
-            $this->reader->getAllPaymentAdyenOrderItemsByIdSalesOrder($orderItem->getFkSalesOrder())
+            $this->reader->getAllPaymentAdyenOrderItemsByIdSalesOrder($orderItem->getFkSalesOrder()),
         );
 
         $this->triggerCancelEvent($orderItems);
@@ -55,7 +55,7 @@ class CancelOrRefundCommandSaver extends AbstractCommandSaver implements AdyenCo
         $this->omsFacade->triggerEventForOrderItems(
             $this->config->getOmsEventRefundName(),
             $remainingItems,
-            [$this->config->getAdyenAutomaticOmsTrigger() => true]
+            [$this->config->getAdyenAutomaticOmsTrigger() => true],
         );
     }
 }

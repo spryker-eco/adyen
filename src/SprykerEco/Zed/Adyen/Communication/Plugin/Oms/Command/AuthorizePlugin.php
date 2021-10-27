@@ -33,7 +33,7 @@ class AuthorizePlugin extends AbstractCommandPlugin implements CommandByOrderInt
             ->handleAuthorizeCommand(
                 $orderItems,
                 $this->getOrderTransfer($orderEntity),
-                $data->getArrayCopy()
+                $data->getArrayCopy(),
             );
 
         return [];

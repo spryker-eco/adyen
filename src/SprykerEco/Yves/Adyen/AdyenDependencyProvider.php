@@ -13,6 +13,9 @@ use SprykerEco\Yves\Adyen\Dependency\Client\AdyenToQuoteClientBridge;
 use SprykerEco\Yves\Adyen\Dependency\Service\AdyenToUtilEncodingServiceBridge;
 use SprykerEco\Yves\Adyen\Plugin\Payment\KlarnaInvoicePaymentMapperPlugin;
 
+/**
+ * @method \SprykerEco\Yves\Adyen\AdyenConfig getConfig()
+ */
 class AdyenDependencyProvider extends AbstractBundleDependencyProvider
 {
     /**

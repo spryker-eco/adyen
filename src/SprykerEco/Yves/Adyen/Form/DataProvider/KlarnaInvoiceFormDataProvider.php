@@ -77,7 +77,7 @@ class KlarnaInvoiceFormDataProvider extends AbstractFormDataProvider
     {
         return in_array(
             $quoteTransfer->getBillingAddressOrFail()->getIso2Code(),
-            $this->config->getSocialSecurityNumberCountriesMandatory()
+            $this->config->getSocialSecurityNumberCountriesMandatory(),
         );
     }
 }

@@ -36,7 +36,7 @@ class AdyenMapperResolver implements AdyenMapperResolverInterface
     {
         if (!array_key_exists($methodName, $this->mappers)) {
             throw new AdyenMethodMapperException(
-                sprintf('%s method mapper is not registered.', $methodName)
+                sprintf('%s method mapper is not registered.', $methodName),
             );
         }
 

@@ -35,7 +35,7 @@ class CaptureCommandMapper extends AbstractCommandMapper implements AdyenCommand
                 ->setMerchantAccount($this->config->getMerchantAccount())
                 ->setOriginalReference($paymentAdyen->getPspReference())
                 ->setOriginalMerchantReference($paymentAdyen->getReference())
-                ->setModificationAmount($this->createAmountTransfer($orderItems, $orderTransfer))
+                ->setModificationAmount($this->createAmountTransfer($orderItems, $orderTransfer)),
         );
 
         return $request;
@@ -70,7 +70,7 @@ class CaptureCommandMapper extends AbstractCommandMapper implements AdyenCommand
             function (SpySalesOrderItem $orderItem) {
                 return $orderItem->getPriceToPayAggregation() ?? static::AMOUNT_TO_MODIFY_DEFAULT;
             },
-            $orderItems
+            $orderItems,
         );
 
         return (int)array_sum($amount);

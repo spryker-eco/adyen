@@ -78,7 +78,7 @@ class OnlineTransferRedirectHandler implements AdyenRedirectHandlerInterface
         $this->writer->saveApiLog(
             sprintf(static::LOG_REQUEST_TYPE, $paymentAdyenTransfer->getPaymentMethod()),
             $requestTransfer,
-            $responseTransfer
+            $responseTransfer,
         );
 
         if (!$responseTransfer->getIsSuccess()) {
@@ -105,7 +105,7 @@ class OnlineTransferRedirectHandler implements AdyenRedirectHandlerInterface
         $requestTransfer->setPaymentDetailsRequest(
             (new AdyenApiPaymentDetailsRequestTransfer())
                 ->setPaymentData($paymentAdyenTransfer->getPaymentData())
-                ->setDetails($this->getRequestDetails($redirectResponseTransfer))
+                ->setDetails($this->getRequestDetails($redirectResponseTransfer)),
         );
 
         return $requestTransfer;

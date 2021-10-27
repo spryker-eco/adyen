@@ -23,7 +23,7 @@ class AuthorizeCommandSaver extends AbstractCommandSaver implements AdyenCommand
     {
         $this->writer->updatePaymentEntities(
             $this->config->getOmsStatusAuthorized(),
-            $this->reader->getPaymentAdyenOrderItemsByOrderItems($orderItems)
+            $this->reader->getPaymentAdyenOrderItemsByOrderItems($orderItems),
         );
     }
 

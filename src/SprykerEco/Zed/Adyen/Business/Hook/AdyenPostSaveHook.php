@@ -38,14 +38,30 @@ class AdyenPostSaveHook implements AdyenHookInterface
      * @var string
      */
     protected const ERROR_MESSAGE_PAYMENT_FAILED = 'Something went wrong with your payment. Try again!';
+
+    /**
+     * @var int
+     */
     protected const ERROR_CODE_PAYMENT_FAILED = 399;
 
     /**
      * @var string
      */
     protected const ADYEN_OMS_STATUS_REFUSED = 'Refused';
+
+    /**
+     * @var string
+     */
     protected const ADYEN_OMS_STATUS_ERROR = 'Error';
+
+    /**
+     * @var string
+     */
     protected const ADYEN_OMS_STATUS_CANCELLED = 'Cancelled';
+
+    /**
+     * @var array
+     */
     protected const ADYEN_OMS_STATUS_REFUSAL_REASONS = [
         self::ADYEN_OMS_STATUS_REFUSED,
         self::ADYEN_OMS_STATUS_ERROR,
@@ -154,7 +170,7 @@ class AdyenPostSaveHook implements AdyenHookInterface
     ): void {
         $checkoutResponseTransfer->setIsExternalRedirect(true);
         $checkoutResponseTransfer->setRedirectUrl(
-            $responseTransfer->getMakePaymentResponseOrFail()->getRedirectOrFail()->getUrl()
+            $responseTransfer->getMakePaymentResponseOrFail()->getRedirectOrFail()->getUrl(),
         );
     }
 

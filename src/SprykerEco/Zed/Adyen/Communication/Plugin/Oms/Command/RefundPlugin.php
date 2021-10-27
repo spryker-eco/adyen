@@ -33,7 +33,7 @@ class RefundPlugin extends AbstractCommandPlugin implements CommandByOrderInterf
             ->handleRefundCommand(
                 $orderItems,
                 $this->getOrderTransfer($orderEntity),
-                $data->getArrayCopy()
+                $data->getArrayCopy(),
             );
 
         return [];

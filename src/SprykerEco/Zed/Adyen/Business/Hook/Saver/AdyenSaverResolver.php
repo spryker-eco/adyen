@@ -36,7 +36,7 @@ class AdyenSaverResolver implements AdyenSaverResolverInterface
     {
         if (!array_key_exists($methodName, $this->savers)) {
             throw new AdyenMethodSaverException(
-                sprintf('%s method saver is not registered.', $methodName)
+                sprintf('%s method saver is not registered.', $methodName),
             );
         }
 

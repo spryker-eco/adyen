@@ -94,7 +94,7 @@ class AdyenWriter implements AdyenWriterInterface
                     $paymentAdyenOrderItemTransfer->setStatus($status);
                     $this->entityManager->savePaymentAdyenOrderItem($paymentAdyenOrderItemTransfer);
                 }
-            }
+            },
         );
     }
 

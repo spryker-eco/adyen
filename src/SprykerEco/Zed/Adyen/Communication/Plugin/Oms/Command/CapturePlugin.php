@@ -33,7 +33,7 @@ class CapturePlugin extends AbstractCommandPlugin implements CommandByOrderInter
             ->handleCaptureCommand(
                 $orderItems,
                 $this->getOrderTransfer($orderEntity),
-                $data->getArrayCopy()
+                $data->getArrayCopy(),
             );
 
         return [];

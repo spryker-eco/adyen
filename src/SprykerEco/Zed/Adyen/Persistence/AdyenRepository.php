@@ -100,7 +100,7 @@ class AdyenRepository extends AbstractRepository implements AdyenRepositoryInter
             $result[] = $mapper
                 ->mapEntityTransferToPaymentAdyenOrderItemTransfer(
                     $entityTransfer,
-                    new PaymentAdyenOrderItemTransfer()
+                    new PaymentAdyenOrderItemTransfer(),
                 );
         }
 
@@ -127,7 +127,7 @@ class AdyenRepository extends AbstractRepository implements AdyenRepositoryInter
             $result[] = $mapper
                 ->mapEntityTransferToPaymentAdyenOrderItemTransfer(
                     $entityTransfer,
-                    new PaymentAdyenOrderItemTransfer()
+                    new PaymentAdyenOrderItemTransfer(),
                 );
         }
 
@@ -158,7 +158,7 @@ class AdyenRepository extends AbstractRepository implements AdyenRepositoryInter
             $result[] = $mapper
                 ->mapEntityTransferToPaymentAdyenOrderItemTransfer(
                     $entityTransfer,
-                    new PaymentAdyenOrderItemTransfer()
+                    new PaymentAdyenOrderItemTransfer(),
                 );
         }
 
@@ -186,7 +186,7 @@ class AdyenRepository extends AbstractRepository implements AdyenRepositoryInter
             function (SpySalesOrderItemEntityTransfer $entityTransfer) {
                 return $entityTransfer->getIdSalesOrderItemOrFail();
             },
-            $entityTransfers
+            $entityTransfers,
         );
 
         return $remainingOrderItemIds;

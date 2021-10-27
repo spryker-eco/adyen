@@ -33,7 +33,7 @@ class CancelOrRefundPlugin extends AbstractCommandPlugin implements CommandByOrd
             ->handleCancelOrRefundCommand(
                 $orderItems,
                 $this->getOrderTransfer($orderEntity),
-                $data->getArrayCopy()
+                $data->getArrayCopy(),
             );
 
         return [];
