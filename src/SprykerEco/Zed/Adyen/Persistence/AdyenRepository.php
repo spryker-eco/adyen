@@ -81,7 +81,7 @@ class AdyenRepository extends AbstractRepository implements AdyenRepositoryInter
     /**
      * @param int $idSalesOrder
      *
-     * @return \Generated\Shared\Transfer\PaymentAdyenOrderItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\PaymentAdyenOrderItemTransfer>
      */
     public function getAllPaymentAdyenOrderItemsByIdSalesOrder(int $idSalesOrder): array
     {
@@ -100,7 +100,7 @@ class AdyenRepository extends AbstractRepository implements AdyenRepositoryInter
             $result[] = $mapper
                 ->mapEntityTransferToPaymentAdyenOrderItemTransfer(
                     $entityTransfer,
-                    new PaymentAdyenOrderItemTransfer()
+                    new PaymentAdyenOrderItemTransfer(),
                 );
         }
 
@@ -108,9 +108,9 @@ class AdyenRepository extends AbstractRepository implements AdyenRepositoryInter
     }
 
     /**
-     * @param int[] $orderItemIds
+     * @param array<int> $orderItemIds
      *
-     * @return \Generated\Shared\Transfer\PaymentAdyenOrderItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\PaymentAdyenOrderItemTransfer>
      */
     public function getOrderItemsByIdsSalesOrderItems(array $orderItemIds): array
     {
@@ -127,7 +127,7 @@ class AdyenRepository extends AbstractRepository implements AdyenRepositoryInter
             $result[] = $mapper
                 ->mapEntityTransferToPaymentAdyenOrderItemTransfer(
                     $entityTransfer,
-                    new PaymentAdyenOrderItemTransfer()
+                    new PaymentAdyenOrderItemTransfer(),
                 );
         }
 
@@ -136,9 +136,9 @@ class AdyenRepository extends AbstractRepository implements AdyenRepositoryInter
 
     /**
      * @param int $idSalesOrder
-     * @param int[] $orderItemIds
+     * @param array<int> $orderItemIds
      *
-     * @return \Generated\Shared\Transfer\PaymentAdyenOrderItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\PaymentAdyenOrderItemTransfer>
      */
     public function getRemainingPaymentAdyenOrderItems(int $idSalesOrder, array $orderItemIds): array
     {
@@ -158,7 +158,7 @@ class AdyenRepository extends AbstractRepository implements AdyenRepositoryInter
             $result[] = $mapper
                 ->mapEntityTransferToPaymentAdyenOrderItemTransfer(
                     $entityTransfer,
-                    new PaymentAdyenOrderItemTransfer()
+                    new PaymentAdyenOrderItemTransfer(),
                 );
         }
 
@@ -167,9 +167,9 @@ class AdyenRepository extends AbstractRepository implements AdyenRepositoryInter
 
     /**
      * @param int $idSalesOrder
-     * @param int[] $orderItemIds
+     * @param array<int> $orderItemIds
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getRemainingSalesOrderItemIds(int $idSalesOrder, array $orderItemIds): array
     {
@@ -186,7 +186,7 @@ class AdyenRepository extends AbstractRepository implements AdyenRepositoryInter
             function (SpySalesOrderItemEntityTransfer $entityTransfer) {
                 return $entityTransfer->getIdSalesOrderItemOrFail();
             },
-            $entityTransfers
+            $entityTransfers,
         );
 
         return $remainingOrderItemIds;

@@ -5,10 +5,13 @@
     name: 'credit-card',
     tag: 'credit-card'
 } %}
-
+{#
+    @deprecated property "scriptSrc" is deprecate: kept for BC reasons, will be removed in next major.
+    @deprecated property "configKey" is deprecate: kept for BC reasons, will be removed in next major.
+#}
 {% define data = {
     form: required,
-    scriptSrc: data.form.adyenCreditCard.vars.sdkUrl,
+    scriptSrc: '',
     configKey: data.form.adyenCreditCard.vars.sdkOriginKey,
 } %}
 

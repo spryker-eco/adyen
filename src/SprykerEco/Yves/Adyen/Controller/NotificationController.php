@@ -46,7 +46,7 @@ class NotificationController extends AbstractController
         return new Response(
             $this->getFactory()->getUtilEncodingService()->encodeJson(static::NOTIFICATION_ACCEPTED_RESPONSE_BODY),
             Response::HTTP_OK,
-            static::NOTIFICATION_ACCEPTED_RESPONSE_HEADER
+            static::NOTIFICATION_ACCEPTED_RESPONSE_HEADER,
         );
     }
 }

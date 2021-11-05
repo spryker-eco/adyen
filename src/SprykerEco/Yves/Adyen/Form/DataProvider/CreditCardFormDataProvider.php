@@ -81,7 +81,6 @@ class CreditCardFormDataProvider extends AbstractFormDataProvider
         $availablePaymentMethodsData = $this->getAvailablePaymentMethodsData($quoteTransfer);
 
         return [
-            CreditCardSubForm::SDK_CHECKOUT_SECURED_FIELDS_URL => $this->config->getSdkCheckoutSecuredFieldsUrl(),
             CreditCardSubForm::SDK_CHECKOUT_ORIGIN_KEY => $this->config->getSdkCheckoutOriginKey(),
             CreditCardSubForm::SDK_CHECKOUT_SHOPPER_JS_URL => $this->config->getSdkCheckoutShopperJsUrl(),
             CreditCardSubForm::SDK_CHECKOUT_SHOPPER_CSS_URL => $this->config->getSdkCheckoutShopperCssUrl(),

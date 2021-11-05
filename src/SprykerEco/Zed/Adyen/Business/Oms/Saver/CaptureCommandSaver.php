@@ -15,7 +15,7 @@ class CaptureCommandSaver extends AbstractCommandSaver implements AdyenCommandSa
     protected const REQUEST_TYPE = 'CAPTURE';
 
     /**
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $orderItems
+     * @param array<\Orm\Zed\Sales\Persistence\SpySalesOrderItem> $orderItems
      *
      * @return void
      */
@@ -23,7 +23,7 @@ class CaptureCommandSaver extends AbstractCommandSaver implements AdyenCommandSa
     {
         $this->writer->updatePaymentEntities(
             $this->config->getOmsStatusCapturePending(),
-            $this->reader->getPaymentAdyenOrderItemsByOrderItems($orderItems)
+            $this->reader->getPaymentAdyenOrderItemsByOrderItems($orderItems),
         );
 
         $remainingItems = $this->reader->getRemainingPaymentAdyenOrderItems($orderItems);
@@ -35,7 +35,7 @@ class CaptureCommandSaver extends AbstractCommandSaver implements AdyenCommandSa
         if (!$this->config->isMultiplePartialCaptureEnabled()) {
             $this->writer->updatePaymentEntities(
                 $this->config->getOmsStatusCancellationPending(),
-                $remainingItems
+                $remainingItems,
             );
 
             $this->triggerCancelEvent($orderItems);
@@ -51,7 +51,7 @@ class CaptureCommandSaver extends AbstractCommandSaver implements AdyenCommandSa
     }
 
     /**
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $orderItems
+     * @param array<\Orm\Zed\Sales\Persistence\SpySalesOrderItem> $orderItems
      *
      * @return void
      */
@@ -60,7 +60,7 @@ class CaptureCommandSaver extends AbstractCommandSaver implements AdyenCommandSa
         $this->omsFacade->triggerEventForOrderItems(
             $this->config->getOmsEventCancelName(),
             $this->reader->getRemainingSalesOrderItemIds($orderItems),
-            [$this->config->getAdyenAutomaticOmsTrigger() => true]
+            [$this->config->getAdyenAutomaticOmsTrigger() => true],
         );
     }
 }

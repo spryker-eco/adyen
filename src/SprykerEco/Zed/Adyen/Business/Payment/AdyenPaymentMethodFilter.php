@@ -24,7 +24,7 @@ class AdyenPaymentMethodFilter implements AdyenPaymentMethodFilterInterface
     protected const ADYEN_PAYMENT_METHOD = 'adyen';
 
     /**
-     * @var string[]
+     * @var array<string>
      */
     protected $availableMethods = [];
 
@@ -69,7 +69,7 @@ class AdyenPaymentMethodFilter implements AdyenPaymentMethodFilterInterface
         QuoteTransfer $quoteTransfer
     ): PaymentMethodsTransfer {
         $this->availableMethods = $this->converter->getAvailablePaymentMethods(
-            $this->getAvailablePaymentMethods($quoteTransfer)->getPaymentMethods()->getArrayCopy()
+            $this->getAvailablePaymentMethods($quoteTransfer)->getPaymentMethods()->getArrayCopy(),
         );
 
         $result = new ArrayObject();

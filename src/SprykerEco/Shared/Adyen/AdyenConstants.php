@@ -24,6 +24,7 @@ interface AdyenConstants
      * - URL to Adyen Checkout security fields SDK JS file.
      *
      * @api
+     *
      * @var string
      */
     public const SDK_CHECKOUT_SECURED_FIELDS_URL = 'ADYEN:SDK_CHECKOUT_SECURED_FIELDS_URL';
@@ -93,6 +94,7 @@ interface AdyenConstants
      * - Return URL for Klarna payment method.
      *
      * @api
+     *
      * @var string
      */
     public const KLARNA_RETURN_URL = 'ADYEN:KLARNA_RETURN_URL';
@@ -102,6 +104,7 @@ interface AdyenConstants
      * - URL to Adyen Checkout shopper SDK JS file.
      *
      * @api
+     *
      * @var string
      */
     public const SDK_CHECKOUT_SHOPPER_JS_URL = 'ADYEN:SDK_CHECKOUT_SHOPPER_JS_URL';
@@ -111,6 +114,7 @@ interface AdyenConstants
      * - URL to Adyen Checkout shopper SDK CSS file.
      *
      * @api
+     *
      * @var string
      */
     public const SDK_CHECKOUT_SHOPPER_CSS_URL = 'ADYEN:SDK_CHECKOUT_SHOPPER_CSS_URL';
@@ -120,6 +124,7 @@ interface AdyenConstants
      * - Subresource Integrity (SRI) hash for Checkout shopper SDK JS file.
      *
      * @api
+     *
      * @var string
      */
     public const SDK_CHECKOUT_SHOPPER_JS_INTEGRITY_HASH = 'ADYEN:SDK_CHECKOUT_SHOPPER_JS_INTEGRITY_HASH';
@@ -129,6 +134,7 @@ interface AdyenConstants
      * - Subresource Integrity (SRI) hash for Checkout shopper SDK CSS file.
      *
      * @api
+     *
      * @var string
      */
     public const SDK_CHECKOUT_SHOPPER_CSS_INTEGRITY_HASH = 'ADYEN:SDK_CHECKOUT_SHOPPER_CSS_INTEGRITY_HASH';
@@ -138,6 +144,7 @@ interface AdyenConstants
      * - Adyen Environment name for SDK.
      *
      * @api
+     *
      * @var string
      */
     public const SDK_ENVIRONMENT = 'ADYEN:SDK_ENVIRONMENT';

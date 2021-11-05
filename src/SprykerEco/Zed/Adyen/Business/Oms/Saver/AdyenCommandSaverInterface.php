@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\AdyenApiResponseTransfer;
 interface AdyenCommandSaverInterface
 {
     /**
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $orderItems
+     * @param array<\Orm\Zed\Sales\Persistence\SpySalesOrderItem> $orderItems
      *
      * @return void
      */

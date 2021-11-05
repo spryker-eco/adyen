@@ -57,7 +57,7 @@ class CreditCardMapper extends AbstractMapper
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     protected function getAdditionalData(): array
     {

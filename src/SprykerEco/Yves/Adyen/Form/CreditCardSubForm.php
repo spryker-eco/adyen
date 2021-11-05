@@ -19,6 +19,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class CreditCardSubForm extends AbstractSubForm
 {
     /**
+     * @deprecated Will be removed without replacement. BC-reason only.
+     *
      * @var string
      */
     public const SDK_CHECKOUT_SECURED_FIELDS_URL = 'sdkUrl';
@@ -144,7 +146,7 @@ class CreditCardSubForm extends AbstractSubForm
                         'message' => static::GLOSSARY_KEY_CONSTRAINT_MESSAGE_INVALID_CARD_NUMBER,
                     ]),
                 ],
-            ]
+            ],
         );
 
         $builder->add(
@@ -156,7 +158,7 @@ class CreditCardSubForm extends AbstractSubForm
                         'message' => static::GLOSSARY_KEY_CONSTRAINT_MESSAGE_INVALID_EXPIRY_YEAR,
                     ]),
                 ],
-            ]
+            ],
         );
 
         $builder->add(
@@ -168,7 +170,7 @@ class CreditCardSubForm extends AbstractSubForm
                         'message' => static::GLOSSARY_KEY_CONSTRAINT_MESSAGE_INVALID_EXPIRY_MONTH,
                     ]),
                 ],
-            ]
+            ],
         );
 
         $builder->add(
@@ -180,7 +182,7 @@ class CreditCardSubForm extends AbstractSubForm
                         'message' => static::GLOSSARY_KEY_CONSTRAINT_MESSAGE_INVALID_SECURITY_CODE,
                     ]),
                 ],
-            ]
+            ],
         );
     }
 
@@ -208,7 +210,6 @@ class CreditCardSubForm extends AbstractSubForm
         parent::buildView($view, $form, $options);
 
         $selectedOptions = $options[static::OPTIONS_FIELD_NAME];
-        $view->vars[static::SDK_CHECKOUT_SECURED_FIELDS_URL] = $selectedOptions[static::SDK_CHECKOUT_SECURED_FIELDS_URL];
         $view->vars[static::SDK_CHECKOUT_ORIGIN_KEY] = $selectedOptions[static::SDK_CHECKOUT_ORIGIN_KEY];
         $view->vars[static::SDK_CHECKOUT_SHOPPER_JS_URL] = $selectedOptions[static::SDK_CHECKOUT_SHOPPER_JS_URL];
         $view->vars[static::SDK_CHECKOUT_SHOPPER_CSS_URL] = $selectedOptions[static::SDK_CHECKOUT_SHOPPER_CSS_URL];
