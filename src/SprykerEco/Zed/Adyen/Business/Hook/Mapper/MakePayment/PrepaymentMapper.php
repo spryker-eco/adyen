@@ -28,7 +28,7 @@ class PrepaymentMapper extends AbstractMapper
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getPayload(QuoteTransfer $quoteTransfer): array
     {

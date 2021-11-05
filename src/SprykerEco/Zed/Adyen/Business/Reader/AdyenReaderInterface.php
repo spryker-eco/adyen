@@ -36,28 +36,28 @@ interface AdyenReaderInterface
     /**
      * @param int $idSalesOrder
      *
-     * @return \Generated\Shared\Transfer\PaymentAdyenOrderItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\PaymentAdyenOrderItemTransfer>
      */
     public function getAllPaymentAdyenOrderItemsByIdSalesOrder(int $idSalesOrder): array;
 
     /**
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $orderItems
+     * @param array<\Orm\Zed\Sales\Persistence\SpySalesOrderItem> $orderItems
      *
-     * @return \Generated\Shared\Transfer\PaymentAdyenOrderItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\PaymentAdyenOrderItemTransfer>
      */
     public function getPaymentAdyenOrderItemsByOrderItems(array $orderItems): array;
 
     /**
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $orderItems
+     * @param array<\Orm\Zed\Sales\Persistence\SpySalesOrderItem> $orderItems
      *
-     * @return \Generated\Shared\Transfer\PaymentAdyenOrderItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\PaymentAdyenOrderItemTransfer>
      */
     public function getRemainingPaymentAdyenOrderItems(array $orderItems): array;
 
     /**
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $orderItems
+     * @param array<\Orm\Zed\Sales\Persistence\SpySalesOrderItem> $orderItems
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getRemainingSalesOrderItemIds(array $orderItems): array;
 }

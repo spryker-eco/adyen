@@ -173,7 +173,7 @@ class BaseSetUpTest extends Test
                 'getAdyenApiFacade',
                 'getOmsFacade',
                 'getUtilEncodingService',
-            ]
+            ],
         );
 
         $stub = $builder->getMock();
@@ -249,31 +249,31 @@ class BaseSetUpTest extends Test
                 [
                     AdyenApiCancelResponseTransfer::PSP_REFERENCE => static::RESPONSE_REFERENCE,
                     AdyenApiCancelResponseTransfer::RESPONSE => static::RESPONSE_CANCEL_RECEIVED,
-                ]
+                ],
             )
             ->withCaptureResponse(
                 [
                     AdyenApiCaptureResponseTransfer::PSP_REFERENCE => static::RESPONSE_REFERENCE,
                     AdyenApiCaptureResponseTransfer::RESPONSE => static::RESPONSE_CAPTURE_RECEIVED,
-                ]
+                ],
             )
             ->withRefundResponse(
                 [
                     AdyenApiRefundResponseTransfer::PSP_REFERENCE => static::RESPONSE_REFERENCE,
                     AdyenApiRefundResponseTransfer::RESPONSE => static::RESPONSE_REFUND_RECEIVED,
-                ]
+                ],
             )
             ->withCancelOrRefundResponse(
                 [
                     AdyenApiCancelOrRefundResponseTransfer::PSP_REFERENCE => static::RESPONSE_REFERENCE,
                     AdyenApiCancelOrRefundResponseTransfer::RESPONSE => self::RESPONSE_CANCEL_OR_REFUND_RECEIVED,
-                ]
+                ],
             )
             ->withPaymentDetailsResponse(
                 [
                     AdyenApiPaymentDetailsResponseTransfer::PSP_REFERENCE => static::RESPONSE_REFERENCE,
                     AdyenApiPaymentDetailsResponseTransfer::RESULT_CODE => static::RESPONSE_AUTHORISED,
-                ]
+                ],
             )
             ->build();
 
@@ -341,7 +341,7 @@ class BaseSetUpTest extends Test
                 [
                     TotalsTransfer::GRAND_TOTAL => static::AMOUNT,
                     TotalsTransfer::REFUND_TOTAL => static::AMOUNT,
-                ]
+                ],
             )
             ->build();
 

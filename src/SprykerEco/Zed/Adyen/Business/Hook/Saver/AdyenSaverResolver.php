@@ -13,12 +13,12 @@ use SprykerEco\Zed\Adyen\Business\Hook\Saver\MakePayment\AdyenSaverInterface;
 class AdyenSaverResolver implements AdyenSaverResolverInterface
 {
     /**
-     * @var \SprykerEco\Zed\Adyen\Business\Hook\Saver\MakePayment\AdyenSaverInterface[]
+     * @var array<\SprykerEco\Zed\Adyen\Business\Hook\Saver\MakePayment\AdyenSaverInterface>
      */
     protected $savers = [];
 
     /**
-     * @param \SprykerEco\Zed\Adyen\Business\Hook\Saver\MakePayment\AdyenSaverInterface[] $savers
+     * @param array<\SprykerEco\Zed\Adyen\Business\Hook\Saver\MakePayment\AdyenSaverInterface> $savers
      */
     public function __construct(array $savers)
     {
@@ -36,7 +36,7 @@ class AdyenSaverResolver implements AdyenSaverResolverInterface
     {
         if (!array_key_exists($methodName, $this->savers)) {
             throw new AdyenMethodSaverException(
-                sprintf('%s method saver is not registered.', $methodName)
+                sprintf('%s method saver is not registered.', $methodName),
             );
         }
 
