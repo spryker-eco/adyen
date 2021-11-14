@@ -16,5 +16,5 @@ interface AdyenToOmsFacadeInterface
      *
      * @return array|null
      */
-    public function triggerEventForOrderItems($eventId, array $orderItemIds, array $data = []);
+    public function triggerEventForOrderItems($eventId, array $orderItemIds, array $data = []): ?array;
 }
