@@ -117,7 +117,7 @@ class DirectDebitSubForm extends AbstractSubForm
                 'constraints' => [
                     $this->createNotBlankConstraint([static::GLOSSARY_KEY_CONSTRAINT_MESSAGE_INVALID_OWNER_NAME]),
                 ],
-            ]
+            ],
         );
 
         return $this;
@@ -139,7 +139,7 @@ class DirectDebitSubForm extends AbstractSubForm
                 'constraints' => [
                     $this->createNotBlankConstraint([static::GLOSSARY_KEY_CONSTRAINT_MESSAGE_INVALID_IBAN_NUMBER]),
                 ],
-            ]
+            ],
         );
 
         return $this;

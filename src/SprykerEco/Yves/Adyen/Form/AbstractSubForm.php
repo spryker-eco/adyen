@@ -34,8 +34,8 @@ abstract class AbstractSubForm extends AbstractSubFormType implements SubFormInt
         return new NotBlank(
             array_merge(
                 ['groups' => $this->getPropertyPath()],
-                $options
-            )
+                $options,
+            ),
         );
     }
 }

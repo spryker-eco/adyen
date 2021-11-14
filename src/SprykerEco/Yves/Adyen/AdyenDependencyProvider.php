@@ -131,7 +131,7 @@ class AdyenDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \SprykerEco\Yves\Adyen\Plugin\Payment\AdyenPaymentMapperPluginInterface[]
+     * @return array<\SprykerEco\Yves\Adyen\Plugin\Payment\AdyenPaymentMapperPluginInterface>
      */
     protected function getAdyenPaymentPlugins(): array
     {

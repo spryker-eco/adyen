@@ -21,13 +21,13 @@ class AdyenPaymentHandler implements AdyenPaymentHandlerInterface
     protected $service;
 
     /**
-     * @var array|\SprykerEco\Yves\Adyen\Plugin\Payment\AdyenPaymentMapperPluginInterface[]
+     * @var array<\SprykerEco\Yves\Adyen\Plugin\Payment\AdyenPaymentMapperPluginInterface>
      */
     protected $paymentPlugins;
 
     /**
      * @param \SprykerEco\Service\Adyen\AdyenServiceInterface $service
-     * @param \SprykerEco\Yves\Adyen\Plugin\Payment\AdyenPaymentMapperPluginInterface[] $paymentPlugins
+     * @param array<\SprykerEco\Yves\Adyen\Plugin\Payment\AdyenPaymentMapperPluginInterface> $paymentPlugins
      */
     public function __construct(
         AdyenServiceInterface $service,

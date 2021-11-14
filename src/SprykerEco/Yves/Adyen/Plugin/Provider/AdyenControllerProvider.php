@@ -42,7 +42,7 @@ class AdyenControllerProvider extends AbstractYvesControllerProvider
             'adyen-notification',
             static::BUNDLE_NAME,
             static::NOTIFICATION_CONTROLLER_NAME,
-            'index'
+            'index',
         );
 
         $this->createController(
@@ -50,7 +50,7 @@ class AdyenControllerProvider extends AbstractYvesControllerProvider
             'adyen-redirect-sofort',
             static::BUNDLE_NAME,
             static::CALLBACK_CONTROLLER_NAME,
-            'redirectSofort'
+            'redirectSofort',
         );
 
         $this->createController(
@@ -58,7 +58,7 @@ class AdyenControllerProvider extends AbstractYvesControllerProvider
             'adyen-redirect-credit-card-3d',
             static::BUNDLE_NAME,
             static::CALLBACK_CONTROLLER_NAME,
-            'redirectCreditCard3d'
+            'redirectCreditCard3d',
         );
 
         $this->createController(
@@ -66,7 +66,7 @@ class AdyenControllerProvider extends AbstractYvesControllerProvider
             'adyen-redirect-ideal',
             static::BUNDLE_NAME,
             static::CALLBACK_CONTROLLER_NAME,
-            'redirectIdeal'
+            'redirectIdeal',
         );
 
         $this->createController(
@@ -74,7 +74,7 @@ class AdyenControllerProvider extends AbstractYvesControllerProvider
             'adyen-redirect-paypal',
             static::BUNDLE_NAME,
             static::CALLBACK_CONTROLLER_NAME,
-            'redirectPayPal'
+            'redirectPayPal',
         );
 
         $this->createController(
@@ -82,7 +82,7 @@ class AdyenControllerProvider extends AbstractYvesControllerProvider
             'adyen-redirect-alipay',
             static::BUNDLE_NAME,
             static::CALLBACK_CONTROLLER_NAME,
-            'redirectAliPay'
+            'redirectAliPay',
         );
 
         $this->createController(
@@ -90,7 +90,7 @@ class AdyenControllerProvider extends AbstractYvesControllerProvider
             'adyen-redirect-wechatpay',
             static::BUNDLE_NAME,
             static::CALLBACK_CONTROLLER_NAME,
-            'redirectWeChatPay'
+            'redirectWeChatPay',
         );
     }
 }

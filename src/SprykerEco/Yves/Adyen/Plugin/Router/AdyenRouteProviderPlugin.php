@@ -60,7 +60,7 @@ class AdyenRouteProviderPlugin extends AbstractRouteProviderPlugin
     {
         $routeCollection->add(
             'adyen-notification',
-            $this->buildPostRoute('/adyen/notification', static::BUNDLE_NAME, static::NOTIFICATION_CONTROLLER_NAME, 'index')
+            $this->buildPostRoute('/adyen/notification', static::BUNDLE_NAME, static::NOTIFICATION_CONTROLLER_NAME, 'index'),
         );
 
         return $routeCollection;
@@ -75,7 +75,7 @@ class AdyenRouteProviderPlugin extends AbstractRouteProviderPlugin
     {
         $routeCollection->add(
             'adyen-redirect-sofort',
-            $this->buildRoute('/adyen/callback/redirect-sofort', static::BUNDLE_NAME, static::CALLBACK_CONTROLLER_NAME, 'redirectSofort')
+            $this->buildRoute('/adyen/callback/redirect-sofort', static::BUNDLE_NAME, static::CALLBACK_CONTROLLER_NAME, 'redirectSofort'),
         );
 
         return $routeCollection;
@@ -90,7 +90,7 @@ class AdyenRouteProviderPlugin extends AbstractRouteProviderPlugin
     {
         $routeCollection->add(
             'adyen-redirect-credit-card-3d',
-            $this->buildRoute('/adyen/callback/redirect-credit-card-3d', static::BUNDLE_NAME, static::CALLBACK_CONTROLLER_NAME, 'redirectCreditCard3d')
+            $this->buildRoute('/adyen/callback/redirect-credit-card-3d', static::BUNDLE_NAME, static::CALLBACK_CONTROLLER_NAME, 'redirectCreditCard3d'),
         );
 
         return $routeCollection;
@@ -105,7 +105,7 @@ class AdyenRouteProviderPlugin extends AbstractRouteProviderPlugin
     {
         $routeCollection->add(
             'adyen-redirect-ideal',
-            $this->buildRoute('/adyen/callback/redirect-ideal', static::BUNDLE_NAME, static::CALLBACK_CONTROLLER_NAME, 'redirectIdeal')
+            $this->buildRoute('/adyen/callback/redirect-ideal', static::BUNDLE_NAME, static::CALLBACK_CONTROLLER_NAME, 'redirectIdeal'),
         );
 
         return $routeCollection;
@@ -120,7 +120,7 @@ class AdyenRouteProviderPlugin extends AbstractRouteProviderPlugin
     {
         $routeCollection->add(
             'adyen-redirect-paypal',
-            $this->buildRoute('/adyen/callback/redirect-paypal', static::BUNDLE_NAME, static::CALLBACK_CONTROLLER_NAME, 'redirectPayPal')
+            $this->buildRoute('/adyen/callback/redirect-paypal', static::BUNDLE_NAME, static::CALLBACK_CONTROLLER_NAME, 'redirectPayPal'),
         );
 
         return $routeCollection;
@@ -135,7 +135,7 @@ class AdyenRouteProviderPlugin extends AbstractRouteProviderPlugin
     {
         $routeCollection->add(
             'adyen-redirect-alipay',
-            $this->buildRoute('/adyen/callback/redirect-alipay', static::BUNDLE_NAME, static::CALLBACK_CONTROLLER_NAME, 'redirectAliPay')
+            $this->buildRoute('/adyen/callback/redirect-alipay', static::BUNDLE_NAME, static::CALLBACK_CONTROLLER_NAME, 'redirectAliPay'),
         );
 
         return $routeCollection;
@@ -150,7 +150,7 @@ class AdyenRouteProviderPlugin extends AbstractRouteProviderPlugin
     {
         $routeCollection->add(
             'adyen-redirect-wechatpay',
-            $this->buildRoute('/adyen/callback/redirect-wechatpay', static::BUNDLE_NAME, static::CALLBACK_CONTROLLER_NAME, 'redirectWeChatPay')
+            $this->buildRoute('/adyen/callback/redirect-wechatpay', static::BUNDLE_NAME, static::CALLBACK_CONTROLLER_NAME, 'redirectWeChatPay'),
         );
 
         return $routeCollection;
@@ -165,7 +165,7 @@ class AdyenRouteProviderPlugin extends AbstractRouteProviderPlugin
     {
         $routeCollection->add(
             'adyen-redirect-klarna',
-            $this->buildRoute('/adyen/callback/redirect-klarna', static::BUNDLE_NAME, static::CALLBACK_CONTROLLER_NAME, 'redirectKlarna')
+            $this->buildRoute('/adyen/callback/redirect-klarna', static::BUNDLE_NAME, static::CALLBACK_CONTROLLER_NAME, 'redirectKlarna'),
         );
 
         return $routeCollection;
