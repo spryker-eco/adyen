@@ -7,8 +7,6 @@
 
 namespace SprykerEco\Zed\Adyen\Dependency\Facade;
 
-use Generated\Shared\Transfer\OrderTransfer;
-
 class AdyenToSalesFacadeBridge implements AdyenToSalesFacadeInterface
 {
     /**
