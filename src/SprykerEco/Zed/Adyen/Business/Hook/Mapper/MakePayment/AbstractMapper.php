@@ -36,7 +36,7 @@ abstract class AbstractMapper implements AdyenMapperInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return array<string>
+     * @return array<string, string>
      */
     abstract protected function getPayload(QuoteTransfer $quoteTransfer): array;
 
@@ -224,7 +224,7 @@ abstract class AbstractMapper implements AdyenMapperInterface
     }
 
     /**
-     * @return array<string>
+     * @return array<string, string>
      */
     protected function getAdditionalData(): array
     {

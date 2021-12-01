@@ -21,5 +21,5 @@ interface AdyenToQuoteClientInterface
      *
      * @return void
      */
-    public function setQuote(QuoteTransfer $quoteTransfer): void;
+    public function setQuote(QuoteTransfer $quoteTransfer);
 }
