@@ -120,9 +120,7 @@ class AdyenPostSaveHook implements AdyenHookInterface
 
         $saver->save($requestTransfer, $responseTransfer);
 
-        $makePaymentResponse = $responseTransfer->getMakePaymentResponseOrFail();
-
-        if (!$responseTransfer->getIsSuccess() || in_array($makePaymentResponse->getResultCode(), static::ADYEN_OMS_STATUS_REFUSAL_REASONS, true)) {
+        if (!$responseTransfer->getIsSuccess() || $this->hasRefusalStatus($responseTransfer)) {
             $this->processFailureResponse($checkoutResponseTransfer);
 
             return;
@@ -131,6 +129,8 @@ class AdyenPostSaveHook implements AdyenHookInterface
         if (!$this->isMethodWithRedirect($responseTransfer)) {
             return;
         }
+
+        $makePaymentResponse = $responseTransfer->getMakePaymentResponseOrFail();
 
         if ($makePaymentResponse->getRedirectOrFail()->getMethod() === static::REDIRECT_METHOD_GET) {
             $this->processGetRedirect($checkoutResponseTransfer, $responseTransfer);
@@ -205,5 +205,19 @@ class AdyenPostSaveHook implements AdyenHookInterface
 
         $checkoutResponseTransfer->setIsSuccess(false);
         $checkoutResponseTransfer->addError($error);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AdyenApiResponseTransfer $adyenApiResponseTransfer
+     *
+     * @return bool
+     */
+    protected function hasRefusalStatus(AdyenApiResponseTransfer $adyenApiResponseTransfer): bool
+    {
+        return in_array(
+            $adyenApiResponseTransfer->getMakePaymentResponseOrFail()->getResultCode(),
+            static::ADYEN_OMS_STATUS_REFUSAL_REASONS,
+            true
+        );
     }
 }
