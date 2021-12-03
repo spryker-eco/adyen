@@ -16,7 +16,7 @@ use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 class RefundCommandMapper extends AbstractCommandMapper implements AdyenCommandMapperInterface
 {
     /**
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $orderItems
+     * @param array<\Orm\Zed\Sales\Persistence\SpySalesOrderItem> $orderItems
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return \Generated\Shared\Transfer\AdyenApiRequestTransfer
@@ -37,7 +37,7 @@ class RefundCommandMapper extends AbstractCommandMapper implements AdyenCommandM
     }
 
     /**
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $orderItems
+     * @param array<\Orm\Zed\Sales\Persistence\SpySalesOrderItem> $orderItems
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return \Generated\Shared\Transfer\AdyenApiAmountTransfer
@@ -50,7 +50,7 @@ class RefundCommandMapper extends AbstractCommandMapper implements AdyenCommandM
     }
 
     /**
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $orderItems
+     * @param array<\Orm\Zed\Sales\Persistence\SpySalesOrderItem> $orderItems
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return int

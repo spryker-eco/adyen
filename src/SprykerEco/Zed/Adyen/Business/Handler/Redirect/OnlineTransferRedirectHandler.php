@@ -149,7 +149,7 @@ class OnlineTransferRedirectHandler implements AdyenRedirectHandlerInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PaymentAdyenOrderItemTransfer[] $paymentAdyenOrderItems
+     * @param array<\Generated\Shared\Transfer\PaymentAdyenOrderItemTransfer> $paymentAdyenOrderItems
      *
      * @return string
      */

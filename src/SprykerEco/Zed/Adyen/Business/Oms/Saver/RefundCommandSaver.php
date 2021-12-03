@@ -15,7 +15,7 @@ class RefundCommandSaver extends AbstractCommandSaver implements AdyenCommandSav
     protected const REQUEST_TYPE = 'REFUND';
 
     /**
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $orderItems
+     * @param array<\Orm\Zed\Sales\Persistence\SpySalesOrderItem> $orderItems
      *
      * @return void
      */

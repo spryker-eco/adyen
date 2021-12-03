@@ -25,9 +25,9 @@ class AdyenPaymentMethodFilterConverter implements AdyenPaymentMethodFilterConve
     }
 
     /**
-     * @param \Generated\Shared\Transfer\AdyenApiPaymentMethodTransfer[] $paymentMethods
+     * @param array<\Generated\Shared\Transfer\AdyenApiPaymentMethodTransfer> $paymentMethods
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getAvailablePaymentMethods(array $paymentMethods): array
     {

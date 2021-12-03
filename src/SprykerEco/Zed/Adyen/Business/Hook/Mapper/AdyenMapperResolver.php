@@ -13,12 +13,12 @@ use SprykerEco\Zed\Adyen\Business\Hook\Mapper\MakePayment\AdyenMapperInterface;
 class AdyenMapperResolver implements AdyenMapperResolverInterface
 {
     /**
-     * @var \SprykerEco\Zed\Adyen\Business\Hook\Mapper\MakePayment\AdyenMapperInterface[]
+     * @var array<\SprykerEco\Zed\Adyen\Business\Hook\Mapper\MakePayment\AdyenMapperInterface>
      */
     protected $mappers;
 
     /**
-     * @param \SprykerEco\Zed\Adyen\Business\Hook\Mapper\MakePayment\AdyenMapperInterface[] $mappers
+     * @param array<\SprykerEco\Zed\Adyen\Business\Hook\Mapper\MakePayment\AdyenMapperInterface> $mappers
      */
     public function __construct(array $mappers)
     {

@@ -15,7 +15,7 @@ class CaptureCommandSaver extends AbstractCommandSaver implements AdyenCommandSa
     protected const REQUEST_TYPE = 'CAPTURE';
 
     /**
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $orderItems
+     * @param array<\Orm\Zed\Sales\Persistence\SpySalesOrderItem> $orderItems
      *
      * @return void
      */
@@ -51,7 +51,7 @@ class CaptureCommandSaver extends AbstractCommandSaver implements AdyenCommandSa
     }
 
     /**
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $orderItems
+     * @param array<\Orm\Zed\Sales\Persistence\SpySalesOrderItem> $orderItems
      *
      * @return void
      */

@@ -139,7 +139,7 @@ class AdyenBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \SprykerEco\Zed\Adyen\Business\Hook\Mapper\MakePayment\AdyenMapperInterface[]
+     * @return array<\SprykerEco\Zed\Adyen\Business\Hook\Mapper\MakePayment\AdyenMapperInterface>
      */
     public function getMakePaymentMappers(): array
     {
@@ -237,7 +237,7 @@ class AdyenBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \SprykerEco\Zed\Adyen\Business\Hook\Saver\MakePayment\AdyenSaverInterface[]
+     * @return array<\SprykerEco\Zed\Adyen\Business\Hook\Saver\MakePayment\AdyenSaverInterface>
      */
     public function getMakePaymentSavers(): array
     {

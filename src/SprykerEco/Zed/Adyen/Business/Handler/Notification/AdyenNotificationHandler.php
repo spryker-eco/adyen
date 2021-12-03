@@ -108,7 +108,7 @@ class AdyenNotificationHandler implements AdyenNotificationHandlerInterface
 
     /**
      * @param \Generated\Shared\Transfer\AdyenNotificationRequestItemTransfer $notificationTransfer
-     * @param \Generated\Shared\Transfer\PaymentAdyenOrderItemTransfer[] $paymentAdyenOrderItems
+     * @param array<\Generated\Shared\Transfer\PaymentAdyenOrderItemTransfer> $paymentAdyenOrderItems
      *
      * @return bool
      */

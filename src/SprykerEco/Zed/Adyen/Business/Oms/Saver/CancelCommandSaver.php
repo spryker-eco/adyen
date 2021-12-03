@@ -15,7 +15,7 @@ class CancelCommandSaver extends AbstractCommandSaver implements AdyenCommandSav
     protected const REQUEST_TYPE = 'CANCEL';
 
     /**
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $orderItems
+     * @param array<\Orm\Zed\Sales\Persistence\SpySalesOrderItem> $orderItems
      *
      * @return void
      */
@@ -41,7 +41,7 @@ class CancelCommandSaver extends AbstractCommandSaver implements AdyenCommandSav
     }
 
     /**
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $orderItems
+     * @param array<\Orm\Zed\Sales\Persistence\SpySalesOrderItem> $orderItems
      *
      * @return void
      */

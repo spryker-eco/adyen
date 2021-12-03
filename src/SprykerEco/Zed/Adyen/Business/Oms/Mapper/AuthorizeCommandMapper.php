@@ -14,7 +14,7 @@ use Generated\Shared\Transfer\OrderTransfer;
 class AuthorizeCommandMapper extends AbstractCommandMapper implements AdyenCommandMapperInterface
 {
     /**
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $orderItems
+     * @param array<\Orm\Zed\Sales\Persistence\SpySalesOrderItem> $orderItems
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return \Generated\Shared\Transfer\AdyenApiRequestTransfer

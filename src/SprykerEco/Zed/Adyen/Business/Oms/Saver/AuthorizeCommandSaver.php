@@ -15,7 +15,7 @@ class AuthorizeCommandSaver extends AbstractCommandSaver implements AdyenCommand
     protected const REQUEST_TYPE = 'AUTHORIZE';
 
     /**
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $orderItems
+     * @param array<\Orm\Zed\Sales\Persistence\SpySalesOrderItem> $orderItems
      *
      * @return void
      */

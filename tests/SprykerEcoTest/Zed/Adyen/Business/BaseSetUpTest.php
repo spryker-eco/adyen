@@ -266,7 +266,7 @@ class BaseSetUpTest extends Test
             ->withCancelOrRefundResponse(
                 [
                     AdyenApiCancelOrRefundResponseTransfer::PSP_REFERENCE => static::RESPONSE_REFERENCE,
-                    AdyenApiCancelOrRefundResponseTransfer::RESPONSE => self::RESPONSE_CANCEL_OR_REFUND_RECEIVED,
+                    AdyenApiCancelOrRefundResponseTransfer::RESPONSE => static::RESPONSE_CANCEL_OR_REFUND_RECEIVED,
                 ],
             )
             ->withPaymentDetailsResponse(
@@ -388,7 +388,7 @@ class BaseSetUpTest extends Test
 
         $notificationsTransfer = (new AdyenNotificationsBuilder([
                 AdyenNotificationsTransfer::LIVE => false,
-                AdyenNotificationsTransfer::IS_SUCCESS => self::RESPONSE_SUCCESS_TRUE,
+                AdyenNotificationsTransfer::IS_SUCCESS => static::RESPONSE_SUCCESS_TRUE,
             ]))
             ->build();
 

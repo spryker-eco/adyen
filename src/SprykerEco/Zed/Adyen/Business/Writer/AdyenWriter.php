@@ -74,7 +74,7 @@ class AdyenWriter implements AdyenWriterInterface
 
     /**
      * @param string $status
-     * @param \Generated\Shared\Transfer\PaymentAdyenOrderItemTransfer[] $paymentAdyenOrderItemTransfers
+     * @param array<\Generated\Shared\Transfer\PaymentAdyenOrderItemTransfer> $paymentAdyenOrderItemTransfers
      * @param \Generated\Shared\Transfer\PaymentAdyenTransfer|null $paymentAdyenTransfer
      *
      * @return void

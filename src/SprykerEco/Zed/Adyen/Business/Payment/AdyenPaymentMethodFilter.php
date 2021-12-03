@@ -24,7 +24,7 @@ class AdyenPaymentMethodFilter implements AdyenPaymentMethodFilterInterface
     protected const ADYEN_PAYMENT_METHOD = 'adyen';
 
     /**
-     * @var string[]
+     * @var array<string>
      */
     protected $availableMethods = [];
 

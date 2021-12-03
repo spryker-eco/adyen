@@ -217,7 +217,7 @@ class AdyenPostSaveHook implements AdyenHookInterface
         return in_array(
             $adyenApiResponseTransfer->getMakePaymentResponseOrFail()->getResultCode(),
             static::ADYEN_OMS_STATUS_REFUSAL_REASONS,
-            true
+            true,
         );
     }
 }

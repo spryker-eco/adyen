@@ -15,7 +15,7 @@ class CancelOrRefundCommandSaver extends AbstractCommandSaver implements AdyenCo
     protected const REQUEST_TYPE = 'CANCEL OR REFUND';
 
     /**
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $orderItems
+     * @param array<\Orm\Zed\Sales\Persistence\SpySalesOrderItem> $orderItems
      *
      * @return void
      */
@@ -41,7 +41,7 @@ class CancelOrRefundCommandSaver extends AbstractCommandSaver implements AdyenCo
     }
 
     /**
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $orderItems
+     * @param array<\Orm\Zed\Sales\Persistence\SpySalesOrderItem> $orderItems
      *
      * @return void
      */
