@@ -13,12 +13,12 @@ use SprykerEco\Zed\Adyen\Business\Hook\Mapper\MakePayment\AdyenMapperInterface;
 class AdyenMapperResolver implements AdyenMapperResolverInterface
 {
     /**
-     * @var \SprykerEco\Zed\Adyen\Business\Hook\Mapper\MakePayment\AdyenMapperInterface[]
+     * @var array<\SprykerEco\Zed\Adyen\Business\Hook\Mapper\MakePayment\AdyenMapperInterface>
      */
     protected $mappers;
 
     /**
-     * @param \SprykerEco\Zed\Adyen\Business\Hook\Mapper\MakePayment\AdyenMapperInterface[] $mappers
+     * @param array<\SprykerEco\Zed\Adyen\Business\Hook\Mapper\MakePayment\AdyenMapperInterface> $mappers
      */
     public function __construct(array $mappers)
     {
@@ -36,7 +36,7 @@ class AdyenMapperResolver implements AdyenMapperResolverInterface
     {
         if (!array_key_exists($methodName, $this->mappers)) {
             throw new AdyenMethodMapperException(
-                sprintf('%s method mapper is not registered.', $methodName)
+                sprintf('%s method mapper is not registered.', $methodName),
             );
         }
 

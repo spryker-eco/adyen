@@ -99,7 +99,7 @@ class IdealSubForm extends AbstractSubForm
                 'placeholder' => false,
                 'choices' => array_flip($choices),
                 'constraints' => [],
-            ]
+            ],
         );
 
         return $this;

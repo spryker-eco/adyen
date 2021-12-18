@@ -14,7 +14,7 @@ use Generated\Shared\Transfer\OrderTransfer;
 class AuthorizeCommandMapper extends AbstractCommandMapper implements AdyenCommandMapperInterface
 {
     /**
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $orderItems
+     * @param array<\Orm\Zed\Sales\Persistence\SpySalesOrderItem> $orderItems
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return \Generated\Shared\Transfer\AdyenApiRequestTransfer
@@ -24,7 +24,7 @@ class AuthorizeCommandMapper extends AbstractCommandMapper implements AdyenComma
         $request = new AdyenApiRequestTransfer();
         $paymentAdyen = $this->reader->getPaymentAdyenByOrderTransfer($orderTransfer);
         $request->setAuthorizeRequest(
-            (new AdyenApiAuthorizeRequestTransfer())
+            (new AdyenApiAuthorizeRequestTransfer()),
         );
 
         return $request;

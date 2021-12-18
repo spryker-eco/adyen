@@ -82,7 +82,7 @@ class FacadeTest extends BaseSetUpTest
         $facade = $this->createFacade();
         $orderTransfer = $this->setUpCommandTest(
             static::PROCESS_NAME_ADYEN_CREDIT_CARD,
-            static::OMS_STATUS_AUTHORIZED
+            static::OMS_STATUS_AUTHORIZED,
         );
         $items = $this->getSpySalesOrderItems($orderTransfer);
         $facade->handleCancelCommand($items, $orderTransfer, []);
@@ -103,7 +103,7 @@ class FacadeTest extends BaseSetUpTest
         $facade = $this->createFacade();
         $orderTransfer = $this->setUpCommandTest(
             static::PROCESS_NAME_ADYEN_CREDIT_CARD,
-            static::OMS_STATUS_AUTHORIZED
+            static::OMS_STATUS_AUTHORIZED,
         );
         $items = $this->getSpySalesOrderItems($orderTransfer);
         $facade->handleCaptureCommand($items, $orderTransfer, []);
@@ -124,7 +124,7 @@ class FacadeTest extends BaseSetUpTest
         $facade = $this->createFacade();
         $orderTransfer = $this->setUpCommandTest(
             static::PROCESS_NAME_ADYEN_CREDIT_CARD,
-            static::OMS_STATUS_CAPTURED
+            static::OMS_STATUS_CAPTURED,
         );
         $items = $this->getSpySalesOrderItems($orderTransfer);
         $facade->handleRefundCommand($items, $orderTransfer, []);
@@ -145,7 +145,7 @@ class FacadeTest extends BaseSetUpTest
         $facade = $this->createFacade();
         $orderTransfer = $this->setUpCommandTest(
             static::PROCESS_NAME_ADYEN_SOFORT,
-            static::OMS_STATUS_CAPTURED
+            static::OMS_STATUS_CAPTURED,
         );
         $items = $this->getSpySalesOrderItems($orderTransfer);
         $facade->handleCancelOrRefundCommand($items, $orderTransfer, []);
@@ -182,7 +182,7 @@ class FacadeTest extends BaseSetUpTest
         $facade = $this->createFacade();
         $orderTransfer = $this->setUpCommandTest(
             static::PROCESS_NAME_ADYEN_CREDIT_CARD,
-            static::OMS_STATUS_CAPTURE_PENDING
+            static::OMS_STATUS_CAPTURE_PENDING,
         );
         $notificationsTransfer = $this->createNotificationsTransfer($orderTransfer, static::EVENT_CODE_CAPTURE);
         $facade->handleNotification($notificationsTransfer);
@@ -204,7 +204,7 @@ class FacadeTest extends BaseSetUpTest
         $facade = $this->createFacade();
         $orderTransfer = $this->setUpCommandTest(
             static::PROCESS_NAME_ADYEN_CREDIT_CARD,
-            static::OMS_STATUS_NEW
+            static::OMS_STATUS_NEW,
         );
 
         // Act
@@ -249,7 +249,7 @@ class FacadeTest extends BaseSetUpTest
         $facade = $this->createFacade();
         $orderTransfer = $this->setUpCommandTest(
             static::PROCESS_NAME_ADYEN_SOFORT,
-            static::OMS_STATUS_NEW
+            static::OMS_STATUS_NEW,
         );
         $redirectResponseTransfer = $this->createRedirectResponseTransfer($orderTransfer);
         $result = $facade->handleOnlineTransferResponseFromAdyen($redirectResponseTransfer);
@@ -271,7 +271,7 @@ class FacadeTest extends BaseSetUpTest
         $facade = $this->createFacade();
         $orderTransfer = $this->setUpCommandTest(
             static::PROCESS_NAME_ADYEN_SOFORT,
-            static::OMS_STATUS_AUTHORIZED
+            static::OMS_STATUS_AUTHORIZED,
         );
         $redirectResponseTransfer = $this->createRedirectResponseTransfer($orderTransfer);
 
@@ -297,7 +297,7 @@ class FacadeTest extends BaseSetUpTest
         $facade = $this->createFacade();
         $orderTransfer = $this->setUpCommandTest(
             static::PROCESS_NAME_ADYEN_CREDIT_CARD,
-            static::OMS_STATUS_NEW
+            static::OMS_STATUS_NEW,
         );
         $redirectResponseTransfer = $this->createRedirectResponseTransfer($orderTransfer);
         $result = $facade->handleCreditCard3dResponseFromAdyen($redirectResponseTransfer);

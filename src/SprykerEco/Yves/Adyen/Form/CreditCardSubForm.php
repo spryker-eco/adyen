@@ -144,7 +144,7 @@ class CreditCardSubForm extends AbstractSubForm
                         'message' => static::GLOSSARY_KEY_CONSTRAINT_MESSAGE_INVALID_CARD_NUMBER,
                     ]),
                 ],
-            ]
+            ],
         );
 
         $builder->add(
@@ -156,7 +156,7 @@ class CreditCardSubForm extends AbstractSubForm
                         'message' => static::GLOSSARY_KEY_CONSTRAINT_MESSAGE_INVALID_EXPIRY_YEAR,
                     ]),
                 ],
-            ]
+            ],
         );
 
         $builder->add(
@@ -168,7 +168,7 @@ class CreditCardSubForm extends AbstractSubForm
                         'message' => static::GLOSSARY_KEY_CONSTRAINT_MESSAGE_INVALID_EXPIRY_MONTH,
                     ]),
                 ],
-            ]
+            ],
         );
 
         $builder->add(
@@ -180,7 +180,7 @@ class CreditCardSubForm extends AbstractSubForm
                         'message' => static::GLOSSARY_KEY_CONSTRAINT_MESSAGE_INVALID_SECURITY_CODE,
                     ]),
                 ],
-            ]
+            ],
         );
     }
 

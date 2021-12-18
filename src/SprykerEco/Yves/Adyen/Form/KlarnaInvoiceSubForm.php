@@ -103,7 +103,7 @@ class KlarnaInvoiceSubForm extends AbstractSubForm
                 'label' => static::SOCIAL_SECURITY_NUMBER_LABEL,
                 'required' => true,
                 'constraints' => [],
-            ]
+            ],
         );
 
         return $this;

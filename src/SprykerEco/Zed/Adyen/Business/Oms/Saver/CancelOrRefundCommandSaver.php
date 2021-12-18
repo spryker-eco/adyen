@@ -15,7 +15,7 @@ class CancelOrRefundCommandSaver extends AbstractCommandSaver implements AdyenCo
     protected const REQUEST_TYPE = 'CANCEL OR REFUND';
 
     /**
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $orderItems
+     * @param array<\Orm\Zed\Sales\Persistence\SpySalesOrderItem> $orderItems
      *
      * @return void
      */
@@ -26,7 +26,7 @@ class CancelOrRefundCommandSaver extends AbstractCommandSaver implements AdyenCo
 
         $this->writer->updatePaymentEntities(
             $this->config->getOmsStatusRefundPending(),
-            $this->reader->getAllPaymentAdyenOrderItemsByIdSalesOrder($orderItem->getFkSalesOrder())
+            $this->reader->getAllPaymentAdyenOrderItemsByIdSalesOrder($orderItem->getFkSalesOrder()),
         );
 
         $this->triggerCancelEvent($orderItems);
@@ -41,7 +41,7 @@ class CancelOrRefundCommandSaver extends AbstractCommandSaver implements AdyenCo
     }
 
     /**
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $orderItems
+     * @param array<\Orm\Zed\Sales\Persistence\SpySalesOrderItem> $orderItems
      *
      * @return void
      */
@@ -55,7 +55,7 @@ class CancelOrRefundCommandSaver extends AbstractCommandSaver implements AdyenCo
         $this->omsFacade->triggerEventForOrderItems(
             $this->config->getOmsEventRefundName(),
             $remainingItems,
-            [$this->config->getAdyenAutomaticOmsTrigger() => true]
+            [$this->config->getAdyenAutomaticOmsTrigger() => true],
         );
     }
 }

@@ -73,7 +73,7 @@ class AdyenPersistenceMapper implements AdyenPersistenceMapperInterface
     ): PaymentAdyenOrderItemTransfer {
         $paymentAdyenOrderItemTransfer->fromArray(
             $paymentAdyenOrderItemEntityTransfer->toArray(),
-            true
+            true,
         );
 
         return $paymentAdyenOrderItemTransfer;
@@ -105,7 +105,7 @@ class AdyenPersistenceMapper implements AdyenPersistenceMapperInterface
     ): PaymentAdyenApiLogTransfer {
         $paymentAdyenApiLogTransfer->fromArray(
             $paymentAdyenApiLogEntityTransfer->toArray(),
-            true
+            true,
         );
 
         return $paymentAdyenApiLogTransfer;
@@ -137,7 +137,7 @@ class AdyenPersistenceMapper implements AdyenPersistenceMapperInterface
     ): PaymentAdyenNotificationTransfer {
         $paymentAdyenNotificationTransfer->fromArray(
             $paymentAdyenNotificationEntityTransfer->toArray(),
-            true
+            true,
         );
 
         return $paymentAdyenNotificationTransfer;
