@@ -14,7 +14,7 @@ use Generated\Shared\Transfer\OrderTransfer;
 class CancelOrRefundCommandMapper extends AbstractCommandMapper implements AdyenCommandMapperInterface
 {
     /**
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $orderItems
+     * @param array<\Orm\Zed\Sales\Persistence\SpySalesOrderItem> $orderItems
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return \Generated\Shared\Transfer\AdyenApiRequestTransfer
@@ -27,7 +27,7 @@ class CancelOrRefundCommandMapper extends AbstractCommandMapper implements Adyen
             (new AdyenApiCancelOrRefundRequestTransfer())
                 ->setMerchantAccount($this->config->getMerchantAccount())
                 ->setOriginalReference($paymentAdyen->getPspReference())
-                ->setOriginalMerchantReference($paymentAdyen->getReference())
+                ->setOriginalMerchantReference($paymentAdyen->getReference()),
         );
 
         return $request;

@@ -63,7 +63,7 @@ abstract class AbstractCommandHandler implements AdyenCommandHandlerInterface
     }
 
     /**
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $orderItems
+     * @param array<\Orm\Zed\Sales\Persistence\SpySalesOrderItem> $orderItems
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      * @param array $data
      *

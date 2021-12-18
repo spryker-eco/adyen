@@ -145,7 +145,7 @@ class AdyenPostSaveHook implements AdyenHookInterface
     ): void {
         $checkoutResponseTransfer->setIsExternalRedirect(true);
         $checkoutResponseTransfer->setRedirectUrl(
-            $responseTransfer->getMakePaymentResponseOrFail()->getRedirectOrFail()->getUrl()
+            $responseTransfer->getMakePaymentResponseOrFail()->getRedirectOrFail()->getUrl(),
         );
     }
 

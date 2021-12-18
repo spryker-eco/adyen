@@ -92,7 +92,7 @@ class KlarnaInvoiceMapper extends AbstractMapper
                     ->setAmountExcludingTax($item->getSumPrice() - $item->getSumTaxAmount())
                     ->setAmountIncludingTax($item->getSumPrice());
             },
-            $quoteTransfer->getItems()->getArrayCopy()
+            $quoteTransfer->getItems()->getArrayCopy(),
         );
 
         return new ArrayObject(array_values($items));

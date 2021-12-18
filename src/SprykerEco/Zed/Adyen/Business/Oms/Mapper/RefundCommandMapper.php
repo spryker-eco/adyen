@@ -16,7 +16,7 @@ use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 class RefundCommandMapper extends AbstractCommandMapper implements AdyenCommandMapperInterface
 {
     /**
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $orderItems
+     * @param array<\Orm\Zed\Sales\Persistence\SpySalesOrderItem> $orderItems
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return \Generated\Shared\Transfer\AdyenApiRequestTransfer
@@ -30,14 +30,14 @@ class RefundCommandMapper extends AbstractCommandMapper implements AdyenCommandM
                 ->setMerchantAccount($this->config->getMerchantAccount())
                 ->setOriginalReference($paymentAdyen->getPspReference())
                 ->setOriginalMerchantReference($paymentAdyen->getReference())
-                ->setModificationAmount($this->createAmountTransfer($orderItems, $orderTransfer))
+                ->setModificationAmount($this->createAmountTransfer($orderItems, $orderTransfer)),
         );
 
         return $request;
     }
 
     /**
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $orderItems
+     * @param array<\Orm\Zed\Sales\Persistence\SpySalesOrderItem> $orderItems
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return \Generated\Shared\Transfer\AdyenApiAmountTransfer
@@ -50,7 +50,7 @@ class RefundCommandMapper extends AbstractCommandMapper implements AdyenCommandM
     }
 
     /**
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $orderItems
+     * @param array<\Orm\Zed\Sales\Persistence\SpySalesOrderItem> $orderItems
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return int
@@ -65,7 +65,7 @@ class RefundCommandMapper extends AbstractCommandMapper implements AdyenCommandM
             function (SpySalesOrderItem $orderItem) {
                 return $orderItem->getRefundableAmount();
             },
-            $orderItems
+            $orderItems,
         );
 
         return (int)array_sum($amount);

@@ -241,7 +241,7 @@ class AdyenConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getOmsStatusAuthorizedAvailableTransitions(): array
     {
@@ -557,7 +557,7 @@ class AdyenConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getMapperPaymentMethods(): array
     {
@@ -590,7 +590,7 @@ class AdyenConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getInvalidAdyenPaymentStatusList(): array
     {
@@ -604,7 +604,7 @@ class AdyenConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getValidAdyenPaymentStatusList(): array
     {

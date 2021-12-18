@@ -36,7 +36,7 @@ abstract class AbstractMapper implements AdyenMapperInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     abstract protected function getPayload(QuoteTransfer $quoteTransfer): array;
 
@@ -145,7 +145,7 @@ abstract class AbstractMapper implements AdyenMapperInterface
                 (new AdyenApiNameTransfer())
                     ->setFirstName($billingAddress->getFirstName())
                     ->setGender($this->getGender($quoteTransfer))
-                    ->setLastName($billingAddress->getLastName())
+                    ->setLastName($billingAddress->getLastName()),
             )
             ->setShopperEmail($customer->getEmail())
             ->setTelephoneNumber($this->getPhoneNumber($quoteTransfer))
@@ -155,7 +155,7 @@ abstract class AbstractMapper implements AdyenMapperInterface
                     ->setCountry($billingAddress->getIso2Code())
                     ->setHouseNumberOrName($billingAddress->getAddress2())
                     ->setPostalCode($billingAddress->getZipCode())
-                    ->setStreet($billingAddress->getAddress1())
+                    ->setStreet($billingAddress->getAddress1()),
             )
             ->setDeliveryAddress(
                 (new AdyenApiAddressTransfer())
@@ -163,7 +163,7 @@ abstract class AbstractMapper implements AdyenMapperInterface
                     ->setCountry($shippingAddress->getIso2Code())
                     ->setHouseNumberOrName($shippingAddress->getAddress2())
                     ->setPostalCode($shippingAddress->getZipCode())
-                    ->setStreet($shippingAddress->getAddress1())
+                    ->setStreet($shippingAddress->getAddress1()),
             );
 
         return $requestTransfer;
@@ -224,7 +224,7 @@ abstract class AbstractMapper implements AdyenMapperInterface
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     protected function getAdditionalData(): array
     {

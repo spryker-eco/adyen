@@ -35,30 +35,30 @@ interface AdyenRepositoryInterface
     /**
      * @param int $idSalesOrder
      *
-     * @return \Generated\Shared\Transfer\PaymentAdyenOrderItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\PaymentAdyenOrderItemTransfer>
      */
     public function getAllPaymentAdyenOrderItemsByIdSalesOrder(int $idSalesOrder): array;
 
     /**
-     * @param int[] $orderItemIds
+     * @param array<int> $orderItemIds
      *
-     * @return \Generated\Shared\Transfer\PaymentAdyenOrderItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\PaymentAdyenOrderItemTransfer>
      */
     public function getOrderItemsByIdsSalesOrderItems(array $orderItemIds): array;
 
     /**
      * @param int $idSalesOrder
-     * @param int[] $orderItemIds
+     * @param array<int> $orderItemIds
      *
-     * @return \Generated\Shared\Transfer\PaymentAdyenOrderItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\PaymentAdyenOrderItemTransfer>
      */
     public function getRemainingPaymentAdyenOrderItems(int $idSalesOrder, array $orderItemIds): array;
 
     /**
      * @param int $idSalesOrder
-     * @param int[] $orderItemIds
+     * @param array<int> $orderItemIds
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getRemainingSalesOrderItemIds(int $idSalesOrder, array $orderItemIds): array;
 }

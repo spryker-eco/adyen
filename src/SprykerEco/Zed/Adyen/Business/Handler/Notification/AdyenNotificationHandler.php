@@ -92,7 +92,7 @@ class AdyenNotificationHandler implements AdyenNotificationHandlerInterface
         $paymentAdyenOrderItems = $this->reader
             ->getAllPaymentAdyenOrderItemsByIdSalesOrder($paymentAdyenTransfer->getFkSalesOrder());
         $paymentAdyenTransfer->setAdditionalData(
-            $this->utilEncodingService->encodeJson($notificationTransfer->getAdditionalData())
+            $this->utilEncodingService->encodeJson($notificationTransfer->getAdditionalData()),
         );
 
         if ($this->isDuplicatedAuthorisationNotification($notificationTransfer, $paymentAdyenOrderItems)) {
@@ -102,13 +102,13 @@ class AdyenNotificationHandler implements AdyenNotificationHandlerInterface
         $this->writer->updatePaymentEntities(
             $statuses[$notificationTransfer->getEventCode()][$notificationTransfer->getSuccess()],
             $paymentAdyenOrderItems,
-            $paymentAdyenTransfer
+            $paymentAdyenTransfer,
         );
     }
 
     /**
      * @param \Generated\Shared\Transfer\AdyenNotificationRequestItemTransfer $notificationTransfer
-     * @param \Generated\Shared\Transfer\PaymentAdyenOrderItemTransfer[] $paymentAdyenOrderItems
+     * @param array<\Generated\Shared\Transfer\PaymentAdyenOrderItemTransfer> $paymentAdyenOrderItems
      *
      * @return bool
      */
