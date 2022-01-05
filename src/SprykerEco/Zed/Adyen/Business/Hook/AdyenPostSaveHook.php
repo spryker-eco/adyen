@@ -12,7 +12,8 @@ use Generated\Shared\Transfer\AdyenRedirectTransfer;
 use Generated\Shared\Transfer\CheckoutErrorTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use SprykerEco\Shared\Adyen\AdyenConfig;
+use SprykerEco\Shared\Adyen\AdyenConfig as AdyenConfigShared;
+use SprykerEco\Zed\Adyen\AdyenConfig;
 use SprykerEco\Zed\Adyen\Business\Hook\Mapper\AdyenMapperResolverInterface;
 use SprykerEco\Zed\Adyen\Business\Hook\Saver\AdyenSaverResolverInterface;
 use SprykerEco\Zed\Adyen\Dependency\Facade\AdyenToAdyenApiFacadeInterface;
@@ -50,25 +51,6 @@ class AdyenPostSaveHook implements AdyenHookInterface
     protected const ADYEN_OMS_STATUS_REFUSED = 'Refused';
 
     /**
-     * @var string
-     */
-    protected const ADYEN_OMS_STATUS_ERROR = 'Error';
-
-    /**
-     * @var string
-     */
-    protected const ADYEN_OMS_STATUS_CANCELLED = 'Cancelled';
-
-    /**
-     * @var array
-     */
-    protected const ADYEN_OMS_STATUS_REFUSAL_REASONS = [
-        self::ADYEN_OMS_STATUS_REFUSED,
-        self::ADYEN_OMS_STATUS_ERROR,
-        self::ADYEN_OMS_STATUS_CANCELLED,
-    ];
-
-    /**
      * @var \SprykerEco\Zed\Adyen\Dependency\Facade\AdyenToAdyenApiFacadeInterface
      */
     protected $adyenApiFacade;
@@ -84,18 +66,26 @@ class AdyenPostSaveHook implements AdyenHookInterface
     protected $saverResolver;
 
     /**
+     * @var \SprykerEco\Zed\Adyen\AdyenConfig
+     */
+    protected $config;
+
+    /**
      * @param \SprykerEco\Zed\Adyen\Dependency\Facade\AdyenToAdyenApiFacadeInterface $adyenApiFacade
      * @param \SprykerEco\Zed\Adyen\Business\Hook\Mapper\AdyenMapperResolverInterface $mapperResolver
      * @param \SprykerEco\Zed\Adyen\Business\Hook\Saver\AdyenSaverResolverInterface $saverResolver
+     * @param \SprykerEco\Zed\Adyen\AdyenConfig $config
      */
     public function __construct(
         AdyenToAdyenApiFacadeInterface $adyenApiFacade,
         AdyenMapperResolverInterface $mapperResolver,
-        AdyenSaverResolverInterface $saverResolver
+        AdyenSaverResolverInterface $saverResolver,
+        AdyenConfig $config
     ) {
         $this->adyenApiFacade = $adyenApiFacade;
         $this->mapperResolver = $mapperResolver;
         $this->saverResolver = $saverResolver;
+        $this->config = $config;
     }
 
     /**
@@ -108,7 +98,7 @@ class AdyenPostSaveHook implements AdyenHookInterface
     {
         $payment = $quoteTransfer->getPaymentOrFail();
 
-        if ($payment->getPaymentProvider() !== AdyenConfig::PROVIDER_NAME) {
+        if ($payment->getPaymentProvider() !== AdyenConfigShared::PROVIDER_NAME) {
             return;
         }
 
@@ -215,8 +205,8 @@ class AdyenPostSaveHook implements AdyenHookInterface
     protected function hasRefusalStatus(AdyenApiResponseTransfer $adyenApiResponseTransfer): bool
     {
         return in_array(
-            $adyenApiResponseTransfer->getMakePaymentResponseOrFail()->getResultCode(),
-            static::ADYEN_OMS_STATUS_REFUSAL_REASONS,
+            strtolower($adyenApiResponseTransfer->getMakePaymentResponseOrFail()->getResultCode()),
+            $this->config->getInvalidAdyenPaymentStatusList(),
             true,
         );
     }
