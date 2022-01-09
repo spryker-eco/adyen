@@ -15,7 +15,7 @@ class AdyenConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getSocialSecurityNumberCountriesMandatory(): array
     {
@@ -25,7 +25,7 @@ class AdyenConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getIdealIssuersList(): array
     {

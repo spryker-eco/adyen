@@ -15,6 +15,9 @@ use SprykerEco\Zed\Adyen\Dependency\Facade\AdyenToOmsFacadeBridge;
 use SprykerEco\Zed\Adyen\Dependency\Facade\AdyenToSalesFacadeBridge;
 use SprykerEco\Zed\Adyen\Dependency\Service\AdyenToUtilEncodingServiceBridge;
 
+/**
+ * @method \SprykerEco\Zed\Adyen\AdyenConfig getConfig()
+ */
 class AdyenDependencyProvider extends AbstractBundleDependencyProvider
 {
     /**

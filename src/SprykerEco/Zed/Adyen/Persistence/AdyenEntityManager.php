@@ -37,7 +37,7 @@ class AdyenEntityManager extends AbstractEntityManager implements AdyenEntityMan
             ->getMapper()
             ->mapEntityTransferToPaymentAdyenTransfer(
                 $entityTransfer,
-                $paymentAdyenTransfer
+                $paymentAdyenTransfer,
             );
 
         return $paymentAdyenTransfer;
@@ -62,7 +62,7 @@ class AdyenEntityManager extends AbstractEntityManager implements AdyenEntityMan
             ->getMapper()
             ->mapEntityTransferToPaymentAdyenOrderItemTransfer(
                 $entityTransfer,
-                $paymentAdyenOrderItemTransfer
+                $paymentAdyenOrderItemTransfer,
             );
 
         return $paymentAdyenOrderItemTransfer;
@@ -87,7 +87,7 @@ class AdyenEntityManager extends AbstractEntityManager implements AdyenEntityMan
             ->getMapper()
             ->mapEntityTransferToPaymentAdyenApiLogTransfer(
                 $entityTransfer,
-                $paymentAdyenApiLogTransfer
+                $paymentAdyenApiLogTransfer,
             );
 
         return $paymentAdyenApiLogTransfer;
@@ -112,7 +112,7 @@ class AdyenEntityManager extends AbstractEntityManager implements AdyenEntityMan
             ->getMapper()
             ->mapEntityTransferToPaymentAdyenNotificationTransfer(
                 $entityTransfer,
-                $paymentAdyenNotificationTransfer
+                $paymentAdyenNotificationTransfer,
             );
 
         return $paymentAdyenNotificationTransfer;

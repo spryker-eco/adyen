@@ -38,7 +38,7 @@ class AdyenDependencyProvider extends AbstractDependencyProvider
      */
     protected function addServiceZed(Container $container): Container
     {
-        $container->set(self::CLIENT_ZED_REQUEST, function (Container $container) {
+        $container->set(static::CLIENT_ZED_REQUEST, function (Container $container) {
             return new AdyenToZedRequestClientBridge($container->getLocator()->zedRequest()->client());
         });
 

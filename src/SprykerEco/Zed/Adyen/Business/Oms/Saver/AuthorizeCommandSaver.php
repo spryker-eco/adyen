@@ -15,7 +15,7 @@ class AuthorizeCommandSaver extends AbstractCommandSaver implements AdyenCommand
     protected const REQUEST_TYPE = 'AUTHORIZE';
 
     /**
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $orderItems
+     * @param array<\Orm\Zed\Sales\Persistence\SpySalesOrderItem> $orderItems
      *
      * @return void
      */
@@ -23,7 +23,7 @@ class AuthorizeCommandSaver extends AbstractCommandSaver implements AdyenCommand
     {
         $this->writer->updatePaymentEntities(
             $this->config->getOmsStatusAuthorized(),
-            $this->reader->getPaymentAdyenOrderItemsByOrderItems($orderItems)
+            $this->reader->getPaymentAdyenOrderItemsByOrderItems($orderItems),
         );
     }
 

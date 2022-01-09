@@ -90,7 +90,7 @@ class AdyenBusinessFactory extends AbstractBusinessFactory
         return new AdyenPaymentMethodFilter(
             $this->getAdyenApiFacade(),
             $this->createPaymentMethodsFilterMapper(),
-            $this->createPaymentMethodsFilterConverter()
+            $this->createPaymentMethodsFilterConverter(),
         );
     }
 
@@ -126,7 +126,7 @@ class AdyenBusinessFactory extends AbstractBusinessFactory
         return new AdyenPostSaveHook(
             $this->getAdyenApiFacade(),
             $this->createMapperResolver(),
-            $this->createSaverResolver()
+            $this->createSaverResolver(),
         );
     }
 
@@ -139,7 +139,7 @@ class AdyenBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \SprykerEco\Zed\Adyen\Business\Hook\Mapper\MakePayment\AdyenMapperInterface[]
+     * @return array<\SprykerEco\Zed\Adyen\Business\Hook\Mapper\MakePayment\AdyenMapperInterface>
      */
     public function getMakePaymentMappers(): array
     {
@@ -237,7 +237,7 @@ class AdyenBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \SprykerEco\Zed\Adyen\Business\Hook\Saver\MakePayment\AdyenSaverInterface[]
+     * @return array<\SprykerEco\Zed\Adyen\Business\Hook\Saver\MakePayment\AdyenSaverInterface>
      */
     public function getMakePaymentSavers(): array
     {
@@ -263,7 +263,7 @@ class AdyenBusinessFactory extends AbstractBusinessFactory
             $this->createReader(),
             $this->createWriter(),
             $this->getUtilEncodingService(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -276,7 +276,7 @@ class AdyenBusinessFactory extends AbstractBusinessFactory
             $this->createReader(),
             $this->createWriter(),
             $this->getUtilEncodingService(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -289,7 +289,7 @@ class AdyenBusinessFactory extends AbstractBusinessFactory
             $this->createReader(),
             $this->createWriter(),
             $this->getUtilEncodingService(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -302,7 +302,7 @@ class AdyenBusinessFactory extends AbstractBusinessFactory
             $this->createReader(),
             $this->createWriter(),
             $this->getUtilEncodingService(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -315,7 +315,7 @@ class AdyenBusinessFactory extends AbstractBusinessFactory
             $this->createReader(),
             $this->createWriter(),
             $this->getUtilEncodingService(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -328,7 +328,7 @@ class AdyenBusinessFactory extends AbstractBusinessFactory
             $this->createReader(),
             $this->createWriter(),
             $this->getUtilEncodingService(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -341,7 +341,7 @@ class AdyenBusinessFactory extends AbstractBusinessFactory
             $this->createReader(),
             $this->createWriter(),
             $this->getUtilEncodingService(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -354,7 +354,7 @@ class AdyenBusinessFactory extends AbstractBusinessFactory
             $this->createReader(),
             $this->createWriter(),
             $this->getUtilEncodingService(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -367,7 +367,7 @@ class AdyenBusinessFactory extends AbstractBusinessFactory
             $this->createReader(),
             $this->createWriter(),
             $this->getUtilEncodingService(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -380,7 +380,7 @@ class AdyenBusinessFactory extends AbstractBusinessFactory
             $this->createAuthorizeCommandMapper(),
             $this->getAdyenApiFacade(),
             $this->createAuthorizeCommandSaver(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -393,7 +393,7 @@ class AdyenBusinessFactory extends AbstractBusinessFactory
             $this->createCancelCommandMapper(),
             $this->getAdyenApiFacade(),
             $this->createCancelCommandSaver(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -406,7 +406,7 @@ class AdyenBusinessFactory extends AbstractBusinessFactory
             $this->createCaptureCommandMapper(),
             $this->getAdyenApiFacade(),
             $this->createCaptureCommandSaver(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -419,7 +419,7 @@ class AdyenBusinessFactory extends AbstractBusinessFactory
             $this->createRefundCommandMapper(),
             $this->getAdyenApiFacade(),
             $this->createRefundCommandSaver(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -432,7 +432,7 @@ class AdyenBusinessFactory extends AbstractBusinessFactory
             $this->createCancelOrRefundCommandMapper(),
             $this->getAdyenApiFacade(),
             $this->createCancelOrRefundCommandSaver(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -443,7 +443,7 @@ class AdyenBusinessFactory extends AbstractBusinessFactory
     {
         return new AuthorizeCommandMapper(
             $this->createReader(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -454,7 +454,7 @@ class AdyenBusinessFactory extends AbstractBusinessFactory
     {
         return new CancelCommandMapper(
             $this->createReader(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -465,7 +465,7 @@ class AdyenBusinessFactory extends AbstractBusinessFactory
     {
         return new CaptureCommandMapper(
             $this->createReader(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -476,7 +476,7 @@ class AdyenBusinessFactory extends AbstractBusinessFactory
     {
         return new RefundCommandMapper(
             $this->createReader(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -487,7 +487,7 @@ class AdyenBusinessFactory extends AbstractBusinessFactory
     {
         return new CancelOrRefundCommandMapper(
             $this->createReader(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -500,7 +500,7 @@ class AdyenBusinessFactory extends AbstractBusinessFactory
             $this->getOmsFacade(),
             $this->createReader(),
             $this->createWriter(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -513,7 +513,7 @@ class AdyenBusinessFactory extends AbstractBusinessFactory
             $this->getOmsFacade(),
             $this->createReader(),
             $this->createWriter(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -526,7 +526,7 @@ class AdyenBusinessFactory extends AbstractBusinessFactory
             $this->getOmsFacade(),
             $this->createReader(),
             $this->createWriter(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -539,7 +539,7 @@ class AdyenBusinessFactory extends AbstractBusinessFactory
             $this->getOmsFacade(),
             $this->createReader(),
             $this->createWriter(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -552,7 +552,7 @@ class AdyenBusinessFactory extends AbstractBusinessFactory
             $this->getOmsFacade(),
             $this->createReader(),
             $this->createWriter(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -564,7 +564,7 @@ class AdyenBusinessFactory extends AbstractBusinessFactory
         return new AdyenWriter(
             $this->getEntityManager(),
             $this->getUtilEncodingService(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -585,7 +585,7 @@ class AdyenBusinessFactory extends AbstractBusinessFactory
             $this->getAdyenApiFacade(),
             $this->createReader(),
             $this->createWriter(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -598,7 +598,7 @@ class AdyenBusinessFactory extends AbstractBusinessFactory
             $this->getAdyenApiFacade(),
             $this->createReader(),
             $this->createWriter(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -611,7 +611,7 @@ class AdyenBusinessFactory extends AbstractBusinessFactory
             $this->getUtilEncodingService(),
             $this->createReader(),
             $this->createWriter(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 

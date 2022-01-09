@@ -21,7 +21,7 @@ class CaptureCommandMapper extends AbstractCommandMapper implements AdyenCommand
     protected const AMOUNT_TO_MODIFY_DEFAULT = 0;
 
     /**
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $orderItems
+     * @param array<\Orm\Zed\Sales\Persistence\SpySalesOrderItem> $orderItems
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return \Generated\Shared\Transfer\AdyenApiRequestTransfer
@@ -35,14 +35,14 @@ class CaptureCommandMapper extends AbstractCommandMapper implements AdyenCommand
                 ->setMerchantAccount($this->config->getMerchantAccount())
                 ->setOriginalReference($paymentAdyen->getPspReference())
                 ->setOriginalMerchantReference($paymentAdyen->getReference())
-                ->setModificationAmount($this->createAmountTransfer($orderItems, $orderTransfer))
+                ->setModificationAmount($this->createAmountTransfer($orderItems, $orderTransfer)),
         );
 
         return $request;
     }
 
     /**
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $orderItems
+     * @param array<\Orm\Zed\Sales\Persistence\SpySalesOrderItem> $orderItems
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return \Generated\Shared\Transfer\AdyenApiAmountTransfer
@@ -55,7 +55,7 @@ class CaptureCommandMapper extends AbstractCommandMapper implements AdyenCommand
     }
 
     /**
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $orderItems
+     * @param array<\Orm\Zed\Sales\Persistence\SpySalesOrderItem> $orderItems
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return int
@@ -70,7 +70,7 @@ class CaptureCommandMapper extends AbstractCommandMapper implements AdyenCommand
             function (SpySalesOrderItem $orderItem) {
                 return $orderItem->getPriceToPayAggregation() ?? static::AMOUNT_TO_MODIFY_DEFAULT;
             },
-            $orderItems
+            $orderItems,
         );
 
         return (int)array_sum($amount);
