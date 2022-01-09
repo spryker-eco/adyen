@@ -90,9 +90,10 @@ class OnlineTransferRedirectHandler implements AdyenRedirectHandlerInterface
             return $redirectResponseTransfer;
         }
 
-        if ($responseTransfer->getPaymentDetailsResponseOrFail()->getResultCode() === static::RESULT_CODE_REFUSED) {
+        $resultCodeLower = strtolower($responseTransfer->getPaymentDetailsResponseOrFail()->getResultCode());
+        if ($resultCodeLower === $this->config->getAdyenPaymentStatusRefused()) {
             $redirectResponseTransfer
-                ->setResultCode(strtolower(static::RESULT_CODE_REFUSED))
+                ->setResultCode($this->config->getAdyenPaymentStatusRefused())
                 ->setIsSuccess(false);
 
             return $redirectResponseTransfer;
