@@ -23,11 +23,6 @@ class OnlineTransferRedirectHandler implements AdyenRedirectHandlerInterface
     /**
      * @var string
      */
-    protected const RESULT_CODE_REFUSED = 'Refused';
-
-    /**
-     * @var string
-     */
     protected const LOG_REQUEST_TYPE = 'PaymentDetails[%s]';
 
     /**
