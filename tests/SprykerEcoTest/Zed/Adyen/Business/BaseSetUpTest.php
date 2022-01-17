@@ -28,6 +28,8 @@ use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\PaymentAdyenOrderItemTransfer;
 use Generated\Shared\Transfer\PaymentAdyenTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
+use Orm\Zed\Adyen\Persistence\SpyPaymentAdyen;
+use Orm\Zed\Adyen\Persistence\SpyPaymentAdyenQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Spryker\Shared\Oms\OmsConstants;
 use SprykerEco\Shared\Adyen\AdyenConstants;
@@ -149,20 +151,24 @@ class BaseSetUpTest extends Test
     protected $tester;
 
     /**
+     * @param \SprykerEco\Zed\Adyen\Dependency\Facade\AdyenToAdyenApiFacadeInterface $adyenApiFacade
+     *
      * @return \SprykerEco\Zed\Adyen\Business\AdyenFacadeInterface
      */
-    protected function createFacade(): AdyenFacadeInterface
+    protected function createFacade(AdyenToAdyenApiFacadeInterface $adyenApiFacade): AdyenFacadeInterface
     {
         $facade = (new AdyenFacade())
-            ->setFactory($this->createFactory());
+            ->setFactory($this->createFactory($adyenApiFacade));
 
         return $facade;
     }
 
     /**
+     * @param \SprykerEco\Zed\Adyen\Dependency\Facade\AdyenToAdyenApiFacadeInterface $adyenApiFacade
+     *
      * @return \PHPUnit_Framework_MockObject_MockObject|\SprykerEco\Zed\Adyen\Business\AdyenBusinessFactory
      */
-    protected function createFactory(): AdyenBusinessFactory
+    protected function createFactory(AdyenToAdyenApiFacadeInterface $adyenApiFacade): AdyenBusinessFactory
     {
         $builder = $this->getMockBuilder(AdyenBusinessFactory::class);
         $builder->setMethods(
@@ -184,7 +190,7 @@ class BaseSetUpTest extends Test
         $stub->method('getEntityManager')
             ->willReturn($this->createEntityManager());
         $stub->method('getAdyenApiFacade')
-            ->willReturn($this->createAdyenApiFacade());
+            ->willReturn($adyenApiFacade);
         $stub->method('getOmsFacade')
             ->willReturn($this->createOmsFacade());
         $stub->method('getUtilEncodingService')
@@ -360,6 +366,18 @@ class BaseSetUpTest extends Test
             ->find();
 
         return $items->getArrayCopy();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Orm\Zed\Adyen\Persistence\SpyPaymentAdyen
+     */
+    protected function getSpyPaymentAdyen(OrderTransfer $orderTransfer): SpyPaymentAdyen
+    {
+        return SpyPaymentAdyenQuery::create()
+            ->filterByOrderReference($orderTransfer->getOrderReference())
+            ->findOne();
     }
 
     /**
