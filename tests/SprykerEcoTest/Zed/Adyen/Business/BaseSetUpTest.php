@@ -29,8 +29,11 @@ use Generated\Shared\Transfer\PaymentAdyenOrderItemTransfer;
 use Generated\Shared\Transfer\PaymentAdyenTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Orm\Zed\Adyen\Persistence\SpyPaymentAdyen;
+use Orm\Zed\Adyen\Persistence\SpyPaymentAdyenApiLog;
+use Orm\Zed\Adyen\Persistence\SpyPaymentAdyenApiLogQuery;
 use Orm\Zed\Adyen\Persistence\SpyPaymentAdyenQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
+use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Shared\Oms\OmsConstants;
 use SprykerEco\Shared\Adyen\AdyenConstants;
 use SprykerEco\Zed\Adyen\AdyenConfig;
@@ -151,24 +154,24 @@ class BaseSetUpTest extends Test
     protected $tester;
 
     /**
-     * @param \SprykerEco\Zed\Adyen\Dependency\Facade\AdyenToAdyenApiFacadeInterface $adyenApiFacade
+     * @param \SprykerEco\Zed\Adyen\Dependency\Facade\AdyenToAdyenApiFacadeInterface $adyenToAdyenApiFacade
      *
      * @return \SprykerEco\Zed\Adyen\Business\AdyenFacadeInterface
      */
-    protected function createFacade(AdyenToAdyenApiFacadeInterface $adyenApiFacade): AdyenFacadeInterface
+    protected function createFacade(AdyenToAdyenApiFacadeInterface $adyenToAdyenApiFacade): AdyenFacadeInterface
     {
         $facade = (new AdyenFacade())
-            ->setFactory($this->createFactory($adyenApiFacade));
+            ->setFactory($this->createFactory($adyenToAdyenApiFacade));
 
         return $facade;
     }
 
     /**
-     * @param \SprykerEco\Zed\Adyen\Dependency\Facade\AdyenToAdyenApiFacadeInterface $adyenApiFacade
+     * @param \SprykerEco\Zed\Adyen\Dependency\Facade\AdyenToAdyenApiFacadeInterface $adyenToAdyenApiFacade
      *
      * @return \PHPUnit_Framework_MockObject_MockObject|\SprykerEco\Zed\Adyen\Business\AdyenBusinessFactory
      */
-    protected function createFactory(AdyenToAdyenApiFacadeInterface $adyenApiFacade): AdyenBusinessFactory
+    protected function createFactory(AdyenToAdyenApiFacadeInterface $adyenToAdyenApiFacade): AdyenBusinessFactory
     {
         $builder = $this->getMockBuilder(AdyenBusinessFactory::class);
         $builder->setMethods(
@@ -190,7 +193,7 @@ class BaseSetUpTest extends Test
         $stub->method('getEntityManager')
             ->willReturn($this->createEntityManager());
         $stub->method('getAdyenApiFacade')
-            ->willReturn($adyenApiFacade);
+            ->willReturn($adyenToAdyenApiFacade);
         $stub->method('getOmsFacade')
             ->willReturn($this->createOmsFacade());
         $stub->method('getUtilEncodingService')
@@ -328,8 +331,8 @@ class BaseSetUpTest extends Test
             ->setFkSalesOrder($saveOrderTransfer->getIdSalesOrder())
             ->setPaymentMethod($processName)
             ->setOrderReference($saveOrderTransfer->getOrderReference())
-            ->setReference(sprintf(static::PAYMENT_ADYEN_REFERENCE, $saveOrderTransfer->getIdSalesOrder()))
-            ->setPspReference(sprintf(static::PAYMENT_ADYEN_PSP_REFERENCE, $saveOrderTransfer->getIdSalesOrder()));
+            ->setReference($this->getPaymentAdyenReference($saveOrderTransfer->getIdSalesOrder()))
+            ->setPspReference($this->getPaymentAdyenPspReference($saveOrderTransfer->getIdSalesOrder()));
         $paymentAdyenTransfer = $entityManager->savePaymentAdyen($paymentAdyenTransfer);
 
         $paymentAdyenOrderItemTransfer = (new PaymentAdyenOrderItemTransfer())
@@ -381,6 +384,16 @@ class BaseSetUpTest extends Test
     }
 
     /**
+     * @return \Orm\Zed\Adyen\Persistence\SpyPaymentAdyenApiLog
+     */
+    protected function getLastSpyPaymentAdyenApiLog(): SpyPaymentAdyenApiLog
+    {
+        return SpyPaymentAdyenApiLogQuery::create()
+            ->orderByIdPaymentAdyenApiLog(Criteria::DESC)
+            ->findOne();
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      * @param string $eventCode
      *
@@ -398,7 +411,7 @@ class BaseSetUpTest extends Test
                 AdyenNotificationRequestItemTransfer::PSP_REFERENCE => static::RESPONSE_REFERENCE,
                 AdyenNotificationRequestItemTransfer::EVENT_CODE => $eventCode,
                 AdyenNotificationRequestItemTransfer::MERCHANT_ACCOUNT_CODE => static::MERCHANT_ACCOUNT,
-                AdyenNotificationRequestItemTransfer::MERCHANT_REFERENCE => sprintf(static::PAYMENT_ADYEN_REFERENCE, $orderTransfer->getIdSalesOrder()),
+                AdyenNotificationRequestItemTransfer::MERCHANT_REFERENCE => $this->getPaymentAdyenReference($orderTransfer->getIdSalesOrder()),
                 AdyenNotificationRequestItemTransfer::SUCCESS => static::RESPONSE_SUCCESS_TRUE,
                 AdyenNotificationRequestItemTransfer::AMOUNT => $amount,
             ]))
@@ -423,7 +436,7 @@ class BaseSetUpTest extends Test
     protected function createRedirectResponseTransfer(OrderTransfer $orderTransfer): AdyenRedirectResponseTransfer
     {
         $redirectResponseTransfer = (new AdyenRedirectResponseBuilder([
-                AdyenRedirectResponseTransfer::REFERENCE => sprintf(static::PAYMENT_ADYEN_REFERENCE, $orderTransfer->getIdSalesOrder()),
+                AdyenRedirectResponseTransfer::REFERENCE => $this->getPaymentAdyenReference($orderTransfer->getIdSalesOrder()),
                 AdyenRedirectResponseTransfer::PAYLOAD => static::REDIRECT_RESPONSE_PAYLOAD,
                 AdyenRedirectResponseTransfer::TYPE => static::REDIRECT_RESPONSE_TYPE,
                 AdyenRedirectResponseTransfer::RESULT_CODE => static::REDIRECT_RESPONSE_RESULT_CODE,
@@ -431,5 +444,25 @@ class BaseSetUpTest extends Test
             ->build();
 
         return $redirectResponseTransfer;
+    }
+
+    /**
+     * @param int $idSalesOrder
+     *
+     * @return string
+     */
+    protected function getPaymentAdyenReference(int $idSalesOrder): string
+    {
+        return sprintf(static::PAYMENT_ADYEN_REFERENCE, $idSalesOrder);
+    }
+
+    /**
+     * @param int $idSalesOrder
+     *
+     * @return string
+     */
+    protected function getPaymentAdyenPspReference(int $idSalesOrder): string
+    {
+        return sprintf(static::PAYMENT_ADYEN_PSP_REFERENCE, $idSalesOrder);
     }
 }

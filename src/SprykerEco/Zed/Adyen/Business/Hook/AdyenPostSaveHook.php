@@ -106,72 +106,72 @@ class AdyenPostSaveHook implements AdyenHookInterface
         $mapper = $this->mapperResolver->resolve($paymentSelection);
         $saver = $this->saverResolver->resolve($paymentSelection);
         $requestTransfer = $mapper->buildPaymentRequestTransfer($quoteTransfer);
-        $responseTransfer = $this->adyenApiFacade->performMakePaymentApiCall($requestTransfer);
+        $adyenApiResponseTransfer = $this->adyenApiFacade->performMakePaymentApiCall($requestTransfer);
 
-        $saver->save($requestTransfer, $responseTransfer);
+        $saver->save($requestTransfer, $adyenApiResponseTransfer);
 
-        if (!$responseTransfer->getIsSuccess() || $this->hasRefusalStatus($responseTransfer)) {
+        if (!$adyenApiResponseTransfer->getIsSuccess() || $this->hasRefusalStatus($adyenApiResponseTransfer)) {
             $this->processFailureResponse($checkoutResponseTransfer);
 
             return;
         }
 
-        if (!$this->isMethodWithRedirect($responseTransfer)) {
+        if (!$this->isMethodWithRedirect($adyenApiResponseTransfer)) {
             return;
         }
 
-        $makePaymentResponse = $responseTransfer->getMakePaymentResponseOrFail();
+        $makePaymentResponse = $adyenApiResponseTransfer->getMakePaymentResponseOrFail();
 
         if ($makePaymentResponse->getRedirectOrFail()->getMethod() === static::REDIRECT_METHOD_GET) {
-            $this->processGetRedirect($checkoutResponseTransfer, $responseTransfer);
+            $this->processGetRedirect($checkoutResponseTransfer, $adyenApiResponseTransfer);
 
             return;
         }
 
         if ($makePaymentResponse->getRedirectOrFail()->getMethod() === static::REDIRECT_METHOD_POST) {
-            $this->processPostRedirect($checkoutResponseTransfer, $responseTransfer);
+            $this->processPostRedirect($checkoutResponseTransfer, $adyenApiResponseTransfer);
 
             return;
         }
     }
 
     /**
-     * @param \Generated\Shared\Transfer\AdyenApiResponseTransfer $responseTransfer
+     * @param \Generated\Shared\Transfer\AdyenApiResponseTransfer $adyenApiResponseTransfer
      *
      * @return bool
      */
-    protected function isMethodWithRedirect(AdyenApiResponseTransfer $responseTransfer): bool
+    protected function isMethodWithRedirect(AdyenApiResponseTransfer $adyenApiResponseTransfer): bool
     {
-        return (bool)$responseTransfer->getMakePaymentResponse()->getRedirect();
+        return (bool)$adyenApiResponseTransfer->getMakePaymentResponseOrFail()->getRedirect();
     }
 
     /**
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
-     * @param \Generated\Shared\Transfer\AdyenApiResponseTransfer $responseTransfer
+     * @param \Generated\Shared\Transfer\AdyenApiResponseTransfer $adyenApiResponseTransfer
      *
      * @return void
      */
     protected function processGetRedirect(
         CheckoutResponseTransfer $checkoutResponseTransfer,
-        AdyenApiResponseTransfer $responseTransfer
+        AdyenApiResponseTransfer $adyenApiResponseTransfer
     ): void {
         $checkoutResponseTransfer->setIsExternalRedirect(true);
         $checkoutResponseTransfer->setRedirectUrl(
-            $responseTransfer->getMakePaymentResponseOrFail()->getRedirectOrFail()->getUrl(),
+            $adyenApiResponseTransfer->getMakePaymentResponseOrFail()->getRedirectOrFail()->getUrl(),
         );
     }
 
     /**
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
-     * @param \Generated\Shared\Transfer\AdyenApiResponseTransfer $responseTransfer
+     * @param \Generated\Shared\Transfer\AdyenApiResponseTransfer $adyenApiResponseTransfer
      *
      * @return void
      */
     protected function processPostRedirect(
         CheckoutResponseTransfer $checkoutResponseTransfer,
-        AdyenApiResponseTransfer $responseTransfer
+        AdyenApiResponseTransfer $adyenApiResponseTransfer
     ): void {
-        $redirect = $responseTransfer->getMakePaymentResponseOrFail()->getRedirectOrFail();
+        $redirect = $adyenApiResponseTransfer->getMakePaymentResponseOrFail()->getRedirectOrFail();
 
         $redirectTransfer = (new AdyenRedirectTransfer())
             ->setAction($redirect->getUrl())

@@ -30,6 +30,21 @@ class AdyenFacadeExecutePostSaveHookTest extends BaseSetUpTest
     /**
      * @var string
      */
+    protected const MAKE_PAYMENT_PAY_PAL_REQUEST_TYPE = 'MakePayment[PayPal]';
+
+    /**
+     * @var array
+     */
+    protected const MAKE_PAYMENT_RESPONSE_DETAILS = ['details'];
+
+    /**
+     * @var string
+     */
+    protected const MAKE_PAYMENT_RESPONSE_PAYMENT_DATA = 'payment data';
+
+    /**
+     * @var string
+     */
     protected const OMS_STATUS_NEW = 'new';
 
     /**
@@ -53,6 +68,16 @@ class AdyenFacadeExecutePostSaveHookTest extends BaseSetUpTest
     protected const ADYEN_PAYMENT_STATUS_CANCELLED = 'Cancelled';
 
     /**
+     * @var string
+     */
+    protected const ERROR_TYPE_PAYMENT_FAILED = 'payment failed';
+
+    /**
+     * @var int
+     */
+    protected const ERROR_CODE_PAYMENT_FAILED = 399;
+
+    /**
      * @return void
      */
     public function testExecutePostSaveHookShouldNotContainErrorsWhenResponsIsSuccessAndDoesNotHaveRefusalStatus(): void
@@ -61,7 +86,11 @@ class AdyenFacadeExecutePostSaveHookTest extends BaseSetUpTest
         $adyenApiResponseTransfer = (new AdyenApiResponseBuilder([
             AdyenApiResponseTransfer::IS_SUCCESS => true,
         ]))
-            ->withMakePaymentResponse([AdyenApiMakePaymentResponseTransfer::RESULT_CODE => static::ADYEN_PAYMENT_STATUS_AUTHORISED])
+            ->withMakePaymentResponse([
+                AdyenApiMakePaymentResponseTransfer::RESULT_CODE => static::ADYEN_PAYMENT_STATUS_AUTHORISED,
+                AdyenApiMakePaymentResponseTransfer::DETAILS => static::MAKE_PAYMENT_RESPONSE_DETAILS,
+                AdyenApiMakePaymentResponseTransfer::PAYMENT_DATA => static::MAKE_PAYMENT_RESPONSE_PAYMENT_DATA,
+            ])
             ->build();
 
         $adyenToAdyenApiFacadeBridgeMock = $this->createMock(AdyenToAdyenApiFacadeBridge::class);
@@ -75,17 +104,26 @@ class AdyenFacadeExecutePostSaveHookTest extends BaseSetUpTest
             static::OMS_STATUS_NEW,
         );
 
-        $spyPaymentAdyen = $this->getSpyPaymentAdyen($orderTransfer);
         $checkoutResponseTransfer = $this->tester->createCheckoutResponseTransfer();
 
         //Act
         $facade->executePostSaveHook(
-            $this->tester->buildQuoteTransfer($spyPaymentAdyen->getReference()),
+            $this->tester->buildQuoteTransfer($this->getPaymentAdyenReference($orderTransfer->getIdSalesOrder())),
             $checkoutResponseTransfer,
         );
 
         //Assert
-        $this->assertSame(0, $checkoutResponseTransfer->getErrors()->count());
+        $this->assertCount(0, $checkoutResponseTransfer->getErrors());
+
+        $this->assertNotFalse($checkoutResponseTransfer->getIsSuccess());
+
+        $spyPaymentAdyenApiLog = $this->getLastSpyPaymentAdyenApiLog();
+        $this->assertSame(static::MAKE_PAYMENT_PAY_PAL_REQUEST_TYPE, $spyPaymentAdyenApiLog->getType());
+        $this->assertTrue($spyPaymentAdyenApiLog->getIsSuccess());
+
+        $spyPaymentAdyen = $this->getSpyPaymentAdyen($orderTransfer);
+        $this->assertSame(static::MAKE_PAYMENT_RESPONSE_PAYMENT_DATA, $spyPaymentAdyen->getPaymentData());
+        $this->assertSame(json_encode(static::MAKE_PAYMENT_RESPONSE_DETAILS), $spyPaymentAdyen->getDetails());
     }
 
     /**
@@ -112,17 +150,31 @@ class AdyenFacadeExecutePostSaveHookTest extends BaseSetUpTest
             static::OMS_STATUS_NEW,
         );
 
-        $spyPaymentAdyen = $this->getSpyPaymentAdyen($orderTransfer);
         $checkoutResponseTransfer = $this->tester->createCheckoutResponseTransfer();
 
         //Act
         $facade->executePostSaveHook(
-            $this->tester->buildQuoteTransfer($spyPaymentAdyen->getReference()),
+            $this->tester->buildQuoteTransfer($this->getPaymentAdyenReference($orderTransfer->getIdSalesOrder())),
             $checkoutResponseTransfer,
         );
 
         //Assert
-        $this->assertSame(1, $checkoutResponseTransfer->getErrors()->count());
+        $this->assertCount(1, $checkoutResponseTransfer->getErrors());
+
+        $this->assertFalse($checkoutResponseTransfer->getIsSuccess());
+
+        $checkoutErrorTransfer = $checkoutResponseTransfer->getErrors()->getIterator()->current();
+        /** @var \Generated\Shared\Transfer\CheckoutErrorTransfer $checkoutErrorTransfer */
+        $this->assertSame(static::ERROR_CODE_PAYMENT_FAILED, $checkoutErrorTransfer->getErrorCode());
+        $this->assertSame(static::ERROR_TYPE_PAYMENT_FAILED, $checkoutErrorTransfer->getErrorType());
+
+        $spyPaymentAdyenApiLog = $this->getLastSpyPaymentAdyenApiLog();
+        $this->assertSame(static::MAKE_PAYMENT_PAY_PAL_REQUEST_TYPE, $spyPaymentAdyenApiLog->getType());
+        $this->assertFalse($spyPaymentAdyenApiLog->getIsSuccess());
+
+        $spyPaymentAdyen = $this->getSpyPaymentAdyen($orderTransfer);
+        $this->assertNull($spyPaymentAdyen->getPaymentData());
+        $this->assertNull($spyPaymentAdyen->getDetails());
     }
 
     /**
@@ -136,9 +188,13 @@ class AdyenFacadeExecutePostSaveHookTest extends BaseSetUpTest
     {
         //Arrange
         $adyenApiResponseTransfer = (new AdyenApiResponseBuilder([
-            AdyenApiResponseTransfer::IS_SUCCESS => false,
+            AdyenApiResponseTransfer::IS_SUCCESS => true,
         ]))
-            ->withMakePaymentResponse([AdyenApiMakePaymentResponseTransfer::RESULT_CODE => static::ADYEN_PAYMENT_STATUS_AUTHORISED])
+            ->withMakePaymentResponse([
+                AdyenApiMakePaymentResponseTransfer::RESULT_CODE => $refusalStatus,
+                AdyenApiMakePaymentResponseTransfer::DETAILS => static::MAKE_PAYMENT_RESPONSE_DETAILS,
+                AdyenApiMakePaymentResponseTransfer::PAYMENT_DATA => static::MAKE_PAYMENT_RESPONSE_PAYMENT_DATA,
+            ])
             ->withError()
             ->build();
 
@@ -153,17 +209,31 @@ class AdyenFacadeExecutePostSaveHookTest extends BaseSetUpTest
             static::OMS_STATUS_NEW,
         );
 
-        $spyPaymentAdyen = $this->getSpyPaymentAdyen($orderTransfer);
         $checkoutResponseTransfer = $this->tester->createCheckoutResponseTransfer();
 
         //Act
         $facade->executePostSaveHook(
-            $this->tester->buildQuoteTransfer($spyPaymentAdyen->getReference()),
+            $this->tester->buildQuoteTransfer($this->getPaymentAdyenReference($orderTransfer->getIdSalesOrder())),
             $checkoutResponseTransfer,
         );
 
         //Assert
-        $this->assertSame(1, $checkoutResponseTransfer->getErrors()->count());
+        $this->assertCount(1, $checkoutResponseTransfer->getErrors());
+
+        $this->assertFalse($checkoutResponseTransfer->getIsSuccess());
+
+        $checkoutErrorTransfer = $checkoutResponseTransfer->getErrors()->getIterator()->current();
+        /** @var \Generated\Shared\Transfer\CheckoutErrorTransfer $checkoutErrorTransfer */
+        $this->assertSame(static::ERROR_CODE_PAYMENT_FAILED, $checkoutErrorTransfer->getErrorCode());
+        $this->assertSame(static::ERROR_TYPE_PAYMENT_FAILED, $checkoutErrorTransfer->getErrorType());
+
+        $spyPaymentAdyenApiLog = $this->getLastSpyPaymentAdyenApiLog();
+        $this->assertSame(static::MAKE_PAYMENT_PAY_PAL_REQUEST_TYPE, $spyPaymentAdyenApiLog->getType());
+        $this->assertTrue($spyPaymentAdyenApiLog->getIsSuccess());
+
+        $spyPaymentAdyen = $this->getSpyPaymentAdyen($orderTransfer);
+        $this->assertSame(static::MAKE_PAYMENT_RESPONSE_PAYMENT_DATA, $spyPaymentAdyen->getPaymentData());
+        $this->assertSame(json_encode(static::MAKE_PAYMENT_RESPONSE_DETAILS), $spyPaymentAdyen->getDetails());
     }
 
     /**
@@ -172,7 +242,7 @@ class AdyenFacadeExecutePostSaveHookTest extends BaseSetUpTest
     public function refusalStatusDataProvider(): array
     {
         return [
-            [static::ADYEN_PAYMENT_STATUS_AUTHORISED],
+            [static::ADYEN_PAYMENT_STATUS_REFUSED],
             [static::ADYEN_PAYMENT_STATUS_CANCELLED],
             [static::ADYEN_PAYMENT_STATUS_ERROR],
         ];
