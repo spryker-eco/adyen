@@ -46,11 +46,6 @@ class AdyenPostSaveHook implements AdyenHookInterface
     protected const ERROR_CODE_PAYMENT_FAILED = 399;
 
     /**
-     * @var string
-     */
-    protected const ADYEN_OMS_STATUS_REFUSED = 'Refused';
-
-    /**
      * @var \SprykerEco\Zed\Adyen\Dependency\Facade\AdyenToAdyenApiFacadeInterface
      */
     protected $adyenApiFacade;

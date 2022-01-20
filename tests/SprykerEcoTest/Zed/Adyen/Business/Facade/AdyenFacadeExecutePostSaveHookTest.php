@@ -80,7 +80,7 @@ class AdyenFacadeExecutePostSaveHookTest extends BaseSetUpTest
     /**
      * @return void
      */
-    public function testExecutePostSaveHookShouldNotContainErrorsWhenResponsIsSuccessAndDoesNotHaveRefusalStatus(): void
+    public function testExecutePostSaveHookShouldNotProcessErrorsWhenResponsIsSuccessAndDoesNotHaveRefusalStatus(): void
     {
         //Arrange
         $adyenApiResponseTransfer = (new AdyenApiResponseBuilder([
@@ -129,7 +129,7 @@ class AdyenFacadeExecutePostSaveHookTest extends BaseSetUpTest
     /**
      * @return void
      */
-    public function testExecutePostSaveHookShouldContainErrorsWhenResponsIsNotSuccess(): void
+    public function testExecutePostSaveHookShouldProcessErrorsWhenResponsIsNotSuccess(): void
     {
         //Arrange
         $adyenApiResponseTransfer = (new AdyenApiResponseBuilder([
@@ -184,7 +184,7 @@ class AdyenFacadeExecutePostSaveHookTest extends BaseSetUpTest
      *
      * @return void
      */
-    public function testExecutePostSaveHookShouldNotContainErrorsWhenResponsIsSuccessAndHasRefusalStatus(string $refusalStatus): void
+    public function testExecutePostSaveHookShouldProcessErrorsWhenResponsIsSuccessAndHasRefusalStatus(string $refusalStatus): void
     {
         //Arrange
         $adyenApiResponseTransfer = (new AdyenApiResponseBuilder([
