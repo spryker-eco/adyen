@@ -374,9 +374,9 @@ class BaseSetUpTest extends Test
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return \Orm\Zed\Adyen\Persistence\SpyPaymentAdyen
+     * @return \Orm\Zed\Adyen\Persistence\SpyPaymentAdyen|null
      */
-    protected function getSpyPaymentAdyen(OrderTransfer $orderTransfer): SpyPaymentAdyen
+    protected function getSpyPaymentAdyen(OrderTransfer $orderTransfer): ?SpyPaymentAdyen
     {
         return SpyPaymentAdyenQuery::create()
             ->filterByOrderReference($orderTransfer->getOrderReference())
@@ -384,9 +384,9 @@ class BaseSetUpTest extends Test
     }
 
     /**
-     * @return \Orm\Zed\Adyen\Persistence\SpyPaymentAdyenApiLog
+     * @return \Orm\Zed\Adyen\Persistence\SpyPaymentAdyenApiLog|null
      */
-    protected function getLastSpyPaymentAdyenApiLog(): SpyPaymentAdyenApiLog
+    protected function getLastSpyPaymentAdyenApiLog(): ?SpyPaymentAdyenApiLog
     {
         return SpyPaymentAdyenApiLogQuery::create()
             ->orderByIdPaymentAdyenApiLog(Criteria::DESC)

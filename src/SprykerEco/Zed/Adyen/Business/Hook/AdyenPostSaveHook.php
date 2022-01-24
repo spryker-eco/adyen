@@ -63,24 +63,24 @@ class AdyenPostSaveHook implements AdyenHookInterface
     /**
      * @var \SprykerEco\Zed\Adyen\AdyenConfig
      */
-    protected $config;
+    protected $adyenConfig;
 
     /**
      * @param \SprykerEco\Zed\Adyen\Dependency\Facade\AdyenToAdyenApiFacadeInterface $adyenApiFacade
      * @param \SprykerEco\Zed\Adyen\Business\Hook\Mapper\AdyenMapperResolverInterface $mapperResolver
      * @param \SprykerEco\Zed\Adyen\Business\Hook\Saver\AdyenSaverResolverInterface $saverResolver
-     * @param \SprykerEco\Zed\Adyen\AdyenConfig $config
+     * @param \SprykerEco\Zed\Adyen\AdyenConfig $adyenConfig
      */
     public function __construct(
         AdyenToAdyenApiFacadeInterface $adyenApiFacade,
         AdyenMapperResolverInterface $mapperResolver,
         AdyenSaverResolverInterface $saverResolver,
-        AdyenConfig $config
+        AdyenConfig $adyenConfig
     ) {
         $this->adyenApiFacade = $adyenApiFacade;
         $this->mapperResolver = $mapperResolver;
         $this->saverResolver = $saverResolver;
-        $this->config = $config;
+        $this->adyenConfig = $adyenConfig;
     }
 
     /**
@@ -201,7 +201,7 @@ class AdyenPostSaveHook implements AdyenHookInterface
     {
         return in_array(
             strtolower($adyenApiResponseTransfer->getMakePaymentResponseOrFail()->getResultCode()),
-            $this->config->getInvalidAdyenPaymentStatusList(),
+            $this->adyenConfig->getInvalidAdyenPaymentStatusList(),
             true,
         );
     }
