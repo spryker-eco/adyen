@@ -56,16 +56,6 @@ class BaseSetUpTest extends Test
     /**
      * @var string
      */
-    protected const PAYMENT_ADYEN_REFERENCE = 'random-reference-string--%s';
-
-    /**
-     * @var string
-     */
-    protected const PAYMENT_ADYEN_PSP_REFERENCE = 'random-psp-reference-string--%s';
-
-    /**
-     * @var string
-     */
     protected const RESPONSE_REFERENCE = '8535408002754771';
 
     /**
@@ -376,7 +366,7 @@ class BaseSetUpTest extends Test
      *
      * @return \Orm\Zed\Adyen\Persistence\SpyPaymentAdyen|null
      */
-    protected function getSpyPaymentAdyen(OrderTransfer $orderTransfer): ?SpyPaymentAdyen
+    protected function findPaymentAdyen(OrderTransfer $orderTransfer): ?SpyPaymentAdyen
     {
         return SpyPaymentAdyenQuery::create()
             ->filterByOrderReference($orderTransfer->getOrderReference())
@@ -386,7 +376,7 @@ class BaseSetUpTest extends Test
     /**
      * @return \Orm\Zed\Adyen\Persistence\SpyPaymentAdyenApiLog|null
      */
-    protected function getLastSpyPaymentAdyenApiLog(): ?SpyPaymentAdyenApiLog
+    protected function findLastPaymentAdyenApiLog(): ?SpyPaymentAdyenApiLog
     {
         return SpyPaymentAdyenApiLogQuery::create()
             ->orderByIdPaymentAdyenApiLog(Criteria::DESC)
@@ -453,7 +443,7 @@ class BaseSetUpTest extends Test
      */
     protected function getPaymentAdyenReference(int $idSalesOrder): string
     {
-        return sprintf(static::PAYMENT_ADYEN_REFERENCE, $idSalesOrder);
+        return sprintf('random-reference-string--%s', $idSalesOrder);
     }
 
     /**
@@ -463,6 +453,6 @@ class BaseSetUpTest extends Test
      */
     protected function getPaymentAdyenPspReference(int $idSalesOrder): string
     {
-        return sprintf(static::PAYMENT_ADYEN_PSP_REFERENCE, $idSalesOrder);
+        return sprintf('random-psp-reference-string--%s', $idSalesOrder);
     }
 }

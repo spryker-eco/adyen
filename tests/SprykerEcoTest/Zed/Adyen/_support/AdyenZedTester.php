@@ -10,7 +10,6 @@ namespace SprykerEcoTest\Zed\Adyen;
 use Codeception\Actor;
 use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\Transfer\AdyenPaymentTransfer;
-use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\PaymentTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use SprykerEco\Shared\Adyen\AdyenConfig as AdyenConfigShared;
@@ -47,7 +46,7 @@ class AdyenZedTester extends Actor
      */
     public function buildQuoteTransfer(string $reference): QuoteTransfer
     {
-        $quoteBuilder = (new QuoteBuilder())
+        $quoteTransfer = (new QuoteBuilder())
             ->withBillingAddress()
             ->withShippingAddress()
             ->withCurrency()
@@ -55,17 +54,9 @@ class AdyenZedTester extends Actor
             ->withCustomer()
             ->build();
 
-        $quoteBuilder->setPayment($this->createPaymentTransfer($reference));
+        $quoteTransfer->setPayment($this->createPaymentTransfer($reference));
 
-        return $quoteBuilder;
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
-     */
-    public function createCheckoutResponseTransfer(): CheckoutResponseTransfer
-    {
-        return (new CheckoutResponseTransfer());
+        return $quoteTransfer;
     }
 
     /**
