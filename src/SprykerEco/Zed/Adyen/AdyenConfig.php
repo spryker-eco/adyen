@@ -557,7 +557,7 @@ class AdyenConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return array<string, string>
+     * @return array<string>
      */
     public function getMapperPaymentMethods(): array
     {

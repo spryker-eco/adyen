@@ -14,7 +14,7 @@ use SprykerEco\Yves\Adyen\Dependency\Service\AdyenToUtilEncodingServiceBridge;
 use SprykerEco\Yves\Adyen\Plugin\Payment\KlarnaInvoicePaymentMapperPlugin;
 
 /**
- * @method \SprykerEco\Zed\Adyen\AdyenConfig getConfig()
+ * @method \SprykerEco\Yves\Adyen\AdyenConfig getConfig()
  */
 class AdyenDependencyProvider extends AbstractBundleDependencyProvider
 {
