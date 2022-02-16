@@ -7,6 +7,8 @@
 
 namespace SprykerEco\Zed\Adyen\Dependency\Facade;
 
+use Generated\Shared\Transfer\OrderTransfer;
+
 class AdyenToSalesFacadeBridge implements AdyenToSalesFacadeInterface
 {
     /**
@@ -27,7 +29,7 @@ class AdyenToSalesFacadeBridge implements AdyenToSalesFacadeInterface
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
-    public function getOrderByIdSalesOrder($idSalesOrder)
+    public function getOrderByIdSalesOrder($idSalesOrder): OrderTransfer
     {
         return $this->salesFacade->getOrderByIdSalesOrder($idSalesOrder);
     }
