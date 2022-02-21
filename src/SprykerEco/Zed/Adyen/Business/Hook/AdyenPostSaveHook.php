@@ -130,7 +130,7 @@ class AdyenPostSaveHook implements AdyenHookInterface
      */
     protected function isMethodWithRedirect(AdyenApiResponseTransfer $responseTransfer): bool
     {
-        return !empty($responseTransfer->getMakePaymentResponse()->getRedirect());
+        return $responseTransfer->getMakePaymentResponse()->getRedirect() !== null;
     }
 
     /**

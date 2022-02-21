@@ -28,7 +28,7 @@ class WeChatPayMapper extends AbstractMapper
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return array<string>
+     * @return array<string, string>
      */
     protected function getPayload(QuoteTransfer $quoteTransfer): array
     {
