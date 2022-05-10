@@ -69,7 +69,7 @@ class AdyenNotificationMapper implements AdyenNotificationMapperInterface
     }
 
     /**
-     * @param array $response
+     * @param array<string, mixed> $response
      *
      * @return array<\Generated\Shared\Transfer\AdyenNotificationRequestItemTransfer>
      */

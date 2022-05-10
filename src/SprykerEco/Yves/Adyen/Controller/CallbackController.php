@@ -140,7 +140,7 @@ class CallbackController extends AbstractController
     protected function handleRedirectFromAdyen(AdyenRedirectResponseTransfer $responseTransfer): RedirectResponse
     {
         if ($responseTransfer->getResultCode() === static::RESULT_CODE_CANCELLED) {
-            return $this->redirectResponseInternal(CheckoutPageControllerProvider::CHECKOUT_PAYMENT);
+            return $this->redirectResponseInternal(CheckoutPageControllerProvider::CHECKOUT_ERROR);
         }
 
         if ($responseTransfer->getResultCode() === static::RESULT_CODE_REFUSED) {
