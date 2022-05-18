@@ -16,12 +16,12 @@ use SprykerEco\Zed\Adyen\Dependency\Facade\AdyenToAdyenApiFacadeBridge;
 use SprykerEcoTest\Zed\Adyen\Business\BaseSetUpTest;
 
 /**
- * @group Functional
- * @group SprykerEco
+ * @group SprykerEcoTest
  * @group Zed
  * @group Adyen
  * @group Business
  * @group Facade
+ * @group ExecutePostSaveHookTest
  */
 class ExecutePostSaveHookTest extends BaseSetUpTest
 {
@@ -88,7 +88,7 @@ class ExecutePostSaveHookTest extends BaseSetUpTest
     /**
      * @return void
      */
-    public function testExecutePostSaveHookShouldNotProcessErrorsWhenResponseIsSuccessAndDoesNotHaveRefusalStatus(): void
+    public function testPaymentSucceedsWhenResponseIsSuccessAndDoesNotHaveRefusalStatus(): void
     {
         // Arrange
         $adyenApiResponseTransfer = (new AdyenApiResponseBuilder([
@@ -139,7 +139,7 @@ class ExecutePostSaveHookTest extends BaseSetUpTest
     /**
      * @return void
      */
-    public function testExecutePostSaveHookShouldProcessErrorsWhenResponseIsNotSuccess(): void
+    public function testPaymentFailsWhenResponseIsNotSuccess(): void
     {
         // Arrange
         $adyenApiResponseTransfer = (new AdyenApiResponseBuilder([
@@ -196,7 +196,7 @@ class ExecutePostSaveHookTest extends BaseSetUpTest
      *
      * @return void
      */
-    public function testExecutePostSaveHookShouldProcessErrorsWhenResponseIsSuccessAndHasRefusalStatus(string $refusalStatus): void
+    public function testPaymentFailsWhenResponseIsSuccessAndHasRefusalStatus(string $refusalStatus): void
     {
         // Arrange
         $adyenApiResponseTransfer = (new AdyenApiResponseBuilder([
@@ -253,7 +253,7 @@ class ExecutePostSaveHookTest extends BaseSetUpTest
     /**
      * @return void
      */
-    public function testExecutePostSaveHookWithoutMakePaymentResponse(): void
+    public function testThrowsExceptionWhenMakePaymentResponseIsMissing(): void
     {
         // Arrange
         $adyenApiResponseTransfer = (new AdyenApiResponseBuilder([
@@ -287,7 +287,7 @@ class ExecutePostSaveHookTest extends BaseSetUpTest
     /**
      * @return void
      */
-    public function testExecutePostSaveHookWithoutPayment(): void
+    public function testThrowsExceptionWhenPaymentIsMissing(): void
     {
         // Arrange
         $quoteTransfer = $this->tester->buildQuoteTransfer(static::PAYMENT_ADYEN_REFERENCE_STUB);
@@ -306,7 +306,7 @@ class ExecutePostSaveHookTest extends BaseSetUpTest
     /**
      * @return void
      */
-    public function testExecutePostSaveHookWithoutAdyenPaymen(): void
+    public function testThrowsExceptionWhenPaymentSelectionIsMissing(): void
     {
         // Arrange
         $quoteTransfer = $this->tester->buildQuoteTransfer(static::PAYMENT_ADYEN_REFERENCE_STUB);
@@ -325,7 +325,7 @@ class ExecutePostSaveHookTest extends BaseSetUpTest
     /**
      * @return void
      */
-    public function testExecutePostSaveHookWithoutPaymentSelection(): void
+    public function testThrowsExceptionWhenAdyenPaymentIsMissing(): void
     {
         // Arrange
         $quoteTransfer = $this->tester->buildQuoteTransfer(static::PAYMENT_ADYEN_REFERENCE_STUB);
@@ -344,7 +344,7 @@ class ExecutePostSaveHookTest extends BaseSetUpTest
     /**
      * @return void
      */
-    public function testExecutePostSaveHookWithoutBillingAddress(): void
+    public function testThrowsExceptionWhenBillingAddressIsMissing(): void
     {
         // Arrange
         $quoteTransfer = $this->tester->buildQuoteTransfer($this->getPaymentAdyenReference(1));

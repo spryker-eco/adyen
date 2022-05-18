@@ -144,24 +144,24 @@ class BaseSetUpTest extends Test
     protected $tester;
 
     /**
-     * @param \SprykerEco\Zed\Adyen\Dependency\Facade\AdyenToAdyenApiFacadeInterface $adyenToAdyenApiFacade
+     * @param \SprykerEco\Zed\Adyen\Dependency\Facade\AdyenToAdyenApiFacadeInterface $adyenToAdyenApiFacadeBridge
      *
      * @return \SprykerEco\Zed\Adyen\Business\AdyenFacadeInterface
      */
-    protected function createFacade(AdyenToAdyenApiFacadeInterface $adyenToAdyenApiFacade): AdyenFacadeInterface
+    protected function createFacade(AdyenToAdyenApiFacadeInterface $adyenToAdyenApiFacadeBridge): AdyenFacadeInterface
     {
         $facade = (new AdyenFacade())
-            ->setFactory($this->createFactory($adyenToAdyenApiFacade));
+            ->setFactory($this->createFactory($adyenToAdyenApiFacadeBridge));
 
         return $facade;
     }
 
     /**
-     * @param \SprykerEco\Zed\Adyen\Dependency\Facade\AdyenToAdyenApiFacadeInterface $adyenToAdyenApiFacade
+     * @param \SprykerEco\Zed\Adyen\Dependency\Facade\AdyenToAdyenApiFacadeInterface $adyenToAdyenApiFacadeBridge
      *
      * @return \PHPUnit_Framework_MockObject_MockObject|\SprykerEco\Zed\Adyen\Business\AdyenBusinessFactory
      */
-    protected function createFactory(AdyenToAdyenApiFacadeInterface $adyenToAdyenApiFacade): AdyenBusinessFactory
+    protected function createFactory(AdyenToAdyenApiFacadeInterface $adyenToAdyenApiFacadeBridge): AdyenBusinessFactory
     {
         $builder = $this->getMockBuilder(AdyenBusinessFactory::class);
         $builder->setMethods(
@@ -183,7 +183,7 @@ class BaseSetUpTest extends Test
         $stub->method('getEntityManager')
             ->willReturn($this->createEntityManager());
         $stub->method('getAdyenApiFacade')
-            ->willReturn($adyenToAdyenApiFacade);
+            ->willReturn($adyenToAdyenApiFacadeBridge);
         $stub->method('getOmsFacade')
             ->willReturn($this->createOmsFacade());
         $stub->method('getUtilEncodingService')
