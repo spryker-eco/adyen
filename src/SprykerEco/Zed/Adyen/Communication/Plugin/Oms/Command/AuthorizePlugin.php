@@ -13,6 +13,8 @@ use Spryker\Zed\Oms\Dependency\Plugin\Command\CommandByOrderInterface;
 
 /**
  * @method \SprykerEco\Zed\Adyen\Business\AdyenFacadeInterface getFacade()
+ * @method \SprykerEco\Zed\Adyen\AdyenConfig getConfig()
+ * @method \SprykerEco\Zed\Adyen\Communication\AdyenCommunicationFactory getFactory()
  */
 class AuthorizePlugin extends AbstractCommandPlugin implements CommandByOrderInterface
 {

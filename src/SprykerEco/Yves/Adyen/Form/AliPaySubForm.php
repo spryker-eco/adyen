@@ -12,6 +12,9 @@ use Generated\Shared\Transfer\PaymentTransfer;
 use SprykerEco\Shared\Adyen\AdyenConfig;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * @method \SprykerEco\Yves\Adyen\AdyenConfig getConfig()
+ */
 class AliPaySubForm extends AbstractSubForm
 {
     /**

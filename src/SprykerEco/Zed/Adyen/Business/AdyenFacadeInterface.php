@@ -153,8 +153,10 @@ interface AdyenFacadeInterface
 
     /**
      * Specification:
+     * - Requires QuoteTransfer.payment.paymentSelection to be set.
      * - Executes make payment request to API.
      * - Creates PaymentAdyen entities, save them to DB.
+     * - Processes the response as failure with next result codes: Refused, Error, Cancelled.
      * - Updates order items with necessary OMS statuses.
      *
      * @api
