@@ -79,7 +79,7 @@ class FacadeTest extends BaseSetUpTest
      */
     public function testHandleCancelCommand(): void
     {
-        $facade = $this->createFacade();
+        $facade = $this->createFacade($this->createAdyenApiFacade());
         $orderTransfer = $this->setUpCommandTest(
             static::PROCESS_NAME_ADYEN_CREDIT_CARD,
             static::OMS_STATUS_AUTHORIZED,
@@ -100,7 +100,7 @@ class FacadeTest extends BaseSetUpTest
      */
     public function testHandleCaptureCommand(): void
     {
-        $facade = $this->createFacade();
+        $facade = $this->createFacade($this->createAdyenApiFacade());
         $orderTransfer = $this->setUpCommandTest(
             static::PROCESS_NAME_ADYEN_CREDIT_CARD,
             static::OMS_STATUS_AUTHORIZED,
@@ -121,7 +121,7 @@ class FacadeTest extends BaseSetUpTest
      */
     public function testHandleRefundCommand(): void
     {
-        $facade = $this->createFacade();
+        $facade = $this->createFacade($this->createAdyenApiFacade());
         $orderTransfer = $this->setUpCommandTest(
             static::PROCESS_NAME_ADYEN_CREDIT_CARD,
             static::OMS_STATUS_CAPTURED,
@@ -142,7 +142,7 @@ class FacadeTest extends BaseSetUpTest
      */
     public function testHandleCancelOrRefundCommand(): void
     {
-        $facade = $this->createFacade();
+        $facade = $this->createFacade($this->createAdyenApiFacade());
         $orderTransfer = $this->setUpCommandTest(
             static::PROCESS_NAME_ADYEN_SOFORT,
             static::OMS_STATUS_CAPTURED,
@@ -169,17 +169,9 @@ class FacadeTest extends BaseSetUpTest
     /**
      * @return void
      */
-    public function testExecutePostSaveHook(): void
-    {
-        $this->markTestSkipped('Will be covered soon.');
-    }
-
-    /**
-     * @return void
-     */
     public function testHandleNotification(): void
     {
-        $facade = $this->createFacade();
+        $facade = $this->createFacade($this->createAdyenApiFacade());
         $orderTransfer = $this->setUpCommandTest(
             static::PROCESS_NAME_ADYEN_CREDIT_CARD,
             static::OMS_STATUS_CAPTURE_PENDING,
@@ -201,7 +193,7 @@ class FacadeTest extends BaseSetUpTest
     public function testHandleNotificationWithAuthorizeEventAfterCaptureEvent(): void
     {
         // Arrange
-        $facade = $this->createFacade();
+        $facade = $this->createFacade($this->createAdyenApiFacade());
         $orderTransfer = $this->setUpCommandTest(
             static::PROCESS_NAME_ADYEN_CREDIT_CARD,
             static::OMS_STATUS_NEW,
@@ -246,7 +238,7 @@ class FacadeTest extends BaseSetUpTest
      */
     public function testHandleOnlineTransferResponseFromAdyen(): void
     {
-        $facade = $this->createFacade();
+        $facade = $this->createFacade($this->createAdyenApiFacade());
         $orderTransfer = $this->setUpCommandTest(
             static::PROCESS_NAME_ADYEN_SOFORT,
             static::OMS_STATUS_NEW,
@@ -268,7 +260,7 @@ class FacadeTest extends BaseSetUpTest
     public function testHandleOnlineTransferResponseFromAdyenAfterNotification(): void
     {
         // Arrange
-        $facade = $this->createFacade();
+        $facade = $this->createFacade($this->createAdyenApiFacade());
         $orderTransfer = $this->setUpCommandTest(
             static::PROCESS_NAME_ADYEN_SOFORT,
             static::OMS_STATUS_AUTHORIZED,
@@ -294,7 +286,7 @@ class FacadeTest extends BaseSetUpTest
      */
     public function testHandleCreditCard3dResponseFromAdyen(): void
     {
-        $facade = $this->createFacade();
+        $facade = $this->createFacade($this->createAdyenApiFacade());
         $orderTransfer = $this->setUpCommandTest(
             static::PROCESS_NAME_ADYEN_CREDIT_CARD,
             static::OMS_STATUS_NEW,

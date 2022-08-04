@@ -28,7 +28,12 @@ use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\PaymentAdyenOrderItemTransfer;
 use Generated\Shared\Transfer\PaymentAdyenTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
+use Orm\Zed\Adyen\Persistence\SpyPaymentAdyen;
+use Orm\Zed\Adyen\Persistence\SpyPaymentAdyenApiLog;
+use Orm\Zed\Adyen\Persistence\SpyPaymentAdyenApiLogQuery;
+use Orm\Zed\Adyen\Persistence\SpyPaymentAdyenQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
+use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Shared\Oms\OmsConstants;
 use SprykerEco\Shared\Adyen\AdyenConstants;
 use SprykerEco\Zed\Adyen\AdyenConfig;
@@ -48,16 +53,6 @@ use SprykerEco\Zed\Adyen\Persistence\AdyenRepositoryInterface;
 
 class BaseSetUpTest extends Test
 {
-    /**
-     * @var string
-     */
-    protected const PAYMENT_ADYEN_REFERENCE = 'random-reference-string--%s';
-
-    /**
-     * @var string
-     */
-    protected const PAYMENT_ADYEN_PSP_REFERENCE = 'random-psp-reference-string--%s';
-
     /**
      * @var string
      */
@@ -154,20 +149,24 @@ class BaseSetUpTest extends Test
     protected $tester;
 
     /**
+     * @param \SprykerEco\Zed\Adyen\Dependency\Facade\AdyenToAdyenApiFacadeInterface $adyenToAdyenApiFacadeBridge
+     *
      * @return \SprykerEco\Zed\Adyen\Business\AdyenFacadeInterface
      */
-    protected function createFacade(): AdyenFacadeInterface
+    protected function createFacade(AdyenToAdyenApiFacadeInterface $adyenToAdyenApiFacadeBridge): AdyenFacadeInterface
     {
         $facade = (new AdyenFacade())
-            ->setFactory($this->createFactory());
+            ->setFactory($this->createFactory($adyenToAdyenApiFacadeBridge));
 
         return $facade;
     }
 
     /**
+     * @param \SprykerEco\Zed\Adyen\Dependency\Facade\AdyenToAdyenApiFacadeInterface $adyenToAdyenApiFacadeBridge
+     *
      * @return \PHPUnit_Framework_MockObject_MockObject|\SprykerEco\Zed\Adyen\Business\AdyenBusinessFactory
      */
-    protected function createFactory(): AdyenBusinessFactory
+    protected function createFactory(AdyenToAdyenApiFacadeInterface $adyenToAdyenApiFacadeBridge): AdyenBusinessFactory
     {
         $builder = $this->getMockBuilder(AdyenBusinessFactory::class);
         $builder->setMethods(
@@ -189,7 +188,7 @@ class BaseSetUpTest extends Test
         $stub->method('getEntityManager')
             ->willReturn($this->createEntityManager());
         $stub->method('getAdyenApiFacade')
-            ->willReturn($this->createAdyenApiFacade());
+            ->willReturn($adyenToAdyenApiFacadeBridge);
         $stub->method('getOmsFacade')
             ->willReturn($this->createOmsFacade());
         $stub->method('getUtilEncodingService')
@@ -327,8 +326,8 @@ class BaseSetUpTest extends Test
             ->setFkSalesOrder($saveOrderTransfer->getIdSalesOrder())
             ->setPaymentMethod($processName)
             ->setOrderReference($saveOrderTransfer->getOrderReference())
-            ->setReference(sprintf(static::PAYMENT_ADYEN_REFERENCE, $saveOrderTransfer->getIdSalesOrder()))
-            ->setPspReference(sprintf(static::PAYMENT_ADYEN_PSP_REFERENCE, $saveOrderTransfer->getIdSalesOrder()));
+            ->setReference($this->getPaymentAdyenReference($saveOrderTransfer->getIdSalesOrder()))
+            ->setPspReference($this->getPaymentAdyenPspReference($saveOrderTransfer->getIdSalesOrder()));
         $paymentAdyenTransfer = $entityManager->savePaymentAdyen($paymentAdyenTransfer);
 
         $paymentAdyenOrderItemTransfer = (new PaymentAdyenOrderItemTransfer())
@@ -369,6 +368,28 @@ class BaseSetUpTest extends Test
 
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Orm\Zed\Adyen\Persistence\SpyPaymentAdyen|null
+     */
+    protected function findPaymentAdyen(OrderTransfer $orderTransfer): ?SpyPaymentAdyen
+    {
+        return SpyPaymentAdyenQuery::create()
+            ->filterByOrderReference($orderTransfer->getOrderReference())
+            ->findOne();
+    }
+
+    /**
+     * @return \Orm\Zed\Adyen\Persistence\SpyPaymentAdyenApiLog|null
+     */
+    protected function findLastPaymentAdyenApiLog(): ?SpyPaymentAdyenApiLog
+    {
+        return SpyPaymentAdyenApiLogQuery::create()
+            ->orderByIdPaymentAdyenApiLog(Criteria::DESC)
+            ->findOne();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      * @param string $eventCode
      *
      * @return \Generated\Shared\Transfer\AdyenNotificationsTransfer
@@ -385,7 +406,7 @@ class BaseSetUpTest extends Test
                 AdyenNotificationRequestItemTransfer::PSP_REFERENCE => static::RESPONSE_REFERENCE,
                 AdyenNotificationRequestItemTransfer::EVENT_CODE => $eventCode,
                 AdyenNotificationRequestItemTransfer::MERCHANT_ACCOUNT_CODE => static::MERCHANT_ACCOUNT,
-                AdyenNotificationRequestItemTransfer::MERCHANT_REFERENCE => sprintf(static::PAYMENT_ADYEN_REFERENCE, $orderTransfer->getIdSalesOrder()),
+                AdyenNotificationRequestItemTransfer::MERCHANT_REFERENCE => $this->getPaymentAdyenReference($orderTransfer->getIdSalesOrder()),
                 AdyenNotificationRequestItemTransfer::SUCCESS => static::RESPONSE_SUCCESS_TRUE,
                 AdyenNotificationRequestItemTransfer::AMOUNT => $amount,
             ]))
@@ -410,7 +431,7 @@ class BaseSetUpTest extends Test
     protected function createRedirectResponseTransfer(OrderTransfer $orderTransfer): AdyenRedirectResponseTransfer
     {
         $redirectResponseTransfer = (new AdyenRedirectResponseBuilder([
-                AdyenRedirectResponseTransfer::REFERENCE => sprintf(static::PAYMENT_ADYEN_REFERENCE, $orderTransfer->getIdSalesOrder()),
+                AdyenRedirectResponseTransfer::REFERENCE => $this->getPaymentAdyenReference($orderTransfer->getIdSalesOrder()),
                 AdyenRedirectResponseTransfer::PAYLOAD => static::REDIRECT_RESPONSE_PAYLOAD,
                 AdyenRedirectResponseTransfer::TYPE => static::REDIRECT_RESPONSE_TYPE,
                 AdyenRedirectResponseTransfer::RESULT_CODE => static::REDIRECT_RESPONSE_RESULT_CODE,
@@ -436,5 +457,25 @@ class BaseSetUpTest extends Test
             ->build();
 
         return $redirectResponseTransfer;
+    }
+
+    /**
+     * @param int $idSalesOrder
+     *
+     * @return string
+     */
+    protected function getPaymentAdyenReference(int $idSalesOrder): string
+    {
+        return sprintf('random-reference-string--%s', $idSalesOrder);
+    }
+
+    /**
+     * @param int $idSalesOrder
+     *
+     * @return string
+     */
+    protected function getPaymentAdyenPspReference(int $idSalesOrder): string
+    {
+        return sprintf('random-psp-reference-string--%s', $idSalesOrder);
     }
 }

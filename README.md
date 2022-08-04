@@ -13,4 +13,4 @@ composer require spryker-eco/adyen
 
 ## Documentation
 
-[Documentation](https://documentation.spryker.com/industry_partners/payment/adyen/adyen.htm)
+[Documentation](https://docs.spryker.com/docs/scos/user/technology-partners/202204.0/payment-partners/adyen.html)

@@ -127,6 +127,7 @@ class AdyenBusinessFactory extends AbstractBusinessFactory
             $this->getAdyenApiFacade(),
             $this->createMapperResolver(),
             $this->createSaverResolver(),
+            $this->getConfig(),
         );
     }
 

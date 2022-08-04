@@ -15,6 +15,8 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 
 /**
  * @method \SprykerEco\Zed\Adyen\Business\AdyenFacadeInterface getFacade()
+ * @method \SprykerEco\Zed\Adyen\Persistence\AdyenRepositoryInterface getRepository()
+ * @method \SprykerEco\Zed\Adyen\Communication\AdyenCommunicationFactory getFactory()
  */
 class GatewayController extends AbstractGatewayController
 {

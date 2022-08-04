@@ -435,6 +435,7 @@
 
     <transfer name="CheckoutError">
         <property name="message" type="string"/>
+        <property name="errorCode" type="int"/>
         <property name="errorType" type="string"/>
     </transfer>
 
