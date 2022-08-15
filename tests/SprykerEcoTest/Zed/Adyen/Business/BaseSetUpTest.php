@@ -448,15 +448,13 @@ class BaseSetUpTest extends Test
      */
     protected function createRefusedRedirectResponseTransfer(OrderTransfer $orderTransfer): AdyenRedirectResponseTransfer
     {
-        $redirectResponseTransfer = (new AdyenRedirectResponseBuilder([
+        return (new AdyenRedirectResponseBuilder([
             AdyenRedirectResponseTransfer::REFERENCE => $this->getPaymentAdyenReference($orderTransfer->getIdSalesOrder()),
             AdyenRedirectResponseTransfer::PAYLOAD => static::REDIRECT_RESPONSE_PAYLOAD,
             AdyenRedirectResponseTransfer::TYPE => static::REDIRECT_RESPONSE_TYPE,
             AdyenRedirectResponseTransfer::RESULT_CODE => static::REDIRECT_RESPONSE_RESULT_CODE_REFUSED,
         ]))
             ->build();
-
-        return $redirectResponseTransfer;
     }
 
     /**

@@ -308,10 +308,10 @@ class FacadeTest extends BaseSetUpTest
     public function testHandleOnlineTransferResponseFromAdyenWithRefusedStatus(): void
     {
         //Arrange
-        $facade = $this->createFacade();
+        $facade = $this->createFacade($this->createAdyenApiFacade());
         $orderTransfer = $this->setUpCommandTest(
-            static::PROCESS_NAME_ADYEN_SOFORT,
-            static::OMS_STATUS_AUTHORIZED,
+            static::PROCESS_NAME_ADYEN_CREDIT_CARD,
+            static::REDIRECT_RESPONSE_RESULT_CODE_REFUSED,
         );
         $redirectResponseTransfer = $this->createRefusedRedirectResponseTransfer($orderTransfer);
 
@@ -319,6 +319,6 @@ class FacadeTest extends BaseSetUpTest
         $result = $facade->handleOnlineTransferResponseFromAdyen($redirectResponseTransfer);
 
         //Assert
-        $this->assertFalse($result->getIsSuccess());
+        $this->assertEquals(static::REDIRECT_RESPONSE_RESULT_CODE_REFUSED, $result->getResultCode());
     }
 }
