@@ -615,7 +615,7 @@ class AdyenConfig extends AbstractBundleConfig
 
     /**
      * Specification:
-     * - Returns `refused` status for adyen payment
+     * - Returns `refused` status for Adyen payment.
      *
      * @api
      *
