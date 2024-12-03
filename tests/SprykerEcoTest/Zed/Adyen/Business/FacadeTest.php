@@ -301,4 +301,24 @@ class FacadeTest extends BaseSetUpTest
             $this->assertNotEmpty($paymentAdyenOrderItem->getSpyPaymentAdyen()->getPspReference());
         }
     }
+
+    /**
+     * @return void
+     */
+    public function testHandleOnlineTransferResponseFromAdyenWithRefusedStatus(): void
+    {
+        //Arrange
+        $facade = $this->createFacade($this->createAdyenApiFacade());
+        $orderTransfer = $this->setUpCommandTest(
+            static::PROCESS_NAME_ADYEN_CREDIT_CARD,
+            static::REDIRECT_RESPONSE_RESULT_CODE_REFUSED,
+        );
+        $redirectResponseTransfer = $this->createRefusedRedirectResponseTransfer($orderTransfer);
+
+        //Act
+        $result = $facade->handleOnlineTransferResponseFromAdyen($redirectResponseTransfer);
+
+        //Assert
+        $this->assertEquals(static::REDIRECT_RESPONSE_RESULT_CODE_REFUSED, $result->getResultCode());
+    }
 }

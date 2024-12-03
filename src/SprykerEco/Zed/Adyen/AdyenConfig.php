@@ -612,4 +612,17 @@ class AdyenConfig extends AbstractBundleConfig
             static::ADYEN_PAYMENT_STATUS_AUTHORISED,
         ];
     }
+
+    /**
+     * Specification:
+     * - Returns `refused` status for Adyen payment.
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getAdyenPaymentStatusRefused(): string
+    {
+        return static::ADYEN_PAYMENT_STATUS_REFUSED;
+    }
 }
